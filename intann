@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiny Mansion — off-grid residences on working farms</title>
+  <meta name="description" content="Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q3 2026.">
+
+  <link rel="canonical" href="https://example.com/">
+  <link rel="icon" href="favicon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tiny Mansion">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:title" content="Tiny Mansion — off-grid residences on working farms">
+  <meta property="og:description" content="Seven days off-grid, on a working farm. First residences deploy in Montenegro, Q3 2026.">
+  <meta property="og:image" content="https://example.com/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tiny Mansion — off-grid residences on working farms">
+  <meta name="twitter:description" content="Seven days off-grid, on a working farm.">
+  <meta name="twitter:image" content="https://example.com/og.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================
+       TOKENS — KORSAKOV brand system
+       ========================================================== */
+    :root {
+      /* Brand, straight from the deck */
+      --bg-cream: #F7F3ED;
+      --ink:      #1A1614;
+      --gold:     #9C7A3C;   /* hairlines, eyebrows, numerals only */
+
+      /* Neutrals derived from ink + cream */
+      --card:     #EFEAE1;
+      --rule:     #D8D0C4;
+      --muted:    #6E6862;
+      --body:     #3A3431;
+
+      /* Interactive accent. Gold fails contrast at small sizes on cream,
+         so buttons and links run on ink. Change this one line to
+         introduce a fourth brand colour. */
+      --accent:   #1A1614;
+
+      /* EB Garamond carries display AND body copy - this is a serif site.
+         Jost is the utility face: labels, nav, buttons, data. Its wide
+         tracked caps are the reason it is here. */
+      --font-serif: 'EB Garamond', Georgia, serif;
+      --font-sans:  'Jost', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+      /* Editorial type scale */
+      --t-hero:    clamp(2.75rem, 7.5vw, 7rem);
+      --t-display: clamp(2.25rem, 5.5vw, 4.75rem);
+      --t-section: clamp(1.9rem, 3.6vw, 3.25rem);
+      --t-lede:    clamp(1.05rem, 1.5vw, 1.45rem);
+
+      --gutter:   clamp(20px, 5vw, 90px);
+      --band:     clamp(64px, 11vh, 150px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .serif { font-family: var(--font-serif); font-weight: 400; }
+
+    /* Body copy is set in the serif and sized up to carry it.
+       Everything not listed here stays on Jost: labels, nav, buttons, data. */
+    .hero-sub, .manifesto-body, .section-head p, .seasonal-lede, .route-stop p,
+    .route-note, .res-text .lede, .specstrip-item p, .cta-band p, .page-lede,
+    .country-hero-body p, .exp-card p, .system-item p,
+    .farm-story p, .prose p, .note-block p, .opening-block p, .footer-desc,
+    .res-intro-copy {
+      font-family: var(--font-serif);
+      letter-spacing: 0.003em;
+    }
+    .hero-sub { font-size: clamp(1.2rem, 1.7vw, 1.6rem); line-height: 1.5; }
+    .prose p { font-size: clamp(1.1rem, 1.35vw, 1.28rem); line-height: 1.75; }
+    .form input, .form textarea { font-family: var(--font-sans); }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+    .container { width: 100%; max-width: 1560px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+    .narrow { max-width: 900px; }
+
+    hr.rule { border: 0; border-top: 1px solid var(--rule); }
+
+    /* Eyebrow — the recurring structural device: gold hairline + caps label */
+    .eyebrow {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 22px;
+    }
+    .eyebrow::before {
+      content: ''; width: clamp(28px, 5vw, 64px); height: 1px;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .eyebrow.on-dark { color: #C7A96B; }
+    .eyebrow.on-dark::before { background: #C7A96B; }
+    .eyebrow.centered { justify-content: center; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(26px); }
+    .reveal.in {
+      opacity: 1; transform: none;
+      transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.d1.in { transition-delay: 0.09s; }
+    .reveal.d2.in { transition-delay: 0.18s; }
+    .reveal.d3.in { transition-delay: 0.27s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    .photo-block { width: 100%; height: 100%; background-size: cover; background-position: center; }
+
+    .color-block {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-serif); font-style: italic;
+      color: rgba(247, 243, 237, 0.55);
+      font-size: 13px; letter-spacing: 0.06em;
+      user-select: none; text-align: center; padding: 10px;
+    }
+
+    /* ==========================================================
+       HEADER
+       ========================================================== */
+    header {
+      position: sticky; top: 0; z-index: 60;
+      background: rgba(247, 243, 237, 0.92);
+      backdrop-filter: saturate(160%) blur(10px);
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    header.over-hero {
+      background: transparent; backdrop-filter: none;
+      border-bottom-color: rgba(247, 243, 237, 0.22);
+    }
+    header.over-hero .wordmark,
+    header.over-hero .nav-link { color: var(--bg-cream); }
+
+    .header-inner { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+    .wordmark {
+      font-family: var(--font-serif);
+      font-size: clamp(17px, 2vw, 23px); font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    .nav { display: flex; gap: clamp(12px, 2.2vw, 34px); align-items: center; white-space: nowrap; }
+    .nav-link {
+      font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; transition: color 0.3s ease;
+    }
+    .nav-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+
+    @media (max-width: 700px) {
+      .header-inner { height: auto; flex-direction: column; align-items: flex-start; gap: 10px; padding: 13px 0; }
+      .nav { width: 100%; justify-content: space-between; gap: 0; }
+      .nav-link { font-size: 10.5px; letter-spacing: 0.06em; }
+    }
+
+    /* ==========================================================
+       BUTTONS
+       ========================================================== */
+    .btn {
+      display: inline-block; cursor: pointer; text-decoration: none;
+      font-family: var(--font-sans); font-size: 12px;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      padding: 16px 32px; border-radius: 0; border: 1px solid transparent;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+    .btn-solid  { background: var(--accent); color: var(--bg-cream); }
+    .btn-solid:hover { background: #322B26; }
+    .btn-line   { border-color: var(--ink); color: var(--ink); }
+    .btn-line:hover { background: var(--ink); color: var(--bg-cream); }
+    .btn-light  { border-color: rgba(247,243,237,0.55); color: var(--bg-cream); }
+    .btn-light:hover { background: var(--bg-cream); color: var(--ink); }
+    .btn-gold   { border-color: var(--gold); color: var(--gold); }
+    .btn-gold:hover { background: var(--gold); color: var(--ink); }
+
+    .view-section { display: none; }
+    .view-section.active { display: block; animation: viewIn 0.26s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes viewIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* ==========================================================
+       HERO
+       ========================================================== */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+      background: var(--ink);
+      margin-top: -79px; /* slide under the sticky header */
+    }
+    .hero-media {
+      position: absolute; inset: 0;
+      background-image: url('hero.jpg');
+      background-size: cover; background-position: center;
+      transform: scale(1.06);
+      animation: driftIn 18s ease-out forwards;
+    }
+    @keyframes driftIn { to { transform: scale(1); } }
+
+    .hero-scrim {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(26,22,20,0.55) 0%, rgba(26,22,20,0.05) 32%, rgba(26,22,20,0.78) 100%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      width: 100%;
+      padding-top: 160px; padding-bottom: clamp(48px, 8vh, 96px);
+      color: var(--bg-cream);
+    }
+    .hero-inner h1 {
+      font-size: var(--t-hero); line-height: 0.96;
+      letter-spacing: -0.015em; max-width: 15ch; color: var(--bg-cream);
+    }
+    .hero-inner h1 em { font-style: italic; }
+    .hero-sub {
+      font-size: var(--t-lede); font-weight: 300; line-height: 1.5;
+      color: rgba(247,243,237,0.86); max-width: 46ch; margin-top: 26px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+
+    /* Vertical rail — reads as an instrument label on the side of the frame */
+    .hero-rail {
+      position: absolute; left: calc(var(--gutter) * 0.42); bottom: clamp(48px, 8vh, 96px);
+      z-index: 2;
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase;
+      color: rgba(247,243,237,0.55);
+    }
+    @media (max-width: 900px) { .hero-rail { display: none; } }
+
+    /* ==========================================================
+       TICKER
+       ========================================================== */
+    .ticker {
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg-cream);
+      overflow: hidden; padding: 15px 0;
+    }
+    .ticker-track {
+      display: flex; gap: 0; width: max-content;
+      animation: slide 46s linear infinite;
+    }
+    .ticker-track span {
+      font-size: 11px; letter-spacing: 0.19em; text-transform: uppercase;
+      color: var(--muted); padding: 0 26px; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 26px;
+    }
+    .ticker-track span::after { content: '·'; color: var(--gold); }
+    @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+
+    /* ==========================================================
+       MANIFESTO
+       ========================================================== */
+    .manifesto { padding: var(--band) 0; text-align: center; }
+    .manifesto-quote {
+      font-size: var(--t-display); line-height: 1.14; letter-spacing: -0.01em;
+      max-width: 20ch; margin: 0 auto;
+    }
+    .manifesto-quote em { font-style: italic; color: var(--gold); }
+    .manifesto-body {
+      font-size: var(--t-lede); line-height: 1.65; color: var(--body);
+      max-width: 60ch; margin: 32px auto 0;
+    }
+
+    /* ==========================================================
+       COUNTRY PANELS — step one
+       ========================================================== */
+    .section-head { padding-bottom: 44px; }
+    .section-head h2 { font-size: var(--t-section); line-height: 1.08; letter-spacing: -0.01em; }
+    .section-head p { font-size: 16px; color: var(--muted); max-width: 52ch; margin-top: 14px; line-height: 1.6; }
+
+    .countries { padding-top: var(--band); }
+
+    .country-panels {
+      display: grid; grid-template-columns: 1fr; gap: 2px;
+      background: var(--rule);
+    }
+    @media (min-width: 700px)  { .country-panels { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .country-panels { grid-template-columns: repeat(4, 1fr); } }
+
+    .country-panel {
+      position: relative; overflow: hidden; cursor: pointer;
+      min-height: clamp(340px, 62vh, 640px);
+      background: var(--ink);
+      display: flex; align-items: flex-end;
+    }
+    .country-panel-media {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 1.1s cubic-bezier(.2,.7,.2,1), filter 0.6s ease;
+      filter: saturate(0.86);
+    }
+    .country-panel:hover .country-panel-media { transform: scale(1.07); filter: saturate(1); }
+    .country-panel-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,22,20,0.12) 40%, rgba(26,22,20,0.85) 100%);
+    }
+    .country-panel-body {
+      position: relative; z-index: 2; padding: clamp(22px, 3vw, 34px);
+      color: var(--bg-cream); width: 100%;
+    }
+    .country-panel-index {
+      font-family: var(--font-serif); font-size: 13px; letter-spacing: 0.2em;
+      color: #C7A96B; display: block; margin-bottom: 10px;
+    }
+    .country-panel-body h3 { font-size: clamp(28px, 2.6vw, 40px); line-height: 1.02; color: var(--bg-cream); }
+    .country-panel-status {
+      display: block; margin-top: 12px; padding-top: 12px;
+      border-top: 1px solid rgba(247,243,237,0.28);
+      font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase;
+      color: rgba(247,243,237,0.78);
+    }
+
+    /* ==========================================================
+       SIGNATURE — the seasonal route
+       ========================================================== */
+    .seasonal { background: var(--ink); color: var(--bg-cream); padding: var(--band) 0; margin-top: var(--band); }
+    .seasonal h2 { font-size: var(--t-section); line-height: 1.08; color: var(--bg-cream); max-width: 16ch; }
+    .seasonal-lede { font-size: 16px; line-height: 1.65; color: rgba(247,243,237,0.66); max-width: 52ch; margin-top: 16px; }
+
+    .route { margin-top: clamp(48px, 7vw, 84px); position: relative; }
+    .route-line { position: absolute; top: 7px; left: 0; right: 0; height: 1px; background: rgba(247,243,237,0.2); }
+    .route-line::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--gold), rgba(156,122,60,0.15));
+      transform-origin: left; transform: scaleX(0);
+      transition: transform 2.4s cubic-bezier(.2,.7,.2,1) 0.2s;
+    }
+    .route.in .route-line::after { transform: scaleX(1); }
+
+    .route-stops { display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media (min-width: 760px) { .route-stops { grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 60px); } }
+
+    .route-stop { position: relative; padding-top: 34px; }
+    .route-stop::before {
+      content: ''; position: absolute; top: 3px; left: 0;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 5px rgba(156,122,60,0.16);
+    }
+    .route-season {
+      font-size: 11px; letter-spacing: 0.19em; text-transform: uppercase;
+      color: #C7A96B; display: block; margin-bottom: 10px;
+    }
+    .route-stop h3 { font-size: clamp(24px, 2.3vw, 34px); line-height: 1.08; color: var(--bg-cream); }
+    .route-stop p { font-size: 15px; line-height: 1.65; color: rgba(247,243,237,0.62); margin-top: 12px; }
+
+    .route-note {
+      margin-top: clamp(44px, 6vw, 72px); padding-top: 26px;
+      border-top: 1px solid rgba(247,243,237,0.18);
+      font-size: 15px; line-height: 1.7; color: rgba(247,243,237,0.72); max-width: 62ch;
+    }
+
+    /* ==========================================================
+       RESIDENCES — step two, editorial rows
+       ========================================================== */
+    .residences { padding: var(--band) 0; }
+
+    .res-row {
+      display: grid; grid-template-columns: 1fr; gap: 30px;
+      align-items: center; padding: clamp(36px, 5vw, 64px) 0;
+      border-top: 1px solid var(--rule);
+    }
+    @media (min-width: 900px) {
+      .res-row { grid-template-columns: 1.05fr 1fr; gap: clamp(40px, 6vw, 88px); }
+      .res-row.flip .res-media { order: 2; }
+    }
+    .res-media {
+      position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+      background: var(--card);
+    }
+    .res-media .photo-block, .res-media .color-block {
+      transition: transform 1.1s cubic-bezier(.2,.7,.2,1);
+    }
+    .res-row:hover .res-media .photo-block { transform: scale(1.05); }
+
+    .res-index {
+      font-family: var(--font-serif); font-size: clamp(40px, 5vw, 72px);
+      line-height: 1; color: var(--rule); display: block; margin-bottom: 14px;
+    }
+    .res-text h3 { font-size: var(--t-display); line-height: 1.02; letter-spacing: -0.015em; }
+    .res-text .lede { font-size: var(--t-lede); line-height: 1.6; color: var(--body); margin-top: 16px; max-width: 40ch; }
+
+    .res-specs {
+      display: flex; flex-wrap: wrap; gap: 0;
+      margin-top: 30px; border-top: 1px solid var(--rule);
+    }
+    .res-spec {
+      flex: 1 1 42%; padding: 15px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .res-spec:nth-child(odd) { padding-right: 20px; }
+    .res-spec dt {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 5px;
+    }
+    .res-spec dd { font-family: var(--font-serif); font-size: 19px; }
+
+    .res-cta { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .res-rate { font-family: var(--font-serif); font-size: 21px; color: var(--ink); }
+    .res-rate small { font-size: 12px; color: var(--muted); font-family: var(--font-sans); letter-spacing: 0.05em; }
+
+    /* ==========================================================
+       SPEC STRIP
+       ========================================================== */
+    .specstrip { padding: var(--band) 0; border-top: 1px solid var(--rule); }
+    .specstrip-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+    @media (min-width: 860px) { .specstrip-grid { grid-template-columns: repeat(3, 1fr); } }
+    .specstrip-item { padding: 30px 0; border-top: 1px solid var(--rule); }
+    @media (min-width: 860px) {
+      .specstrip-item { padding: 34px clamp(20px, 3vw, 44px) 34px 0; }
+      .specstrip-item + .specstrip-item { border-left: 1px solid var(--rule); padding-left: clamp(20px, 3vw, 44px); }
+    }
+    .specstrip-item h3 { font-size: clamp(22px, 2vw, 29px); line-height: 1.1; margin-bottom: 12px; }
+    .specstrip-item p { font-size: 15px; line-height: 1.68; color: var(--body); }
+    .specstrip-num { font-family: var(--font-serif); font-size: 13px; letter-spacing: 0.2em; color: var(--gold); display: block; margin-bottom: 16px; }
+
+    /* ==========================================================
+       CTA BAND
+       ========================================================== */
+    .cta-band {
+      position: relative; overflow: hidden;
+      background: var(--ink); color: var(--bg-cream);
+      padding: calc(var(--band) * 1.15) 0;
+    }
+    .cta-band-media {
+      position: absolute; inset: 0;
+      background-image: url('cta.jpg'); background-size: cover; background-position: center;
+      opacity: 0.3;
+    }
+    .cta-band-inner { position: relative; z-index: 2; max-width: 700px; }
+    .cta-band h2 { font-size: var(--t-display); line-height: 1.04; color: var(--bg-cream); letter-spacing: -0.01em; }
+    .cta-band p { font-size: var(--t-lede); line-height: 1.6; color: rgba(247,243,237,0.75); margin-top: 20px; }
+    .cta-band .btn { margin-top: 34px; }
+
+    /* ==========================================================
+       INNER PAGES
+       ========================================================== */
+    .page-top { padding-top: 40px; }
+    .breadcrumbs {
+      display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+      font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted);
+      padding-bottom: 10px;
+    }
+    .breadcrumb-item { cursor: pointer; text-decoration: none; }
+    .breadcrumb-item:hover { color: var(--ink); }
+    .breadcrumb-current { color: var(--ink); }
+
+    .page-title { font-size: var(--t-display); line-height: 1.02; letter-spacing: -0.015em; }
+    .page-lede { font-size: var(--t-lede); line-height: 1.6; color: var(--body); max-width: 56ch; margin-top: 18px; }
+
+    .section-pad { padding-top: 44px; padding-bottom: 96px; }
+
+    /* Country page */
+    .country-hero {
+      position: relative; min-height: clamp(320px, 52vh, 560px);
+      display: flex; align-items: flex-end; overflow: hidden;
+      background: var(--ink); color: var(--bg-cream); margin-top: 18px;
+    }
+    .country-hero-media { position: absolute; inset: 0; background-size: cover; background-position: center; }
+    .country-hero-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,22,20,0.15) 30%, rgba(26,22,20,0.82) 100%);
+    }
+    .country-hero-body { position: relative; z-index: 2; padding: clamp(28px, 4vw, 54px) 0; width: 100%; }
+    .country-hero-body h1 { font-size: var(--t-display); line-height: 1; color: var(--bg-cream); }
+    .country-hero-body p { font-size: 16px; line-height: 1.65; color: rgba(247,243,237,0.78); max-width: 56ch; margin-top: 16px; }
+    .status-tag {
+      display: inline-block; font-size: 10px; letter-spacing: 0.17em;
+      text-transform: uppercase; color: #C7A96B;
+      border: 1px solid rgba(199,169,107,0.6); padding: 6px 13px; margin-bottom: 18px;
+    }
+    .status-tag.on-light { color: var(--gold); border-color: rgba(156,122,60,0.6); }
+
+    .region-tags { display: flex; gap: 8px; flex-wrap: wrap; padding: 28px 0 22px; }
+    .tag-pill {
+      padding: 8px 18px; border: 1px solid var(--rule); background: transparent;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .tag-pill.active, .tag-pill:hover { background: var(--ink); color: var(--bg-cream); border-color: var(--ink); }
+
+    .tabs-row { display: flex; gap: clamp(20px, 3vw, 40px); border-bottom: 1px solid var(--rule); margin-bottom: 44px; overflow-x: auto; }
+    .tab-btn {
+      font-family: var(--font-serif); font-size: clamp(19px, 2vw, 26px); color: var(--muted);
+      background: none; border: none; padding-bottom: 14px; cursor: pointer;
+      position: relative; white-space: nowrap; transition: color 0.2s ease;
+    }
+    .tab-btn:hover, .tab-btn.active { color: var(--ink); }
+    .tab-btn.active::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--gold);
+    }
+    .tab-content { display: none; padding-bottom: 60px; }
+    .tab-content.active { display: block; }
+
+    .cards-2 { display: grid; grid-template-columns: 1fr; gap: 2px; background: var(--rule); }
+    @media (min-width: 760px) { .cards-2 { grid-template-columns: repeat(2, 1fr); } }
+
+    .cards-3 { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 700px)  { .cards-3 { grid-template-columns: repeat(2, 1fr); } }
+
+    /* Residence card (country tab) */
+    .res-card { cursor: pointer; background: var(--bg-cream); overflow: hidden; }
+    .res-card-media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--card); }
+    .res-card-media .photo-block { transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+    .res-card:hover .res-card-media .photo-block { transform: scale(1.05); }
+    .res-card-body { padding: 22px 4px 30px; }
+    .res-card-body h3 { font-size: clamp(23px, 2vw, 30px); line-height: 1.08; }
+    .res-card-meta { font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+    .res-card-rate { font-family: var(--font-serif); font-size: 19px; margin-top: 8px; }
+
+    /* Farm card */
+    .farm-card {
+      position: relative; cursor: pointer; overflow: hidden;
+      min-height: 300px; display: flex; align-items: flex-end; background: var(--ink);
+    }
+    .farm-card-media {
+      position: absolute; inset: 0; background-size: cover; background-position: center;
+      transition: transform 1.1s cubic-bezier(.2,.7,.2,1); filter: saturate(0.85);
+    }
+    .farm-card:hover .farm-card-media { transform: scale(1.06); filter: saturate(1); }
+    .farm-card-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,22,20,0.1) 35%, rgba(26,22,20,0.86) 100%);
+    }
+    .farm-card-body { position: relative; z-index: 2; padding: 26px; color: var(--bg-cream); width: 100%; }
+    .farm-card-type {
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #C7A96B; display: block; margin-bottom: 8px;
+    }
+    .farm-card-body h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; color: var(--bg-cream); }
+    .farm-card-meta {
+      font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+      color: rgba(247,243,237,0.7); margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid rgba(247,243,237,0.24);
+    }
+
+    /* Experience card */
+    .exp-card { border-top: 1px solid var(--rule); padding: 26px 0; }
+    .exp-card h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; }
+    .exp-card p { font-size: 15px; line-height: 1.65; color: var(--body); margin-top: 10px; max-width: 46ch; }
+    .exp-meta { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: 12px; }
+
+    .empty-msg { text-align: center; padding: 70px 0; font-size: 14px; color: var(--muted); grid-column: 1 / -1; }
+
+    .opening-block { padding: clamp(60px, 10vw, 120px) 0; text-align: center; max-width: 620px; margin: 0 auto; }
+    .opening-block h2 { font-size: var(--t-section); line-height: 1.08; margin-bottom: 18px; }
+    .opening-block p { font-size: var(--t-lede); color: var(--body); line-height: 1.6; margin-bottom: 36px; }
+    .opening-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+    /* Residence detail — full-bleed frame, then the data */
+    .res-hero {
+      position: relative; overflow: hidden; background: var(--ink);
+      min-height: clamp(400px, 76vh, 820px);
+      display: flex; align-items: flex-end; margin-top: 16px;
+    }
+    .res-hero-media { position: absolute; inset: 0; }
+    .res-hero-media .photo-block, .res-hero-media .color-block { height: 100%; }
+    .res-hero-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,22,20,0.12) 35%, rgba(26,22,20,0.8) 100%);
+    }
+    .res-hero-body {
+      position: relative; z-index: 2; width: 100%;
+      padding: clamp(30px, 5vw, 62px) 0; color: var(--bg-cream);
+    }
+    .res-hero-body h1 {
+      font-size: var(--t-hero); line-height: 0.96;
+      letter-spacing: -0.015em; color: var(--bg-cream); max-width: 14ch;
+    }
+    .res-hero-rate {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 22px;
+      font-family: var(--font-serif); font-size: clamp(22px, 2.2vw, 30px); color: var(--bg-cream);
+    }
+    .res-hero-rate small {
+      font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.13em;
+      text-transform: uppercase; color: rgba(247,243,237,0.6);
+    }
+
+    .res-thumbs {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--rule);
+    }
+    .res-thumb {
+      aspect-ratio: 16 / 10; cursor: pointer; background: var(--card);
+      overflow: hidden; position: relative;
+    }
+    .res-thumb .photo-block { transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
+    .res-thumb:hover .photo-block { transform: scale(1.06); }
+    .res-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: var(--bg-cream); opacity: 0.45; transition: opacity 0.25s ease;
+    }
+    .res-thumb:hover::after, .res-thumb.active::after { opacity: 0; }
+
+    .res-intro {
+      display: grid; grid-template-columns: 1fr; gap: 30px;
+      padding: clamp(50px, 7vw, 96px) 0 clamp(30px, 4vw, 50px);
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .res-intro { grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 90px); }
+    }
+    .res-intro-copy { font-size: clamp(1.2rem, 1.6vw, 1.55rem); line-height: 1.68; color: var(--body); }
+    .res-intro-side { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+    .res-intro-note { font-size: 12px; color: var(--muted); line-height: 1.6; max-width: 34ch; }
+
+    /* Specs as a large data grid, not a list */
+    .spec-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 0; border-top: 1px solid var(--rule);
+    }
+    @media (min-width: 760px)  { .spec-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1150px) { .spec-grid { grid-template-columns: repeat(6, 1fr); } }
+    .spec-cell {
+      padding: 26px clamp(14px, 2vw, 26px) 30px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    @media (min-width: 760px) {
+      .spec-cell + .spec-cell { border-left: 1px solid var(--rule); padding-left: clamp(14px, 2vw, 26px); }
+    }
+    .spec-label {
+      display: block; font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .spec-value {
+      display: block; font-family: var(--font-serif);
+      font-size: clamp(21px, 2vw, 30px); line-height: 1.1;
+    }
+
+    .systems { padding: var(--band) 0; border-top: 1px solid var(--rule); }
+    .systems-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+    @media (min-width: 760px) { .systems-grid { grid-template-columns: repeat(2, 1fr); gap: 0 clamp(30px, 5vw, 70px); } }
+    .system-item { padding: 26px 0; border-top: 1px solid var(--rule); }
+    .system-item h3 { font-size: clamp(21px, 1.9vw, 27px); margin-bottom: 10px; }
+    .system-item p { font-size: 15px; line-height: 1.68; color: var(--body); }
+
+    /* Farm detail */
+    .farm-detail { display: grid; grid-template-columns: 1fr; gap: 36px; padding-top: 34px; }
+    @media (min-width: 950px) { .farm-detail { grid-template-columns: 440px 1fr; gap: clamp(40px, 5vw, 80px); } }
+    .farm-detail-media { aspect-ratio: 4 / 5; background: var(--card); background-size: cover; background-position: center; }
+    .farm-detail h1 { font-size: var(--t-display); line-height: 1; letter-spacing: -0.015em; }
+    .farm-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; padding: 26px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 28px 0; }
+    @media (min-width: 640px) { .farm-facts { grid-template-columns: repeat(3, auto); gap: clamp(24px, 4vw, 56px); } }
+    .fact-label { display: block; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+    .fact-value { display: block; font-family: var(--font-serif); font-size: 19px; line-height: 1.25; }
+    .farm-story p:first-child { font-family: var(--font-serif); font-size: clamp(20px, 2vw, 26px); line-height: 1.4; margin-bottom: 18px; }
+    .farm-story p { font-size: 16px; line-height: 1.72; color: var(--body); }
+    .farm-actions { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+    .back-link { font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+
+    /* Prose + team */
+    .prose { max-width: 660px; }
+    .prose p { font-size: 17px; line-height: 1.8; color: var(--body); margin-bottom: 22px; }
+    .prose p.lead { font-family: var(--font-serif); font-size: clamp(21px, 2.2vw, 28px); line-height: 1.42; color: var(--ink); }
+    .prose h2 { font-size: clamp(21px, 2vw, 27px); margin: 40px 0 12px; }
+
+    .team-grid { display: grid; grid-template-columns: 1fr; gap: 36px; }
+    @media (min-width: 640px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .team-grid { grid-template-columns: repeat(4, 1fr); gap: 28px; } }
+    .team-photo {
+      aspect-ratio: 3 / 4; background: var(--card); border: 1px solid var(--rule);
+      margin-bottom: 16px; background-size: cover; background-position: center;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .team-photo::after { content: attr(data-label); font-family: var(--font-serif); font-style: italic; font-size: 13px; color: var(--rule); }
+    .team-photo[style*="background-image"]::after { display: none; }
+    .team-card h3 { font-size: 22px; margin-bottom: 5px; }
+    .team-role { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .team-card p { font-size: 14px; line-height: 1.65; color: var(--body); }
+
+    .note-block { background: var(--card); padding: clamp(26px, 4vw, 44px); max-width: 700px; border-left: 2px solid var(--gold); }
+    .note-block h2 { font-size: clamp(21px, 2vw, 27px); margin-bottom: 14px; }
+    .note-block p { font-size: 16px; line-height: 1.7; color: var(--body); margin-bottom: 14px; }
+    .note-block p:last-child { margin-bottom: 0; }
+
+    /* Forms */
+    .form { display: flex; flex-direction: column; gap: 14px; max-width: 560px; }
+    .form-row { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 560px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    .form input, .form textarea {
+      width: 100%; padding: 15px 0; background: transparent;
+      border: 0; border-bottom: 1px solid var(--rule); border-radius: 0;
+      font-family: var(--font-sans); font-size: 15px; color: var(--ink); outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form textarea { min-height: 100px; resize: vertical; }
+    .form input::placeholder, .form textarea::placeholder { color: var(--muted); }
+    .form input:focus, .form textarea:focus { border-bottom-color: var(--ink); }
+    .form-hint { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .form .btn { align-self: flex-start; margin-top: 10px; }
+
+    /* Footer */
+    .footer { background: var(--ink); color: var(--bg-cream); padding: clamp(56px, 8vw, 90px) 0 44px; margin-top: 0; }
+    .footer-content { display: flex; flex-direction: column; gap: 44px; }
+    @media (min-width: 820px) { .footer-content { flex-direction: row; justify-content: space-between; align-items: flex-start; } }
+    .footer-brand { max-width: 330px; }
+    .footer-wordmark { font-family: var(--font-serif); font-size: 22px; letter-spacing: 0.22em; text-transform: uppercase; display: block; margin-bottom: 14px; }
+    .footer-desc { font-size: 14px; font-weight: 300; line-height: 1.7; color: rgba(247,243,237,0.6); }
+    .footer-nav-group { display: flex; gap: clamp(32px, 6vw, 74px); flex-wrap: wrap; }
+    .footer-column { display: flex; flex-direction: column; gap: 13px; }
+    .footer-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C7A96B; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .footer-link { font-size: 14px; font-weight: 300; color: var(--bg-cream); text-decoration: none; cursor: pointer; transition: opacity 0.2s ease; }
+    .footer-link:hover { opacity: 0.65; }
+    .footer-bottom {
+      margin-top: 54px; padding-top: 24px; border-top: 1px solid rgba(247,243,237,0.15);
+      display: flex; flex-direction: column; gap: 10px;
+      font-size: 12px; font-weight: 300; color: rgba(247,243,237,0.55);
+    }
+    @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a onclick="showView('home')" class="wordmark">Tiny Mansion</a>
+        <nav class="nav">
+          <a onclick="showView('all-residences')" class="nav-link">Residences</a>
+          <a onclick="showView('all-farms')" class="nav-link">Farms</a>
+          <a onclick="showView('about')" class="nav-link">About</a>
+          <a onclick="showView('enquiry')" class="nav-link">Enquire</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ======================================================
+         HOME
+         ====================================================== -->
+    <section id="view-home" class="view-section active">
+
+      <!-- HERO -->
+      <div class="hero" id="hero">
+        <div class="hero-media"></div>
+        <div class="hero-scrim"></div>
+        <span class="hero-rail">TinyArc Group &nbsp;·&nbsp; Montenegro</span>
+        <div class="container hero-inner">
+          <span class="eyebrow on-dark">First residences deploy Q3 2026</span>
+          <h1>A house that moves to where the <em>season</em> is</h1>
+          <p class="hero-sub">Off-grid stone-clad residences placed on working farms. Seven days without a single connection to anything.</p>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="#choose-country">Choose a country</a>
+            <a class="btn btn-gold" href="#choose-residence">See the residences</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TICKER -->
+      <div class="ticker">
+        <div class="ticker-track" id="ticker-track"></div>
+      </div>
+
+      <!-- MANIFESTO -->
+      <section class="manifesto">
+        <div class="container">
+          <span class="eyebrow centered reveal">The idea</span>
+          <h2 class="manifesto-quote reveal d1">A hotel is only as good as the <em>spot it was built on</em>.</h2>
+          <p class="manifesto-body reveal d2">Ours isn't built on one. It is engineered like a yacht and registered as a vehicle, so it can be lifted off one farm and set down on another in a matter of hours. When the mountains go quiet, it is already somewhere else.</p>
+        </div>
+      </section>
+
+      <!-- STEP ONE — COUNTRIES -->
+      <section class="countries" id="choose-country">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">Step one</span>
+            <h2 class="serif">Choose a country</h2>
+            <p>Montenegro opens first. The rest follow as each farm network is built, one country at a time.</p>
+          </div>
+        </div>
+        <div class="country-panels" id="country-panels"></div>
+      </section>
+
+      <!-- SIGNATURE — SEASONAL ROUTE -->
+      <section class="seasonal">
+        <div class="container">
+          <span class="eyebrow on-dark reveal">The signature</span>
+          <h2 class="serif reveal">One residence, three seasons, one country</h2>
+          <p class="seasonal-lede reveal d1">Montenegro is small enough that the mountains, the wine country and the sea are a few hours apart. So the same house stands in all three across a year, and it is never the one that sits empty.</p>
+
+          <div class="route reveal" id="route">
+            <div class="route-line"></div>
+            <div class="route-stops">
+              <div class="route-stop">
+                <span class="route-season">June to September</span>
+                <h3 class="serif">The north</h3>
+                <p>Durmitor, the Tara canyon, Biogradska Gora. Mountain pastures at 1,450m where the summer katun season runs.</p>
+              </div>
+              <div class="route-stop">
+                <span class="route-season">April, May, October</span>
+                <h3 class="serif">The centre</h3>
+                <p>Skadar Lake, Cetinje, the Crmnica wine valleys. The shoulder months, when the coast is cold and the mountains are wet.</p>
+              </div>
+              <div class="route-stop">
+                <span class="route-season">Selected weeks</span>
+                <h3 class="serif">The south</h3>
+                <p>A short, deliberately small stretch of coast. Kotor, Bar, Ulcinj, and only where a farm sits behind the water.</p>
+              </div>
+            </div>
+            <p class="route-note">The residence travels on its own American chassis, by ordinary road, with nothing to dismantle and nothing to reconnect at the other end. It carries its own power, water and sanitation, which is what makes any of this possible.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP TWO — RESIDENCES -->
+      <section class="residences" id="choose-residence">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">Step two</span>
+            <h2 class="serif">Choose a residence</h2>
+            <p>Two sizes, the same systems inside. Both run a full week with nothing connected.</p>
+          </div>
+          <div id="residence-rows"></div>
+        </div>
+      </section>
+
+      <!-- SPEC STRIP -->
+      <section class="specstrip">
+        <div class="container">
+          <div class="specstrip-grid">
+            <div class="specstrip-item reveal">
+              <span class="specstrip-num">01</span>
+              <h3 class="serif">It runs on nothing</h3>
+              <p>Four lithium banks, seven solar panels, a shower that recycles most of its water and a toilet that needs no septic. Marine-grade climate control from -10&deg;C to 40&deg;C.</p>
+            </div>
+            <div class="specstrip-item reveal d1">
+              <span class="specstrip-num">02</span>
+              <h3 class="serif">It stands on a working farm</h3>
+              <p>Not a resort, not an empty field. You wake up on a farm that was already there, with the food, the animals and the people that come with it.</p>
+            </div>
+            <div class="specstrip-item reveal d2">
+              <span class="specstrip-num">03</span>
+              <h3 class="serif">It leaves nothing behind</h3>
+              <p>No foundations, no groundwork, no connection to any mains. When it goes, the field is a field again.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="cta-band">
+        <div class="cta-band-media"></div>
+        <div class="container">
+          <div class="cta-band-inner">
+            <span class="eyebrow on-dark">Not open yet</span>
+            <h2 class="serif">Be there for the first season</h2>
+            <p>The first residences deploy in Montenegro in Q3 2026. Leave your details and we write to you when dates open, before anything goes public.</p>
+            <a class="btn btn-light" onclick="showView('enquiry')">Register your interest</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================
+         COUNTRY
+         ====================================================== -->
+    <section id="view-country" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Countries</span>
+          <span>/</span>
+          <span class="breadcrumb-current" id="country-breadcrumb-name">Country</span>
+        </div>
+      </div>
+
+      <div class="country-hero">
+        <div class="country-hero-media" id="country-hero-media"></div>
+        <div class="country-hero-scrim"></div>
+        <div class="container country-hero-body">
+          <span class="status-tag" id="country-status">Opening Q3 2026</span>
+          <h1 id="country-title" class="serif">Country</h1>
+          <p id="country-desc"></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="region-tags" id="country-region-tags"></div>
+
+        <div class="tabs-row" id="country-tabs-row">
+          <button class="tab-btn active" onclick="switchTab('residences')">Residences</button>
+          <button class="tab-btn" onclick="switchTab('farms')">Farms</button>
+          <button class="tab-btn" onclick="switchTab('experiences')">Experiences</button>
+        </div>
+
+        <div id="tab-residences" class="tab-content active">
+          <div class="cards-3" id="country-residences-grid"></div>
+        </div>
+
+        <div id="tab-farms" class="tab-content">
+          <div class="cards-2" id="country-farms-grid"></div>
+        </div>
+
+        <div id="tab-experiences" class="tab-content">
+          <div id="country-experiences-grid"></div>
+        </div>
+
+        <div id="country-opening-content" style="display:none;">
+          <div class="opening-block">
+            <span class="eyebrow centered">Not open yet</span>
+            <h2 class="serif" id="country-opening-title">Not open yet</h2>
+            <p id="country-opening-desc"></p>
+            <div class="opening-actions">
+              <a class="btn btn-solid" onclick="showView('enquiry')">Tell us you want in</a>
+              <a class="btn btn-line" onclick="showView('host')">Offer your farm</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <hr class="rule">
+        <div style="padding:40px 0 90px;font-size:16px;color:var(--body);">
+          Do you run a farm in <strong id="country-cta-name">this country</strong>?
+          <a onclick="showView('host')" style="text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-left:6px;">Host a residence</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         RESIDENCE DETAIL
+         ====================================================== -->
+    <section id="view-residence" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span>
+          <span class="breadcrumb-item" onclick="showView('all-residences')">Residences</span>
+          <span>/</span>
+          <span class="breadcrumb-current" id="residence-breadcrumb-title">Residence</span>
+        </div>
+      </div>
+
+      <div class="res-hero">
+        <div class="res-hero-media" id="residence-main-media"></div>
+        <div class="res-hero-scrim"></div>
+        <div class="container res-hero-body">
+          <span class="eyebrow on-dark" id="residence-eyebrow">Residence</span>
+          <h1 id="residence-title" class="serif">Residence</h1>
+          <div class="res-hero-rate">
+            <span id="residence-rate"></span>
+            <small>Indicative opening rate</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-thumbs" id="residence-thumbnails"></div>
+
+      <div class="container">
+        <div class="res-intro">
+          <p class="res-intro-copy" id="residence-desc"></p>
+          <div class="res-intro-side">
+            <a class="btn btn-solid" onclick="startEnquiry()">Register interest in this residence</a>
+            <p class="res-intro-note">Booking is not open. Rates are indicative and confirmed when the first season opens, Q3 2026.</p>
+          </div>
+        </div>
+
+        <span class="eyebrow">Specification</span>
+        <div class="spec-grid" id="residence-spec-table"></div>
+      </div>
+
+      <div class="container">
+        <div class="systems">
+          <span class="eyebrow">What is inside</span>
+          <h2 class="page-title serif">Systems</h2>
+          <p class="page-lede">Marine and expedition grade, chosen to run unattended for a week.</p>
+          <div class="systems-grid" style="margin-top:44px;">
+            <div class="system-item">
+              <h3 class="serif">Power</h3>
+              <p>Victron inverter, four 200Ah LiFePO&#8324; banks (~38 kWh), seven 400W solar panels. Seven days off-grid.</p>
+            </div>
+            <div class="system-item">
+              <h3 class="serif">Climate</h3>
+              <p>Dual-zone heat pump in an R-40 envelope. Quiet, marine grade, four seasons from -10&deg;C to 40&deg;C.</p>
+            </div>
+            <div class="system-item">
+              <h3 class="serif">Water and sanitation</h3>
+              <p>An Orbital shower recycling around 90% of its water. An incineration toilet: no blackwater, no septic tank.</p>
+            </div>
+            <div class="system-item">
+              <h3 class="serif">Access</h3>
+              <p>A Nuki smart lock, so you let yourself in. Cerbo GX watches every system so nothing runs out while you sleep.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         FARM DETAIL
+         ====================================================== -->
+    <section id="view-farm-detail" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span>
+          <span class="breadcrumb-item" id="farm-breadcrumb-country" onclick="openCountry(currentFarm.countryId)">Country</span>
+          <span>/</span>
+          <span class="breadcrumb-current" id="farm-breadcrumb-name">Farm</span>
+        </div>
+
+        <div class="farm-detail">
+          <div class="farm-detail-media" id="farm-detail-media"></div>
+          <div>
+            <span class="status-tag on-light">Framework agreement signed</span>
+            <h1 id="farm-title" class="serif">Farm</h1>
+
+            <div class="farm-facts" id="farm-facts"></div>
+
+            <div class="farm-story">
+              <p id="farm-p1"></p>
+              <p id="farm-p2"></p>
+            </div>
+
+            <div class="farm-actions">
+              <a class="btn btn-solid" onclick="showView('enquiry')">Register interest</a>
+              <a class="back-link" onclick="openCountry(currentFarm.countryId)">&larr; Back to the country</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:90px;"></div>
+    </section>
+
+    <!-- ======================================================
+         ALL RESIDENCES
+         ====================================================== -->
+    <section id="view-all-residences" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">Residences</span>
+        </div>
+        <div class="section-pad">
+          <span class="eyebrow">Two sizes</span>
+          <h1 class="page-title serif">Residences</h1>
+          <p class="page-lede">The same American chassis, the same systems, built to the same specification.</p>
+          <div id="all-residence-rows" style="margin-top:54px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         ALL FARMS
+         ====================================================== -->
+    <section id="view-all-farms" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">Farms</span>
+        </div>
+        <div class="section-pad">
+          <span class="eyebrow">The network</span>
+          <h1 class="page-title serif">Farms</h1>
+          <p class="page-lede">Working households and highland pastures that host our residences. Each one was already there, doing its own work.</p>
+
+          <div class="region-tags" id="farms-filter-pills"></div>
+          <div class="cards-2" id="all-farms-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         ENQUIRY
+         ====================================================== -->
+    <section id="view-enquiry" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">Enquire</span>
+        </div>
+        <div class="section-pad">
+          <span class="eyebrow">Q3 2026</span>
+          <h1 class="page-title serif">Be there for the first season</h1>
+          <p class="page-lede">Booking is not open. The first residences deploy in Montenegro in Q3 2026, and we contact this list before anything else. Tell us roughly when you'd want to come and we'll write when those dates exist.</p>
+
+          <form action="https://formsubmit.co/korsakovyuri8@gmail.com" method="POST" class="form" style="margin-top:48px;">
+            <input type="hidden" name="_subject" value="Tiny Mansion — guest enquiry">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://example.com/?thanks=1">
+            <p style="display:none"><input name="_honey"></p>
+
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Your name" required>
+              <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-row">
+              <input type="text" name="country" placeholder="Country you're interested in" id="enquiry-country">
+              <input type="text" name="residence" placeholder="Residence (21ft or 24ft)" id="enquiry-residence">
+            </div>
+            <input type="text" name="when" placeholder="Roughly when (e.g. late summer 2026)">
+            <textarea name="message" placeholder="Anything else we should know"></textarea>
+            <button type="submit" class="btn btn-solid">Send</button>
+            <p class="form-hint">We answer every message ourselves, from korsakovyuri8@gmail.com.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         HOST A RESIDENCE
+         ====================================================== -->
+    <section id="view-host" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">Host a residence</span>
+        </div>
+        <div class="section-pad">
+          <span class="eyebrow">For farm owners</span>
+          <h1 class="page-title serif">Host a residence on your farm</h1>
+          <p class="page-lede">You keep farming. We put a residence on a corner of your land and bring the guests to it.</p>
+
+          <div class="specstrip-grid" style="margin:60px 0;">
+            <div class="specstrip-item">
+              <span class="specstrip-num">01</span>
+              <h3 class="serif">No rent, in either direction</h3>
+              <p>There is no lease and no site fee either way. What you get instead is guests: people who arrive, eat, buy and book what you already offer.</p>
+            </div>
+            <div class="specstrip-item">
+              <span class="specstrip-num">02</span>
+              <h3 class="serif">You sell your own produce</h3>
+              <p>Farm Store sales run through the platform and you keep 85%. Dinners, tastings, riding, walks and classes are yours to price and yours to run.</p>
+            </div>
+            <div class="specstrip-item">
+              <span class="specstrip-num">03</span>
+              <h3 class="serif">Nothing to build</h3>
+              <p>The residence brings its own power, water and sanitation. No connections, no groundwork, no building permit on your side.</p>
+            </div>
+          </div>
+
+          <div class="note-block" style="margin-bottom:64px;">
+            <h2 class="serif">Where we actually are</h2>
+            <p>No residence has been built to production specification yet. There is one prototype, from 2023, and the first units are due in Montenegro in 2026.</p>
+            <p>So we can't promise you a number of guests or a season's income. What exists today is signed framework agreements with farms, a confirmed manufacturer, and terms that cost you nothing until a residence is actually standing on your land.</p>
+          </div>
+
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.1;margin-bottom:12px;">Write to us</h2>
+          <p style="font-size:16px;color:var(--muted);margin-bottom:34px;">Tell us where the farm is and what you already do there.</p>
+
+          <form action="https://formsubmit.co/korsakovyuri8@gmail.com" method="POST" class="form">
+            <input type="hidden" name="_subject" value="Tiny Mansion — farm partner enquiry">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://example.com/?thanks=1">
+            <p style="display:none"><input name="_honey"></p>
+
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Your name" required>
+              <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-row">
+              <input type="text" name="farm" placeholder="Farm name" required>
+              <input type="text" name="location" placeholder="Country and region" required>
+            </div>
+            <input type="text" name="link" placeholder="Website or Instagram">
+            <textarea name="message" placeholder="What you do on the farm today"></textarea>
+            <button type="submit" class="btn btn-solid">Send</button>
+            <p class="form-hint">We read every message and answer ourselves.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         ABOUT
+         ====================================================== -->
+    <section id="view-about" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">About</span>
+        </div>
+        <div class="section-pad">
+          <span class="eyebrow">TinyArc Group</span>
+          <h1 class="page-title serif">About Tiny Mansion</h1>
+
+          <div class="prose" style="margin-top:44px;">
+            <p class="lead">It started with a trailer built by hand, over two years, mostly wrongly.</p>
+            <p>What came out of it was a simple observation: the trouble with a beautiful place to stay is that it can only ever be in one place.</p>
+            <p>So we built the other thing. A residence engineered like a yacht, registered as a vehicle, able to run a full week with no power, water or drainage connected to it. It stands on a farm for a season and then it goes somewhere else.</p>
+            <p>We don't own land and don't intend to. Across Europe there are farms with owners, with land, and with almost no income, and they are better places to wake up than anything we could buy. We work with them instead.</p>
+            <p>The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.</p>
+          </div>
+
+          <hr class="rule" style="margin:64px 0 48px;">
+
+          <span class="eyebrow">The people</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.1;margin-bottom:44px;">Who we are</h2>
+
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-photo" data-label="Photo"></div>
+              <h3 class="serif">Yuri Korsakov</h3>
+              <div class="team-role">Founder &middot; Operations</div>
+              <p>Six years across architecture and hospitality. Designed the concept, moved to Montenegro to run production and deployment on the ground.</p>
+            </div>
+            <div class="team-card">
+              <div class="team-photo" data-label="Photo"></div>
+              <h3 class="serif">Sergei Ermakov</h3>
+              <div class="team-role">Co-founder &middot; Brand</div>
+              <p>Ten years in hospitality and real estate marketing, including Wyndham, Best Western and Radisson Individuals.</p>
+            </div>
+            <div class="team-card">
+              <div class="team-photo" data-label="Photo"></div>
+              <h3 class="serif">Nana Tabidze</h3>
+              <div class="team-role">Advisor &middot; Guest experience</div>
+              <p>Thirty years of executive leadership, and founder of an award-winning Georgian destination operator.</p>
+            </div>
+            <div class="team-card">
+              <div class="team-photo" data-label="Photo"></div>
+              <h3 class="serif">Aleksan Vartapetyan</h3>
+              <div class="team-role">Platform engineering</div>
+              <p>Five years full-stack. Builds the booking engine and the farm-partner platform.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TERMS
+         ====================================================== -->
+    <section id="view-terms" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">Terms</span>
+        </div>
+        <div class="section-pad prose">
+          <h1 class="page-title serif" style="margin-bottom:34px;">Terms</h1>
+
+          <h2 class="serif">Who you are dealing with</h2>
+          <p>[Legal name], registered in [city, country] under number [registration number]. Address: [address]. Email: korsakovyuri8@gmail.com.</p>
+
+          <h2 class="serif">Enquiries and bookings</h2>
+          <p>Nothing on this site is a booking or an offer of one. Sending the form registers your interest and starts a conversation by email. Rates shown are indicative and are not confirmed until booking opens.</p>
+
+          <h2 class="serif">Rates and payment</h2>
+          <p>All rates are in euro and include [VAT / no VAT — state which]. Payment terms, deposits and cancellation windows will be stated in full when booking opens. [Complete before launch.]</p>
+
+          <h2 class="serif">Cancellation</h2>
+          <p>[Decide and state: free cancellation window, deposit, and what happens if we cancel.]</p>
+
+          <h2 class="serif">On site</h2>
+          <p>Residences stand on private working farms. [State: access, arrival hours, whether children and dogs are welcome, what the farm expects of guests.]</p>
+
+          <h2 class="serif">Law</h2>
+          <p>These terms are governed by the law of [country]. Last updated [date].</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         PRIVACY
+         ====================================================== -->
+    <section id="view-privacy" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <span>/</span><span class="breadcrumb-current">Privacy</span>
+        </div>
+        <div class="section-pad prose">
+          <h1 class="page-title serif" style="margin-bottom:34px;">Privacy</h1>
+
+          <p>[Legal name], [address], korsakovyuri8@gmail.com, decides how your data is used on this site.</p>
+
+          <h2 class="serif">What we collect</h2>
+          <p>Only what you type into a form: your name, your email, and whatever you write in the message. We ask for nothing else and we set no tracking cookies.</p>
+
+          <h2 class="serif">What we do with it</h2>
+          <p>We answer you, and we write to you when dates open if that is what you asked for. We don't sell your details and we don't add you to anything you didn't ask for.</p>
+
+          <h2 class="serif">Who else sees it</h2>
+          <p>Form submissions pass through FormSubmit, which forwards them to our inbox. Email goes through Google. Fonts load from Google Fonts, which sees your IP address as part of serving them. Each has its own privacy policy.</p>
+
+          <h2 class="serif">Your rights</h2>
+          <p>Write to korsakovyuri8@gmail.com and we'll tell you what we hold about you, correct it, or delete it. Last updated [date].</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         THANKS
+         ====================================================== -->
+    <section id="view-thanks" class="view-section">
+      <div class="container" style="max-width:680px;text-align:center;padding-top:120px;padding-bottom:120px;">
+        <span class="eyebrow centered">Received</span>
+        <h1 class="page-title serif">Thank you</h1>
+        <p class="page-lede" style="margin:20px auto 36px;">We have your message. We answer from korsakovyuri8@gmail.com, usually within a few days.</p>
+        <a class="btn btn-solid" onclick="showView('home')">Back to the start</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="footer-wordmark">Tiny Mansion</span>
+          <p class="footer-desc">Off-grid residences on working farms. A TinyArc Group project. First deployment Montenegro, Q3 2026.</p>
+        </div>
+
+        <div class="footer-nav-group">
+          <div class="footer-column">
+            <span class="footer-title">Stay</span>
+            <ul class="footer-links">
+              <li><a onclick="goCountries()" class="footer-link">Countries</a></li>
+              <li><a onclick="showView('all-residences')" class="footer-link">Residences</a></li>
+              <li><a onclick="showView('all-farms')" class="footer-link">Farms</a></li>
+              <li><a onclick="showView('enquiry')" class="footer-link">Enquire</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <span class="footer-title">Partners</span>
+            <ul class="footer-links">
+              <li><a onclick="showView('host')" class="footer-link">Host a residence</a></li>
+              <li><a onclick="showView('about')" class="footer-link">About</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <span class="footer-title">Legal</span>
+            <ul class="footer-links">
+              <li><a onclick="showView('terms')" class="footer-link">Terms</a></li>
+              <li><a onclick="showView('privacy')" class="footer-link">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 TinyArc Group</span>
+        <span>korsakovyuri8@gmail.com</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+/* ==========================================================
+   DATA
+   ========================================================== */
+
+const TICKER_ITEMS = [
+  'Seven days off-grid',
+  'Two to four guests',
+  'On a working farm',
+  'No septic, no mains',
+  'Moves with the season',
+  'Montenegro, Q3 2026'
+];
+
+const RESIDENCES = [
+  {
+    id: 'residence-21',
+    index: '01',
+    name: 'Residence 21ft',
+    tagline: 'Two guests, one long week, nothing plugged in.',
+    rate: 280,
+    photo: 'residence-21.jpg',
+    photos: ['residence-21.jpg', 'residence-21-b.jpg', 'residence-21-c.jpg'],
+    color: '#4A4238',
+    desc: 'The smaller of the two. Six and a half metres on an American Trailer Made chassis, stone-clad, with a bed, a bathroom and a kitchen that all work at the end of a dirt track. It runs seven days with no power, water or drainage connected, so it can stand where nothing else can.',
+    specs: [
+      ['Length', '21 ft / 6.4 m'],
+      ['Width', '100" / 2.54 m'],
+      ['Guests', '2'],
+      ['Autonomy', '7 days off-grid'],
+      ['Chassis', 'Trailer Made'],
+      ['Climate', '-10\u00B0C to 40\u00B0C']
+    ]
+  },
+  {
+    id: 'residence-24',
+    index: '02',
+    name: 'Grand Residence 24ft',
+    tagline: 'Up to four guests, with room to stay longer.',
+    rate: 320,
+    photo: 'residence-24.jpg',
+    photos: ['residence-24.jpg', 'residence-24-b.jpg', 'residence-24-c.jpg'],
+    color: '#3B372F',
+    desc: 'Seven and a third metres, the same systems and the same chassis, with space for up to four and enough storage to stay a fortnight without thinking about it. Built for the longer stay, and for the farms furthest from a road.',
+    specs: [
+      ['Length', '24 ft / 7.3 m'],
+      ['Width', '100" / 2.54 m'],
+      ['Guests', '2-4'],
+      ['Autonomy', '7+ days off-grid'],
+      ['Chassis', 'Trailer Made'],
+      ['Climate', '-10\u00B0C to 40\u00B0C']
+    ]
+  }
+];
+
+const EXPERIENCES = [
+  { name: 'Farm dinner', desc: 'Cooked by the household you are staying with, from what the farm produced that week.', meta: 'Run by the farm \u00B7 price on request' },
+  { name: 'Wine tasting', desc: 'In the cellar, with the person who made it. Central Montenegro, Crmnica.', meta: 'Run by the farm \u00B7 price on request' },
+  { name: 'Riding and mountain walks', desc: 'Horses on the farm, and routes into Durmitor and the Tara canyon.', meta: 'Run by the farm \u00B7 price on request' },
+  { name: 'Cooking and craft classes', desc: 'Traditional cooking, brandy, cheese and handwork, taught in the kitchen where it happens.', meta: 'Run by the farm \u00B7 price on request' }
+];
+
+const DATA = {
+  countries: {
+    montenegro: {
+      id: 'montenegro', index: '01', name: 'Montenegro',
+      color: '#3E4438', photo: 'montenegro.jpg',
+      status: 'Opening Q3 2026', isOpeningSoon: false,
+      caption: '25 residences planned',
+      desc: 'The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.',
+      regions: ['All regions', 'North', 'Center', 'South'],
+      farms: [
+        { id: 'f-djedovina', countryId: 'montenegro', name: 'Ethno Household \u0110edovina', region: 'Center', city: 'Nik\u0161i\u0107', photo: 'farm-djedovina.jpg', color: '#3E4438', type: 'Heritage farm', season: 'Year-round',
+          p1: 'A traditional stone-built household in the central Montenegrin highlands, run by the same family all year.',
+          p2: 'Certified organic, with culinary classes and a seasonal calendar of farm activities already in place. English spoken.' },
+        { id: 'f-karadzic', countryId: 'montenegro', name: 'Household Karad\u017ei\u0107', region: 'North', city: 'Durmitor National Park', photo: 'farm-karadzic.jpg', color: '#37402F', type: 'Inside a national park', season: 'Year-round',
+          p1: 'A thirteen-bed working household inside Durmitor National Park, a UNESCO World Heritage site.',
+          p2: 'Horse riding and cooking classes are already on offer. The hosts speak English and Italian.' },
+        { id: 'f-pony', countryId: 'montenegro', name: 'Charming Pony Village House', region: 'North', city: '\u017dabljak', photo: 'farm-pony.jpg', color: '#434A3B', type: 'Working pony farm', season: 'Summer season',
+          p1: 'A mountain household at 1,450m on the Durmitor plateau, in the park buffer zone.',
+          p2: 'A working pony farm with a long history of hosting guests, run by Bogdan.' },
+        { id: 'f-djedovdo', countryId: 'montenegro', name: 'Etno Katun \u0110edov Do', region: 'North', city: 'High-mountain katun', photo: 'farm-djedovdo.jpg', color: '#3B4334', type: 'Traditional summer pasture', season: 'Summer season',
+          p1: 'An authentic katun, the centuries-old high-mountain summer pasture settlement, run today as a heritage stay.',
+          p2: 'Traditional cooking and horses on site, in a place that has been used the same way for generations.' },
+        { id: 'f-pesic', countryId: 'montenegro', name: 'Household Pe\u0161i\u0107', region: 'North', city: 'Bijelo Polje', photo: 'farm-pesic.jpg', color: '#464E3E', type: 'Gastronomy and working farm', season: 'Year-round',
+          p1: 'A working-farm gastronomy destination on the national Gastro Route, with a fifty-person dining hall.',
+          p2: 'Homemade brandy production and a monthly calendar of farm activities. A large family operation, English spoken.' },
+        { id: 'f-pavicevic', countryId: 'montenegro', name: 'Household Pavi\u0107evi\u0107', region: 'North', city: 'Durmitor plateau', photo: 'farm-pavicevic.jpg', color: '#37402F', type: 'Certified organic farm', season: 'April to December',
+          p1: 'A working organic farm at 1,450m inside Durmitor National Park.',
+          p2: 'Multi-certified: Gastro Route, organic, specialized and protected zone. Russian and English spoken.' },
+        { id: 'f-medojevic', countryId: 'montenegro', name: 'Household Medojevi\u0107 \u2014 Ravni', region: 'North', city: 'Mojkovac', photo: 'farm-medojevic.jpg', color: '#3E4438', type: 'Organic farm and food destination', season: 'Year-round',
+          p1: 'A working organic farm in Bojna Njiva with commercial chokeberry juice production.',
+          p2: 'Seven kilometres from Biogradska Gora National Park and its UNESCO beech forests. Good for families.' },
+        { id: 'f-ekooaza', countryId: 'montenegro', name: 'Eko Oaza "Tear of Europe"', region: 'North', city: 'Dobrilovina, Tara canyon', photo: 'farm-ekooaza.jpg', color: '#3D4536', type: 'Eco-camping concept', season: 'Summer season',
+          p1: 'On the Tara, the deepest canyon in Europe, in the Durmitor buffer zone.',
+          p2: 'Already running off-grid and to sustainability standards close to our own specification.' }
+      ]
+    },
+
+    croatia: {
+      id: 'croatia', index: '02', name: 'Croatia',
+      color: '#4A4C50', photo: 'croatia.jpg',
+      status: 'Planned 2028', isOpeningSoon: true, caption: 'Planned 2028',
+      desc: 'Istria and the Dalmatian interior, after Montenegro has run a full season.',
+      openingTitle: 'Croatia is not open',
+      openingDesc: 'Istria and the Dalmatian interior come after Montenegro is running. We are looking for farms there now.',
+      regions: [], farms: []
+    },
+
+    greece: {
+      id: 'greece', index: '03', name: 'Greece',
+      color: '#54503F', photo: 'greece.jpg',
+      status: 'Planned 2029', isOpeningSoon: true, caption: 'Planned 2029',
+      desc: 'The Peloponnese and a small number of island hubs.',
+      openingTitle: 'Greece is not open',
+      openingDesc: 'The Peloponnese and island hubs are on the map for 2029. Nothing is confirmed there yet.',
+      regions: [], farms: []
+    },
+
+    switzerland: {
+      id: 'switzerland', index: '04', name: 'Switzerland',
+      color: '#464B4E', photo: 'switzerland.jpg',
+      status: 'Planned 2029', isOpeningSoon: true, caption: 'Planned 2029',
+      desc: 'Alpine valleys and lake regions.',
+      openingTitle: 'Switzerland is not open',
+      openingDesc: 'Alpine valleys and lake regions are on the map for 2029. Nothing is confirmed there yet.',
+      regions: [], farms: []
+    }
+  }
+};
+
+/* ==========================================================
+   STATE
+   ========================================================== */
+let currentView = 'home';
+let currentCountry = null;
+let currentResidence = null;
+let currentFarm = null;
+let activeFarmsFilter = 'ALL';
+
+/* ==========================================================
+   HELPERS
+   ========================================================== */
+function media(photo, color, label) {
+  return photo
+    ? '<div class="photo-block" style="background-image:url(\'' + photo + '\')"></div>'
+    : '<div class="color-block" style="background-color:' + color + '">' + (label || '') + '</div>';
+}
+function bgStyle(photo, color) {
+  return photo ? "background-image:url('" + photo + "')" : 'background-color:' + color;
+}
+function countryOf(id) { return DATA.countries[id]; }
+function allFarms() {
+  let list = [];
+  Object.values(DATA.countries).forEach(c => {
+    (c.farms || []).forEach(f => list.push(Object.assign({}, f, { countryName: c.name })));
+  });
+  return list;
+}
+
+/* ==========================================================
+   REVEAL + HEADER
+   ========================================================== */
+let observer = null;
+function initReveal() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal, .route').forEach(el => el.classList.add('in'));
+    return;
+  }
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  refreshReveal();
+}
+function refreshReveal() {
+  if (!observer) return;
+  document.querySelectorAll('.reveal:not(.in), .route:not(.in)').forEach(el => observer.observe(el));
+}
+
+function initHeaderState() {
+  const header = document.getElementById('site-header');
+  const update = () => {
+    const onHome = currentView === 'home';
+    const past = window.scrollY > (window.innerHeight * 0.72);
+    header.classList.toggle('over-hero', onHome && !past);
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  window.__updateHeader = update;
+  update();
+}
+
+/* ==========================================================
+   ROUTING
+   ========================================================== */
+const SIMPLE_VIEWS = ['home','all-residences','all-farms','enquiry','host','about','terms','privacy','thanks'];
+let routing = false;
+
+function showView(viewId) {
+  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('view-' + viewId);
+  if (target) {
+    target.classList.add('active');
+    currentView = viewId;
+    window.scrollTo(0, 0);
+    if (SIMPLE_VIEWS.indexOf(viewId) !== -1) setHash('/' + viewId);
+  }
+  if (viewId === 'all-residences') renderResidenceRows('all-residence-rows');
+  if (viewId === 'all-farms') renderAllFarms();
+  if (window.__updateHeader) window.__updateHeader();
+  refreshReveal();
+}
+
+function setHash(h) {
+  if (routing) return;
+  if (location.hash === '#' + h) return;
+  history.pushState(null, '', '#' + h);
+}
+
+function applyHash() {
+  routing = true;
+  const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  if (parts.length === 0) showView('home');
+  else if (parts[0] === 'country' && parts[1]) openCountry(parts[1]);
+  else if (parts[0] === 'residence' && parts[1]) openResidence(parts[1]);
+  else if (parts[0] === 'farm' && parts[1]) openFarm(parts[1]);
+  else showView(parts[0]);
+  routing = false;
+  if (!document.querySelector('.view-section.active')) showView('home');
+}
+window.addEventListener('popstate', applyHash);
+
+function goCountries() {
+  showView('home');
+  setTimeout(() => {
+    const el = document.getElementById('choose-country');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 60);
+}
+
+/* ==========================================================
+   HOME RENDER
+   ========================================================== */
+function renderTicker() {
+  const one = TICKER_ITEMS.map(t => '<span>' + t + '</span>').join('');
+  document.getElementById('ticker-track').innerHTML = one + one;
+}
+
+function renderCountryPanels() {
+  document.getElementById('country-panels').innerHTML =
+    Object.values(DATA.countries).map(c => `
+      <div class="country-panel" onclick="openCountry('${c.id}')">
+        <div class="country-panel-media" style="${bgStyle(c.photo, c.color)}"></div>
+        <div class="country-panel-scrim"></div>
+        <div class="country-panel-body">
+          <span class="country-panel-index">${c.index}</span>
+          <h3 class="serif">${c.name}</h3>
+          <span class="country-panel-status">${c.caption}</span>
+        </div>
+      </div>`).join('');
+}
+
+function renderResidenceRows(targetId) {
+  document.getElementById(targetId).innerHTML = RESIDENCES.map((r, i) => `
+    <div class="res-row ${i % 2 ? 'flip' : ''} reveal">
+      <div class="res-media" onclick="openResidence('${r.id}')" style="cursor:pointer;">
+        ${media(r.photo, r.color, r.name)}
+      </div>
+      <div class="res-text">
+        <span class="res-index serif">${r.index}</span>
+        <h3 class="serif">${r.name}</h3>
+        <p class="lede">${r.tagline}</p>
+        <div class="res-specs">
+          ${r.specs.slice(0, 4).map(s => `
+            <dl class="res-spec"><dt>${s[0]}</dt><dd>${s[1]}</dd></dl>`).join('')}
+        </div>
+        <div class="res-cta">
+          <span class="res-rate">\u20AC${r.rate} <small>/ night, indicative</small></span>
+          <a class="btn btn-line" onclick="openResidence('${r.id}')">See the residence</a>
+        </div>
+      </div>
+    </div>`).join('');
+  refreshReveal();
+}
+
+/* ==========================================================
+   COUNTRY
+   ========================================================== */
+function openCountry(countryId) {
+  const c = countryOf(countryId);
+  if (!c) return;
+  currentCountry = c;
+
+  document.getElementById('country-breadcrumb-name').innerText = c.name;
+  document.getElementById('country-title').innerText = c.name;
+  document.getElementById('country-desc').innerText = c.desc;
+  document.getElementById('country-status').innerText = c.status;
+  document.getElementById('country-cta-name').innerText = c.name;
+  document.getElementById('country-hero-media').setAttribute('style', bgStyle(c.photo, c.color));
+
+  const tabsRow = document.getElementById('country-tabs-row');
+  const opening = document.getElementById('country-opening-content');
+  const tabs = ['tab-residences','tab-farms','tab-experiences'].map(id => document.getElementById(id));
+  const tags = document.getElementById('country-region-tags');
+
+  if (c.isOpeningSoon) {
+    tabsRow.style.display = 'none';
+    tags.style.display = 'none';
+    tabs.forEach(el => el.style.display = 'none');
+    opening.style.display = 'block';
+    document.getElementById('country-opening-title').innerText = c.openingTitle || 'Not open yet';
+    document.getElementById('country-opening-desc').innerText = c.openingDesc || '';
+  } else {
+    tabsRow.style.display = 'flex';
+    tags.style.display = 'flex';
+    tabs.forEach(el => el.style.display = '');
+    opening.style.display = 'none';
+
+    tags.innerHTML = '';
+    (c.regions || []).forEach((r, idx) => {
+      const pill = document.createElement('span');
+      pill.className = 'tag-pill' + (idx === 0 ? ' active' : '');
+      pill.innerText = r;
+      pill.onclick = () => {
+        tags.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        renderCountryFarms(r);
+      };
+      tags.appendChild(pill);
+    });
+
+    renderCountryResidences();
+    renderCountryFarms();
+    renderCountryExperiences();
+    switchTab('residences');
+  }
+
+  setHash('/country/' + countryId);
+  showView('country');
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('#country-tabs-row .tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').indexOf("'" + tabId + "'") !== -1);
+  });
+  document.querySelectorAll('#view-country .tab-content').forEach(el => {
+    el.classList.toggle('active', el.id === 'tab-' + tabId);
+  });
+}
+
+function renderCountryResidences() {
+  document.getElementById('country-residences-grid').innerHTML = RESIDENCES.map(r => `
+    <div class="res-card" onclick="openResidence('${r.id}')">
+      <div class="res-card-media">${media(r.photo, r.color, r.name)}</div>
+      <div class="res-card-body">
+        <h3 class="serif">${r.name}</h3>
+        <div class="res-card-meta">${r.specs[2][1]} guests \u00B7 ${r.specs[3][1]}</div>
+        <div class="res-card-rate">from \u20AC${r.rate} / night</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderCountryFarms(region) {
+  const grid = document.getElementById('country-farms-grid');
+  let list = currentCountry.farms || [];
+  if (region && region.indexOf('All') !== 0) list = list.filter(f => f.region === region);
+
+  if (!list.length) { grid.innerHTML = '<div class="empty-msg">No farms listed in this region yet</div>'; return; }
+
+  grid.innerHTML = list.map(f => `
+    <div class="farm-card" onclick="openFarm('${f.id}')">
+      <div class="farm-card-media" style="${bgStyle(f.photo, f.color)}"></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">${f.type}</span>
+        <h3 class="serif">${f.name}</h3>
+        <div class="farm-card-meta">${f.city} \u00B7 ${f.season}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderCountryExperiences() {
+  document.getElementById('country-experiences-grid').innerHTML = EXPERIENCES.map(e => `
+    <div class="exp-card">
+      <h3 class="serif">${e.name}</h3>
+      <p>${e.desc}</p>
+      <div class="exp-meta">${e.meta}</div>
+    </div>`).join('');
+}
+
+/* ==========================================================
+   RESIDENCE DETAIL
+   ========================================================== */
+function openResidence(residenceId) {
+  const r = RESIDENCES.find(x => x.id === residenceId);
+  if (!r) return;
+  currentResidence = r;
+
+  document.getElementById('residence-breadcrumb-title').innerText = r.name;
+  document.getElementById('residence-eyebrow').innerHTML = 'Residence ' + r.index;
+  document.getElementById('residence-title').innerText = r.name;
+  document.getElementById('residence-rate').innerText = '\u20AC' + r.rate + ' / night';
+  document.getElementById('residence-desc').innerText = r.desc;
+  document.getElementById('residence-main-media').innerHTML = media(r.photo, r.color, r.name);
+
+  document.getElementById('residence-thumbnails').innerHTML = (r.photos || []).map((src, i) => `
+    <div class="res-thumb ${i === 0 ? 'active' : ''}" onclick="swapPhoto(this,'${src}')">${media(src, r.color, '')}</div>`).join('');
+
+  document.getElementById('residence-spec-table').innerHTML = r.specs.map(s => `
+    <div class="spec-cell"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`).join('');
+
+  setHash('/residence/' + residenceId);
+  showView('residence');
+}
+
+function swapPhoto(el, src) {
+  document.getElementById('residence-main-media').innerHTML =
+    '<div class="photo-block" style="background-image:url(\'' + src + '\')"></div>';
+  document.querySelectorAll('#residence-thumbnails .res-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function startEnquiry() {
+  showView('enquiry');
+  const rf = document.getElementById('enquiry-residence');
+  if (rf && currentResidence) rf.value = currentResidence.name;
+  const cf = document.getElementById('enquiry-country');
+  if (cf && currentCountry) cf.value = currentCountry.name;
+}
+
+/* ==========================================================
+   FARM DETAIL
+   ========================================================== */
+function openFarm(farmId) {
+  let found = null;
+  Object.values(DATA.countries).forEach(c => {
+    const f = (c.farms || []).find(x => x.id === farmId);
+    if (f) found = f;
+  });
+  if (!found) return;
+  currentFarm = found;
+  const c = countryOf(found.countryId);
+
+  document.getElementById('farm-breadcrumb-country').innerText = c.name;
+  document.getElementById('farm-breadcrumb-name').innerText = found.name;
+  document.getElementById('farm-title').innerText = found.name;
+  document.getElementById('farm-detail-media').setAttribute('style', bgStyle(found.photo, found.color));
+
+  document.getElementById('farm-facts').innerHTML = `
+    <div><span class="fact-label">Where</span><span class="fact-value">${found.city}, ${c.name}</span></div>
+    <div><span class="fact-label">Type</span><span class="fact-value">${found.type}</span></div>
+    <div><span class="fact-label">Open</span><span class="fact-value">${found.season}</span></div>`;
+
+  document.getElementById('farm-p1').innerText = found.p1;
+  document.getElementById('farm-p2').innerText = found.p2;
+
+  setHash('/farm/' + farmId);
+  showView('farm-detail');
+}
+
+/* ==========================================================
+   ALL FARMS
+   ========================================================== */
+function renderAllFarms() {
+  const pills = document.getElementById('farms-filter-pills');
+  const names = ['ALL'].concat(Object.values(DATA.countries).map(c => c.name));
+  pills.innerHTML = '';
+  names.forEach(n => {
+    const pill = document.createElement('span');
+    pill.className = 'tag-pill' + (activeFarmsFilter === n ? ' active' : '');
+    pill.innerText = n;
+    pill.onclick = () => { activeFarmsFilter = n; renderAllFarms(); };
+    pills.appendChild(pill);
+  });
+
+  let list = allFarms();
+  if (activeFarmsFilter !== 'ALL') list = list.filter(f => f.countryName === activeFarmsFilter);
+
+  const grid = document.getElementById('all-farms-grid');
+  if (!list.length) { grid.innerHTML = '<div class="empty-msg">No farms listed here yet</div>'; return; }
+
+  grid.innerHTML = list.map(f => `
+    <div class="farm-card" onclick="openFarm('${f.id}')">
+      <div class="farm-card-media" style="${bgStyle(f.photo, f.color)}"></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">${f.type}</span>
+        <h3 class="serif">${f.name}</h3>
+        <div class="farm-card-meta">${f.city}, ${f.countryName} \u00B7 ${f.season}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ==========================================================
+   INIT
+   ========================================================== */
+window.addEventListener('DOMContentLoaded', () => {
+  renderTicker();
+  renderCountryPanels();
+  renderResidenceRows('residence-rows');
+  initReveal();
+  initHeaderState();
+
+  const q = new URLSearchParams(location.search);
+  const thanks = q.get('thanks') === '1';
+  if (q.has('thanks')) history.replaceState(null, '', location.pathname + location.hash);
+
+  if (thanks && !location.hash) showView('thanks');
+  else applyHash();
+});
+</script>
+</body>
+</html>
+
