@@ -6,22 +6,26 @@
   <title>Tiny Mansion — off-grid residences on working farms</title>
   <meta name="description" content="Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q3 2026.">
 
-  <link rel="canonical" href="https://example.com/">
-  <link rel="icon" href="favicon.png">
+  <!-- Live address of the site. Swap both this and og:url if a custom domain is attached. -->
+  <link rel="canonical" href="https://korsakovyuri8-design.github.io/tiny_mansion/">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#1A1614">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tiny Mansion">
-  <meta property="og:url" content="https://example.com/">
+  <meta property="og:url" content="https://korsakovyuri8-design.github.io/tiny_mansion/">
   <meta property="og:title" content="Tiny Mansion — off-grid residences on working farms">
   <meta property="og:description" content="Seven days off-grid, on a working farm. First residences deploy in Montenegro, Q3 2026.">
-  <meta property="og:image" content="https://example.com/og.jpg">
+  <meta property="og:image" content="https://korsakovyuri8-design.github.io/tiny_mansion/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Residence 21ft standing on a working farm in Montenegro">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tiny Mansion — off-grid residences on working farms">
   <meta name="twitter:description" content="Seven days off-grid, on a working farm.">
-  <meta name="twitter:image" content="https://example.com/og.jpg">
+  <meta name="twitter:image" content="https://korsakovyuri8-design.github.io/tiny_mansion/og.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +39,10 @@
       /* Brand, straight from the deck */
       --bg-cream: #F7F3ED;
       --ink:      #1A1614;
-      --gold:     #9C7A3C;   /* hairlines, eyebrows, numerals only */
+      --gold:     #9C7A3C;   /* hairlines and rules on light, text on ink */
+      /* The brand gold only reaches 3.6:1 on cream, so small caps labels on a
+         light ground run on this darker cut instead - 5.15:1, still gold. */
+      --gold-ink: #7F622E;
 
       /* Neutrals derived from ink + cream */
       --card:     #EFEAE1;
@@ -95,6 +102,17 @@
     .form input, .form textarea { font-family: var(--font-sans); }
     a { color: inherit; }
     :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .hero :focus-visible, .footer :focus-visible, .seasonal :focus-visible,
+    .cta :focus-visible, .res-hero :focus-visible, .country-hero :focus-visible,
+    .country-panel:focus-visible, .farm-card:focus-visible {
+      outline-color: var(--bg-cream);
+    }
+
+    /* Visible to screen readers, out of the layout for everyone else. */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
 
     .container { width: 100%; max-width: 1560px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
     .narrow { max-width: 900px; }
@@ -105,11 +123,11 @@
     .eyebrow {
       display: flex; align-items: center; gap: 14px;
       font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 22px;
+      color: var(--gold-ink); margin-bottom: 22px;
     }
     .eyebrow::before {
       content: ''; width: clamp(28px, 5vw, 64px); height: 1px;
-      background: var(--gold); flex-shrink: 0;
+      background: var(--gold-ink); flex-shrink: 0;
     }
     .eyebrow.on-dark { color: #C7A96B; }
     .eyebrow.on-dark::before { background: #C7A96B; }
@@ -131,7 +149,14 @@
       .reveal { opacity: 1; transform: none; }
     }
 
-    .photo-block { width: 100%; height: 100%; background-size: cover; background-position: center; }
+    /* Photography runs through real <img> elements so it can carry alt text
+       and lazy-load; .photo-block is the shared cover-fit skin. */
+    .photo-block {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+    }
+    .country-panel-media > *, .farm-card-media > *,
+    .country-hero-media > *, .farm-detail-media > * { width: 100%; height: 100%; }
 
     .color-block {
       width: 100%; height: 100%;
@@ -218,7 +243,7 @@
     }
     .hero-media {
       position: absolute; inset: 0;
-      background-image: url('hero.jpg');
+      background-image: url('residence-21.jpg');
       background-size: cover; background-position: center;
       transform: scale(1.06);
       animation: driftIn 18s ease-out forwards;
@@ -228,7 +253,8 @@
     .hero-scrim {
       position: absolute; inset: 0;
       background:
-        linear-gradient(180deg, rgba(26,22,20,0.55) 0%, rgba(26,22,20,0.05) 32%, rgba(26,22,20,0.78) 100%);
+        linear-gradient(90deg, rgba(26,22,20,0.55) 0%, rgba(26,22,20,0.26) 40%, rgba(26,22,20,0) 70%),
+        linear-gradient(180deg, rgba(26,22,20,0.62) 0%, rgba(26,22,20,0.18) 26%, rgba(26,22,20,0.62) 58%, rgba(26,22,20,0.92) 100%);
     }
 
     .hero-inner {
@@ -275,7 +301,7 @@
       color: var(--muted); padding: 0 26px; white-space: nowrap;
       display: inline-flex; align-items: center; gap: 26px;
     }
-    .ticker-track span::after { content: '·'; color: var(--gold); }
+    .ticker-track span::after { content: '·'; color: var(--gold-ink); }
     @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .ticker:hover .ticker-track { animation-play-state: paused; }
 
@@ -423,7 +449,7 @@
     .res-spec:nth-child(odd) { padding-right: 20px; }
     .res-spec dt {
       font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 5px;
+      color: var(--gold-ink); margin-bottom: 5px;
     }
     .res-spec dd { font-family: var(--font-serif); font-size: 19px; }
 
@@ -444,7 +470,7 @@
     }
     .specstrip-item h3 { font-size: clamp(22px, 2vw, 29px); line-height: 1.1; margin-bottom: 12px; }
     .specstrip-item p { font-size: 15px; line-height: 1.68; color: var(--body); }
-    .specstrip-num { font-family: var(--font-serif); font-size: 13px; letter-spacing: 0.2em; color: var(--gold); display: block; margin-bottom: 16px; }
+    .specstrip-num { font-family: var(--font-serif); font-size: 13px; letter-spacing: 0.2em; color: var(--gold-ink); display: block; margin-bottom: 16px; }
 
     /* ==========================================================
        CTA BAND
@@ -456,7 +482,7 @@
     }
     .cta-band-media {
       position: absolute; inset: 0;
-      background-image: url('cta.jpg'); background-size: cover; background-position: center;
+      background-image: url('residence-21-c.jpg'); background-size: cover; background-position: center;
       opacity: 0.3;
     }
     .cta-band-inner { position: relative; z-index: 2; max-width: 700px; }
@@ -491,9 +517,14 @@
     .country-hero-media { position: absolute; inset: 0; background-size: cover; background-position: center; }
     .country-hero-scrim {
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(26,22,20,0.15) 30%, rgba(26,22,20,0.82) 100%);
+      background:
+        linear-gradient(90deg, rgba(26,22,20,0.5) 0%, rgba(26,22,20,0.22) 40%, rgba(26,22,20,0) 70%),
+        linear-gradient(180deg, rgba(26,22,20,0.15) 30%, rgba(26,22,20,0.82) 100%);
     }
-    .country-hero-body { position: relative; z-index: 2; padding: clamp(28px, 4vw, 54px) 0; width: 100%; }
+    .country-hero-body {
+      position: relative; z-index: 2; width: 100%;
+      padding-top: clamp(28px, 4vw, 54px); padding-bottom: clamp(28px, 4vw, 54px);
+    }
     .country-hero-body h1 { font-size: var(--t-display); line-height: 1; color: var(--bg-cream); }
     .country-hero-body p { font-size: 16px; line-height: 1.65; color: rgba(247,243,237,0.78); max-width: 56ch; margin-top: 16px; }
     .status-tag {
@@ -501,7 +532,7 @@
       text-transform: uppercase; color: #C7A96B;
       border: 1px solid rgba(199,169,107,0.6); padding: 6px 13px; margin-bottom: 18px;
     }
-    .status-tag.on-light { color: var(--gold); border-color: rgba(156,122,60,0.6); }
+    .status-tag.on-light { color: var(--gold-ink); border-color: rgba(127,98,46,0.6); }
 
     .region-tags { display: flex; gap: 8px; flex-wrap: wrap; padding: 28px 0 22px; }
     .tag-pill {
@@ -545,6 +576,7 @@
       position: relative; cursor: pointer; overflow: hidden;
       min-height: 300px; display: flex; align-items: flex-end; background: var(--ink);
     }
+    .country-panel, .farm-card, .res-card, .res-media { cursor: pointer; }
     .farm-card-media {
       position: absolute; inset: 0; background-size: cover; background-position: center;
       transition: transform 1.1s cubic-bezier(.2,.7,.2,1); filter: saturate(0.85);
@@ -570,7 +602,7 @@
     .exp-card { border-top: 1px solid var(--rule); padding: 26px 0; }
     .exp-card h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; }
     .exp-card p { font-size: 15px; line-height: 1.65; color: var(--body); margin-top: 10px; max-width: 46ch; }
-    .exp-meta { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: 12px; }
+    .exp-meta { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-ink); margin-top: 12px; }
 
     .empty-msg { text-align: center; padding: 70px 0; font-size: 14px; color: var(--muted); grid-column: 1 / -1; }
 
@@ -589,11 +621,13 @@
     .res-hero-media .photo-block, .res-hero-media .color-block { height: 100%; }
     .res-hero-scrim {
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(26,22,20,0.12) 35%, rgba(26,22,20,0.8) 100%);
+      background:
+        linear-gradient(90deg, rgba(26,22,20,0.5) 0%, rgba(26,22,20,0.22) 40%, rgba(26,22,20,0) 70%),
+        linear-gradient(180deg, rgba(26,22,20,0.10) 0%, rgba(26,22,20,0.26) 40%, rgba(26,22,20,0.84) 84%, rgba(26,22,20,0.92) 100%);
     }
     .res-hero-body {
-      position: relative; z-index: 2; width: 100%;
-      padding: clamp(30px, 5vw, 62px) 0; color: var(--bg-cream);
+      position: relative; z-index: 2; width: 100%; color: var(--bg-cream);
+      padding-top: clamp(30px, 5vw, 62px); padding-bottom: clamp(30px, 5vw, 62px);
     }
     .res-hero-body h1 {
       font-size: var(--t-hero); line-height: 0.96;
@@ -609,12 +643,13 @@
     }
 
     .res-thumbs {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 2px; background: var(--rule);
     }
     .res-thumb {
       aspect-ratio: 16 / 10; cursor: pointer; background: var(--card);
       overflow: hidden; position: relative;
+      padding: 0; border: 0; font: inherit; color: inherit; display: block;
     }
     .res-thumb .photo-block { transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
     .res-thumb:hover .photo-block { transform: scale(1.06); }
@@ -652,7 +687,7 @@
     }
     .spec-label {
       display: block; font-size: 10px; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+      text-transform: uppercase; color: var(--gold-ink); margin-bottom: 12px;
     }
     .spec-value {
       display: block; font-family: var(--font-serif);
@@ -673,7 +708,7 @@
     .farm-detail h1 { font-size: var(--t-display); line-height: 1; letter-spacing: -0.015em; }
     .farm-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; padding: 26px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 28px 0; }
     @media (min-width: 640px) { .farm-facts { grid-template-columns: repeat(3, auto); gap: clamp(24px, 4vw, 56px); } }
-    .fact-label { display: block; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+    .fact-label { display: block; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 7px; }
     .fact-value { display: block; font-family: var(--font-serif); font-size: 19px; line-height: 1.25; }
     .farm-story p:first-child { font-family: var(--font-serif); font-size: clamp(20px, 2vw, 26px); line-height: 1.4; margin-bottom: 18px; }
     .farm-story p { font-size: 16px; line-height: 1.72; color: var(--body); }
@@ -697,7 +732,7 @@
     .team-photo::after { content: attr(data-label); font-family: var(--font-serif); font-style: italic; font-size: 13px; color: var(--rule); }
     .team-photo[style*="background-image"]::after { display: none; }
     .team-card h3 { font-size: 22px; margin-bottom: 5px; }
-    .team-role { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .team-role { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 12px; }
     .team-card p { font-size: 14px; line-height: 1.65; color: var(--body); }
 
     .note-block { background: var(--card); padding: clamp(26px, 4vw, 44px); max-width: 700px; border-left: 2px solid var(--gold); }
@@ -748,16 +783,23 @@
   <header id="site-header">
     <div class="container">
       <div class="header-inner">
-        <a onclick="showView('home')" class="wordmark">Tiny Mansion</a>
-        <nav class="nav">
-          <a onclick="showView('all-residences')" class="nav-link">Residences</a>
-          <a onclick="showView('all-farms')" class="nav-link">Farms</a>
-          <a onclick="showView('about')" class="nav-link">About</a>
-          <a onclick="showView('enquiry')" class="nav-link">Enquire</a>
+        <a href="#/home" class="wordmark">Tiny Mansion</a>
+        <nav class="nav" aria-label="Main">
+          <a href="#/all-residences" class="nav-link">Residences</a>
+          <a href="#/all-farms" class="nav-link">Farms</a>
+          <a href="#/about" class="nav-link">About</a>
+          <a href="#/enquiry" class="nav-link">Enquire</a>
         </nav>
       </div>
     </div>
   </header>
+
+  <noscript>
+    <div style="background:#1A1614;color:#F7F3ED;padding:20px 5vw;font-family:'Jost',sans-serif;font-size:14px;line-height:1.6;">
+      This site needs JavaScript to move between the residences, the farms and the enquiry form.
+      Turn it on, or write to us at <span style="text-decoration:underline">korsakovyuri8 [at] gmail [dot] com</span>.
+    </div>
+  </noscript>
 
   <main>
 
@@ -882,7 +924,7 @@
             <span class="eyebrow on-dark">Not open yet</span>
             <h2 class="serif">Be there for the first season</h2>
             <p>The first residences deploy in Montenegro in Q3 2026. Leave your details and we write to you when dates open, before anything goes public.</p>
-            <a class="btn btn-light" onclick="showView('enquiry')">Register your interest</a>
+            <a class="btn btn-light" href="#/enquiry">Register your interest</a>
           </div>
         </div>
       </div>
@@ -895,7 +937,7 @@
     <section id="view-country" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Countries</span>
+          <a class="breadcrumb-item" href="#/home">Countries</a>
           <span>/</span>
           <span class="breadcrumb-current" id="country-breadcrumb-name">Country</span>
         </div>
@@ -912,23 +954,22 @@
       </div>
 
       <div class="container">
-        <div class="region-tags" id="country-region-tags"></div>
-
-        <div class="tabs-row" id="country-tabs-row">
-          <button class="tab-btn active" onclick="switchTab('residences')">Residences</button>
-          <button class="tab-btn" onclick="switchTab('farms')">Farms</button>
-          <button class="tab-btn" onclick="switchTab('experiences')">Experiences</button>
+        <div class="tabs-row" id="country-tabs-row" role="tablist" aria-label="What is in this country">
+          <button type="button" id="tabbtn-residences" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-residences" onclick="switchTab('residences')">Residences</button>
+          <button type="button" id="tabbtn-farms" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-farms" onclick="switchTab('farms')">Farms</button>
+          <button type="button" id="tabbtn-experiences" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-experiences" onclick="switchTab('experiences')">Experiences</button>
         </div>
 
-        <div id="tab-residences" class="tab-content active">
+        <div id="tab-residences" class="tab-content active" role="tabpanel" aria-labelledby="tabbtn-residences">
           <div class="cards-3" id="country-residences-grid"></div>
         </div>
 
-        <div id="tab-farms" class="tab-content">
+        <div id="tab-farms" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-farms">
+          <div class="region-tags" id="country-region-tags"></div>
           <div class="cards-2" id="country-farms-grid"></div>
         </div>
 
-        <div id="tab-experiences" class="tab-content">
+        <div id="tab-experiences" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-experiences">
           <div id="country-experiences-grid"></div>
         </div>
 
@@ -938,8 +979,8 @@
             <h2 class="serif" id="country-opening-title">Not open yet</h2>
             <p id="country-opening-desc"></p>
             <div class="opening-actions">
-              <a class="btn btn-solid" onclick="showView('enquiry')">Tell us you want in</a>
-              <a class="btn btn-line" onclick="showView('host')">Offer your farm</a>
+              <a class="btn btn-solid" href="#/enquiry">Tell us you want in</a>
+              <a class="btn btn-line" href="#/host">Offer your farm</a>
             </div>
           </div>
         </div>
@@ -949,7 +990,7 @@
         <hr class="rule">
         <div style="padding:40px 0 90px;font-size:16px;color:var(--body);">
           Do you run a farm in <strong id="country-cta-name">this country</strong>?
-          <a onclick="showView('host')" style="text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-left:6px;">Host a residence</a>
+          <a href="#/host" style="text-decoration:underline;text-underline-offset:4px;margin-left:6px;">Host a residence</a>
         </div>
       </div>
     </section>
@@ -960,9 +1001,9 @@
     <section id="view-residence" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span>
-          <span class="breadcrumb-item" onclick="showView('all-residences')">Residences</span>
+          <a class="breadcrumb-item" href="#/all-residences">Residences</a>
           <span>/</span>
           <span class="breadcrumb-current" id="residence-breadcrumb-title">Residence</span>
         </div>
@@ -987,7 +1028,7 @@
         <div class="res-intro">
           <p class="res-intro-copy" id="residence-desc"></p>
           <div class="res-intro-side">
-            <a class="btn btn-solid" onclick="startEnquiry()">Register interest in this residence</a>
+            <a class="btn btn-solid" href="#/enquiry" onclick="startEnquiry()">Register interest in this residence</a>
             <p class="res-intro-note">Booking is not open. Rates are indicative and confirmed when the first season opens, Q3 2026.</p>
           </div>
         </div>
@@ -1029,9 +1070,9 @@
     <section id="view-farm-detail" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span>
-          <span class="breadcrumb-item" id="farm-breadcrumb-country" onclick="openCountry(currentFarm.countryId)">Country</span>
+          <a class="breadcrumb-item" id="farm-breadcrumb-country" href="#/home">Country</a>
           <span>/</span>
           <span class="breadcrumb-current" id="farm-breadcrumb-name">Farm</span>
         </div>
@@ -1050,8 +1091,8 @@
             </div>
 
             <div class="farm-actions">
-              <a class="btn btn-solid" onclick="showView('enquiry')">Register interest</a>
-              <a class="back-link" onclick="openCountry(currentFarm.countryId)">&larr; Back to the country</a>
+              <a class="btn btn-solid" href="#/enquiry">Register interest</a>
+              <a class="back-link" id="farm-back-link" href="#/home">&larr; Back to the country</a>
             </div>
           </div>
         </div>
@@ -1065,7 +1106,7 @@
     <section id="view-all-residences" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">Residences</span>
         </div>
         <div class="section-pad">
@@ -1083,7 +1124,7 @@
     <section id="view-all-farms" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">Farms</span>
         </div>
         <div class="section-pad">
@@ -1103,7 +1144,7 @@
     <section id="view-enquiry" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">Enquire</span>
         </div>
         <div class="section-pad">
@@ -1111,25 +1152,34 @@
           <h1 class="page-title serif">Be there for the first season</h1>
           <p class="page-lede">Booking is not open. The first residences deploy in Montenegro in Q3 2026, and we contact this list before anything else. Tell us roughly when you'd want to come and we'll write when those dates exist.</p>
 
-          <form action="https://formsubmit.co/korsakovyuri8@gmail.com" method="POST" class="form" style="margin-top:48px;">
+          <!-- action and _next are filled in by initForms() so the address is not
+               sitting in the markup for scrapers, and the redirect follows whatever
+               domain the site is actually served from. -->
+          <form method="POST" class="form" data-mailform style="margin-top:48px;">
             <input type="hidden" name="_subject" value="Tiny Mansion — guest enquiry">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://example.com/?thanks=1">
-            <p style="display:none"><input name="_honey"></p>
+            <input type="hidden" name="_next" value="">
+            <p style="display:none" aria-hidden="true"><input name="_honey" tabindex="-1" autocomplete="off"></p>
 
             <div class="form-row">
-              <input type="text" name="name" placeholder="Your name" required>
-              <input type="email" name="email" placeholder="Email" required>
+              <label class="sr-only" for="enq-name">Your name</label>
+              <input type="text" id="enq-name" name="name" placeholder="Your name" autocomplete="name" required>
+              <label class="sr-only" for="enq-email">Email</label>
+              <input type="email" id="enq-email" name="email" placeholder="Email" autocomplete="email" required>
             </div>
             <div class="form-row">
+              <label class="sr-only" for="enquiry-country">Country you're interested in</label>
               <input type="text" name="country" placeholder="Country you're interested in" id="enquiry-country">
+              <label class="sr-only" for="enquiry-residence">Residence (21ft or 24ft)</label>
               <input type="text" name="residence" placeholder="Residence (21ft or 24ft)" id="enquiry-residence">
             </div>
-            <input type="text" name="when" placeholder="Roughly when (e.g. late summer 2026)">
-            <textarea name="message" placeholder="Anything else we should know"></textarea>
+            <label class="sr-only" for="enq-when">Roughly when you would want to come</label>
+            <input type="text" id="enq-when" name="when" placeholder="Roughly when (e.g. late summer 2026)">
+            <label class="sr-only" for="enq-message">Anything else we should know</label>
+            <textarea id="enq-message" name="message" placeholder="Anything else we should know"></textarea>
             <button type="submit" class="btn btn-solid">Send</button>
-            <p class="form-hint">We answer every message ourselves, from korsakovyuri8@gmail.com.</p>
+            <p class="form-hint">We answer every message ourselves, from <span data-mail>our own inbox</span>.</p>
           </form>
         </div>
       </div>
@@ -1141,7 +1191,7 @@
     <section id="view-host" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">Host a residence</span>
         </div>
         <div class="section-pad">
@@ -1176,23 +1226,29 @@
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.1;margin-bottom:12px;">Write to us</h2>
           <p style="font-size:16px;color:var(--muted);margin-bottom:34px;">Tell us where the farm is and what you already do there.</p>
 
-          <form action="https://formsubmit.co/korsakovyuri8@gmail.com" method="POST" class="form">
+          <form method="POST" class="form" data-mailform>
             <input type="hidden" name="_subject" value="Tiny Mansion — farm partner enquiry">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://example.com/?thanks=1">
-            <p style="display:none"><input name="_honey"></p>
+            <input type="hidden" name="_next" value="">
+            <p style="display:none" aria-hidden="true"><input name="_honey" tabindex="-1" autocomplete="off"></p>
 
             <div class="form-row">
-              <input type="text" name="name" placeholder="Your name" required>
-              <input type="email" name="email" placeholder="Email" required>
+              <label class="sr-only" for="host-name">Your name</label>
+              <input type="text" id="host-name" name="name" placeholder="Your name" autocomplete="name" required>
+              <label class="sr-only" for="host-email">Email</label>
+              <input type="email" id="host-email" name="email" placeholder="Email" autocomplete="email" required>
             </div>
             <div class="form-row">
-              <input type="text" name="farm" placeholder="Farm name" required>
-              <input type="text" name="location" placeholder="Country and region" required>
+              <label class="sr-only" for="host-farm">Farm name</label>
+              <input type="text" id="host-farm" name="farm" placeholder="Farm name" required>
+              <label class="sr-only" for="host-location">Country and region</label>
+              <input type="text" id="host-location" name="location" placeholder="Country and region" required>
             </div>
-            <input type="text" name="link" placeholder="Website or Instagram">
-            <textarea name="message" placeholder="What you do on the farm today"></textarea>
+            <label class="sr-only" for="host-link">Website or Instagram</label>
+            <input type="text" id="host-link" name="link" placeholder="Website or Instagram">
+            <label class="sr-only" for="host-message">What you do on the farm today</label>
+            <textarea id="host-message" name="message" placeholder="What you do on the farm today"></textarea>
             <button type="submit" class="btn btn-solid">Send</button>
             <p class="form-hint">We read every message and answer ourselves.</p>
           </form>
@@ -1206,7 +1262,7 @@
     <section id="view-about" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">About</span>
         </div>
         <div class="section-pad">
@@ -1262,14 +1318,14 @@
     <section id="view-terms" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">Terms</span>
         </div>
         <div class="section-pad prose">
           <h1 class="page-title serif" style="margin-bottom:34px;">Terms</h1>
 
           <h2 class="serif">Who you are dealing with</h2>
-          <p>[Legal name], registered in [city, country] under number [registration number]. Address: [address]. Email: korsakovyuri8@gmail.com.</p>
+          <p>[Legal name], registered in [city, country] under number [registration number]. Address: [address]. Email: <span data-mail>our inbox</span>.</p>
 
           <h2 class="serif">Enquiries and bookings</h2>
           <p>Nothing on this site is a booking or an offer of one. Sending the form registers your interest and starts a conversation by email. Rates shown are indicative and are not confirmed until booking opens.</p>
@@ -1295,13 +1351,13 @@
     <section id="view-privacy" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <span class="breadcrumb-item" onclick="showView('home')">Home</span>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span><span class="breadcrumb-current">Privacy</span>
         </div>
         <div class="section-pad prose">
           <h1 class="page-title serif" style="margin-bottom:34px;">Privacy</h1>
 
-          <p>[Legal name], [address], korsakovyuri8@gmail.com, decides how your data is used on this site.</p>
+          <p>[Legal name], [address], <span data-mail>our inbox</span>, decides how your data is used on this site.</p>
 
           <h2 class="serif">What we collect</h2>
           <p>Only what you type into a form: your name, your email, and whatever you write in the message. We ask for nothing else and we set no tracking cookies.</p>
@@ -1313,7 +1369,7 @@
           <p>Form submissions pass through FormSubmit, which forwards them to our inbox. Email goes through Google. Fonts load from Google Fonts, which sees your IP address as part of serving them. Each has its own privacy policy.</p>
 
           <h2 class="serif">Your rights</h2>
-          <p>Write to korsakovyuri8@gmail.com and we'll tell you what we hold about you, correct it, or delete it. Last updated [date].</p>
+          <p>Write to <span data-mail>our inbox</span> and we'll tell you what we hold about you, correct it, or delete it. Last updated [date].</p>
         </div>
       </div>
     </section>
@@ -1325,8 +1381,8 @@
       <div class="container" style="max-width:680px;text-align:center;padding-top:120px;padding-bottom:120px;">
         <span class="eyebrow centered">Received</span>
         <h1 class="page-title serif">Thank you</h1>
-        <p class="page-lede" style="margin:20px auto 36px;">We have your message. We answer from korsakovyuri8@gmail.com, usually within a few days.</p>
-        <a class="btn btn-solid" onclick="showView('home')">Back to the start</a>
+        <p class="page-lede" style="margin:20px auto 36px;">We have your message. We answer from <span data-mail>our own inbox</span>, usually within a few days.</p>
+        <a class="btn btn-solid" href="#/home">Back to the start</a>
       </div>
     </section>
 
@@ -1345,26 +1401,26 @@
           <div class="footer-column">
             <span class="footer-title">Stay</span>
             <ul class="footer-links">
-              <li><a onclick="goCountries()" class="footer-link">Countries</a></li>
-              <li><a onclick="showView('all-residences')" class="footer-link">Residences</a></li>
-              <li><a onclick="showView('all-farms')" class="footer-link">Farms</a></li>
-              <li><a onclick="showView('enquiry')" class="footer-link">Enquire</a></li>
+              <li><a href="#/home" onclick="goCountries()" class="footer-link">Countries</a></li>
+              <li><a href="#/all-residences" class="footer-link">Residences</a></li>
+              <li><a href="#/all-farms" class="footer-link">Farms</a></li>
+              <li><a href="#/enquiry" class="footer-link">Enquire</a></li>
             </ul>
           </div>
 
           <div class="footer-column">
             <span class="footer-title">Partners</span>
             <ul class="footer-links">
-              <li><a onclick="showView('host')" class="footer-link">Host a residence</a></li>
-              <li><a onclick="showView('about')" class="footer-link">About</a></li>
+              <li><a href="#/host" class="footer-link">Host a residence</a></li>
+              <li><a href="#/about" class="footer-link">About</a></li>
             </ul>
           </div>
 
           <div class="footer-column">
             <span class="footer-title">Legal</span>
             <ul class="footer-links">
-              <li><a onclick="showView('terms')" class="footer-link">Terms</a></li>
-              <li><a onclick="showView('privacy')" class="footer-link">Privacy</a></li>
+              <li><a href="#/terms" class="footer-link">Terms</a></li>
+              <li><a href="#/privacy" class="footer-link">Privacy</a></li>
             </ul>
           </div>
         </div>
@@ -1372,7 +1428,7 @@
 
       <div class="footer-bottom">
         <span>&copy; 2026 TinyArc Group</span>
-        <span>korsakovyuri8@gmail.com</span>
+        <span data-mail>Write to us</span>
       </div>
     </div>
   </footer>
@@ -1399,7 +1455,15 @@ const RESIDENCES = [
     tagline: 'Two guests, one long week, nothing plugged in.',
     rate: 280,
     photo: 'residence-21.jpg',
-    photos: ['residence-21.jpg', 'residence-21-b.jpg', 'residence-21-c.jpg'],
+    photos: [
+      { src: 'residence-21.jpg',   alt: 'Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it' },
+      { src: 'residence-21-b.jpg', alt: 'Residence 21ft from the front, arched oak door and a timber deck over the trailer bed' },
+      { src: 'residence-21-c.jpg', alt: 'Residence 21ft from the gable end at dusk, stone cladding and lit windows' },
+      { src: 'residence-21-d.jpg', alt: 'Inside Residence 21ft: the living end, the loft ladder, and the bathroom door beyond the kitchen' },
+      { src: 'residence-21-e.jpg', alt: 'The galley kitchen in Residence 21ft, sage cabinetry under a beamed vaulted ceiling' },
+      { src: 'residence-21-f.jpg', alt: 'The shower in Residence 21ft, a brass rain head against a stacked stone wall' },
+      { src: 'residence-21-g.jpg', alt: 'The bathroom in Residence 21ft, recessed shelves, terracotta floor and a small window' }
+    ],
     color: '#4A4238',
     desc: 'The smaller of the two. Six and a half metres on an American Trailer Made chassis, stone-clad, with a bed, a bathroom and a kitchen that all work at the end of a dirt track. It runs seven days with no power, water or drainage connected, so it can stand where nothing else can.',
     specs: [
@@ -1418,7 +1482,9 @@ const RESIDENCES = [
     tagline: 'Up to four guests, with room to stay longer.',
     rate: 320,
     photo: 'residence-24.jpg',
-    photos: ['residence-24.jpg', 'residence-24-b.jpg', 'residence-24-c.jpg'],
+    photos: [
+      { src: 'residence-24.jpg', alt: 'Grand Residence 24ft on an olive terrace, glazed double doors between green shutters' }
+    ],
     color: '#3B372F',
     desc: 'Seven and a third metres, the same systems and the same chassis, with space for up to four and enough storage to stay a fortnight without thinking about it. Built for the longer stay, and for the farms furthest from a road.',
     specs: [
@@ -1443,34 +1509,34 @@ const DATA = {
   countries: {
     montenegro: {
       id: 'montenegro', index: '01', name: 'Montenegro',
-      color: '#3E4438', photo: 'montenegro.jpg',
+      color: '#3E4438', photo: null /* add montenegro.jpg to the repo to use a photo here */,
       status: 'Opening Q3 2026', isOpeningSoon: false,
       caption: '25 residences planned',
       desc: 'The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.',
       regions: ['All regions', 'North', 'Center', 'South'],
       farms: [
-        { id: 'f-djedovina', countryId: 'montenegro', name: 'Ethno Household \u0110edovina', region: 'Center', city: 'Nik\u0161i\u0107', photo: 'farm-djedovina.jpg', color: '#3E4438', type: 'Heritage farm', season: 'Year-round',
+        { id: 'f-djedovina', countryId: 'montenegro', name: 'Ethno Household \u0110edovina', region: 'Center', city: 'Nik\u0161i\u0107', photo: null, color: '#3E4438', type: 'Heritage farm', season: 'Year-round',
           p1: 'A traditional stone-built household in the central Montenegrin highlands, run by the same family all year.',
           p2: 'Certified organic, with culinary classes and a seasonal calendar of farm activities already in place. English spoken.' },
-        { id: 'f-karadzic', countryId: 'montenegro', name: 'Household Karad\u017ei\u0107', region: 'North', city: 'Durmitor National Park', photo: 'farm-karadzic.jpg', color: '#37402F', type: 'Inside a national park', season: 'Year-round',
+        { id: 'f-karadzic', countryId: 'montenegro', name: 'Household Karad\u017ei\u0107', region: 'North', city: 'Durmitor National Park', photo: null, color: '#37402F', type: 'Inside a national park', season: 'Year-round',
           p1: 'A thirteen-bed working household inside Durmitor National Park, a UNESCO World Heritage site.',
           p2: 'Horse riding and cooking classes are already on offer. The hosts speak English and Italian.' },
-        { id: 'f-pony', countryId: 'montenegro', name: 'Charming Pony Village House', region: 'North', city: '\u017dabljak', photo: 'farm-pony.jpg', color: '#434A3B', type: 'Working pony farm', season: 'Summer season',
+        { id: 'f-pony', countryId: 'montenegro', name: 'Charming Pony Village House', region: 'North', city: '\u017dabljak', photo: null, color: '#434A3B', type: 'Working pony farm', season: 'Summer season',
           p1: 'A mountain household at 1,450m on the Durmitor plateau, in the park buffer zone.',
           p2: 'A working pony farm with a long history of hosting guests, run by Bogdan.' },
-        { id: 'f-djedovdo', countryId: 'montenegro', name: 'Etno Katun \u0110edov Do', region: 'North', city: 'High-mountain katun', photo: 'farm-djedovdo.jpg', color: '#3B4334', type: 'Traditional summer pasture', season: 'Summer season',
+        { id: 'f-djedovdo', countryId: 'montenegro', name: 'Etno Katun \u0110edov Do', region: 'North', city: 'High-mountain katun', photo: null, color: '#3B4334', type: 'Traditional summer pasture', season: 'Summer season',
           p1: 'An authentic katun, the centuries-old high-mountain summer pasture settlement, run today as a heritage stay.',
           p2: 'Traditional cooking and horses on site, in a place that has been used the same way for generations.' },
-        { id: 'f-pesic', countryId: 'montenegro', name: 'Household Pe\u0161i\u0107', region: 'North', city: 'Bijelo Polje', photo: 'farm-pesic.jpg', color: '#464E3E', type: 'Gastronomy and working farm', season: 'Year-round',
+        { id: 'f-pesic', countryId: 'montenegro', name: 'Household Pe\u0161i\u0107', region: 'North', city: 'Bijelo Polje', photo: null, color: '#464E3E', type: 'Gastronomy and working farm', season: 'Year-round',
           p1: 'A working-farm gastronomy destination on the national Gastro Route, with a fifty-person dining hall.',
           p2: 'Homemade brandy production and a monthly calendar of farm activities. A large family operation, English spoken.' },
-        { id: 'f-pavicevic', countryId: 'montenegro', name: 'Household Pavi\u0107evi\u0107', region: 'North', city: 'Durmitor plateau', photo: 'farm-pavicevic.jpg', color: '#37402F', type: 'Certified organic farm', season: 'April to December',
+        { id: 'f-pavicevic', countryId: 'montenegro', name: 'Household Pavi\u0107evi\u0107', region: 'North', city: 'Durmitor plateau', photo: null, color: '#37402F', type: 'Certified organic farm', season: 'April to December',
           p1: 'A working organic farm at 1,450m inside Durmitor National Park.',
           p2: 'Multi-certified: Gastro Route, organic, specialized and protected zone. Russian and English spoken.' },
-        { id: 'f-medojevic', countryId: 'montenegro', name: 'Household Medojevi\u0107 \u2014 Ravni', region: 'North', city: 'Mojkovac', photo: 'farm-medojevic.jpg', color: '#3E4438', type: 'Organic farm and food destination', season: 'Year-round',
+        { id: 'f-medojevic', countryId: 'montenegro', name: 'Household Medojevi\u0107 \u2014 Ravni', region: 'North', city: 'Mojkovac', photo: null, color: '#3E4438', type: 'Organic farm and food destination', season: 'Year-round',
           p1: 'A working organic farm in Bojna Njiva with commercial chokeberry juice production.',
           p2: 'Seven kilometres from Biogradska Gora National Park and its UNESCO beech forests. Good for families.' },
-        { id: 'f-ekooaza', countryId: 'montenegro', name: 'Eko Oaza "Tear of Europe"', region: 'North', city: 'Dobrilovina, Tara canyon', photo: 'farm-ekooaza.jpg', color: '#3D4536', type: 'Eco-camping concept', season: 'Summer season',
+        { id: 'f-ekooaza', countryId: 'montenegro', name: 'Eko Oaza "Tear of Europe"', region: 'North', city: 'Dobrilovina, Tara canyon', photo: null, color: '#3D4536', type: 'Eco-camping concept', season: 'Summer season',
           p1: 'On the Tara, the deepest canyon in Europe, in the Durmitor buffer zone.',
           p2: 'Already running off-grid and to sustainability standards close to our own specification.' }
       ]
@@ -1478,7 +1544,7 @@ const DATA = {
 
     croatia: {
       id: 'croatia', index: '02', name: 'Croatia',
-      color: '#4A4C50', photo: 'croatia.jpg',
+      color: '#4A4C50', photo: null /* add croatia.jpg to the repo to use a photo here */,
       status: 'Planned 2028', isOpeningSoon: true, caption: 'Planned 2028',
       desc: 'Istria and the Dalmatian interior, after Montenegro has run a full season.',
       openingTitle: 'Croatia is not open',
@@ -1488,7 +1554,7 @@ const DATA = {
 
     greece: {
       id: 'greece', index: '03', name: 'Greece',
-      color: '#54503F', photo: 'greece.jpg',
+      color: '#54503F', photo: null /* add greece.jpg to the repo to use a photo here */,
       status: 'Planned 2029', isOpeningSoon: true, caption: 'Planned 2029',
       desc: 'The Peloponnese and a small number of island hubs.',
       openingTitle: 'Greece is not open',
@@ -1498,7 +1564,7 @@ const DATA = {
 
     switzerland: {
       id: 'switzerland', index: '04', name: 'Switzerland',
-      color: '#464B4E', photo: 'switzerland.jpg',
+      color: '#464B4E', photo: null /* add switzerland.jpg to the repo to use a photo here */,
       status: 'Planned 2029', isOpeningSoon: true, caption: 'Planned 2029',
       desc: 'Alpine valleys and lake regions.',
       openingTitle: 'Switzerland is not open',
@@ -1520,13 +1586,18 @@ let activeFarmsFilter = 'ALL';
 /* ==========================================================
    HELPERS
    ========================================================== */
-function media(photo, color, label) {
-  return photo
-    ? '<div class="photo-block" style="background-image:url(\'' + photo + '\')"></div>'
-    : '<div class="color-block" style="background-color:' + color + '">' + (label || '') + '</div>';
+function esc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-function bgStyle(photo, color) {
-  return photo ? "background-image:url('" + photo + "')" : 'background-color:' + color;
+
+/* Real <img> so photography carries alt text and lazy-loads. Without a file
+   the block falls back to the brand colour rather than a broken request. */
+function media(photo, color, alt, eager) {
+  if (!photo) return '<div class="color-block" style="background-color:' + esc(color) + '"></div>';
+  return '<img class="photo-block" src="' + esc(photo) + '" alt="' + esc(alt || '') + '"' +
+         (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">';
 }
 function countryOf(id) { return DATA.countries[id]; }
 function allFarms() {
@@ -1599,6 +1670,23 @@ function setHash(h) {
 }
 
 function applyHash() {
+  /* Anything that is not '#/...' is an in-page anchor (#choose-country).
+     Don't route it to a missing view — but if that anchor lives in a section
+     we are not currently showing (going Back to it from another view, say),
+     bring that section up and jump to it. */
+  if (location.hash && location.hash.charAt(1) !== '/') {
+    let target = null;
+    try { target = document.querySelector(location.hash); } catch (e) { target = null; }
+    const section = target && target.closest('.view-section');
+    if (section && !section.classList.contains('active')) {
+      routing = true;
+      showView(section.id.replace(/^view-/, ''));
+      routing = false;
+      target.scrollIntoView({ block: 'start' });
+    }
+    return;
+  }
+
   routing = true;
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   if (parts.length === 0) showView('home');
@@ -1610,6 +1698,17 @@ function applyHash() {
   if (!document.querySelector('.view-section.active')) showView('home');
 }
 window.addEventListener('popstate', applyHash);
+window.addEventListener('hashchange', applyHash);
+
+/* Cards are divs with role="button", so they need the keyboard behaviour
+   a real button would have given us for free. */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+  const el = e.target.closest && e.target.closest('[role="button"][tabindex]');
+  if (!el) return;
+  e.preventDefault();
+  el.click();
+});
 
 function goCountries() {
   showView('home');
@@ -1630,8 +1729,8 @@ function renderTicker() {
 function renderCountryPanels() {
   document.getElementById('country-panels').innerHTML =
     Object.values(DATA.countries).map(c => `
-      <div class="country-panel" onclick="openCountry('${c.id}')">
-        <div class="country-panel-media" style="${bgStyle(c.photo, c.color)}"></div>
+      <div class="country-panel" role="button" tabindex="0" onclick="openCountry('${c.id}')">
+        <div class="country-panel-media">${media(c.photo, c.color, c.name)}</div>
         <div class="country-panel-scrim"></div>
         <div class="country-panel-body">
           <span class="country-panel-index">${c.index}</span>
@@ -1644,7 +1743,7 @@ function renderCountryPanels() {
 function renderResidenceRows(targetId) {
   document.getElementById(targetId).innerHTML = RESIDENCES.map((r, i) => `
     <div class="res-row ${i % 2 ? 'flip' : ''} reveal">
-      <div class="res-media" onclick="openResidence('${r.id}')" style="cursor:pointer;">
+      <div class="res-media" role="button" tabindex="0" aria-label="See ${esc(r.name)}" onclick="openResidence('${r.id}')">
         ${media(r.photo, r.color, r.name)}
       </div>
       <div class="res-text">
@@ -1657,7 +1756,7 @@ function renderResidenceRows(targetId) {
         </div>
         <div class="res-cta">
           <span class="res-rate">\u20AC${r.rate} <small>/ night, indicative</small></span>
-          <a class="btn btn-line" onclick="openResidence('${r.id}')">See the residence</a>
+          <a class="btn btn-line" href="#/residence/${r.id}">See the residence</a>
         </div>
       </div>
     </div>`).join('');
@@ -1677,7 +1776,7 @@ function openCountry(countryId) {
   document.getElementById('country-desc').innerText = c.desc;
   document.getElementById('country-status').innerText = c.status;
   document.getElementById('country-cta-name').innerText = c.name;
-  document.getElementById('country-hero-media').setAttribute('style', bgStyle(c.photo, c.color));
+  document.getElementById('country-hero-media').innerHTML = media(c.photo, c.color, c.name, true);
 
   const tabsRow = document.getElementById('country-tabs-row');
   const opening = document.getElementById('country-opening-content');
@@ -1697,8 +1796,14 @@ function openCountry(countryId) {
     tabs.forEach(el => el.style.display = '');
     opening.style.display = 'none';
 
+    /* Only the regions that actually hold a farm, so no pill leads to an
+       empty list. 'All regions' stays first. */
+    const present = (c.regions || []).filter((r, idx) =>
+      idx === 0 || (c.farms || []).some(f => f.region === r));
+
     tags.innerHTML = '';
-    (c.regions || []).forEach((r, idx) => {
+    tags.style.display = present.length > 1 ? 'flex' : 'none';
+    present.forEach((r, idx) => {
       const pill = document.createElement('span');
       pill.className = 'tag-pill' + (idx === 0 ? ' active' : '');
       pill.innerText = r;
@@ -1722,7 +1827,9 @@ function openCountry(countryId) {
 
 function switchTab(tabId) {
   document.querySelectorAll('#country-tabs-row .tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').indexOf("'" + tabId + "'") !== -1);
+    const on = btn.getAttribute('onclick').indexOf("'" + tabId + "'") !== -1;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
   });
   document.querySelectorAll('#view-country .tab-content').forEach(el => {
     el.classList.toggle('active', el.id === 'tab-' + tabId);
@@ -1731,7 +1838,7 @@ function switchTab(tabId) {
 
 function renderCountryResidences() {
   document.getElementById('country-residences-grid').innerHTML = RESIDENCES.map(r => `
-    <div class="res-card" onclick="openResidence('${r.id}')">
+    <div class="res-card" role="button" tabindex="0" onclick="openResidence('${r.id}')">
       <div class="res-card-media">${media(r.photo, r.color, r.name)}</div>
       <div class="res-card-body">
         <h3 class="serif">${r.name}</h3>
@@ -1749,8 +1856,8 @@ function renderCountryFarms(region) {
   if (!list.length) { grid.innerHTML = '<div class="empty-msg">No farms listed in this region yet</div>'; return; }
 
   grid.innerHTML = list.map(f => `
-    <div class="farm-card" onclick="openFarm('${f.id}')">
-      <div class="farm-card-media" style="${bgStyle(f.photo, f.color)}"></div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('${f.id}')">
+      <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city)}</div>
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">${f.type}</span>
@@ -1782,10 +1889,12 @@ function openResidence(residenceId) {
   document.getElementById('residence-title').innerText = r.name;
   document.getElementById('residence-rate').innerText = '\u20AC' + r.rate + ' / night';
   document.getElementById('residence-desc').innerText = r.desc;
-  document.getElementById('residence-main-media').innerHTML = media(r.photo, r.color, r.name);
+  document.getElementById('residence-main-media').innerHTML = media(r.photo, r.color, (r.photos && r.photos[0] && r.photos[0].alt) || r.name, true);
 
-  document.getElementById('residence-thumbnails').innerHTML = (r.photos || []).map((src, i) => `
-    <div class="res-thumb ${i === 0 ? 'active' : ''}" onclick="swapPhoto(this,'${src}')">${media(src, r.color, '')}</div>`).join('');
+  document.getElementById('residence-thumbnails').innerHTML = (r.photos || []).map((p, i) => `
+    <button type="button" class="res-thumb ${i === 0 ? 'active' : ''}"
+            aria-label="Show photo ${i + 1} of ${r.photos.length}: ${esc(p.alt)}"
+            onclick="swapPhoto(this, ${i})">${media(p.src, r.color, p.alt)}</button>`).join('');
 
   document.getElementById('residence-spec-table').innerHTML = r.specs.map(s => `
     <div class="spec-cell"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`).join('');
@@ -1794,9 +1903,11 @@ function openResidence(residenceId) {
   showView('residence');
 }
 
-function swapPhoto(el, src) {
+function swapPhoto(el, index) {
+  const p = currentResidence && currentResidence.photos && currentResidence.photos[index];
+  if (!p) return;
   document.getElementById('residence-main-media').innerHTML =
-    '<div class="photo-block" style="background-image:url(\'' + src + '\')"></div>';
+    media(p.src, currentResidence.color, p.alt, true);
   document.querySelectorAll('#residence-thumbnails .res-thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
@@ -1822,10 +1933,14 @@ function openFarm(farmId) {
   currentFarm = found;
   const c = countryOf(found.countryId);
 
-  document.getElementById('farm-breadcrumb-country').innerText = c.name;
+  const countryHref = '#/country/' + found.countryId;
+  const crumb = document.getElementById('farm-breadcrumb-country');
+  crumb.innerText = c.name;
+  crumb.setAttribute('href', countryHref);
+  document.getElementById('farm-back-link').setAttribute('href', countryHref);
   document.getElementById('farm-breadcrumb-name').innerText = found.name;
   document.getElementById('farm-title').innerText = found.name;
-  document.getElementById('farm-detail-media').setAttribute('style', bgStyle(found.photo, found.color));
+  document.getElementById('farm-detail-media').innerHTML = media(found.photo, found.color, found.name + ', ' + found.city, true);
 
   document.getElementById('farm-facts').innerHTML = `
     <div><span class="fact-label">Where</span><span class="fact-value">${found.city}, ${c.name}</span></div>
@@ -1844,7 +1959,10 @@ function openFarm(farmId) {
    ========================================================== */
 function renderAllFarms() {
   const pills = document.getElementById('farms-filter-pills');
-  const names = ['ALL'].concat(Object.values(DATA.countries).map(c => c.name));
+  /* A country with no farms yet would only ever produce an empty list. */
+  const names = ['ALL'].concat(
+    Object.values(DATA.countries).filter(c => (c.farms || []).length).map(c => c.name));
+  if (names.indexOf(activeFarmsFilter) === -1) activeFarmsFilter = 'ALL';
   pills.innerHTML = '';
   names.forEach(n => {
     const pill = document.createElement('span');
@@ -1861,8 +1979,8 @@ function renderAllFarms() {
   if (!list.length) { grid.innerHTML = '<div class="empty-msg">No farms listed here yet</div>'; return; }
 
   grid.innerHTML = list.map(f => `
-    <div class="farm-card" onclick="openFarm('${f.id}')">
-      <div class="farm-card-media" style="${bgStyle(f.photo, f.color)}"></div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('${f.id}')">
+      <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city)}</div>
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">${f.type}</span>
@@ -1870,6 +1988,38 @@ function renderAllFarms() {
         <div class="farm-card-meta">${f.city}, ${f.countryName} \u00B7 ${f.season}</div>
       </div>
     </div>`).join('');
+}
+
+/* ==========================================================
+   FORMS
+   ==========================================================
+   The address is joined here rather than written into the markup, so it is
+   not sitting in the served HTML for address harvesters. The stronger fix is
+   FormSubmit's hashed endpoint (https://formsubmit.co/{hash}), which you get
+   by submitting the form once and following the activation email — drop that
+   hash into MAIL_ENDPOINT and the address leaves the page entirely.
+   ========================================================== */
+const MAIL_ENDPOINT = null; /* e.g. 'https://formsubmit.co/a1b2c3d4e5f6' */
+
+function siteMail() { return ['korsakovyuri8', 'gmail.com'].join('@'); }
+
+function initForms() {
+  const back = location.origin + location.pathname + '?thanks=1';
+
+  document.querySelectorAll('form[data-mailform]').forEach(form => {
+    form.setAttribute('action', MAIL_ENDPOINT || ('https://formsubmit.co/' + siteMail()));
+    const next = form.querySelector('input[name="_next"]');
+    if (next) next.value = back;
+  });
+
+  document.querySelectorAll('[data-mail]').forEach(el => {
+    const a = document.createElement('a');
+    a.href = 'mailto:' + siteMail();
+    a.textContent = siteMail();
+    a.style.textDecoration = 'underline';
+    a.style.textUnderlineOffset = '3px';
+    el.replaceWith(a);
+  });
 }
 
 /* ==========================================================
@@ -1881,6 +2031,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderResidenceRows('residence-rows');
   initReveal();
   initHeaderState();
+  initForms();
 
   const q = new URLSearchParams(location.search);
   const thanks = q.get('thanks') === '1';
