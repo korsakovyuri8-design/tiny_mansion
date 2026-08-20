@@ -730,8 +730,12 @@
       margin-bottom: 16px; background-size: cover; background-position: center;
       display: flex; align-items: center; justify-content: center;
     }
-    .team-photo::after { content: attr(data-label); font-family: var(--font-serif); font-style: italic; font-size: 13px; color: var(--rule); }
-    .team-photo[style*="background-image"]::after { display: none; }
+    /* Cards without a portrait fall back to a monogram; the ones with a
+       portrait simply carry no data-label, so nothing is rendered. */
+    .team-photo::after {
+      content: attr(data-label); font-family: var(--font-serif);
+      font-size: 21px; letter-spacing: 0.1em; color: var(--rule);
+    }
     .team-card h3 { font-size: 22px; margin-bottom: 5px; }
     .team-role { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 12px; }
     .team-card p { font-size: 14px; line-height: 1.65; color: var(--body); }
@@ -1285,25 +1289,31 @@
 
           <div class="team-grid">
             <div class="team-card">
-              <div class="team-photo" data-label="Photo"></div>
+              <div class="team-photo">
+                <img class="photo-block" src="team-yuri.jpg" alt="Yuri Korsakov" loading="lazy" decoding="async">
+              </div>
               <h3 class="serif">Yuri Korsakov</h3>
               <div class="team-role">Founder &middot; Operations</div>
               <p>Six years across architecture and hospitality. Designed the concept, moved to Montenegro to run production and deployment on the ground.</p>
             </div>
             <div class="team-card">
-              <div class="team-photo" data-label="Photo"></div>
+              <div class="team-photo">
+                <img class="photo-block" src="team-sergei.jpg" alt="Sergei Ermakov" loading="lazy" decoding="async">
+              </div>
               <h3 class="serif">Sergei Ermakov</h3>
               <div class="team-role">Co-founder &middot; Brand</div>
               <p>Ten years in hospitality and real estate marketing, including Wyndham, Best Western and Radisson Individuals.</p>
             </div>
             <div class="team-card">
-              <div class="team-photo" data-label="Photo"></div>
+              <div class="team-photo">
+                <img class="photo-block" src="team-nana.jpg" alt="Nana Tabidze" loading="lazy" decoding="async">
+              </div>
               <h3 class="serif">Nana Tabidze</h3>
               <div class="team-role">Advisor &middot; Guest experience</div>
               <p>Thirty years of executive leadership, and founder of an award-winning Georgian destination operator.</p>
             </div>
             <div class="team-card">
-              <div class="team-photo" data-label="Photo"></div>
+              <div class="team-photo" data-label="AV" role="img" aria-label="Aleksan Vartapetyan, no portrait yet"></div>
               <h3 class="serif">Aleksan Vartapetyan</h3>
               <div class="team-role">Platform engineering</div>
               <p>Five years full-stack. Builds the booking engine and the farm-partner platform.</p>
