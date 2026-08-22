@@ -358,8 +358,11 @@
       display: grid; grid-template-columns: 1fr; gap: 2px;
       background: var(--rule);
     }
-    @media (min-width: 700px)  { .country-panels { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1100px) { .country-panels { grid-template-columns: repeat(4, 1fr); } }
+    /* auto-fit rather than a fixed count, so the single country runs full
+       width and a second one would simply split the row */
+    @media (min-width: 700px) {
+      .country-panels { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    }
 
     .country-panel {
       position: relative; overflow: hidden; cursor: pointer;
@@ -367,6 +370,11 @@
       background: var(--ink);
       display: flex; align-items: flex-end;
     }
+    /* On its own the panel spans the full width, where the height meant for a
+       column of four reads as an empty field. Add a photo and this can go. */
+    .country-panels.single .country-panel { min-height: clamp(240px, 32vh, 380px); }
+    /* and the rule under the name stays a rule, not a full-width divider */
+    .country-panels.single .country-panel-body { max-width: 520px; }
     .country-panel-media {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
@@ -853,7 +861,7 @@
           <h1 data-i18n-html="hero-title">A house that moves to where the <em>season</em> is</h1>
           <p class="hero-sub">Off-grid stone-clad residences placed on working farms. Seven days without a single connection to anything.</p>
           <div class="hero-actions">
-            <a class="btn btn-light" href="#choose-country">Choose a country</a>
+            <a class="btn btn-light" href="#/country/montenegro">Montenegro</a>
             <a class="btn btn-gold" href="#choose-residence">See the residences</a>
           </div>
         </div>
@@ -873,13 +881,13 @@
         </div>
       </section>
 
-      <!-- STEP ONE — COUNTRIES -->
+      <!-- STEP ONE — THE COUNTRY -->
       <section class="countries" id="choose-country">
         <div class="container">
           <div class="section-head reveal">
             <span class="eyebrow">Step one</span>
-            <h2 class="serif">Choose a country</h2>
-            <p>Montenegro opens first. The rest follow as each farm network is built, one country at a time.</p>
+            <h2 class="serif">One country to begin with</h2>
+            <p>Montenegro, and nothing else until it works. The mountains in the north, the wine country in the middle, a short stretch of coast in the south.</p>
           </div>
         </div>
         <div class="country-panels" id="country-panels"></div>
@@ -972,7 +980,7 @@
     <section id="view-country" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <a class="breadcrumb-item" href="#/home">Countries</a>
+          <a class="breadcrumb-item" href="#/home">Home</a>
           <span>/</span>
           <span class="breadcrumb-current" id="country-breadcrumb-name">Country</span>
         </div>
@@ -1309,7 +1317,7 @@
             <p>What came out of it was a simple observation: the trouble with a beautiful place to stay is that it can only ever be in one place.</p>
             <p>So we built the other thing. A residence engineered like a yacht, registered as a vehicle, able to run a full week with no power, water or drainage connected to it. It stands on a farm for a season and then it goes somewhere else.</p>
             <p>We don't own land and don't intend to. Across Europe there are farms with owners, with land, and with almost no income, and they are better places to wake up than anything we could buy. We work with them instead.</p>
-            <p>The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.</p>
+            <p>The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. One country, until that one works.</p>
           </div>
 
           <hr class="rule" style="margin:64px 0 48px;">
@@ -1442,7 +1450,7 @@
           <div class="footer-column">
             <span class="footer-title">Stay</span>
             <ul class="footer-links">
-              <li><a href="#/home" onclick="goCountries()" class="footer-link">Countries</a></li>
+              <li><a href="#/country/montenegro" class="footer-link">Montenegro</a></li>
               <li><a href="#/all-residences" class="footer-link">Residences</a></li>
               <li><a href="#/all-farms" class="footer-link">Farms</a></li>
               <li><a href="#/enquiry" class="footer-link">Enquire</a></li>
@@ -1581,37 +1589,12 @@ const DATA = {
           p1: 'On the Tara, the deepest canyon in Europe, in the Durmitor buffer zone.',
           p2: 'Already running off-grid and to sustainability standards close to our own specification.' }
       ]
-    },
-
-    croatia: {
-      id: 'croatia', index: '02', name: 'Croatia',
-      color: '#4A4C50', photo: null /* add croatia.jpg to the repo to use a photo here */,
-      status: 'Planned 2028', isOpeningSoon: true, caption: 'Planned 2028',
-      desc: 'Istria and the Dalmatian interior, after Montenegro has run a full season.',
-      openingTitle: 'Croatia is not open',
-      openingDesc: 'Istria and the Dalmatian interior come after Montenegro is running. We are looking for farms there now.',
-      regions: [], farms: []
-    },
-
-    greece: {
-      id: 'greece', index: '03', name: 'Greece',
-      color: '#54503F', photo: null /* add greece.jpg to the repo to use a photo here */,
-      status: 'Planned 2029', isOpeningSoon: true, caption: 'Planned 2029',
-      desc: 'The Peloponnese and a small number of island hubs.',
-      openingTitle: 'Greece is not open',
-      openingDesc: 'The Peloponnese and island hubs are on the map for 2029. Nothing is confirmed there yet.',
-      regions: [], farms: []
-    },
-
-    switzerland: {
-      id: 'switzerland', index: '04', name: 'Switzerland',
-      color: '#464B4E', photo: null /* add switzerland.jpg to the repo to use a photo here */,
-      status: 'Planned 2029', isOpeningSoon: true, caption: 'Planned 2029',
-      desc: 'Alpine valleys and lake regions.',
-      openingTitle: 'Switzerland is not open',
-      openingDesc: 'Alpine valleys and lake regions are on the map for 2029. Nothing is confirmed there yet.',
-      regions: [], farms: []
     }
+
+    /* One country only, on purpose. The panels grid, the farms filter and
+       the country page all read from this object, so a second country is a
+       matter of adding it back here — the isOpeningSoon branch that draws
+       the "not open yet" panel is still in place for that. */
   }
 };
 
@@ -1731,11 +1714,16 @@ function applyHash() {
 
   routing = true;
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  let ok = true;
   if (parts.length === 0) showView('home');
-  else if (parts[0] === 'country' && parts[1]) openCountry(parts[1]);
-  else if (parts[0] === 'residence' && parts[1]) openResidence(parts[1]);
-  else if (parts[0] === 'farm' && parts[1]) openFarm(parts[1]);
+  /* An id that no longer exists — a bookmark to a country we have since
+     dropped, say — has to land somewhere rather than leave the previous
+     view standing. */
+  else if (parts[0] === 'country' && parts[1]) ok = openCountry(parts[1]);
+  else if (parts[0] === 'residence' && parts[1]) ok = openResidence(parts[1]);
+  else if (parts[0] === 'farm' && parts[1]) ok = openFarm(parts[1]);
   else showView(parts[0]);
+  if (ok === false) showView('home');
   routing = false;
   if (!document.querySelector('.view-section.active')) showView('home');
 }
@@ -1752,14 +1740,6 @@ document.addEventListener('keydown', (e) => {
   el.click();
 });
 
-function goCountries() {
-  showView('home');
-  setTimeout(() => {
-    const el = document.getElementById('choose-country');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 60);
-}
-
 /* ==========================================================
    HOME RENDER
    ========================================================== */
@@ -1769,8 +1749,11 @@ function renderTicker() {
 }
 
 function renderCountryPanels() {
-  document.getElementById('country-panels').innerHTML =
-    Object.values(DATA.countries).map(c => `
+  const list = Object.values(DATA.countries);
+  const panels = document.getElementById('country-panels');
+  panels.classList.toggle('single', list.length === 1);
+  panels.innerHTML =
+    list.map(c => `
       <div class="country-panel" role="button" tabindex="0" onclick="openCountry('${c.id}')">
         <div class="country-panel-media">${media(c.photo, c.color, c.name)}</div>
         <div class="country-panel-scrim"></div>
@@ -1810,7 +1793,7 @@ function renderResidenceRows(targetId) {
    ========================================================== */
 function openCountry(countryId) {
   const c = countryOf(countryId);
-  if (!c) return;
+  if (!c) return false;
   currentCountry = c;
 
   document.getElementById('country-breadcrumb-name').innerText = c.name;
@@ -1865,6 +1848,7 @@ function openCountry(countryId) {
 
   setHash('/country/' + countryId);
   showView('country');
+  return true;
 }
 
 function switchTab(tabId) {
@@ -1924,7 +1908,7 @@ function renderCountryExperiences() {
    ========================================================== */
 function openResidence(residenceId) {
   const r = RESIDENCES.find(x => x.id === residenceId);
-  if (!r) return;
+  if (!r) return false;
   currentResidence = r;
 
   document.getElementById('residence-breadcrumb-title').innerText = r.name;
@@ -1946,6 +1930,7 @@ function openResidence(residenceId) {
 
   setHash('/residence/' + residenceId);
   showView('residence');
+  return true;
 }
 
 function swapPhoto(el, index) {
@@ -1975,7 +1960,7 @@ function openFarm(farmId) {
     const f = (c.farms || []).find(x => x.id === farmId);
     if (f) found = f;
   });
-  if (!found) return;
+  if (!found) return false;
   currentFarm = found;
   const c = countryOf(found.countryId);
 
@@ -1998,6 +1983,7 @@ function openFarm(farmId) {
 
   setHash('/farm/' + farmId);
   showView('farm-detail');
+  return true;
 }
 
 /* ==========================================================
@@ -2005,11 +1991,13 @@ function openFarm(farmId) {
    ========================================================== */
 function renderAllFarms() {
   const pills = document.getElementById('farms-filter-pills');
-  /* A country with no farms yet would only ever produce an empty list. */
+  /* A country with no farms yet would only ever produce an empty list, and
+     with a single country there is nothing to filter between. */
   const names = ['ALL'].concat(
     Object.values(DATA.countries).filter(c => (c.farms || []).length).map(c => c.name));
   if (names.indexOf(activeFarmsFilter) === -1) activeFarmsFilter = 'ALL';
   pills.innerHTML = '';
+  pills.style.display = names.length > 2 ? 'flex' : 'none';
   names.forEach(n => {
     const pill = document.createElement('span');
     pill.className = 'tag-pill' + (activeFarmsFilter === n ? ' active' : '');
@@ -2055,7 +2043,6 @@ const RU = {
   'About': 'О нас',
   'Enquire': 'Заявка',
   'Home': 'Главная',
-  'Countries': 'Страны',
   'Country': 'Страна',
   'Farm': 'Ферма',
   'Residence': 'Резиденция',
@@ -2076,7 +2063,7 @@ const RU = {
   'First residences deploy Q3 2026': 'Первые резиденции — III квартал 2026',
   'Off-grid stone-clad residences placed on working farms. Seven days without a single connection to anything.':
     'Автономные резиденции в каменной облицовке на действующих фермах. Семь дней без единого подключения.',
-  'Choose a country': 'Выбрать страну',
+  'One country to begin with': 'Начинаем с одной страны',
   'See the residences': 'Смотреть резиденции',
   'TinyArc Group  ·  Montenegro': 'TinyArc Group  ·  Черногория',
   'Seven days off-grid': 'Семь дней автономии',
@@ -2093,8 +2080,8 @@ const RU = {
   'Step one': 'Шаг первый',
   'Step two': 'Шаг второй',
   'Choose a residence': 'Выбрать резиденцию',
-  'Montenegro opens first. The rest follow as each farm network is built, one country at a time.':
-    'Первой открывается Черногория. Остальные — по мере того, как собирается сеть ферм, страна за страной.',
+  'Montenegro, and nothing else until it works. The mountains in the north, the wine country in the middle, a short stretch of coast in the south.':
+    'Черногория — и ничего больше, пока она не заработает. Горы на севере, винный край посередине, короткая полоса побережья на юге.',
   'Two sizes, the same systems inside. Both run a full week with nothing connected.':
     'Два размера, внутри одни и те же системы. Обе держат полную неделю без подключений.',
   'The signature': 'Главное',
@@ -2132,29 +2119,11 @@ const RU = {
 
   /* Countries */
   'Montenegro': 'Черногория',
-  'Croatia': 'Хорватия',
-  'Greece': 'Греция',
-  'Switzerland': 'Швейцария',
   'this country': 'эта страна',
   'Opening Q3 2026': 'Открытие — III квартал 2026',
-  'Planned 2028': 'План на 2028',
-  'Planned 2029': 'План на 2029',
   '25 residences planned': '25 резиденций в плане',
   'The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.':
     'Первая страна. Горы на севере, винный край и озеро посередине, короткая и придирчиво выбранная полоса побережья на юге. Достаточно компактно, чтобы резиденция переезжала между всеми тремя за несколько часов, — в этом и весь смысл.',
-  'Istria and the Dalmatian interior, after Montenegro has run a full season.':
-    'Истрия и далматинская глубинка — после того, как Черногория отработает полный сезон.',
-  'Croatia is not open': 'Хорватия ещё не открыта',
-  'Istria and the Dalmatian interior come after Montenegro is running. We are looking for farms there now.':
-    'Истрия и далматинская глубинка — следом за тем, как заработает Черногория. Фермы там мы ищем уже сейчас.',
-  'The Peloponnese and a small number of island hubs.': 'Пелопоннес и несколько островных точек.',
-  'Greece is not open': 'Греция ещё не открыта',
-  'The Peloponnese and island hubs are on the map for 2029. Nothing is confirmed there yet.':
-    'Пелопоннес и островные точки — в планах на 2029. Там пока ничего не подтверждено.',
-  'Alpine valleys and lake regions.': 'Альпийские долины и озёрные районы.',
-  'Switzerland is not open': 'Швейцария ещё не открыта',
-  'Alpine valleys and lake regions are on the map for 2029. Nothing is confirmed there yet.':
-    'Альпийские долины и озёрные районы — в планах на 2029. Там пока ничего не подтверждено.',
   'Tell us you want in': 'Скажите, что хотите участвовать',
   'Offer your farm': 'Предложить свою ферму',
   'Do you run a farm in': 'Держите ферму в стране',
@@ -2342,8 +2311,8 @@ const RU = {
     'Поэтому мы сделали другое. Резиденцию, спроектированную как яхта и зарегистрированную как транспортное средство, способную неделю работать без подключённых электричества, воды и канализации. Она стоит на ферме сезон, а потом уезжает дальше.',
   "We don't own land and don't intend to. Across Europe there are farms with owners, with land, and with almost no income, and they are better places to wake up than anything we could buy. We work with them instead.":
     'Мы не владеем землёй и не собираемся. По всей Европе есть фермы — с хозяевами, с землёй и почти без дохода, — и просыпаться там лучше, чем в чём угодно, что мы могли бы купить. Мы работаем с ними.',
-  'The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.':
-    'Первые двадцать пять резиденций встанут по Черногории с III квартала 2026: горы на севере, винный край посередине и несколько площадок на побережье юга. Следом Хорватия, дальше — шире.',
+  'The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. One country, until that one works.':
+    'Первые двадцать пять резиденций встанут по Черногории с III квартала 2026: горы на севере, винный край посередине и несколько площадок на побережье юга. Одна страна — пока не заработает она.',
   'The people': 'Люди',
   'Who we are': 'Кто мы',
   'Yuri Korsakov': 'Юрий Корсаков',
