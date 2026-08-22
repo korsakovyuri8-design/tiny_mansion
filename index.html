@@ -195,16 +195,34 @@
       transition: color 0.3s ease;
     }
 
-    .nav { display: flex; gap: clamp(12px, 2.2vw, 34px); align-items: center; white-space: nowrap; }
+    .nav { display: flex; gap: clamp(12px, 2.2vw, 34px); align-items: center; white-space: nowrap; margin-left: auto; }
     .nav-link {
       font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase;
       text-decoration: none; cursor: pointer; transition: color 0.3s ease;
     }
     .nav-link:hover { text-decoration: underline; text-underline-offset: 5px; }
 
+    /* Language switch — sits at the end of the nav, same weight as a nav link */
+    .lang { display: flex; align-items: center; gap: 9px; margin-left: clamp(14px, 2.2vw, 30px); }
+    .lang-btn {
+      font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; background: none; border: 0; padding: 4px 1px;
+      color: var(--muted); cursor: pointer; transition: color 0.3s ease;
+    }
+    .lang-btn.active { color: var(--ink); }
+    .lang-btn:not(.active):hover { color: var(--ink); }
+    .lang-sep { width: 1px; height: 11px; background: var(--rule); }
+    header.over-hero .lang-btn { color: rgba(247, 243, 237, 0.5); }
+    header.over-hero .lang-btn.active,
+    header.over-hero .lang-btn:not(.active):hover { color: var(--bg-cream); }
+    header.over-hero .lang-sep { background: rgba(247, 243, 237, 0.3); }
+
     @media (max-width: 700px) {
-      .header-inner { height: auto; flex-direction: column; align-items: flex-start; gap: 10px; padding: 13px 0; }
-      .nav { width: 100%; justify-content: space-between; gap: 0; }
+      /* Wordmark and language on the first line, nav wrapping onto the second. */
+      .header-inner { height: auto; flex-wrap: wrap; align-items: center; gap: 10px; padding: 13px 0; }
+      .wordmark { order: 1; }
+      .lang { order: 2; margin-left: auto; }
+      .nav { order: 3; width: 100%; justify-content: space-between; gap: 0; }
       .nav-link { font-size: 10.5px; letter-spacing: 0.06em; }
     }
 
@@ -315,6 +333,13 @@
       max-width: 20ch; margin: 0 auto;
     }
     .manifesto-quote em { font-style: italic; color: var(--gold); }
+    /* Russian runs roughly a quarter longer than English, so the measures
+       set in ch need a little more room to break where the design intends. */
+    html[lang="ru"] .manifesto-quote { max-width: 26ch; }
+    html[lang="ru"] .manifesto-body,
+    html[lang="ru"] .seasonal-lede,
+    html[lang="ru"] .section-head p,
+    html[lang="ru"] .country-hero-body p { max-width: 64ch; }
     .manifesto-body {
       font-size: var(--t-lede); line-height: 1.65; color: var(--body);
       max-width: 60ch; margin: 32px auto 0;
@@ -795,6 +820,11 @@
           <a href="#/about" class="nav-link">About</a>
           <a href="#/enquiry" class="nav-link">Enquire</a>
         </nav>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" class="lang-btn active" data-lang="en" lang="en">EN</button>
+          <span class="lang-sep" aria-hidden="true"></span>
+          <button type="button" class="lang-btn" data-lang="ru" lang="ru">RU</button>
+        </div>
       </div>
     </div>
   </header>
@@ -820,7 +850,7 @@
         <span class="hero-rail">TinyArc Group &nbsp;·&nbsp; Montenegro</span>
         <div class="container hero-inner">
           <span class="eyebrow on-dark">First residences deploy Q3 2026</span>
-          <h1>A house that moves to where the <em>season</em> is</h1>
+          <h1 data-i18n-html="hero-title">A house that moves to where the <em>season</em> is</h1>
           <p class="hero-sub">Off-grid stone-clad residences placed on working farms. Seven days without a single connection to anything.</p>
           <div class="hero-actions">
             <a class="btn btn-light" href="#choose-country">Choose a country</a>
@@ -838,7 +868,7 @@
       <section class="manifesto">
         <div class="container">
           <span class="eyebrow centered reveal">The idea</span>
-          <h2 class="manifesto-quote reveal d1">A hotel is only as good as the <em>spot it was built on</em>.</h2>
+          <h2 class="manifesto-quote reveal d1" data-i18n-html="manifesto">A hotel is only as good as the <em>spot it was built on</em>.</h2>
           <p class="manifesto-body reveal d2">Ours isn't built on one. It is engineered like a yacht and registered as a vehicle, so it can be lifted off one farm and set down on another in a matter of hours. When the mountains go quiet, it is already somewhere else.</p>
         </div>
       </section>
@@ -1672,6 +1702,7 @@ function showView(viewId) {
   if (viewId === 'all-farms') renderAllFarms();
   if (window.__updateHeader) window.__updateHeader();
   refreshReveal();
+  applyLang();   /* anything just rendered comes out in English */
 }
 
 function setHash(h) {
@@ -1864,9 +1895,9 @@ function renderCountryFarms(region) {
   let list = currentCountry.farms || [];
   if (region && region.indexOf('All') !== 0) list = list.filter(f => f.region === region);
 
-  if (!list.length) { grid.innerHTML = '<div class="empty-msg">No farms listed in this region yet</div>'; return; }
-
-  grid.innerHTML = list.map(f => `
+  grid.innerHTML = !list.length
+    ? '<div class="empty-msg">No farms listed in this region yet</div>'
+    : list.map(f => `
     <div class="farm-card" role="button" tabindex="0" onclick="openFarm('${f.id}')">
       <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city)}</div>
       <div class="farm-card-scrim"></div>
@@ -1876,6 +1907,7 @@ function renderCountryFarms(region) {
         <div class="farm-card-meta">${f.city} \u00B7 ${f.season}</div>
       </div>
     </div>`).join('');
+  applyLang();
 }
 
 function renderCountryExperiences() {
@@ -1902,9 +1934,11 @@ function openResidence(residenceId) {
   document.getElementById('residence-desc').innerText = r.desc;
   document.getElementById('residence-main-media').innerHTML = media(r.photo, r.color, (r.photos && r.photos[0] && r.photos[0].alt) || r.name, true);
 
+  /* The label carries numbers, so applyLang() composes it from these two
+     attributes rather than looking a finished sentence up in the dictionary. */
   document.getElementById('residence-thumbnails').innerHTML = (r.photos || []).map((p, i) => `
     <button type="button" class="res-thumb ${i === 0 ? 'active' : ''}"
-            aria-label="Show photo ${i + 1} of ${r.photos.length}: ${esc(p.alt)}"
+            data-photo-i="${i + 1}" data-photo-n="${r.photos.length}"
             onclick="swapPhoto(this, ${i})">${media(p.src, r.color, p.alt)}</button>`).join('');
 
   document.getElementById('residence-spec-table').innerHTML = r.specs.map(s => `
@@ -1921,14 +1955,15 @@ function swapPhoto(el, index) {
     media(p.src, currentResidence.color, p.alt, true);
   document.querySelectorAll('#residence-thumbnails .res-thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
+  applyLang();
 }
 
 function startEnquiry() {
   showView('enquiry');
   const rf = document.getElementById('enquiry-residence');
-  if (rf && currentResidence) rf.value = currentResidence.name;
+  if (rf && currentResidence) rf.value = T(currentResidence.name);
   const cf = document.getElementById('enquiry-country');
-  if (cf && currentCountry) cf.value = currentCountry.name;
+  if (cf && currentCountry) cf.value = T(currentCountry.name);
 }
 
 /* ==========================================================
@@ -1987,9 +2022,9 @@ function renderAllFarms() {
   if (activeFarmsFilter !== 'ALL') list = list.filter(f => f.countryName === activeFarmsFilter);
 
   const grid = document.getElementById('all-farms-grid');
-  if (!list.length) { grid.innerHTML = '<div class="empty-msg">No farms listed here yet</div>'; return; }
-
-  grid.innerHTML = list.map(f => `
+  grid.innerHTML = !list.length
+    ? '<div class="empty-msg">No farms listed here yet</div>'
+    : list.map(f => `
     <div class="farm-card" role="button" tabindex="0" onclick="openFarm('${f.id}')">
       <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city)}</div>
       <div class="farm-card-scrim"></div>
@@ -1999,6 +2034,491 @@ function renderAllFarms() {
         <div class="farm-card-meta">${f.city}, ${f.countryName} \u00B7 ${f.season}</div>
       </div>
     </div>`).join('');
+  applyLang();
+}
+
+/* ==========================================================
+   LANGUAGE
+   ==========================================================
+   English lives in the markup and in the data; Russian is a lookup keyed
+   by the English string. Everything the site renders - static copy, the
+   country/residence/farm data, placeholders, alt text - goes through the
+   same pass, so new copy only needs an entry here. Two headlines wrap a
+   word in <em>, where Russian word order differs; those carry a
+   data-i18n-html key and are swapped whole.
+   ========================================================== */
+
+const RU = {
+  /* Chrome and navigation */
+  'Residences': 'Резиденции',
+  'Farms': 'Фермы',
+  'About': 'О нас',
+  'Enquire': 'Заявка',
+  'Home': 'Главная',
+  'Countries': 'Страны',
+  'Country': 'Страна',
+  'Farm': 'Ферма',
+  'Residence': 'Резиденция',
+  'Language': 'Язык',
+  'Main': 'Основная',
+  'Stay': 'Проживание',
+  'Partners': 'Партнёрам',
+  'Legal': 'Документы',
+  'Terms': 'Условия',
+  'Privacy': 'Конфиденциальность',
+  'Host a residence': 'Разместить резиденцию',
+  '© 2026 TinyArc Group': '© 2026 TinyArc Group',
+  'Off-grid residences on working farms. A TinyArc Group project. First deployment Montenegro, Q3 2026.':
+    'Автономные резиденции на действующих фермах. Проект TinyArc Group. Первое развёртывание — Черногория, III квартал 2026.',
+  'Write to us': 'Напишите нам',
+
+  /* Hero and ticker */
+  'First residences deploy Q3 2026': 'Первые резиденции — III квартал 2026',
+  'Off-grid stone-clad residences placed on working farms. Seven days without a single connection to anything.':
+    'Автономные резиденции в каменной облицовке на действующих фермах. Семь дней без единого подключения.',
+  'Choose a country': 'Выбрать страну',
+  'See the residences': 'Смотреть резиденции',
+  'TinyArc Group  ·  Montenegro': 'TinyArc Group  ·  Черногория',
+  'Seven days off-grid': 'Семь дней автономии',
+  'Two to four guests': 'От двух до четырёх гостей',
+  'On a working farm': 'На действующей ферме',
+  'No septic, no mains': 'Ни септика, ни сетей',
+  'Moves with the season': 'Едет вслед за сезоном',
+  'Montenegro, Q3 2026': 'Черногория, III кв. 2026',
+
+  /* Manifesto and home sections */
+  'The idea': 'Идея',
+  "Ours isn't built on one. It is engineered like a yacht and registered as a vehicle, so it can be lifted off one farm and set down on another in a matter of hours. When the mountains go quiet, it is already somewhere else.":
+    'Наш — не построен. Он спроектирован как яхта и зарегистрирован как транспортное средство, поэтому его можно снять с одной фермы и за несколько часов поставить на другую. Когда в горах становится тихо, он уже в другом месте.',
+  'Step one': 'Шаг первый',
+  'Step two': 'Шаг второй',
+  'Choose a residence': 'Выбрать резиденцию',
+  'Montenegro opens first. The rest follow as each farm network is built, one country at a time.':
+    'Первой открывается Черногория. Остальные — по мере того, как собирается сеть ферм, страна за страной.',
+  'Two sizes, the same systems inside. Both run a full week with nothing connected.':
+    'Два размера, внутри одни и те же системы. Обе держат полную неделю без подключений.',
+  'The signature': 'Главное',
+  'One residence, three seasons, one country': 'Одна резиденция, три сезона, одна страна',
+  'Montenegro is small enough that the mountains, the wine country and the sea are a few hours apart. So the same house stands in all three across a year, and it is never the one that sits empty.':
+    'Черногория достаточно мала, чтобы горы, винный край и море оказались в нескольких часах друг от друга. Поэтому один и тот же дом стоит за год во всех трёх — и никогда не оказывается тем, что пустует.',
+  'June to September': 'С июня по сентябрь',
+  'April, May, October': 'Апрель, май, октябрь',
+  'Selected weeks': 'Отдельные недели',
+  'The north': 'Север',
+  'The centre': 'Центр',
+  'The south': 'Юг',
+  'Durmitor, the Tara canyon, Biogradska Gora. Mountain pastures at 1,450m where the summer katun season runs.':
+    'Дурмитор, каньон Тары, Биоградска-Гора. Горные пастбища на 1450 м, где идёт летний сезон катунов.',
+  'Skadar Lake, Cetinje, the Crmnica wine valleys. The shoulder months, when the coast is cold and the mountains are wet.':
+    'Скадарское озеро, Цетине, винные долины Црмницы. Межсезонье, когда на побережье холодно, а в горах сыро.',
+  'A short, deliberately small stretch of coast. Kotor, Bar, Ulcinj, and only where a farm sits behind the water.':
+    'Короткая, намеренно небольшая полоса побережья. Котор, Бар, Улцинь — и только там, где за водой стоит ферма.',
+  'The residence travels on its own American chassis, by ordinary road, with nothing to dismantle and nothing to reconnect at the other end. It carries its own power, water and sanitation, which is what makes any of this possible.':
+    'Резиденция едет на собственном американском шасси, по обычной дороге: ничего не нужно разбирать и ничего подключать на месте. Она везёт с собой электричество, воду и канализацию — именно это и делает всё остальное возможным.',
+  'It runs on nothing': 'Ей ничего не нужно',
+  'It stands on a working farm': 'Она стоит на действующей ферме',
+  'It leaves nothing behind': 'Она не оставляет следа',
+  'Four lithium banks, seven solar panels, a shower that recycles most of its water and a toilet that needs no septic. Marine-grade climate control from -10°C to 40°C.':
+    'Четыре литиевых блока, семь солнечных панелей, душ, возвращающий в оборот большую часть воды, и туалет без септика. Климат морского класса — от −10 °C до 40 °C.',
+  'Not a resort, not an empty field. You wake up on a farm that was already there, with the food, the animals and the people that come with it.':
+    'Не курорт и не пустое поле. Вы просыпаетесь на ферме, которая была здесь и до вас, — с её едой, животными и людьми.',
+  'No foundations, no groundwork, no connection to any mains. When it goes, the field is a field again.':
+    'Ни фундамента, ни земляных работ, ни подключения к сетям. Уезжает — и поле снова просто поле.',
+  'Not open yet': 'Пока не открыто',
+  'Be there for the first season': 'Быть здесь в первый сезон',
+  'The first residences deploy in Montenegro in Q3 2026. Leave your details and we write to you when dates open, before anything goes public.':
+    'Первые резиденции встанут в Черногории в III квартале 2026. Оставьте контакты — напишем, когда откроются даты, раньше любых публичных анонсов.',
+  'Register your interest': 'Оставить заявку',
+
+  /* Countries */
+  'Montenegro': 'Черногория',
+  'Croatia': 'Хорватия',
+  'Greece': 'Греция',
+  'Switzerland': 'Швейцария',
+  'this country': 'эта страна',
+  'Opening Q3 2026': 'Открытие — III квартал 2026',
+  'Planned 2028': 'План на 2028',
+  'Planned 2029': 'План на 2029',
+  '25 residences planned': '25 резиденций в плане',
+  'The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.':
+    'Первая страна. Горы на севере, винный край и озеро посередине, короткая и придирчиво выбранная полоса побережья на юге. Достаточно компактно, чтобы резиденция переезжала между всеми тремя за несколько часов, — в этом и весь смысл.',
+  'Istria and the Dalmatian interior, after Montenegro has run a full season.':
+    'Истрия и далматинская глубинка — после того, как Черногория отработает полный сезон.',
+  'Croatia is not open': 'Хорватия ещё не открыта',
+  'Istria and the Dalmatian interior come after Montenegro is running. We are looking for farms there now.':
+    'Истрия и далматинская глубинка — следом за тем, как заработает Черногория. Фермы там мы ищем уже сейчас.',
+  'The Peloponnese and a small number of island hubs.': 'Пелопоннес и несколько островных точек.',
+  'Greece is not open': 'Греция ещё не открыта',
+  'The Peloponnese and island hubs are on the map for 2029. Nothing is confirmed there yet.':
+    'Пелопоннес и островные точки — в планах на 2029. Там пока ничего не подтверждено.',
+  'Alpine valleys and lake regions.': 'Альпийские долины и озёрные районы.',
+  'Switzerland is not open': 'Швейцария ещё не открыта',
+  'Alpine valleys and lake regions are on the map for 2029. Nothing is confirmed there yet.':
+    'Альпийские долины и озёрные районы — в планах на 2029. Там пока ничего не подтверждено.',
+  'Tell us you want in': 'Скажите, что хотите участвовать',
+  'Offer your farm': 'Предложить свою ферму',
+  'Do you run a farm in': 'Держите ферму в стране',
+  'All regions': 'Все регионы',
+  'North': 'Север',
+  'Center': 'Центр',
+  'South': 'Юг',
+  'Experiences': 'Впечатления',
+  'What is in this country': 'Что есть в этой стране',
+  'No farms listed here yet': 'Ферм здесь пока нет',
+  'No farms listed in this region yet': 'В этом регионе ферм пока нет',
+  'ALL': 'ВСЕ',
+
+  /* Residences */
+  'Two sizes': 'Два размера',
+  'The same American chassis, the same systems, built to the same specification.':
+    'То же американское шасси, те же системы, та же спецификация.',
+  'Residence 01': 'Резиденция 01',
+  'Residence 02': 'Резиденция 02',
+  'Two guests, one long week, nothing plugged in.': 'Двое гостей, одна долгая неделя, ничего не подключено.',
+  'Up to four guests, with room to stay longer.': 'До четырёх гостей и запас, чтобы остаться подольше.',
+  'The smaller of the two. Six and a half metres on an American Trailer Made chassis, stone-clad, with a bed, a bathroom and a kitchen that all work at the end of a dirt track. It runs seven days with no power, water or drainage connected, so it can stand where nothing else can.':
+    'Меньшая из двух. Шесть с половиной метров на американском шасси Trailer Made, в каменной облицовке, с кроватью, ванной и кухней, которые работают в конце грунтовой дороги. Держит семь дней без подключённых электричества, воды и канализации — поэтому встаёт там, где не встанет ничто другое.',
+  'Seven and a third metres, the same systems and the same chassis, with space for up to four and enough storage to stay a fortnight without thinking about it. Built for the longer stay, and for the farms furthest from a road.':
+    'Семь с третью метров, те же системы и то же шасси, место для четверых и достаточно хранения, чтобы прожить две недели, не задумываясь. Сделана для долгой поездки и для ферм, до которых дальше всего ехать.',
+  'See the residence': 'Смотреть резиденцию',
+  'See Residence 21ft': 'Смотреть Residence 21ft',
+  'See Grand Residence 24ft': 'Смотреть Grand Residence 24ft',
+  'Length': 'Длина',
+  'Width': 'Ширина',
+  'Guests': 'Гости',
+  'Autonomy': 'Автономность',
+  'Chassis': 'Шасси',
+  'Climate': 'Климат',
+  '21 ft / 6.4 m': '21 фут / 6,4 м',
+  '24 ft / 7.3 m': '24 фута / 7,3 м',
+  '100" / 2.54 m': '100″ / 2,54 м',
+  '7 days off-grid': '7 дней автономии',
+  '7+ days off-grid': '7+ дней автономии',
+  '-10°C to 40°C': 'от −10 °C до 40 °C',
+  '2 guests · 7 days off-grid': '2 гостя · 7 дней автономии',
+  '2-4 guests · 7+ days off-grid': '2–4 гостя · 7+ дней автономии',
+  'from €280 / night': 'от €280 / ночь',
+  'from €320 / night': 'от €320 / ночь',
+  '€280 / night': '€280 / ночь',
+  '€320 / night': '€320 / ночь',
+  '/ night, indicative': '/ ночь, ориентировочно',
+  'Indicative opening rate': 'Ориентировочная цена на старте',
+  'Register interest in this residence': 'Оставить заявку на эту резиденцию',
+  'Booking is not open. Rates are indicative and confirmed when the first season opens, Q3 2026.':
+    'Бронирование ещё не открыто. Цены ориентировочные и подтверждаются к открытию первого сезона, III квартал 2026.',
+  'Specification': 'Спецификация',
+  'What is inside': 'Что внутри',
+  'Systems': 'Системы',
+  'Marine and expedition grade, chosen to run unattended for a week.':
+    'Морской и экспедиционный класс, выбранный так, чтобы неделю работать без присмотра.',
+  'Power': 'Электричество',
+  'Victron inverter, four 200Ah LiFePO₄ banks (~38 kWh), seven 400W solar panels. Seven days off-grid.':
+    'Инвертор Victron, четыре блока LiFePO₄ по 200 А·ч (~38 кВт·ч), семь панелей по 400 Вт. Семь дней автономии.',
+  'Dual-zone heat pump in an R-40 envelope. Quiet, marine grade, four seasons from -10°C to 40°C.':
+    'Двухзонный тепловой насос в оболочке R-40. Тихий, морского класса, все четыре сезона — от −10 °C до 40 °C.',
+  'Water and sanitation': 'Вода и канализация',
+  'An Orbital shower recycling around 90% of its water. An incineration toilet: no blackwater, no septic tank.':
+    'Душ Orbital, возвращающий в оборот около 90% воды. Сжигающий туалет: ни стоков, ни септика.',
+  'Access': 'Доступ',
+  'A Nuki smart lock, so you let yourself in. Cerbo GX watches every system so nothing runs out while you sleep.':
+    'Умный замок Nuki — заселяетесь сами. Cerbo GX следит за всеми системами, чтобы ничего не кончилось, пока вы спите.',
+
+  /* Farms */
+  'The network': 'Сеть',
+  'Working households and highland pastures that host our residences. Each one was already there, doing its own work.':
+    'Действующие подворья и горные пастбища, которые принимают наши резиденции. Каждое было здесь и раньше и делало свою работу.',
+  'Ethno Household Đedovina': 'Этно-усадьба Đedovina',
+  'Household Karadžić': 'Усадьба Karadžić',
+  'Etno Katun Đedov Do': 'Этно-катун Đedov Do',
+  'Household Pešić': 'Усадьба Pešić',
+  'Household Pavićević': 'Усадьба Pavićević',
+  'Household Medojević — Ravni': 'Усадьба Medojević — Ravni',
+  'Eko Oaza "Tear of Europe"': 'Eko Oaza «Слеза Европы»',
+  'Heritage farm': 'Историческая усадьба',
+  'Inside a national park': 'Внутри национального парка',
+  'Working pony farm': 'Действующая пони-ферма',
+  'Traditional summer pasture': 'Традиционное летнее пастбище',
+  'Gastronomy and working farm': 'Гастрономия и действующая ферма',
+  'Certified organic farm': 'Сертифицированная органическая ферма',
+  'Organic farm and food destination': 'Органическая ферма и гастрономическая точка',
+  'Eco-camping concept': 'Экокемпинг',
+  'Year-round': 'Круглый год',
+  'Summer season': 'Летний сезон',
+  'April to December': 'С апреля по декабрь',
+  'Where': 'Где',
+  'Type': 'Тип',
+  'Open': 'Открыто',
+  'Framework agreement signed': 'Рамочное соглашение подписано',
+  'Register interest': 'Оставить заявку',
+  '← Back to the country': '← Назад к стране',
+  'Nikšić · Year-round': 'Никшич · Круглый год',
+  'Nikšić, Montenegro': 'Никшич, Черногория',
+  'Nikšić, Montenegro · Year-round': 'Никшич, Черногория · Круглый год',
+  'Durmitor National Park · Year-round': 'Национальный парк Дурмитор · Круглый год',
+  'Durmitor National Park, Montenegro · Year-round': 'Национальный парк Дурмитор, Черногория · Круглый год',
+  'Žabljak · Summer season': 'Жабляк · Летний сезон',
+  'Žabljak, Montenegro · Summer season': 'Жабляк, Черногория · Летний сезон',
+  'High-mountain katun · Summer season': 'Высокогорный катун · Летний сезон',
+  'High-mountain katun, Montenegro · Summer season': 'Высокогорный катун, Черногория · Летний сезон',
+  'Bijelo Polje · Year-round': 'Биело-Поле · Круглый год',
+  'Bijelo Polje, Montenegro · Year-round': 'Биело-Поле, Черногория · Круглый год',
+  'Durmitor plateau · April to December': 'Плато Дурмитор · С апреля по декабрь',
+  'Durmitor plateau, Montenegro · April to December': 'Плато Дурмитор, Черногория · С апреля по декабрь',
+  'Mojkovac · Year-round': 'Мойковац · Круглый год',
+  'Mojkovac, Montenegro · Year-round': 'Мойковац, Черногория · Круглый год',
+  'Dobrilovina, Tara canyon · Summer season': 'Добриловина, каньон Тары · Летний сезон',
+  'Dobrilovina, Tara canyon, Montenegro · Summer season': 'Добриловина, каньон Тары, Черногория · Летний сезон',
+  'A traditional stone-built household in the central Montenegrin highlands, run by the same family all year.':
+    'Традиционная каменная усадьба в центральном нагорье Черногории, круглый год её ведёт одна семья.',
+  'Certified organic, with culinary classes and a seasonal calendar of farm activities already in place. English spoken.':
+    'Сертифицированная органика, кулинарные классы и уже готовый сезонный календарь работ на ферме. Говорят по-английски.',
+
+  /* Experiences */
+  'Farm dinner': 'Ужин на ферме',
+  'Cooked by the household you are staying with, from what the farm produced that week.':
+    'Готовит семья, у которой вы остановились, из того, что ферма собрала на этой неделе.',
+  'Wine tasting': 'Дегустация вина',
+  'In the cellar, with the person who made it. Central Montenegro, Crmnica.':
+    'В погребе, с тем, кто это вино сделал. Центральная Черногория, Црмница.',
+  'Riding and mountain walks': 'Верховая езда и горные прогулки',
+  'Horses on the farm, and routes into Durmitor and the Tara canyon.':
+    'Лошади на ферме и маршруты в Дурмитор и каньон Тары.',
+  'Cooking and craft classes': 'Кулинарные и ремесленные классы',
+  'Traditional cooking, brandy, cheese and handwork, taught in the kitchen where it happens.':
+    'Традиционная кухня, ракия, сыр и ремёсла — прямо на той кухне, где всё это и делается.',
+  'Run by the farm · price on request': 'Проводит ферма · цена по запросу',
+
+  /* Enquiry, host and thanks */
+  'Q3 2026': 'III квартал 2026',
+  "Booking is not open. The first residences deploy in Montenegro in Q3 2026, and we contact this list before anything else. Tell us roughly when you'd want to come and we'll write when those dates exist.":
+    'Бронирование ещё не открыто. Первые резиденции встанут в Черногории в III квартале 2026, и мы пишем по этому списку раньше, чем куда-либо ещё. Скажите примерно, когда хотели бы приехать, — напишем, как только даты появятся.',
+  'Your name': 'Ваше имя',
+  "Country you're interested in": 'Интересующая страна',
+  'Residence (21ft or 24ft)': 'Резиденция (21ft или 24ft)',
+  'Roughly when (e.g. late summer 2026)': 'Примерно когда (например, конец лета 2026)',
+  'Roughly when you would want to come': 'Примерно когда хотели бы приехать',
+  'Anything else we should know': 'Что ещё нам стоит знать',
+  'Send': 'Отправить',
+  'We answer every message ourselves, from': 'Мы отвечаем на каждое сообщение сами, с адреса',
+  'For farm owners': 'Владельцам ферм',
+  'Host a residence on your farm': 'Разместите резиденцию на своей ферме',
+  'You keep farming. We put a residence on a corner of your land and bring the guests to it.':
+    'Вы продолжаете хозяйствовать. Мы ставим резиденцию на краю вашей земли и привозим к ней гостей.',
+  'No rent, in either direction': 'Никакой аренды — ни в одну сторону',
+  'There is no lease and no site fee either way. What you get instead is guests: people who arrive, eat, buy and book what you already offer.':
+    'Ни договора аренды, ни платы за площадку — ни в одну сторону. Вместо этого вы получаете гостей: людей, которые приезжают, едят, покупают и бронируют то, что вы уже предлагаете.',
+  'You sell your own produce': 'Вы продаёте свои продукты',
+  'Farm Store sales run through the platform and you keep 85%. Dinners, tastings, riding, walks and classes are yours to price and yours to run.':
+    'Продажи Farm Store идут через платформу, вам остаётся 85%. Ужины, дегустации, верховые прогулки, походы и классы — ваша цена и ваше ведение.',
+  'Nothing to build': 'Строить ничего не нужно',
+  'The residence brings its own power, water and sanitation. No connections, no groundwork, no building permit on your side.':
+    'Резиденция привозит с собой электричество, воду и канализацию. Ни подключений, ни земляных работ, ни разрешения на строительство с вашей стороны.',
+  'Where we actually are': 'Где мы на самом деле',
+  'No residence has been built to production specification yet. There is one prototype, from 2023, and the first units are due in Montenegro in 2026.':
+    'Ни одна резиденция ещё не построена в серийной спецификации. Есть один прототип 2023 года, первые серийные — в Черногории в 2026.',
+  "So we can't promise you a number of guests or a season's income. What exists today is signed framework agreements with farms, a confirmed manufacturer, and terms that cost you nothing until a residence is actually standing on your land.":
+    'Поэтому мы не можем обещать вам ни числа гостей, ни дохода за сезон. Что есть сегодня — подписанные рамочные соглашения с фермами, утверждённый производитель и условия, которые ничего вам не стоят, пока резиденция реально не встанет на вашей земле.',
+  'Write to us': 'Напишите нам',
+  'Tell us where the farm is and what you already do there.':
+    'Расскажите, где ферма и что вы на ней уже делаете.',
+  'Farm name': 'Название фермы',
+  'Country and region': 'Страна и регион',
+  'Website or Instagram': 'Сайт или Instagram',
+  'What you do on the farm today': 'Чем вы занимаетесь на ферме сейчас',
+  'We read every message and answer ourselves.': 'Мы читаем каждое сообщение и отвечаем сами.',
+  'Received': 'Получено',
+  'Thank you': 'Спасибо',
+  'We have your message. We answer from': 'Мы получили ваше сообщение. Отвечаем с адреса',
+  ', usually within a few days.': ', обычно в течение нескольких дней.',
+  'Back to the start': 'Вернуться в начало',
+
+  /* About */
+  'About Tiny Mansion': 'О Tiny Mansion',
+  'It started with a trailer built by hand, over two years, mostly wrongly.':
+    'Всё началось с прицепа, который два года собирали руками — и по большей части неправильно.',
+  'What came out of it was a simple observation: the trouble with a beautiful place to stay is that it can only ever be in one place.':
+    'Из этого вышло простое наблюдение: беда красивого места для жизни в том, что оно всегда только в одном месте.',
+  'So we built the other thing. A residence engineered like a yacht, registered as a vehicle, able to run a full week with no power, water or drainage connected to it. It stands on a farm for a season and then it goes somewhere else.':
+    'Поэтому мы сделали другое. Резиденцию, спроектированную как яхта и зарегистрированную как транспортное средство, способную неделю работать без подключённых электричества, воды и канализации. Она стоит на ферме сезон, а потом уезжает дальше.',
+  "We don't own land and don't intend to. Across Europe there are farms with owners, with land, and with almost no income, and they are better places to wake up than anything we could buy. We work with them instead.":
+    'Мы не владеем землёй и не собираемся. По всей Европе есть фермы — с хозяевами, с землёй и почти без дохода, — и просыпаться там лучше, чем в чём угодно, что мы могли бы купить. Мы работаем с ними.',
+  'The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.':
+    'Первые двадцать пять резиденций встанут по Черногории с III квартала 2026: горы на севере, винный край посередине и несколько площадок на побережье юга. Следом Хорватия, дальше — шире.',
+  'The people': 'Люди',
+  'Who we are': 'Кто мы',
+  'Yuri Korsakov': 'Юрий Корсаков',
+  'Sergei Ermakov': 'Сергей Ермаков',
+  'Nana Tabidze': 'Нана Табидзе',
+  'Aleksan Vartapetyan': 'Алексан Вартапетян',
+  'Founder · Operations': 'Основатель · Операции',
+  'Co-founder · Brand': 'Сооснователь · Бренд',
+  'Advisor · Guest experience': 'Советник · Гостевой опыт',
+  'Platform engineering': 'Разработка платформы',
+  'Six years across architecture and hospitality. Designed the concept, moved to Montenegro to run production and deployment on the ground.':
+    'Шесть лет в архитектуре и гостеприимстве. Придумал концепцию, переехал в Черногорию — вести производство и развёртывание на месте.',
+  'Ten years in hospitality and real estate marketing, including Wyndham, Best Western and Radisson Individuals.':
+    'Десять лет в маркетинге гостеприимства и недвижимости, включая Wyndham, Best Western и Radisson Individuals.',
+  'Thirty years of executive leadership, and founder of an award-winning Georgian destination operator.':
+    'Тридцать лет на руководящих позициях, основательница отмеченного наградами грузинского туроператора.',
+  'Five years full-stack. Builds the booking engine and the farm-partner platform.':
+    'Пять лет full-stack. Делает движок бронирования и платформу для ферм-партнёров.',
+  'Aleksan Vartapetyan, no portrait yet': 'Алексан Вартапетян, портрета пока нет',
+
+  /* Terms and privacy */
+  'Who you are dealing with': 'С кем вы имеете дело',
+  '[Legal name], registered in [city, country] under number [registration number]. Address: [address]. Email:':
+    '[Юридическое название], зарегистрировано в [город, страна] под номером [регистрационный номер]. Адрес: [адрес]. Email:',
+  'Enquiries and bookings': 'Заявки и бронирование',
+  'Nothing on this site is a booking or an offer of one. Sending the form registers your interest and starts a conversation by email. Rates shown are indicative and are not confirmed until booking opens.':
+    'Ничто на этом сайте не является бронированием или офертой. Отправка формы фиксирует ваш интерес и начинает переписку по email. Указанные цены ориентировочные и не подтверждены до открытия бронирования.',
+  'Rates and payment': 'Цены и оплата',
+  'All rates are in euro and include [VAT / no VAT — state which]. Payment terms, deposits and cancellation windows will be stated in full when booking opens. [Complete before launch.]':
+    'Все цены указаны в евро и включают [НДС / без НДС — уточнить]. Условия оплаты, депозиты и сроки отмены будут описаны полностью при открытии бронирования. [Заполнить до запуска.]',
+  'On site': 'На месте',
+  'Residences stand on private working farms. [State: access, arrival hours, whether children and dogs are welcome, what the farm expects of guests.]':
+    'Резиденции стоят на частных действующих фермах. [Указать: доступ, часы заезда, можно ли с детьми и собаками, чего ферма ждёт от гостей.]',
+  'Cancellation': 'Отмена',
+  '[Decide and state: free cancellation window, deposit, and what happens if we cancel.]':
+    '[Определить и указать: срок бесплатной отмены, депозит и что происходит, если отменяем мы.]',
+  'Law': 'Право',
+  'These terms are governed by the law of [country]. Last updated [date].':
+    'Настоящие условия регулируются правом страны [страна]. Последнее обновление: [дата].',
+  'What we collect': 'Что мы собираем',
+  'Only what you type into a form: your name, your email, and whatever you write in the message. We ask for nothing else and we set no tracking cookies.':
+    'Только то, что вы вводите в форму: имя, email и текст сообщения. Больше мы ничего не спрашиваем и не ставим отслеживающих куки.',
+  'What we do with it': 'Что мы с этим делаем',
+  "We answer you, and we write to you when dates open if that is what you asked for. We don't sell your details and we don't add you to anything you didn't ask for.":
+    'Мы отвечаем вам и пишем, когда откроются даты, если вы об этом просили. Мы не продаём ваши данные и не подписываем вас ни на что, о чём вы не просили.',
+  'Who else sees it': 'Кто ещё это видит',
+  'Form submissions pass through FormSubmit, which forwards them to our inbox. Email goes through Google. Fonts load from Google Fonts, which sees your IP address as part of serving them. Each has its own privacy policy.':
+    'Отправленные формы проходят через FormSubmit, который пересылает их нам на почту. Почта работает через Google. Шрифты загружаются с Google Fonts, который при этом видит ваш IP-адрес. У каждого из них своя политика конфиденциальности.',
+  'Your rights': 'Ваши права',
+  'Write to': 'Напишите на',
+  "and we'll tell you what we hold about you, correct it, or delete it. Last updated [date].":
+    '— и мы расскажем, что о вас храним, исправим это или удалим. Последнее обновление: [дата].',
+  '[Legal name], [address],': '[Юридическое название], [адрес],',
+  ', decides how your data is used on this site.':
+    ' — определяет, как используются ваши данные на этом сайте.',
+
+  /* Photography */
+  'Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it':
+    'Residence 21ft на действующей ферме: черепичная крыша, шалфейные ставни, оливы и горы позади',
+  'Residence 21ft from the front, arched oak door and a timber deck over the trailer bed':
+    'Residence 21ft спереди: арочная дубовая дверь и деревянная терраса над платформой прицепа',
+  'Residence 21ft from the gable end at dusk, stone cladding and lit windows':
+    'Residence 21ft с торца в сумерках: каменная облицовка и освещённые окна',
+  'Inside Residence 21ft: the living end, the loft ladder, and the bathroom door beyond the kitchen':
+    'Внутри Residence 21ft: гостиная часть, лестница на антресоль и дверь ванной за кухней',
+  'The galley kitchen in Residence 21ft, sage cabinetry under a beamed vaulted ceiling':
+    'Кухня-камбуз в Residence 21ft: шалфейные фасады под балочным сводом',
+  'The shower in Residence 21ft, a brass rain head against a stacked stone wall':
+    'Душ в Residence 21ft: латунная тропическая лейка на фоне каменной кладки',
+  'The bathroom in Residence 21ft, recessed shelves, terracotta floor and a small window':
+    'Ванная в Residence 21ft: встроенные полки, терракотовый пол и небольшое окно',
+  'Grand Residence 24ft on an olive terrace, glazed double doors between green shutters':
+    'Grand Residence 24ft на оливковой террасе: остеклённые двустворчатые двери между зелёными ставнями',
+
+  /* Interpolated in JS */
+  'Show photo %1 of %2': 'Фото %1 из %2'
+};
+
+/* Headlines whose Russian word order differs from the English. */
+const RU_HTML = {
+  'hero-title': 'Дом, который едет туда, где <em>сезон</em>',
+  'manifesto': 'Отель хорош ровно настолько, насколько хорошо <em>место, где он построен</em>.'
+};
+
+const META = {
+  en: {
+    title: 'Tiny Mansion — off-grid residences on working farms',
+    description: 'Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q3 2026.'
+  },
+  ru: {
+    title: 'Tiny Mansion — автономные резиденции на действующих фермах',
+    description: 'Автономные резиденции премиум-класса на действующих фермах. Семь дней автономии, системы яхтенного класса. Первые резиденции — Черногория, III квартал 2026.'
+  }
+};
+
+const LANG_KEY = 'tm-lang';
+const I18N_ATTRS = ['placeholder', 'alt', 'aria-label', 'title', 'data-label'];
+const originalAttrs = new WeakMap();
+let lang = 'en';
+
+/* For strings built in JS, where a plain lookup cannot carry the numbers. */
+function T(s) { return (lang === 'ru' && RU[s]) || s; }
+
+function applyLang() {
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    let store = originalAttrs.get(el);
+    if (!store) originalAttrs.set(el, (store = {}));
+    if (store.__html === undefined) store.__html = el.innerHTML;
+    const ru = RU_HTML[el.getAttribute('data-i18n-html')];
+    el.innerHTML = (lang === 'ru' && ru) || store.__html;
+  });
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const parent = node.parentNode;
+    if (!parent || parent.nodeName === 'SCRIPT' || parent.nodeName === 'STYLE' ||
+        parent.nodeName === 'NOSCRIPT') continue;
+    /* those two headlines are swapped whole, above */
+    if (parent.closest && parent.closest('[data-i18n-html]')) continue;
+    if (node.__en === undefined) node.__en = node.nodeValue;
+    const key = node.__en.trim();
+    if (!key) continue;
+    const ru = lang === 'ru' ? RU[key] : null;
+    node.nodeValue = ru ? node.__en.replace(key, ru) : node.__en;
+  }
+
+  document.querySelectorAll(I18N_ATTRS.map(a => '[' + a + ']').join(',')).forEach(el => {
+    let store = originalAttrs.get(el);
+    if (!store) originalAttrs.set(el, (store = {}));
+    I18N_ATTRS.forEach(a => {
+      if (!el.hasAttribute(a)) return;
+      if (store[a] === undefined) store[a] = el.getAttribute(a);
+      const ru = lang === 'ru' ? RU[store[a]] : null;
+      el.setAttribute(a, ru || store[a]);
+    });
+  });
+
+  /* Composed last, so it picks up the alt text the pass above just set. */
+  document.querySelectorAll('[data-photo-i]').forEach(el => {
+    const img = el.querySelector('img');
+    const label = T('Show photo %1 of %2')
+      .replace('%1', el.getAttribute('data-photo-i'))
+      .replace('%2', el.getAttribute('data-photo-n'));
+    el.setAttribute('aria-label', img ? label + ': ' + img.getAttribute('alt') : label);
+  });
+
+  document.title = META[lang].title;
+  const desc = document.querySelector('meta[name="description"]');
+  if (desc) desc.setAttribute('content', META[lang].description);
+
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+}
+
+function setLang(next) {
+  if (next === lang) return;
+  lang = next;
+  try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* private mode */ }
+  applyLang();
+}
+
+function initLang() {
+  let saved = null;
+  try { saved = localStorage.getItem(LANG_KEY); } catch (e) { /* private mode */ }
+  /* A remembered choice wins; otherwise follow the browser. */
+  lang = (saved === 'ru' || saved === 'en') ? saved
+       : (String(navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en');
+
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.addEventListener('click', () => setLang(b.getAttribute('data-lang'))));
+
+  applyLang();
 }
 
 /* ==========================================================
@@ -2043,6 +2563,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initHeaderState();
   initForms();
+  initLang();
 
   const q = new URLSearchParams(location.search);
   const thanks = q.get('thanks') === '1';
