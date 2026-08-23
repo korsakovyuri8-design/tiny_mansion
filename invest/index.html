@@ -25,7 +25,7 @@
   --img-res24:     url('../residence-24.jpg');    /* 24ft на террасе */
   --img-zone-n:    url('../zone-north.jpg');      /* хвойный лес и скальные вершины */
   --img-zone-c:    url('../zone-center.jpg');     /* виноградники до горизонта */
-  --img-zone-s:    none;                          /* нужен кадр с водой: Которский залив — img/south.jpg */
+  --img-zone-s:    url('../zone-south.jpg');      /* Которский залив, оливковая терраса над водой */
   --img-farm:      url('../farm-network.jpg');    /* хутор с амбаром, овцы, резиденции на площадке */
   --img-interior:  url('../residence-21-d.jpg');  /* интерьер, гостиная с лестницей */
   --img-closing:   url('../residence-21-c.jpg');  /* торец в сумерках */
@@ -223,7 +223,7 @@ td.us{font-weight:500}
    ради которого карточка и существует. */
 .zone--n{background-image:var(--img-zone-n);background-position:50% 34%}
 .zone--c{background-image:var(--img-zone-c);background-position:12% 46%}
-.zone--s{background-image:var(--img-zone-s)}
+.zone--s{background-image:var(--img-zone-s);background-position:52% 42%}
 .zone::after{content:"";position:absolute;inset:0;
   background:linear-gradient(to top,rgba(20,17,15,.93) 0%,rgba(20,17,15,.74) 40%,rgba(20,17,15,.18) 100%)}
 .zone-in{position:relative;z-index:2}

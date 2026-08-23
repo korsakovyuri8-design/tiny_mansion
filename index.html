@@ -635,6 +635,17 @@
     .exp-card p { font-size: 15px; line-height: 1.65; color: var(--body); margin-top: 10px; max-width: 46ch; }
     .exp-meta { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-ink); margin-top: 12px; }
 
+    /* Wide plate opening the farms page */
+    .network-band { margin: 40px 0 0; }
+    .network-band img {
+      width: 100%; aspect-ratio: 2.4 / 1; object-fit: cover;
+      object-position: 50% 58%; display: block; background: var(--card);
+    }
+    .network-band figcaption {
+      font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-top: 12px;
+    }
+
     .empty-msg { text-align: center; padding: 70px 0; font-size: 14px; color: var(--muted); grid-column: 1 / -1; }
 
     .opening-block { padding: clamp(60px, 10vw, 120px) 0; text-align: center; max-width: 620px; margin: 0 auto; }
@@ -1173,6 +1184,16 @@
           <span class="eyebrow">The network</span>
           <h1 class="page-title serif">Farms</h1>
           <p class="page-lede">Working households and highland pastures that host our residences. Each one was already there, doing its own work.</p>
+
+          <!-- The eight farms below carry no photograph yet, so the page opens
+               on what a partner yard actually looks like. Generic on purpose:
+               it illustrates the arrangement, it does not stand for any one
+               household. -->
+          <figure class="network-band">
+            <img src="farm-yard.jpg" alt="A residence standing at the edge of a working farmyard: stone house, timber barn, tractor, vegetable beds and grazing goats"
+                 loading="lazy" decoding="async">
+            <figcaption>A corner of the yard, and nothing built for us</figcaption>
+          </figure>
 
           <div class="region-tags" id="farms-filter-pills"></div>
           <div class="cards-2" id="all-farms-grid"></div>
@@ -2252,6 +2273,9 @@ const RU = {
   'The network': 'Сеть',
   'Working households and highland pastures that host our residences. Each one was already there, doing its own work.':
     'Действующие подворья и горные пастбища, которые принимают наши резиденции. Каждое было здесь и раньше и делало свою работу.',
+  'A corner of the yard, and nothing built for us': 'Угол двора — и ничего, построенного под нас',
+  'A residence standing at the edge of a working farmyard: stone house, timber barn, tractor, vegetable beds and grazing goats':
+    'Резиденция на краю действующего фермерского двора: каменный дом, деревянный амбар, трактор, грядки и пасущиеся козы',
   'Ethno Household Đedovina': 'Этно-усадьба Đedovina',
   'Household Karadžić': 'Усадьба Karadžić',
   'Etno Katun Đedov Do': 'Этно-катун Đedov Do',
