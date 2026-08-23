@@ -158,6 +158,11 @@
 
     /* Photography runs through real <img> elements so it can carry alt text
        and lazy-load; .photo-block is the shared cover-fit skin. */
+    /* <picture> only exists to offer the browser a choice of file. It must
+       not become a box of its own, or every layout that expects the image
+       to be the child gets an inline wrapper in the way. */
+    picture { display: contents; }
+
     .photo-block {
       display: block; width: 100%; height: 100%;
       object-fit: cover; object-position: center;
@@ -271,7 +276,11 @@
     }
     .hero-media {
       position: absolute; inset: 0;
+      /* Plain url() first: a browser without image-set() ignores the second
+         declaration and keeps this one. */
       background-image: url('/residence-21.jpg');
+      background-image: image-set(url('/residence-21-2048.webp') type('image/webp'),
+                                  url('/residence-21.jpg')       type('image/jpeg'));
       background-size: cover; background-position: center;
       transform: scale(1.06);
       animation: driftIn 18s ease-out forwards;
@@ -519,8 +528,27 @@
       position: absolute; inset: 0;
       /* The whole set on a farm, rather than a third pass of the same house:
          hero and both rows already carry the single residence. */
-      background-image: url('/network-evening.jpg'); background-size: cover; background-position: center;
+      background-image: url('/network-evening.jpg');
+      background-image: image-set(url('/network-evening-2048.webp') type('image/webp'),
+                                  url('/network-evening.jpg')       type('image/jpeg'));
+      background-size: cover; background-position: center;
       opacity: 0.3;
+    }
+
+    /* Neither of the two full-bleed backgrounds can carry a srcset, so a
+       narrow screen is pointed at the 1024 files by hand. Declared after
+       both rules above, or the wide version would win on source order. */
+    @media (max-width: 900px) {
+      .hero-media {
+        background-image: url('/residence-21.jpg');
+        background-image: image-set(url('/residence-21-1024.webp') type('image/webp'),
+                                    url('/residence-21.jpg')       type('image/jpeg'));
+      }
+      .cta-band-media {
+        background-image: url('/network-evening.jpg');
+        background-image: image-set(url('/network-evening-1024.webp') type('image/webp'),
+                                    url('/network-evening.jpg')       type('image/jpeg'));
+      }
     }
     .cta-band-inner { position: relative; z-index: 2; max-width: 700px; }
     .cta-band h2 { font-size: var(--t-display); line-height: 1.04; color: var(--bg-cream); letter-spacing: -0.01em; }
@@ -911,7 +939,7 @@
         </div>
         <div class="country-panels" id="country-panels">
       <div class="country-panel" role="button" tabindex="0" onclick="openCountry('montenegro')">
-        <div class="country-panel-media"><img class="photo-block" src="/montenegro.jpg" alt="Three residences standing on a working farm in Montenegro, vineyard and olive terraces below a limestone massif" loading="lazy" decoding="async"></div>
+        <div class="country-panel-media"><picture><source type="image/webp" srcset="/montenegro-1024.webp 1024w, /montenegro-1440.webp 1440w, /montenegro-2048.webp 2048w" sizes="(max-width: 700px) 100vw, 25vw"><img class="photo-block" src="/montenegro.jpg" alt="Three residences standing on a working farm in Montenegro, vineyard and olive terraces below a limestone massif" loading="lazy" decoding="async"></picture></div>
         <div class="country-panel-scrim"></div>
         <div class="country-panel-body">
           <span class="country-panel-index">01</span>
@@ -990,7 +1018,7 @@
           <div id="residence-rows">
     <div class="res-row  reveal">
       <div class="res-media" role="button" tabindex="0" aria-label="See Residence 21ft" onclick="openResidence('residence-21')">
-        <img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft" loading="lazy" decoding="async">
+        <picture><source type="image/webp" srcset="/residence-21-1024.webp 1024w, /residence-21-1440.webp 1440w, /residence-21-2048.webp 2048w" sizes="(max-width: 900px) 100vw, 50vw"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft" loading="lazy" decoding="async"></picture>
       </div>
       <div class="res-text">
         <span class="res-index serif">01</span>
@@ -1011,7 +1039,7 @@
     </div>
     <div class="res-row flip reveal">
       <div class="res-media" role="button" tabindex="0" aria-label="See Grand Residence 24ft" onclick="openResidence('residence-24')">
-        <img class="photo-block" src="/residence-24.jpg" alt="Grand Residence 24ft" loading="lazy" decoding="async">
+        <picture><source type="image/webp" srcset="/residence-24-1024.webp 1024w, /residence-24-1440.webp 1440w, /residence-24-2048.webp 2048w" sizes="(max-width: 900px) 100vw, 50vw"><img class="photo-block" src="/residence-24.jpg" alt="Grand Residence 24ft" loading="lazy" decoding="async"></picture>
       </div>
       <div class="res-text">
         <span class="res-index serif">02</span>
@@ -1150,7 +1178,7 @@
       </div>
 
       <div class="res-hero">
-        <div class="res-hero-media" id="residence-main-media"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it" fetchpriority="high" decoding="async"></div>
+        <div class="res-hero-media" id="residence-main-media"><picture><source type="image/webp" srcset="/residence-21-1024.webp 1024w, /residence-21-1440.webp 1440w, /residence-21-2048.webp 2048w" sizes="100vw"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it" fetchpriority="high" decoding="async"></picture></div>
         <div class="res-hero-scrim"></div>
         <div class="container res-hero-body">
           <span class="eyebrow on-dark" id="residence-eyebrow">Residence 01</span>
@@ -1163,13 +1191,13 @@
       </div>
 
       <div class="res-thumbs" id="residence-thumbnails">
-    <button type="button" class="res-thumb active" data-photo-i="1" data-photo-n="7" onclick="swapPhoto(this, 0)" aria-label="Show photo 1 of 7: Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it" loading="lazy" decoding="async"></button>
-    <button type="button" class="res-thumb " data-photo-i="2" data-photo-n="7" onclick="swapPhoto(this, 1)" aria-label="Show photo 2 of 7: Residence 21ft from the front, arched oak door and a timber deck over the trailer bed"><img class="photo-block" src="/residence-21-b.jpg" alt="Residence 21ft from the front, arched oak door and a timber deck over the trailer bed" loading="lazy" decoding="async"></button>
-    <button type="button" class="res-thumb " data-photo-i="3" data-photo-n="7" onclick="swapPhoto(this, 2)" aria-label="Show photo 3 of 7: Residence 21ft from the gable end at dusk, stone cladding and lit windows"><img class="photo-block" src="/residence-21-c.jpg" alt="Residence 21ft from the gable end at dusk, stone cladding and lit windows" loading="lazy" decoding="async"></button>
-    <button type="button" class="res-thumb " data-photo-i="4" data-photo-n="7" onclick="swapPhoto(this, 3)" aria-label="Show photo 4 of 7: Inside Residence 21ft: the living end, the loft ladder, and the bathroom door beyond the kitchen"><img class="photo-block" src="/residence-21-d.jpg" alt="Inside Residence 21ft: the living end, the loft ladder, and the bathroom door beyond the kitchen" loading="lazy" decoding="async"></button>
-    <button type="button" class="res-thumb " data-photo-i="5" data-photo-n="7" onclick="swapPhoto(this, 4)" aria-label="Show photo 5 of 7: The galley kitchen in Residence 21ft, sage cabinetry under a beamed vaulted ceiling"><img class="photo-block" src="/residence-21-e.jpg" alt="The galley kitchen in Residence 21ft, sage cabinetry under a beamed vaulted ceiling" loading="lazy" decoding="async"></button>
-    <button type="button" class="res-thumb " data-photo-i="6" data-photo-n="7" onclick="swapPhoto(this, 5)" aria-label="Show photo 6 of 7: The shower in Residence 21ft, a brass rain head against a stacked stone wall"><img class="photo-block" src="/residence-21-f.jpg" alt="The shower in Residence 21ft, a brass rain head against a stacked stone wall" loading="lazy" decoding="async"></button>
-    <button type="button" class="res-thumb " data-photo-i="7" data-photo-n="7" onclick="swapPhoto(this, 6)" aria-label="Show photo 7 of 7: The bathroom in Residence 21ft, recessed shelves, terracotta floor and a small window"><img class="photo-block" src="/residence-21-g.jpg" alt="The bathroom in Residence 21ft, recessed shelves, terracotta floor and a small window" loading="lazy" decoding="async"></button></div>
+    <button type="button" class="res-thumb active" data-photo-i="1" data-photo-n="7" onclick="swapPhoto(this, 0)" aria-label="Show photo 1 of 7: Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it"><picture><source type="image/webp" srcset="/residence-21-1024.webp 1024w, /residence-21-1440.webp 1440w, /residence-21-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft standing on a working farm, tiled roof and sage shutters, olive trees and the mountains behind it" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="2" data-photo-n="7" onclick="swapPhoto(this, 1)" aria-label="Show photo 2 of 7: Residence 21ft from the front, arched oak door and a timber deck over the trailer bed"><picture><source type="image/webp" srcset="/residence-21-b-1024.webp 1024w, /residence-21-b-1440.webp 1440w, /residence-21-b-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21-b.jpg" alt="Residence 21ft from the front, arched oak door and a timber deck over the trailer bed" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="3" data-photo-n="7" onclick="swapPhoto(this, 2)" aria-label="Show photo 3 of 7: Residence 21ft from the gable end at dusk, stone cladding and lit windows"><picture><source type="image/webp" srcset="/residence-21-c-1024.webp 1024w, /residence-21-c-1440.webp 1440w, /residence-21-c-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21-c.jpg" alt="Residence 21ft from the gable end at dusk, stone cladding and lit windows" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="4" data-photo-n="7" onclick="swapPhoto(this, 3)" aria-label="Show photo 4 of 7: Inside Residence 21ft: the living end, the loft ladder, and the bathroom door beyond the kitchen"><picture><source type="image/webp" srcset="/residence-21-d-1024.webp 1024w, /residence-21-d-1440.webp 1440w, /residence-21-d-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21-d.jpg" alt="Inside Residence 21ft: the living end, the loft ladder, and the bathroom door beyond the kitchen" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="5" data-photo-n="7" onclick="swapPhoto(this, 4)" aria-label="Show photo 5 of 7: The galley kitchen in Residence 21ft, sage cabinetry under a beamed vaulted ceiling"><picture><source type="image/webp" srcset="/residence-21-e-1024.webp 1024w, /residence-21-e-1440.webp 1440w, /residence-21-e-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21-e.jpg" alt="The galley kitchen in Residence 21ft, sage cabinetry under a beamed vaulted ceiling" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="6" data-photo-n="7" onclick="swapPhoto(this, 5)" aria-label="Show photo 6 of 7: The shower in Residence 21ft, a brass rain head against a stacked stone wall"><picture><source type="image/webp" srcset="/residence-21-f-1024.webp 1024w, /residence-21-f-1440.webp 1440w, /residence-21-f-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21-f.jpg" alt="The shower in Residence 21ft, a brass rain head against a stacked stone wall" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="7" data-photo-n="7" onclick="swapPhoto(this, 6)" aria-label="Show photo 7 of 7: The bathroom in Residence 21ft, recessed shelves, terracotta floor and a small window"><picture><source type="image/webp" srcset="/residence-21-g-1024.webp 1024w, /residence-21-g-1440.webp 1440w, /residence-21-g-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/residence-21-g.jpg" alt="The bathroom in Residence 21ft, recessed shelves, terracotta floor and a small window" loading="lazy" decoding="async"></picture></button></div>
 
       <div class="container">
         <div class="res-intro">
@@ -1447,7 +1475,7 @@
           <div class="team-grid">
             <div class="team-card">
               <div class="team-photo">
-                <img class="photo-block" src="/team-yuri.jpg" alt="Yuri Korsakov" loading="lazy" decoding="async">
+                <picture><source type="image/webp" srcset="/team-yuri-1024.webp 1024w, /team-yuri-1440.webp 1440w, /team-yuri-2048.webp 2048w" sizes="(max-width: 700px) 100vw, 33vw"><img class="photo-block" src="/team-yuri.jpg" alt="Yuri Korsakov" loading="lazy" decoding="async"></picture>
               </div>
               <h3 class="serif">Yuri Korsakov</h3>
               <div class="team-role">Founder · Operations</div>
@@ -1455,7 +1483,7 @@
             </div>
             <div class="team-card">
               <div class="team-photo">
-                <img class="photo-block" src="/team-sergei.jpg" alt="Sergei Ermakov" loading="lazy" decoding="async">
+                <picture><source type="image/webp" srcset="/team-sergei-1024.webp 1024w, /team-sergei-1440.webp 1440w, /team-sergei-2048.webp 2048w" sizes="(max-width: 700px) 100vw, 33vw"><img class="photo-block" src="/team-sergei.jpg" alt="Sergei Ermakov" loading="lazy" decoding="async"></picture>
               </div>
               <h3 class="serif">Sergei Ermakov</h3>
               <div class="team-role">Co-founder · Brand</div>
@@ -1463,7 +1491,7 @@
             </div>
             <div class="team-card">
               <div class="team-photo">
-                <img class="photo-block" src="/team-nana.jpg" alt="Nana Tabidze" loading="lazy" decoding="async">
+                <picture><source type="image/webp" srcset="/team-nana-1024.webp 1024w, /team-nana-1440.webp 1440w, /team-nana-2048.webp 2048w" sizes="(max-width: 700px) 100vw, 33vw"><img class="photo-block" src="/team-nana.jpg" alt="Nana Tabidze" loading="lazy" decoding="async"></picture>
               </div>
               <h3 class="serif">Nana Tabidze</h3>
               <div class="team-role">Advisor · Guest experience</div>
@@ -1767,10 +1795,30 @@ function esc(v) {
 
 /* Real <img> so photography carries alt text and lazy-loads. Without a file
    the block falls back to the brand colour rather than a broken request. */
-function media(photo, color, alt, eager) {
+/* How wide this photograph is actually painted, so the browser can pick a
+   file instead of always taking the largest. Rough is fine — these only
+   have to land on the right side of 1024. */
+const SIZES = {
+  hero:  '100vw',
+  panel: '(max-width: 700px) 100vw, 25vw',
+  row:   '(max-width: 900px) 100vw, 50vw',
+  card:  '(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw',
+  thumb: '(max-width: 700px) 25vw, 120px'
+};
+
+function media(photo, color, alt, eager, size) {
   if (!photo) return '<div class="color-block" style="background-color:' + esc(color) + '"></div>';
-  return '<img class="photo-block" src="' + esc(asset(photo)) + '" alt="' + esc(alt || '') + '"' +
-         (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">';
+  const jpg = esc(asset(photo));
+  /* images.py writes a WebP pair beside every .jpg. The <img> keeps the
+     .jpg, so a browser without WebP still gets the photograph. */
+  const stem = jpg.replace(/\.jpg$/, '');
+  const srcset = stem + '-1024.webp 1024w, ' + stem + '-1440.webp 1440w, ' +
+                 stem + '-2048.webp 2048w';
+  return '<picture>' +
+           '<source type="image/webp" srcset="' + srcset + '" sizes="' + esc(SIZES[size] || SIZES.row) + '">' +
+           '<img class="photo-block" src="' + jpg + '" alt="' + esc(alt || '') + '"' +
+           (eager ? ' fetchpriority="high"' : ' loading="lazy"') + ' decoding="async">' +
+         '</picture>';
 }
 
 /* Pages now live at real paths (/about/, /farm/f-pony/), so a bare filename
@@ -2069,7 +2117,7 @@ function renderCountryPanels() {
   document.getElementById('country-panels').innerHTML =
     Object.values(DATA.countries).map(c => `
       <div class="country-panel" role="button" tabindex="0" onclick="openCountry('${c.id}')">
-        <div class="country-panel-media">${media(c.photo, c.color, c.alt || c.name)}</div>
+        <div class="country-panel-media">${media(c.photo, c.color, c.alt || c.name, false, 'panel')}</div>
         <div class="country-panel-scrim"></div>
         <div class="country-panel-body">
           <span class="country-panel-index">${c.index}</span>
@@ -2083,7 +2131,7 @@ function renderResidenceRows(targetId) {
   document.getElementById(targetId).innerHTML = RESIDENCES.map((r, i) => `
     <div class="res-row ${i % 2 ? 'flip' : ''} reveal">
       <div class="res-media" role="button" tabindex="0" aria-label="See ${esc(r.name)}" onclick="openResidence('${r.id}')">
-        ${media(r.photo, r.color, r.name)}
+        ${media(r.photo, r.color, r.name, false, 'row')}
       </div>
       <div class="res-text">
         <span class="res-index serif">${r.index}</span>
@@ -2116,7 +2164,7 @@ function openCountry(countryId) {
   document.getElementById('country-status').innerText = c.status;
   document.getElementById('country-cta-name').innerText = c.name;
   document.getElementById('country-hero-media').innerHTML =
-    media(c.heroPhoto || c.photo, c.color, c.heroAlt || c.alt || c.name, true);
+    media(c.heroPhoto || c.photo, c.color, c.heroAlt || c.alt || c.name, true, 'hero');
 
   const tabsRow = document.getElementById('country-tabs-row');
   const opening = document.getElementById('country-opening-content');
@@ -2180,7 +2228,7 @@ function switchTab(tabId) {
 function renderCountryResidences() {
   document.getElementById('country-residences-grid').innerHTML = RESIDENCES.map(r => `
     <div class="res-card" role="button" tabindex="0" onclick="openResidence('${r.id}')">
-      <div class="res-card-media">${media(r.photo, r.color, r.name)}</div>
+      <div class="res-card-media">${media(r.photo, r.color, r.name, false, 'card')}</div>
       <div class="res-card-body">
         <h3 class="serif">${r.name}</h3>
         <div class="res-card-meta">${r.specs[2][1]} guests \u00B7 ${r.specs[3][1]}</div>
@@ -2198,7 +2246,7 @@ function renderCountryFarms(region) {
     ? '<div class="empty-msg">No farms listed in this region yet</div>'
     : list.map(f => `
     <div class="farm-card" role="button" tabindex="0" onclick="openFarm('${f.id}')">
-      <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city)}</div>
+      <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city, false, 'card')}</div>
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">${f.type}</span>
@@ -2231,14 +2279,14 @@ function openResidence(residenceId) {
   document.getElementById('residence-title').innerText = r.name;
   document.getElementById('residence-rate').innerText = '\u20AC' + r.rate + ' / night';
   document.getElementById('residence-desc').innerText = r.desc;
-  document.getElementById('residence-main-media').innerHTML = media(r.photo, r.color, (r.photos && r.photos[0] && r.photos[0].alt) || r.name, true);
+  document.getElementById('residence-main-media').innerHTML = media(r.photo, r.color, (r.photos && r.photos[0] && r.photos[0].alt) || r.name, true, 'hero');
 
   /* The label carries numbers, so applyLang() composes it from these two
      attributes rather than looking a finished sentence up in the dictionary. */
   document.getElementById('residence-thumbnails').innerHTML = (r.photos || []).map((p, i) => `
     <button type="button" class="res-thumb ${i === 0 ? 'active' : ''}"
             data-photo-i="${i + 1}" data-photo-n="${r.photos.length}"
-            onclick="swapPhoto(this, ${i})">${media(p.src, r.color, p.alt)}</button>`).join('');
+            onclick="swapPhoto(this, ${i})">${media(p.src, r.color, p.alt, false, 'thumb')}</button>`).join('');
 
   document.getElementById('residence-spec-table').innerHTML = r.specs.map(s => `
     <div class="spec-cell"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`).join('');
@@ -2252,7 +2300,7 @@ function swapPhoto(el, index) {
   const p = currentResidence && currentResidence.photos && currentResidence.photos[index];
   if (!p) return;
   document.getElementById('residence-main-media').innerHTML =
-    media(p.src, currentResidence.color, p.alt, true);
+    media(p.src, currentResidence.color, p.alt, true, 'hero');
   document.querySelectorAll('#residence-thumbnails .res-thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   applyLang();
@@ -2288,7 +2336,7 @@ function openFarm(farmId) {
   document.getElementById('farm-back-link').setAttribute('href', countryHref);
   document.getElementById('farm-breadcrumb-name').innerText = found.name;
   document.getElementById('farm-title').innerText = found.name;
-  document.getElementById('farm-detail-media').innerHTML = media(found.photo, found.color, found.name + ', ' + found.city, true);
+  document.getElementById('farm-detail-media').innerHTML = media(found.photo, found.color, found.name + ', ' + found.city, true, 'hero');
 
   document.getElementById('farm-facts').innerHTML = `
     <div><span class="fact-label">Where</span><span class="fact-value">${found.city}, ${c.name}</span></div>
@@ -2329,7 +2377,7 @@ function renderAllFarms() {
     ? '<div class="empty-msg">No farms listed here yet</div>'
     : list.map(f => `
     <div class="farm-card" role="button" tabindex="0" onclick="openFarm('${f.id}')">
-      <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city)}</div>
+      <div class="farm-card-media">${media(f.photo, f.color, f.name + ', ' + f.city, false, 'card')}</div>
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">${f.type}</span>

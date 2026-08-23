@@ -6,6 +6,12 @@
    ========================================================== */
 /* ═══════════════════════════════════════════════
    КАРТИНКИ — меняй только здесь.
+   Здесь стоит .webp без запасного .jpg: фолбэк
+   двумя объявлениями работает для обычных свойств,
+   но не для переменных — при var() позднее
+   объявление просто выигрывает. WebP понимают все
+   браузеры с 2020 года, а страницу мы отправляем
+   адресно. Файлы рядом делает images.py.
    Пять снимков берутся из фотографий сайта (../),
    пять пока не сняты и стоят как none: плита
    рисуется цветом, битых запросов нет.
@@ -13,16 +19,16 @@
    рядом с этой страницей и подставь путь.
    ═══════════════════════════════════════════════ */
 :root{
-  --img-hero:      url('/residence-21.jpg');    /* резиденция на ферме, горы */
-  --img-country:   url('/north-empty.jpg');     /* север: ни людей, ни построек — та самая пустота */
-  --img-res21:     url('/residence-21-b.jpg');  /* 21ft спереди */
-  --img-res24:     url('/residence-24.jpg');    /* 24ft на террасе */
-  --img-zone-n:    url('/zone-north.jpg');      /* хвойный лес и скальные вершины */
-  --img-zone-c:    url('/zone-center.jpg');     /* виноградники до горизонта */
-  --img-zone-s:    url('/zone-south.jpg');      /* Которский залив, оливковая терраса над водой */
-  --img-farm:      url('/farm-network.jpg');    /* хутор с амбаром, овцы, резиденции на площадке */
-  --img-interior:  url('/residence-21-d.jpg');  /* интерьер, гостиная с лестницей */
-  --img-closing:   url('/residence-21-c.jpg');  /* торец в сумерках */
+  --img-hero:      url('/residence-21-2048.webp');    /* резиденция на ферме, горы */
+  --img-country:   url('/north-empty-2048.webp');     /* север: ни людей, ни построек — та самая пустота */
+  --img-res21:     url('/residence-21-b-2048.webp');  /* 21ft спереди */
+  --img-res24:     url('/residence-24-2048.webp');    /* 24ft на террасе */
+  --img-zone-n:    url('/zone-north-2048.webp');      /* хвойный лес и скальные вершины */
+  --img-zone-c:    url('/zone-center-2048.webp');     /* виноградники до горизонта */
+  --img-zone-s:    url('/zone-south-2048.webp');      /* Которский залив, оливковая терраса над водой */
+  --img-farm:      url('/farm-network-2048.webp');    /* хутор с амбаром, овцы, резиденции на площадке */
+  --img-interior:  url('/residence-21-d-2048.webp');  /* интерьер, гостиная с лестницей */
+  --img-closing:   url('/residence-21-c-2048.webp');  /* торец в сумерках */
 
   --cream:#F7F3ED; --card:#EFE9DF; --ink:#1A1614; --gold:#9C7A3C;
   /* Брендовое золото даёт на кремовом только 3,6:1. Мелкие капсы на светлом
@@ -34,6 +40,25 @@
   --cream-muted:rgba(247,243,237,.66);
   --serif:"EB Garamond",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+/* Every plate on this page is a full-bleed background, and a background
+   cannot carry a srcset. On a narrow screen the same photographs come
+   from the 1024 files instead — about a third of the weight for a
+   third of the width. */
+@media(max-width:900px){
+  :root{
+    --img-hero:      url('/residence-21-1024.webp');
+    --img-country:   url('/north-empty-1024.webp');
+    --img-res21:     url('/residence-21-b-1024.webp');
+    --img-res24:     url('/residence-24-1024.webp');
+    --img-zone-n:    url('/zone-north-1024.webp');
+    --img-zone-c:    url('/zone-center-1024.webp');
+    --img-zone-s:    url('/zone-south-1024.webp');
+    --img-farm:      url('/farm-network-1024.webp');
+    --img-interior:  url('/residence-21-d-1024.webp');
+    --img-closing:   url('/residence-21-c-1024.webp');
+  }
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
