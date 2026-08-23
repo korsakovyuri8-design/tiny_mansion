@@ -81,9 +81,11 @@ a{color:inherit}
    тот же, что на главной странице сайта. */
 .hero .eyebrow,.closing .eyebrow{color:#C7A96B}
 h1{font-weight:400;font-size:clamp(38px,7vw,76px);line-height:1.03;letter-spacing:-.02em}
-h2{font-weight:400;font-size:clamp(28px,5vw,46px);line-height:1.12;
-  letter-spacing:-.012em;margin-bottom:22px}
-h3{font-weight:500;font-size:21px;line-height:1.3;margin-bottom:7px}
+/* Кегль поднят примерно на 15%: на телефоне заголовки должны ловиться
+   беглым взглядом, а не вычитываться. */
+h2{font-weight:400;font-size:clamp(32px,5.2vw,48px);line-height:1.1;
+  letter-spacing:-.014em;margin-bottom:22px}
+h3{font-weight:500;font-size:clamp(22px,4.4vw,24px);line-height:1.28;margin-bottom:7px}
 p{margin-bottom:18px}
 p:last-child{margin-bottom:0}
 .lede{font-size:clamp(20px,2.5vw,24px);color:var(--muted);max-width:34em}
@@ -110,6 +112,30 @@ section{padding:96px 0}
 .hero-meta{margin-top:44px;padding-top:26px;border-top:1px solid rgba(247,243,237,.24);
   display:flex;flex-wrap:wrap;gap:14px 52px;font-family:var(--mono);
   font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,237,.72)}
+
+/* ── Дисбаланс ночёвок. Обе полосы меряют одну величину — долю ночёвок,
+   поэтому цвет один: разница в длине и есть весь смысл. Золотом идёт не
+   вторая «серия», а подпись-указатель. Значения продублированы текстом,
+   так что смысл не держится на одном цвете. ── */
+.split{margin-top:46px;border-top:1px solid var(--rule);padding-top:28px}
+.split-cap{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.split-row{padding:16px 0;border-bottom:1px solid var(--rule)}
+.split-row dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.split-row dd{display:flex;align-items:center;gap:18px}
+.split-track{position:relative;flex:1;height:12px;background:rgba(26,22,20,.09)}
+.split-bar{position:absolute;left:0;top:0;bottom:0;width:var(--w);
+  background:var(--ink);border-radius:0 3px 3px 0}
+.split-val{font-size:clamp(22px,3vw,30px);line-height:1;letter-spacing:-.02em;
+  min-width:3.6em;text-align:right}
+.split-us{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold-ink);margin-top:12px}
+.split-sum{margin-top:22px;font-size:clamp(19px,2.2vw,22px)}
+@media(max-width:560px){
+  .split-row dd{gap:12px}
+  .split-val{min-width:3.1em}
+}
 
 .plate{height:clamp(300px,58vh,620px);background-color:var(--ink);
   background-size:cover;background-position:center;position:relative}
@@ -341,6 +367,28 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
         <p class="stat-n">Дурмитор, Биоградска Гора, Комови. Природа мирового уровня, гостей почти нет</p>
       </div>
     </div>
+    <figure class="split">
+      <figcaption class="split-cap">Доля ночёвок по регионам · сентябрь 2025</figcaption>
+      <dl>
+        <div class="split-row">
+          <dt>Побережье</dt>
+          <dd>
+            <span class="split-track"><span class="split-bar" style="--w:89.7%"></span></span>
+            <span class="split-val">89,7%</span>
+          </dd>
+        </div>
+        <div class="split-row">
+          <dt>Горы</dt>
+          <dd>
+            <span class="split-track"><span class="split-bar" style="--w:2.9%"></span></span>
+            <span class="split-val">2,9%</span>
+          </dd>
+          <p class="split-us">Сюда резиденция уезжает, когда побережье закрывается</p>
+        </div>
+      </dl>
+      <p class="split-sum">Одна страна, один и тот же сентябрь. Разница в тридцать раз.</p>
+    </figure>
+
     <p class="note">Статичный отель обязан выбрать одну из этих половин и жить её сезоном. Наш выбирает обе по очереди.</p>
   </div>
 </section>
@@ -472,7 +520,35 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
       </div>
     </div>
 
-    <p class="note">Энергия: четыре банки LiFePO₄ около 38 кВт·ч и семь панелей по 400 Вт. Вода: душ с рециркуляцией 90%, инсинерационный туалет, ноль стоков и ноль септика. Климат: от −10 до +40 °C. Доступ и телеметрия: Nuki и Cerbo GX.</p>
+  </div>
+</section>
+
+<!-- ══ ИНЖЕНЕРИЯ ══ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Инженерия</p>
+    <h2>Из чего собран актив</h2>
+    <p class="lede">Автономность в семь дней — это не лозунг, а следствие конкретных узлов. Вот они, с номиналами.</p>
+    <div class="tblwrap" style="margin-top:38px">
+      <table>
+        <thead><tr><th>Узел</th><th class="us">Решение</th><th>Что это даёт</th></tr></thead>
+        <tbody>
+          <tr><td>Шасси</td><td class="us">Trailer Made, США · двухосное</td><td>перегон по обычной дороге без разрешений на негабарит и без разборки</td></tr>
+          <tr><td>Габарит</td><td class="us">6,4 и 7,3 м × 2,54 м</td><td>ширина в пределах нормы для дорог общего пользования</td></tr>
+          <tr><td>Корпус</td><td class="us">алюминий, каменная облицовка, терракота</td><td>вес под шасси при виде капитального дома</td></tr>
+          <tr><td>Хранение энергии</td><td class="us">4 × LiFePO₄ 200 А·ч ≈ 38 кВт·ч</td><td>неделя работы всех систем без подключения и без генератора</td></tr>
+          <tr><td>Генерация</td><td class="us">7 × 400 Вт = 2,8 кВт пик</td><td>дневная подзарядка банка в сезон, без топлива и его логистики</td></tr>
+          <tr><td>Преобразование</td><td class="us">инвертор Victron</td><td>морской класс, ремонтопригоден в любой марине Адриатики</td></tr>
+          <tr><td>Вода</td><td class="us">душ Orbital, рециркуляция ≈ 90%</td><td>привоз воды раз в неделю вместо ежедневного</td></tr>
+          <tr><td>Канализация</td><td class="us">инсинерационный туалет</td><td>ни септика, ни стоков — отсюда site fee ноль и отсутствие стройки</td></tr>
+          <tr><td>Климат</td><td class="us">двухзонный тепловой насос, оболочка R-40</td><td>работа от −10 до +40 °C, то есть круглогодичная эксплуатация</td></tr>
+          <tr><td>Телеметрия</td><td class="us">Cerbo GX</td><td>заряд, вода и температура видны удалённо — выезд по данным, а не по звонку гостя</td></tr>
+          <tr><td>Доступ</td><td class="us">замок Nuki</td><td>заселение без персонала на площадке</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Каждая строка здесь — причина, по которой резиденция может стоять на краю фермы без подведённых сетей. Уберите инсинерационный туалет — появляется септик, а с ним земляные работы, согласование и привязка к месту. Уберите 38 кВт·ч — появляется генератор, топливо и его подвоз. Автономность и мобильность держатся на этих узлах, а не на формулировках.</p>
+    <p class="note">Это серийная спецификация, согласованная с производителем. Ни один юнит по ней ещё не собран: прототип 2023 года делали вручную и по другой. Инженерную документацию разбираем на встрече.</p>
   </div>
 </section>
 
@@ -505,6 +581,30 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
       <li><h3>Переезд занимает часы</h3><p>Страна компактная, перегон между зонами — десятки, максимум несколько сотен километров. Транспорт заложен в операционный бюджет как регулярная процедура.</p></li>
       <li><h3>Ноль затрат на землю</h3><p>Резиденции стоят на действующих фермах. Site fee ноль или символический: фермер получает гостей и канал сбыта, мы площадку. Восемь ферм уже под подписанными рамочными соглашениями.</p></li>
     </ol>
+  </div>
+</section>
+
+<!-- ══ ПРОТИВ АПАРТАМЕНТА ══ -->
+<section class="tint">
+  <div class="wrap">
+    <p class="eyebrow">Альтернатива</p>
+    <h2>«Почему не купить апартамент за те же деньги»</h2>
+    <p class="lede">Законный вопрос, и мы задаём его себе сами. Разница не в отделке и не в виде из окна — она в том, что происходит, когда что-то идёт не так.</p>
+    <div class="tblwrap" style="margin-top:38px">
+      <table>
+        <thead><tr><th></th><th>Апартамент в высотке</th><th class="us">Tiny Mansion</th></tr></thead>
+        <tbody>
+          <tr><td>Чем торгуете</td><td>лотом, который в том же доме повторён сотни раз</td><td class="us">одним из 25 юнитов на страну по плану</td></tr>
+          <tr><td>Слабая локация</td><td>продавать месяцами, по цене покупателя</td><td class="us">уехать за часы, площадка меняется</td></tr>
+          <tr><td>Несезон</td><td>стоит там же и пустует</td><td class="us">переезжает в зону, где сезон идёт</td></tr>
+          <tr><td>Земля и стройка</td><td>в цене лота</td><td class="us">site fee ноль, стройки нет</td></tr>
+          <tr><td>На чём держится доходность</td><td>во многом на росте цены объекта</td><td class="us">на аренде; рост цены в расчёт не заложен</td></tr>
+          <tr><td>Если рынок не вырастет</td><td>сценарий выхода рассыпается</td><td class="us">модель считается без него</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Классический девелопмент отвечает на слабую локацию только одним способом — снижением цены. У мобильного актива есть второй: перестать в ней стоять. Это единственное настоящее отличие, всё остальное — отделка.</p>
+    <p class="note">Сравнение структурное: речь о типе актива, а не о конкретном доме или застройщике. Обратная сторона — в разделе «Где мы слабее»: у квартиры есть вторичный рынок и земля под ней, у нас нет ни того, ни другого.</p>
   </div>
 </section>
 
