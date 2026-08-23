@@ -158,6 +158,9 @@
     }
     .country-panel-media > *, .farm-card-media > *,
     .country-hero-media > *, .farm-detail-media > * { width: 100%; height: 100%; }
+    /* The hero band is far wider than the photograph, so a centred crop keeps
+       sky and loses the ground. Bias it down to the ridge and the pasture. */
+    .country-hero-media .photo-block { object-position: 50% 66%; }
 
     .color-block {
       width: 100%; height: 100%;
@@ -1556,6 +1559,10 @@ const DATA = {
       id: 'montenegro', index: '01', name: 'Montenegro',
       color: '#3E4438', photo: 'montenegro.jpg',
       alt: 'Three residences standing on a working farm in Montenegro, vineyard and olive terraces below a limestone massif',
+      /* The panel is a tall column and shows the residences; the page opens on
+         a panorama of the country itself, so the two want different frames. */
+      heroPhoto: 'montenegro-north.jpg',
+      heroAlt: 'Highland pasture in northern Montenegro, mountain huts on the meadow and the snow-covered Durmitor range behind',
       status: 'Opening Q3 2026', isOpeningSoon: false,
       caption: '25 residences planned',
       desc: 'The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.',
@@ -1827,7 +1834,8 @@ function openCountry(countryId) {
   document.getElementById('country-desc').innerText = c.desc;
   document.getElementById('country-status').innerText = c.status;
   document.getElementById('country-cta-name').innerText = c.name;
-  document.getElementById('country-hero-media').innerHTML = media(c.photo, c.color, c.alt || c.name, true);
+  document.getElementById('country-hero-media').innerHTML =
+    media(c.heroPhoto || c.photo, c.color, c.heroAlt || c.alt || c.name, true);
 
   const tabsRow = document.getElementById('country-tabs-row');
   const opening = document.getElementById('country-opening-content');
@@ -2147,6 +2155,8 @@ const RU = {
   'Montenegro': 'Черногория',
   'Three residences standing on a working farm in Montenegro, vineyard and olive terraces below a limestone massif':
     'Три резиденции на действующей ферме в Черногории: виноградник и оливковые террасы под известняковым массивом',
+  'Highland pasture in northern Montenegro, mountain huts on the meadow and the snow-covered Durmitor range behind':
+    'Горное пастбище на севере Черногории: катуны на покосе, за ними заснеженный Дурмитор',
   'Croatia': 'Хорватия',
   'Greece': 'Греция',
   'Switzerland': 'Швейцария',
