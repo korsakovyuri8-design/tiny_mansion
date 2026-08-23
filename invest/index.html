@@ -23,9 +23,9 @@
   --img-country:   url('../montenegro.jpg');      /* три резиденции на ферме, массив за долиной */
   --img-res21:     url('../residence-21-b.jpg');  /* 21ft спереди */
   --img-res24:     url('../residence-24.jpg');    /* 24ft на террасе */
-  --img-zone-n:    none;                          /* нужен: север, Дурмитор/Тара — img/north.jpg */
-  --img-zone-c:    none;                          /* нужен: центр, Скадарское озеро — img/center.jpg */
-  --img-zone-s:    none;                          /* нужен: юг, Которский залив — img/south.jpg */
+  --img-zone-n:    url('../zone-north.jpg');      /* хвойный лес и скальные вершины */
+  --img-zone-c:    url('../zone-center.jpg');     /* виноградники до горизонта */
+  --img-zone-s:    none;                          /* нужен кадр с водой: Которский залив — img/south.jpg */
   --img-farm:      url('../farm-network.jpg');    /* хутор с амбаром, овцы, резиденции на площадке */
   --img-interior:  url('../residence-21-d.jpg');  /* интерьер, гостиная с лестницей */
   --img-closing:   url('../residence-21-c.jpg');  /* торец в сумерках */
@@ -218,14 +218,17 @@ td.us{font-weight:500}
 .zones{display:grid;grid-template-columns:1fr;gap:2px;margin-top:40px}
 .zone{position:relative;min-height:330px;display:flex;align-items:flex-end;
   padding:30px;background:var(--ink) center/cover no-repeat;color:var(--cream)}
-.zone--n{background-image:var(--img-zone-n)}
-.zone--c{background-image:var(--img-zone-c)}
+/* Карточка узкая и почти квадратная, а снимки широкие: без сдвига точки
+   кадрирования от центра остаётся один дом и теряется сам ландшафт,
+   ради которого карточка и существует. */
+.zone--n{background-image:var(--img-zone-n);background-position:50% 34%}
+.zone--c{background-image:var(--img-zone-c);background-position:12% 46%}
 .zone--s{background-image:var(--img-zone-s)}
 .zone::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(20,17,15,.86),rgba(20,17,15,.05))}
+  background:linear-gradient(to top,rgba(20,17,15,.93) 0%,rgba(20,17,15,.74) 40%,rgba(20,17,15,.18) 100%)}
 .zone-in{position:relative;z-index:2}
 .zone-pc{font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  text-transform:uppercase;color:#C7A96B;margin-bottom:8px}
 .zone p{color:rgba(247,243,237,.78);font-size:17px}
 @media(min-width:820px){.zones{grid-template-columns:repeat(3,1fr)}}
 
