@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Tiny Mansion · Первый сезон сети в Черногории</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   КАРТИНКИ — меняй только здесь.
+   Пять снимков берутся из фотографий сайта (../),
+   пять пока не сняты и стоят как none: плита
+   рисуется цветом, битых запросов нет.
+   Как появится файл — положи его в папку img
+   рядом с этой страницей и подставь путь.
+   ═══════════════════════════════════════════════ */
+:root{
+  --img-hero:      url('../residence-21.jpg');    /* резиденция на ферме, горы */
+  --img-country:   none;                          /* нужен: Дурмитор, северная зона — img/montenegro.jpg */
+  --img-res21:     url('../residence-21-b.jpg');  /* 21ft спереди */
+  --img-res24:     url('../residence-24.jpg');    /* 24ft на террасе */
+  --img-zone-n:    none;                          /* нужен: север, Дурмитор/Тара — img/north.jpg */
+  --img-zone-c:    none;                          /* нужен: центр, Скадарское озеро — img/center.jpg */
+  --img-zone-s:    none;                          /* нужен: юг, Которский залив — img/south.jpg */
+  --img-farm:      none;                          /* нужен: ферма-партнёр — img/farm.jpg */
+  --img-interior:  url('../residence-21-d.jpg');  /* интерьер, гостиная с лестницей */
+  --img-closing:   url('../residence-21-c.jpg');  /* торец в сумерках */
+
+  --cream:#F7F3ED; --card:#EFE9DF; --ink:#1A1614; --gold:#9C7A3C;
+  /* Брендовое золото даёт на кремовом только 3,6:1. Мелкие капсы на светлом
+     фоне идут этим более тёмным оттенком — 5,1:1, и это всё ещё золото. */
+  --gold-ink:#7F622E;
+  /* На .60 мелкий текст на карточке давал 4,4:1 — чуть ниже нормы.
+     На .64 выглядит так же, но проходит. */
+  --rule:rgba(26,22,20,.14); --muted:rgba(26,22,20,.64);
+  --cream-muted:rgba(247,243,237,.66);
+  --serif:"EB Garamond",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--serif);
+  font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 26px}
+.narrow{max-width:760px;margin:0 auto;padding:0 26px}
+
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold-ink);margin-bottom:20px}
+.dark .eyebrow,.hero .eyebrow,.closing .eyebrow{color:var(--gold)}
+h1{font-weight:400;font-size:clamp(38px,7vw,76px);line-height:1.03;letter-spacing:-.02em}
+h2{font-weight:400;font-size:clamp(28px,5vw,46px);line-height:1.12;
+  letter-spacing:-.012em;margin-bottom:22px}
+h3{font-weight:500;font-size:21px;line-height:1.3;margin-bottom:7px}
+p{margin-bottom:18px}
+p:last-child{margin-bottom:0}
+.lede{font-size:clamp(20px,2.5vw,24px);color:var(--muted);max-width:34em}
+
+section{padding:96px 0}
+.dark{background:var(--ink);color:var(--cream)}
+.dark h2,.dark h3{color:var(--cream)}
+.dark p{color:var(--cream-muted)}
+.dark .note{color:rgba(247,243,237,.5)}
+.tint{background:var(--card)}
+
+.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;
+  padding:0 0 78px;background:var(--ink) var(--img-hero) center/cover no-repeat;color:var(--cream)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(20,17,15,.55) 0%,rgba(20,17,15,.15) 38%,rgba(20,17,15,.88) 100%)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{max-width:14em}
+.hero .lede{color:rgba(247,243,237,.8);margin-top:24px}
+.hero-meta{margin-top:44px;padding-top:26px;border-top:1px solid rgba(247,243,237,.24);
+  display:flex;flex-wrap:wrap;gap:14px 52px;font-family:var(--mono);
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,237,.72)}
+
+.plate{height:clamp(300px,58vh,620px);background-color:var(--ink);
+  background-size:cover;background-position:center;position:relative}
+.plate--country{background-image:var(--img-country)}
+.plate--farm{background-image:var(--img-farm)}
+.plate--interior{background-image:var(--img-interior)}
+.plate-cap{position:absolute;left:0;right:0;bottom:0;padding:26px;
+  background:linear-gradient(to top,rgba(20,17,15,.72),transparent);
+  color:var(--cream);font-family:var(--mono);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase}
+
+.stats{margin-top:44px;border-top:1px solid var(--rule)}
+.stat{padding:26px 0;border-bottom:1px solid var(--rule);
+  display:grid;grid-template-columns:1fr;gap:4px}
+.stat-v{font-size:clamp(38px,7vw,62px);line-height:1;letter-spacing:-.025em}
+.stat-l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted)}
+.stat-n{color:var(--muted);font-size:17px}
+@media(min-width:700px){
+  .stat{grid-template-columns:minmax(0,300px) 1fr;gap:34px;align-items:baseline}
+  .stat > div:first-child{display:flex;flex-direction:column;gap:6px}
+}
+.dark .stats{border-color:rgba(247,243,237,.2)}
+.dark .stat{border-color:rgba(247,243,237,.12)}
+.dark .stat-l{color:rgba(247,243,237,.5)}
+.dark .stat-n{color:var(--cream-muted)}
+.dark .stat-v{color:var(--cream)}
+.stat--flag .stat-v{color:var(--gold)}
+
+.ladder{margin-top:36px;border-top:1px solid rgba(247,243,237,.2)}
+.rung{padding:22px 0;border-bottom:1px solid rgba(247,243,237,.12);
+  display:grid;grid-template-columns:1fr;gap:5px}
+.rung-v{font-size:clamp(30px,6vw,50px);line-height:1;letter-spacing:-.025em;color:var(--cream)}
+.rung-l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(247,243,237,.5)}
+.rung-n{color:var(--cream-muted);font-size:17px}
+.rung--flag .rung-v{color:var(--gold)}
+@media(min-width:700px){
+  .rung{grid-template-columns:minmax(0,340px) 1fr;gap:34px;align-items:baseline}
+  .rung > div:first-child{display:flex;flex-direction:column;gap:6px}
+}
+
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:18px}
+table{width:100%;border-collapse:collapse;font-size:16px;min-width:640px}
+th,td{text-align:left;padding:15px 16px 15px 0;border-bottom:1px solid var(--rule);
+  font-weight:400;vertical-align:top}
+thead th{font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+tbody td:first-child{font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:23%}
+thead th.us{color:var(--gold-ink)}
+td.us{font-weight:500}
+.dark table th,.dark table td{border-color:rgba(247,243,237,.14)}
+.dark thead th,.dark tbody td:first-child{color:rgba(247,243,237,.5)}
+.dark td{color:var(--cream)}
+.dark thead th.us{color:var(--gold)}
+
+.product{border-top:1px solid var(--rule)}
+.product-row{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--rule)}
+.product-img{height:clamp(240px,42vw,420px);background:var(--ink) center/cover no-repeat}
+.product-img--21{background-image:var(--img-res21)}
+.product-img--24{background-image:var(--img-res24)}
+.product-body{padding:38px 0}
+.spec{margin-top:22px;border-top:1px solid var(--rule)}
+.spec div{display:flex;justify-content:space-between;gap:20px;
+  padding:11px 0;border-bottom:1px solid var(--rule)}
+.spec dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+.spec dd{font-weight:500}
+.price{margin-top:24px;font-size:clamp(30px,5vw,42px);line-height:1;letter-spacing:-.02em}
+.price small{display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:8px;font-weight:400}
+@media(min-width:860px){
+  .product-row{grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+  .product-row--flip .product-img{order:2}
+  .product-body{padding:52px 0}
+}
+
+.zones{display:grid;grid-template-columns:1fr;gap:2px;margin-top:40px}
+.zone{position:relative;min-height:330px;display:flex;align-items:flex-end;
+  padding:30px;background:var(--ink) center/cover no-repeat;color:var(--cream)}
+.zone--n{background-image:var(--img-zone-n)}
+.zone--c{background-image:var(--img-zone-c)}
+.zone--s{background-image:var(--img-zone-s)}
+.zone::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(20,17,15,.86),rgba(20,17,15,.05))}
+.zone-in{position:relative;z-index:2}
+.zone-pc{font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.zone p{color:rgba(247,243,237,.78);font-size:17px}
+@media(min-width:820px){.zones{grid-template-columns:repeat(3,1fr)}}
+
+ol.steps{list-style:none;counter-reset:s;margin-top:34px}
+ol.steps li{counter-increment:s;padding:24px 0 24px 52px;position:relative;
+  border-top:1px solid var(--rule)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;
+  left:0;top:27px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold-ink)}
+ol.steps p{color:var(--muted);font-size:18px}
+.dark ol.steps li{border-color:rgba(247,243,237,.14)}
+.dark ol.steps li::before{color:var(--gold)}
+.dark ol.steps p{color:var(--cream-muted)}
+
+/* два столбца: приезжаешь / не приезжаешь */
+.duo{display:grid;grid-template-columns:1fr;gap:2px;margin-top:38px}
+.duo > div{padding:34px 30px;background:var(--card)}
+.duo > div.alt{background:var(--ink);color:var(--cream)}
+.duo > div.alt h3{color:var(--cream)}
+.duo > div.alt p{color:var(--cream-muted)}
+.duo p{font-size:17px;margin-bottom:14px}
+@media(min-width:820px){.duo{grid-template-columns:1fr 1fr}}
+
+/* уровни входа */
+.tiers{display:grid;grid-template-columns:1fr;gap:2px;margin-top:38px}
+.tier{padding:34px 30px;background:var(--card)}
+.tier--top{background:var(--ink);color:var(--cream)}
+.tier--top h3,.tier--top .tier-am{color:var(--cream)}
+/* Одинаковый вес с «.tier li» ниже, а идёт раньше — поэтому тёмная карточка
+   получала тёмный текст на тёмном фоне. Поднимаем вес, чтобы правило выиграло. */
+.tier.tier--top li{color:var(--cream-muted);border-color:rgba(247,243,237,.14)}
+.tier-am{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold-ink);margin-bottom:10px}
+.tier--top .tier-am{color:var(--gold)}
+.tier ul{list-style:none;margin-top:16px}
+.tier li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;color:var(--muted)}
+.tier li:last-child{border-bottom:0}
+@media(min-width:860px){.tiers{grid-template-columns:repeat(3,1fr)}}
+
+.ledger{margin-top:34px;border-top:1px solid rgba(247,243,237,.2)}
+.lrow{padding:18px 0;border-bottom:1px solid rgba(247,243,237,.12);
+  display:grid;grid-template-columns:1fr;gap:5px}
+.lmark{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold)}
+.lrow--no .lmark{color:rgba(247,243,237,.5)}
+.lrow p{color:var(--cream)}
+.lrow--no p{color:var(--cream-muted)}
+@media(min-width:640px){.lrow{grid-template-columns:150px 1fr;gap:24px;align-items:baseline}}
+
+.closing{position:relative;min-height:82vh;display:flex;align-items:center;
+  background:var(--ink) var(--img-closing) center/cover no-repeat;color:var(--cream);padding:80px 0}
+.closing::after{content:"";position:absolute;inset:0;background:rgba(20,17,15,.7)}
+.closing .narrow{position:relative;z-index:2}
+.cta{display:inline-block;margin-top:14px;padding:16px 30px;
+  border:1px solid var(--gold);color:var(--gold);text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  transition:background .2s,color .2s}
+.cta:hover,.cta:focus-visible{background:var(--gold);color:var(--ink)}
+
+.note{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--muted);margin-top:24px}
+footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Черногория · первый сезон · ранний вход</p>
+    <h1>Три дома. Один сезон. Вы у истока сети</h1>
+    <p class="lede">Каменные резиденции ручной работы на фермах Адриатики. Доход в евро, личные ночи в сети, вход от €50 000.</p>
+    <div class="hero-meta">
+      <span>Проект €700 000</span>
+      <span>3 резиденции</span>
+      <span>Сплит 80 / 20</span>
+      <span>Доход в евро</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══ ЧТО ЭТО ══ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Предложение</p>
+    <h2>Первый сезон сети, а не витрина</h2>
+    <p class="lede">Мы собираем €700 000 на три резиденции: производство в Стамбуле, доставка морем в Бар, размещение на фермах-партнёрах и первый сезон работы. Это не демонстрационный образец во дворе. Это три дома, которые принимают гостей и переезжают, когда данные говорят переезжать.</p>
+    <div class="stats">
+      <div class="stat">
+        <div><span class="stat-l">Размер проекта</span><span class="stat-v">€700 000</span></div>
+        <p class="stat-n">Производство, фрахт, размещение и операционный запас на первый сезон</p>
+      </div>
+      <div class="stat stat--flag">
+        <div><span class="stat-l">Вход</span><span class="stat-v">от €50 000</span></div>
+        <p class="stat-n">Доля считается со всего пула пропорционально вкладу. Один человек может закрыть проект целиком</p>
+      </div>
+      <div class="stat">
+        <div><span class="stat-l">Первые ночи в продаже</span><span class="stat-v">сезон 2027</span></div>
+        <p class="stat-n">Производство занимает пять-шесть месяцев с момента заказа, дальше море до Бара и размещение</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="plate plate--interior"><p class="plate-cap">Интерьер резиденции · рендер</p></div>
+
+<!-- ══ РЫНОК ══ -->
+<section class="tint">
+  <div class="wrap">
+    <p class="eyebrow">Рынок</p>
+    <h2>Побережье переполнено. Север пустой.</h2>
+    <p class="lede">Черногория собирает больше миллиарда евро туристической выручки в год. Почти вся она приходится на четыре месяца и на одну полосу у моря.</p>
+    <div class="stats">
+      <div class="stat">
+        <div><span class="stat-l">Выручка от туризма, 2025</span><span class="stat-v">€1,3 млрд+</span></div>
+        <p class="stat-n">Рекордный год: более 2,7 млн прибытий и свыше 15 млн ночёвок</p>
+      </div>
+      <div class="stat">
+        <div><span class="stat-l">Ночёвок на побережье</span><span class="stat-v">89,7%</span></div>
+        <p class="stat-n">Сентябрь 2025. Страна фактически работает одной полосой</p>
+      </div>
+      <div class="stat">
+        <div><span class="stat-l">Ночёвок в горах</span><span class="stat-v">2,9%</span></div>
+        <p class="stat-n">Дурмитор, Биоградска Гора, Комови. Природа мирового уровня, гостей почти нет</p>
+      </div>
+    </div>
+    <p class="note">Статичный отель обязан выбрать одну из этих половин и жить её сезоном. Наш выбирает обе по очереди.</p>
+  </div>
+</section>
+
+<div class="plate plate--country"><p class="plate-cap">Дурмитор · северная зона размещения</p></div>
+
+<!-- ══ СТРАНА ══ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Страна</p>
+    <h2>Почему Черногория, а не Грузия и не Бали</h2>
+    <p class="lede">Три рынка, где сегодня активно продают доходную недвижимость русскоязычному покупателю. Разница между ними не в пейзаже.</p>
+    <div class="tblwrap" style="margin-top:38px">
+      <table>
+        <thead><tr><th></th><th class="us">Черногория</th><th>Грузия</th><th>Бали</th></tr></thead>
+        <tbody>
+          <tr><td>Валюта дохода</td><td class="us">евро с 2002 года</td><td>лари</td><td>рупия</td></tr>
+          <tr><td>Путь в ЕС</td><td class="us">закрыто 18 глав, финальная фаза</td><td>процесс приостановлен, тема снята с повестки до конца 2028</td><td>не применимо</td></tr>
+          <tr><td>Оценка Еврокомиссии</td><td class="us">самая продвинутая страна расширения</td><td>кандидат только по названию</td><td>—</td></tr>
+          <tr><td>Финансовый пакет ЕС</td><td class="us">€3,2 млрд предложено в июне 2026</td><td>нет</td><td>нет</td></tr>
+          <tr><td>Собственность иностранцу</td><td class="us">свободно</td><td>свободно</td><td>только долгосрочная аренда</td></tr>
+          <tr><td>Лёт из Европы</td><td class="us">около 2 часов</td><td>3–4 часа</td><td>от 14 часов</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Данные по расширению ЕС — сообщения Еврокомиссии и заявления сторон, июнь–июль 2026. Ситуация меняется, проверьте перед решением.</p>
+  </div>
+</section>
+
+<!-- ══ АРИФМЕТИКА ══ -->
+<section class="dark">
+  <div class="wrap">
+    <p class="eyebrow">Проверка обещаний</p>
+    <h2>Возьмите годовую доходность и разделите на 365</h2>
+    <p class="lede" style="color:rgba(247,243,237,.7)">Разбор, который вам никто не показывает. Все цифры — с сайтов самих проектов, август 2026.</p>
+
+    <h3 style="margin-top:52px">Silk Towers, Батуми</h3>
+    <p>На сайте застройщика указан один показатель: 12% ROI. У брокера, продающего тот же дом, — прогноз 15–20% годовых и разобранный пример на 14,38% чистыми. Разложим этот пример.</p>
+    <div class="ladder">
+      <div class="rung">
+        <div><span class="rung-l">Цена квартиры</span><span class="rung-v">$155 000</span></div>
+        <p class="rung-n">Однокомнатная, 27 этаж</p>
+      </div>
+      <div class="rung">
+        <div><span class="rung-l">Валовая аренда за год</span><span class="rung-v">$45 292</span></div>
+        <p class="rung-n">Цифра из их собственного разбора доходности</p>
+      </div>
+      <div class="rung rung--flag">
+        <div><span class="rung-l">Валовая доходность</span><span class="rung-v">29%</span></div>
+        <p class="rung-n">При том, что рыночная доходность по центру Батуми на той же странице названа как 7–13% брутто</p>
+      </div>
+      <div class="rung rung--flag">
+        <div><span class="rung-l">В пересчёте на ночь</span><span class="rung-v">$124</span></div>
+        <p class="rung-n">Каждую ночь, все 365 дней. Без единой пустой ночи в феврале на Чёрном море</p>
+      </div>
+      <div class="rung rung--flag">
+        <div><span class="rung-l">При загрузке 45%</span><span class="rung-v">$276</span></div>
+        <p class="rung-n">Столько должна стоить ночь в однокомнатной, чтобы выручка сошлась. Это ставка люкс-курорта</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:64px">Jewelberry Saguramo, Грузия</h3>
+    <p>Заявлено 18% годовых на акции и среднегодовая доходность 30,2% в оптимистичном сценарии, 23,0% в умеренном. В сносках указано, из чего это собрано: прирост стоимости объекта заложен на уровне 10%, 7% и 5% в год на пятилетку вперёд, и в среднегодовую доходность включён доход от перепродажи акций.</p>
+    <p>То есть большая часть цифры — не аренда, а ставка на то, что через пять лет придёт следующий покупатель и заплатит больше. В стране, где переговоры о вступлении в ЕС приостановлены.</p>
+
+    <p class="note" style="margin-top:40px">Мы не утверждаем, что кто-то вводит покупателя в заблуждение. Мы берём опубликованные цифры и раскладываем их. Требуйте того же от любого, кто показывает вам годовую доходность одной строкой. В том числе от нас.</p>
+  </div>
+</section>
+
+<!-- ══ НАШИ ДОПУЩЕНИЯ ══ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Наш расчёт</p>
+    <h2>Мы не обещаем процент. Мы показываем допущения</h2>
+    <p class="lede">Доходность собирается из двух вещей: сколько ночей продано и по какой цене. Вот что мы закладываем, и почему первый год у нас скромный.</p>
+    <div class="tblwrap" style="margin-top:38px">
+      <table>
+        <thead><tr><th>Год</th><th class="us">Загрузка</th><th class="us">Средняя ставка за ночь</th><th>Что происходит</th></tr></thead>
+        <tbody>
+          <tr><td>Год 1</td><td class="us">52%</td><td class="us">€296</td><td>ноль узнаваемости, копим отзывы, а не выручку</td></tr>
+          <tr><td>Год 2</td><td class="us">63%</td><td class="us">€296</td><td>20–30 отзывов на юнит, органика в поиске, первые повторные брони</td></tr>
+          <tr><td>Год 3</td><td class="us">68%</td><td class="us">€296</td><td>уровень действующих люкс-отелей Черногории</td></tr>
+          <tr><td>Годы 4–5</td><td class="us">72%</td><td class="us">€320</td><td>мобильность даёт запас сверх рыночного уровня</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Люкс-сегмент отелей Черногории отработал 2025 год на загрузке 68–72%. Мы выходим на этот уровень к третьему году, а не на старте. Ни один новый оператор не выходит на рыночный уровень в первый сезон, и мы не моделируем так, будто выйдем.</p>
+    <p class="note">Это операционные допущения, а не обещанная доходность. Точная доходность зависит от размера вашего вклада и финальной структуры сделки — мы считаем её персонально и присылаем с раскладкой по трём сценариям. Прирост стоимости актива в расчёт не заложен: если рынок не вырастет, модель не рассыпается.</p>
+  </div>
+</section>
+
+<!-- ══ ПРОДУКТ ══ -->
+<section class="tint">
+  <div class="wrap">
+    <p class="eyebrow">Продукт</p>
+    <h2>Каменная резиденция на колёсах</h2>
+    <p class="lede">Отделка ручной работы, терракотовая черепица, ставни. Алюминиевый корпус на американском шасси Trailer Made. Семь дней автономии без единого подключения.</p>
+
+    <div class="product">
+      <div class="product-row">
+        <div class="product-img product-img--21"></div>
+        <div class="product-body">
+          <h3>Residence 21ft</h3>
+          <p style="color:var(--muted)">Два гостя, собственная ванная, кухня, терраса.</p>
+          <dl class="spec">
+            <div><dt>Длина</dt><dd>6,4 м</dd></div>
+            <div><dt>Ширина</dt><dd>2,54 м</dd></div>
+            <div><dt>Вместимость</dt><dd>2 гостя</dd></div>
+            <div><dt>Автономность</dt><dd>7 дней</dd></div>
+            <div><dt>Целевая ставка</dt><dd>€280 за ночь</dd></div>
+          </dl>
+          <p class="price"><small>Стоимость актива</small>€152 000</p>
+        </div>
+      </div>
+      <div class="product-row product-row--flip">
+        <div class="product-img product-img--24"></div>
+        <div class="product-body">
+          <h3>Grand Residence 24ft</h3>
+          <p style="color:var(--muted)">До четырёх гостей, увеличенная терраса, полный инженерный пакет.</p>
+          <dl class="spec">
+            <div><dt>Длина</dt><dd>7,3 м</dd></div>
+            <div><dt>Ширина</dt><dd>2,54 м</dd></div>
+            <div><dt>Вместимость</dt><dd>2–4 гостя</dd></div>
+            <div><dt>Автономность</dt><dd>7+ дней</dd></div>
+            <div><dt>Целевая ставка</dt><dd>€320 за ночь</dd></div>
+          </dl>
+          <p class="price"><small>Стоимость актива</small>€184 000</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">Энергия: четыре банки LiFePO₄ около 38 кВт·ч и семь панелей по 400 Вт. Вода: душ с рециркуляцией 90%, инсинерационный туалет, ноль стоков и ноль септика. Климат: от −10 до +40 °C. Доступ и телеметрия: Nuki и Cerbo GX.</p>
+  </div>
+</section>
+
+<!-- ══ ЗОНЫ ══ -->
+<section class="dark">
+  <div class="wrap">
+    <p class="eyebrow">Как это работает</p>
+    <h2>Три климата, один актив</h2>
+    <p class="lede" style="color:rgba(247,243,237,.7)">Пики сезонов в Черногории разведены во времени. Резиденция едет за спросом, а не ждёт его на месте.</p>
+    <div class="zones">
+      <div class="zone zone--n"><div class="zone-in">
+        <p class="zone-pc">Север</p>
+        <h3>Дурмитор, Тара, Колашин</h3>
+        <p>Горный сезон, когда побережье уже закрылось. Каньоны и национальные парки, почти нулевая конкуренция в премиуме.</p>
+      </div></div>
+      <div class="zone zone--c"><div class="zone-in">
+        <p class="zone-pc">Центр</p>
+        <h3>Скадарское озеро, Црмница, Ловчен</h3>
+        <p>Винная долина с ровным потоком круглый год. Держит межсезонье, когда не работают ни горы, ни море.</p>
+      </div></div>
+      <div class="zone zone--s"><div class="zone-in">
+        <p class="zone-pc">Юг</p>
+        <h3>Которский залив, Бар, Улцинь</h3>
+        <p>Летний пик Адриатики. Заходим выборочно и только туда, где отелей нет по определению.</p>
+      </div></div>
+    </div>
+    <ol class="steps">
+      <li><h3>Бронирование открывается до размещения</h3><p>Сезон стартует с подтверждёнными датами, а не с холодного спроса. Мы видим, где концентрируются брони, до того как физически перемещаем актив.</p></li>
+      <li><h3>Резиденция едет туда, где эти брони</h3><p>Решение принимается по данным: загрузка ниже порога, качество сервиса на площадке, смена сезона, концентрация спроса, уход партнёра.</p></li>
+      <li><h3>Переезд занимает часы</h3><p>Страна компактная, перегон между зонами — десятки, максимум несколько сотен километров. Транспорт заложен в операционный бюджет как регулярная процедура.</p></li>
+      <li><h3>Ноль затрат на землю</h3><p>Резиденции стоят на действующих фермах. Site fee ноль или символический: фермер получает гостей и канал сбыта, мы площадку. Восемь ферм уже под подписанными рамочными соглашениями.</p></li>
+    </ol>
+  </div>
+</section>
+
+<div class="plate plate--farm"><p class="plate-cap">Ферма-партнёр · северная Черногория</p></div>
+
+<!-- ══ КАК РАБОТАЕТ ПУЛ ══ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Механика</p>
+    <h2>Хотите — отдыхаете. Не хотите — актив работает</h2>
+    <p class="lede">Доход считается со всей сети сразу, а не с «вашего» дома. Неудачный сезон одной площадки не топит вас лично: риск распределён между всеми участниками.</p>
+    <div class="duo">
+      <div>
+        <h3>Вы приезжаете</h3>
+        <p>Живёте на Адриатике в каменном доме. Ради этого многие и входят.</p>
+        <p>Выбираете локацию под настроение: залив, озеро или горы. Резиденция ждёт готовой.</p>
+        <p>Ночи не сгорают и переносятся внутри года. Можете отдать их друзьям или семье.</p>
+      </div>
+      <div class="alt">
+        <h3>Вы не приезжаете</h3>
+        <p>Резиденция сдаётся гостям, выручка идёт в общий пул, вы получаете свою долю.</p>
+        <p>Ничего делать не нужно: брони, уборка, встреча гостей, ремонт — всё на операторе.</p>
+        <p>Видите всё в личном кабинете: загрузка, выручка, ваша доля в реальном времени.</p>
+      </div>
+    </div>
+    <p class="note">Три резиденции в трёх климатических зонах: когда на побережье дождь, в горах сезон. Это защита от сезонности, встроенная в конструкцию, а не обещанная словами.</p>
+  </div>
+</section>
+
+<!-- ══ УРОВНИ ══ -->
+<section class="tint">
+  <div class="wrap">
+    <p class="eyebrow">Уровни входа</p>
+    <h2>Чем крупнее вход, тем больше доступа</h2>
+    <p class="lede">Доля с пула считается пропорционально вкладу у всех одинаково. Отличаются привилегии.</p>
+    <div class="tiers">
+      <div class="tier">
+        <p class="tier-am">Основатель · меньший чек</p>
+        <h3>Вход в сеть</h3>
+        <ul>
+          <li>Доля с пула по вкладу</li>
+          <li>Личные ночи в сети</li>
+          <li>Ужины и события на фермах</li>
+          <li>Личный кабинет с прозрачной отчётностью</li>
+          <li>Имя в круге основателей</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <p class="tier-am">Партнёр · средний чек</p>
+        <h3>Всё из «Основателя», плюс</h3>
+        <ul>
+          <li>Больше ночей и приоритет на лучшие даты</li>
+          <li>Именная резиденция — ваше имя на доме</li>
+          <li>Гостевые ночи для друзей и семьи</li>
+          <li>Приоритетное приглашение на следующий этап</li>
+          <li>Прямая линия с командой</li>
+        </ul>
+      </div>
+      <div class="tier tier--top">
+        <p class="tier-am">Якорь · крупный чек</p>
+        <h3>Всё из «Партнёра», плюс</h3>
+        <ul>
+          <li>Максимум ночей в сезоне</li>
+          <li>Именная площадка — ваше имя на ферме</li>
+          <li>Прямой контакт с основателем</li>
+          <li>Совещательный голос в проекте</li>
+          <li>Персональный подбор дат и локаций</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Точные пороги чеков и число ночей финализируются под конфигурацию первого сезона.</p>
+  </div>
+</section>
+
+<!-- ══ ВЫХОД ══ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Выход</p>
+    <h2>Три пути, и все названы заранее</h2>
+    <ol class="steps">
+      <li><h3>Выкуп при масштабировании</h3><p>Когда модель доказана, следующий этап привлекает крупный капитал, и он выкупает ранних участников. Вы получаете вложенное плюс заработанное. Ранние выходят первыми, приоритет по очереди входа.</p></li>
+      <li><h3>Переход в следующий этап</h3><p>Не хотите забирать — переносите участие в масштабированный проект на приоритетных условиях. Вклад засчитывается целиком, накопленный статус и привилегии сохраняются.</p></li>
+      <li><h3>Продолжение в пуле</h3><p>Довольны ночами и доходом — остаётесь как есть, пока сеть работает. Без принудительного выхода и фиксированного срока.</p></li>
+    </ol>
+    <p class="note">Возврат тела завязан на успех проекта и приход следующего капитала. Это путь выхода, а не календарная гарантия: мы не обещаем дату, мы показываем механизм. Пока он не сработал, вы в доходном пуле с личными ночами.</p>
+  </div>
+</section>
+
+<!-- ══ ЧЕСТНЫЙ РЕЕСТР ══ -->
+<section class="dark">
+  <div class="wrap">
+    <p class="eyebrow">Где мы слабее</p>
+    <h2>Что честнее сказать самим</h2>
+    <p class="lede" style="color:rgba(247,243,237,.7)">Вы всё равно найдёте эти пункты. Вопрос только в том, найдёте вы их здесь или после разговора с юристом.</p>
+    <div class="ledger">
+      <div class="lrow lrow--no"><span class="lmark">Слабее</span><p>Ни одной проданной ночи. Ни одного гостя. Ни одного евро выручки. Вы будете первым.</p></div>
+      <div class="lrow lrow--no"><span class="lmark">Слабее</span><p>Ни один юнит не построен по производственной спецификации. Есть один прототип 2023 года и шесть лет работы над моделью.</p></div>
+      <div class="lrow lrow--no"><span class="lmark">Слабее</span><p>Застройщики дают рассрочку на четыре года под ноль процентов. У нас оплата по графику производства — войти в квартиру в Батуми дешевле.</p></div>
+      <div class="lrow lrow--no"><span class="lmark">Слабее</span><p>У квартиры есть вторичный рынок и земля под ней. Наша резиденция — движимое имущество, она амортизируется. Выход мы отвечаем механизмом, а не молчанием.</p></div>
+      <div class="lrow"><span class="lmark">Сильнее</span><p>Наша доходность не опирается на рост цены объекта. Если рынок не вырастет, расчёт не рассыпается.</p></div>
+      <div class="lrow"><span class="lmark">Сильнее</span><p>Слабая локация не держит ваш капитал. Дом уезжает за часы, а не продаётся за годы.</p></div>
+      <div class="lrow"><span class="lmark">Сильнее</span><p>Доход в евро, в стране, которая заканчивает переговоры о вступлении в ЕС, а не замораживает их.</p></div>
+      <div class="lrow"><span class="lmark">Сильнее</span><p>Вы получаете не только процент, но и место, где можно жить. У покупателя квартиры под сдачу этого нет.</p></div>
+    </div>
+    <p class="note">Мы не самое доходное предложение на рынке. На стадии, где у всех одни обещания, честный расчёт — единственное, что имеет вес.</p>
+  </div>
+</section>
+
+<!-- ══ ФИНАЛ ══ -->
+<section class="closing">
+  <div class="narrow">
+    <p class="eyebrow">Дальше</p>
+    <h2>Начните с вопросов, а не с бумаг</h2>
+    <p style="color:rgba(247,243,237,.78);font-size:21px">Назовите сумму, которую рассматриваете, и получите расчёт по трём сценариям именно под неё, с допущениями. Двадцать минут разговора, без давления и без сроков.</p>
+    <p style="color:rgba(247,243,237,.78);font-size:21px">Либо приезжайте. Посмотрите площадки, познакомьтесь с хозяевами ферм, поужинайте на ферме. Это честнее любой презентации.</p>
+    <p><a class="cta" href="mailto:korsakovyuri8@gmail.com?subject=Tiny%20Mansion%20·%20первый%20сезон">Написать Юрию</a></p>
+    <p class="note" style="color:rgba(247,243,237,.55)">Юрий Корсаков, основатель TinyArc Group. Черногория.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="note" style="margin-top:0">Страница носит информационный характер и не является предложением ценных бумаг, инвестиционной рекомендацией или публичной офертой. Все финансовые показатели — модельные допущения, не гарантия результата. Изображения резиденций — рендеры; ни один юнит не построен по производственной спецификации. Сведения о сторонних проектах приведены по их публичным материалам на август 2026 года (silktowers.com, страница брокера ProfitKey Properties, jb.camp) и могли измениться. Условия участия обсуждаются индивидуально и фиксируются документами, подготовленными с юристом.</p>
+  </div>
+</footer>
+
+</body>
+</html>
