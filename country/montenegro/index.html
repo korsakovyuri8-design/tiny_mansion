@@ -2,29 +2,29 @@
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tiny Mansion — off-grid residences on working farms</title>
-  <meta name="description" content="Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q3 2026.">
+  <title>Montenegro — Tiny Mansion</title>
+  <meta name="description" content="The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a…">
 
   <!-- Live address of the site. The CNAME file in the repository root is what
        points GitHub Pages at this domain; keep the two in step. -->
-  <link rel="canonical" href="https://tinymansion.co/">
+  <link rel="canonical" href="https://tinymansion.co/country/montenegro/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="theme-color" content="#1A1614">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tiny Mansion">
-  <meta property="og:url" content="https://tinymansion.co/">
-  <meta property="og:title" content="Tiny Mansion — off-grid residences on working farms">
-  <meta property="og:description" content="Seven days off-grid, on a working farm. First residences deploy in Montenegro, Q3 2026.">
+  <meta property="og:url" content="https://tinymansion.co/country/montenegro/">
+  <meta property="og:title" content="Montenegro — Tiny Mansion">
+  <meta property="og:description" content="The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a…">
   <meta property="og:image" content="https://tinymansion.co/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Residence 21ft standing on a working farm in Montenegro">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tiny Mansion — off-grid residences on working farms">
-  <meta name="twitter:description" content="Seven days off-grid, on a working farm.">
+  <meta name="twitter:title" content="Montenegro — Tiny Mansion">
+  <meta name="twitter:description" content="The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a…">
   <meta name="twitter:image" content="https://tinymansion.co/og.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -833,7 +833,7 @@
 <body>
 
   <!-- HEADER -->
-  <header id="site-header" class="over-hero">
+  <header id="site-header" class="">
     <div class="container">
       <div class="header-inner">
         <a href="/" class="wordmark">Tiny Mansion</a>
@@ -866,7 +866,7 @@
     <!-- ======================================================
          HOME
          ====================================================== -->
-    <section id="view-home" class="view-section active">
+    <section id="view-home" class="view-section">
 
       <!-- HERO -->
       <div class="hero" id="hero">
@@ -1072,43 +1072,151 @@
     <!-- ======================================================
          COUNTRY
          ====================================================== -->
-    <section id="view-country" class="view-section">
+    <section id="view-country" class="view-section active">
       <div class="container page-top">
         <div class="breadcrumbs">
           <a class="breadcrumb-item" href="/">Countries</a>
           <span>/</span>
-          <span class="breadcrumb-current" id="country-breadcrumb-name">Country</span>
+          <span class="breadcrumb-current" id="country-breadcrumb-name">Montenegro</span>
         </div>
       </div>
 
       <div class="country-hero">
-        <div class="country-hero-media" id="country-hero-media"></div>
+        <div class="country-hero-media" id="country-hero-media"><img class="photo-block" src="/montenegro-north.jpg" alt="Highland pasture in northern Montenegro, mountain huts on the meadow and the snow-covered Durmitor range behind" fetchpriority="high" decoding="async"></div>
         <div class="country-hero-scrim"></div>
         <div class="container country-hero-body">
           <span class="status-tag" id="country-status">Opening Q3 2026</span>
-          <h1 id="country-title" class="serif">Country</h1>
-          <p id="country-desc"></p>
+          <h1 id="country-title" class="serif">Montenegro</h1>
+          <p id="country-desc">The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.</p>
         </div>
       </div>
 
       <div class="container">
-        <div class="tabs-row" id="country-tabs-row" role="tablist" aria-label="What is in this country">
+        <div class="tabs-row" id="country-tabs-row" role="tablist" aria-label="What is in this country" style="display: flex;">
           <button type="button" id="tabbtn-residences" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-residences" onclick="switchTab('residences')">Residences</button>
           <button type="button" id="tabbtn-farms" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-farms" onclick="switchTab('farms')">Farms</button>
           <button type="button" id="tabbtn-experiences" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-experiences" onclick="switchTab('experiences')">Experiences</button>
         </div>
 
         <div id="tab-residences" class="tab-content active" role="tabpanel" aria-labelledby="tabbtn-residences">
-          <div class="cards-3" id="country-residences-grid"></div>
+          <div class="cards-3" id="country-residences-grid">
+    <div class="res-card" role="button" tabindex="0" onclick="openResidence('residence-21')">
+      <div class="res-card-media"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft" loading="lazy" decoding="async"></div>
+      <div class="res-card-body">
+        <h3 class="serif">Residence 21ft</h3>
+        <div class="res-card-meta">2 guests · 7 days off-grid</div>
+        <div class="res-card-rate">from €280 / night</div>
+      </div>
+    </div>
+    <div class="res-card" role="button" tabindex="0" onclick="openResidence('residence-24')">
+      <div class="res-card-media"><img class="photo-block" src="/residence-24.jpg" alt="Grand Residence 24ft" loading="lazy" decoding="async"></div>
+      <div class="res-card-body">
+        <h3 class="serif">Grand Residence 24ft</h3>
+        <div class="res-card-meta">2-4 guests · 7+ days off-grid</div>
+        <div class="res-card-rate">from €320 / night</div>
+      </div>
+    </div></div>
         </div>
 
         <div id="tab-farms" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-farms">
-          <div class="region-tags" id="country-region-tags"></div>
-          <div class="cards-2" id="country-farms-grid"></div>
+          <div class="region-tags" id="country-region-tags" style="display: flex;"><span class="tag-pill active">All regions</span><span class="tag-pill">North</span><span class="tag-pill">Center</span></div>
+          <div class="cards-2" id="country-farms-grid">
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-djedovina')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3E4438"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Heritage farm</span>
+        <h3 class="serif">Ethno Household Đedovina</h3>
+        <div class="farm-card-meta">Nikšić · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-karadzic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#37402F"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Inside a national park</span>
+        <h3 class="serif">Household Karadžić</h3>
+        <div class="farm-card-meta">Durmitor National Park · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-pony')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#434A3B"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Working pony farm</span>
+        <h3 class="serif">Charming Pony Village House</h3>
+        <div class="farm-card-meta">Žabljak · Summer season</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-djedovdo')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3B4334"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Traditional summer pasture</span>
+        <h3 class="serif">Etno Katun Đedov Do</h3>
+        <div class="farm-card-meta">High-mountain katun · Summer season</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-pesic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#464E3E"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Gastronomy and working farm</span>
+        <h3 class="serif">Household Pešić</h3>
+        <div class="farm-card-meta">Bijelo Polje · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-pavicevic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#37402F"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Certified organic farm</span>
+        <h3 class="serif">Household Pavićević</h3>
+        <div class="farm-card-meta">Durmitor plateau · April to December</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-medojevic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3E4438"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Organic farm and food destination</span>
+        <h3 class="serif">Household Medojević — Ravni</h3>
+        <div class="farm-card-meta">Mojkovac · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-ekooaza')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3D4536"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Eco-camping concept</span>
+        <h3 class="serif">Eko Oaza "Tear of Europe"</h3>
+        <div class="farm-card-meta">Dobrilovina, Tara canyon · Summer season</div>
+      </div>
+    </div></div>
         </div>
 
         <div id="tab-experiences" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-experiences">
-          <div id="country-experiences-grid"></div>
+          <div id="country-experiences-grid">
+    <div class="exp-card">
+      <h3 class="serif">Farm dinner</h3>
+      <p>Cooked by the household you are staying with, from what the farm produced that week.</p>
+      <div class="exp-meta">Run by the farm · price on request</div>
+    </div>
+    <div class="exp-card">
+      <h3 class="serif">Wine tasting</h3>
+      <p>In the cellar, with the person who made it. Central Montenegro, Crmnica.</p>
+      <div class="exp-meta">Run by the farm · price on request</div>
+    </div>
+    <div class="exp-card">
+      <h3 class="serif">Riding and mountain walks</h3>
+      <p>Horses on the farm, and routes into Durmitor and the Tara canyon.</p>
+      <div class="exp-meta">Run by the farm · price on request</div>
+    </div>
+    <div class="exp-card">
+      <h3 class="serif">Cooking and craft classes</h3>
+      <p>Traditional cooking, brandy, cheese and handwork, taught in the kitchen where it happens.</p>
+      <div class="exp-meta">Run by the farm · price on request</div>
+    </div></div>
         </div>
 
         <div id="country-opening-content" style="display:none;">
@@ -1127,7 +1235,7 @@
       <div class="container">
         <hr class="rule">
         <div style="padding:40px 0 90px;font-size:16px;color:var(--body);">
-          Do you run a farm in <strong id="country-cta-name">this country</strong>?
+          Do you run a farm in <strong id="country-cta-name">Montenegro</strong>?
           <a href="/host/" style="text-decoration:underline;text-underline-offset:4px;margin-left:6px;">Host a residence</a>
         </div>
       </div>

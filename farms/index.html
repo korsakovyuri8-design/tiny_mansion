@@ -2,29 +2,29 @@
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tiny Mansion — off-grid residences on working farms</title>
-  <meta name="description" content="Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q3 2026.">
+  <title>The farms — Tiny Mansion</title>
+  <meta name="description" content="The working farms hosting the residences: national parks, high-mountain pastures, organic smallholdings and heritage households.">
 
   <!-- Live address of the site. The CNAME file in the repository root is what
        points GitHub Pages at this domain; keep the two in step. -->
-  <link rel="canonical" href="https://tinymansion.co/">
+  <link rel="canonical" href="https://tinymansion.co/farms/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="theme-color" content="#1A1614">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tiny Mansion">
-  <meta property="og:url" content="https://tinymansion.co/">
-  <meta property="og:title" content="Tiny Mansion — off-grid residences on working farms">
-  <meta property="og:description" content="Seven days off-grid, on a working farm. First residences deploy in Montenegro, Q3 2026.">
+  <meta property="og:url" content="https://tinymansion.co/farms/">
+  <meta property="og:title" content="The farms — Tiny Mansion">
+  <meta property="og:description" content="The working farms hosting the residences: national parks, high-mountain pastures, organic smallholdings and heritage households.">
   <meta property="og:image" content="https://tinymansion.co/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Residence 21ft standing on a working farm in Montenegro">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tiny Mansion — off-grid residences on working farms">
-  <meta name="twitter:description" content="Seven days off-grid, on a working farm.">
+  <meta name="twitter:title" content="The farms — Tiny Mansion">
+  <meta name="twitter:description" content="The working farms hosting the residences: national parks, high-mountain pastures, organic smallholdings and heritage households.">
   <meta name="twitter:image" content="https://tinymansion.co/og.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -833,7 +833,7 @@
 <body>
 
   <!-- HEADER -->
-  <header id="site-header" class="over-hero">
+  <header id="site-header" class="">
     <div class="container">
       <div class="header-inner">
         <a href="/" class="wordmark">Tiny Mansion</a>
@@ -866,7 +866,7 @@
     <!-- ======================================================
          HOME
          ====================================================== -->
-    <section id="view-home" class="view-section active">
+    <section id="view-home" class="view-section">
 
       <!-- HERO -->
       <div class="hero" id="hero">
@@ -1259,7 +1259,7 @@
     <!-- ======================================================
          ALL FARMS
          ====================================================== -->
-    <section id="view-all-farms" class="view-section">
+    <section id="view-all-farms" class="view-section active">
       <div class="container page-top">
         <div class="breadcrumbs">
           <a class="breadcrumb-item" href="/">Home</a>
@@ -1279,8 +1279,80 @@
             <figcaption>A corner of the yard, and nothing built for us</figcaption>
           </figure>
 
-          <div class="region-tags" id="farms-filter-pills"></div>
-          <div class="cards-2" id="all-farms-grid"></div>
+          <div class="region-tags" id="farms-filter-pills"><span class="tag-pill active">ALL</span><span class="tag-pill">Montenegro</span></div>
+          <div class="cards-2" id="all-farms-grid">
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-djedovina')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3E4438"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Heritage farm</span>
+        <h3 class="serif">Ethno Household Đedovina</h3>
+        <div class="farm-card-meta">Nikšić, Montenegro · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-karadzic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#37402F"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Inside a national park</span>
+        <h3 class="serif">Household Karadžić</h3>
+        <div class="farm-card-meta">Durmitor National Park, Montenegro · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-pony')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#434A3B"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Working pony farm</span>
+        <h3 class="serif">Charming Pony Village House</h3>
+        <div class="farm-card-meta">Žabljak, Montenegro · Summer season</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-djedovdo')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3B4334"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Traditional summer pasture</span>
+        <h3 class="serif">Etno Katun Đedov Do</h3>
+        <div class="farm-card-meta">High-mountain katun, Montenegro · Summer season</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-pesic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#464E3E"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Gastronomy and working farm</span>
+        <h3 class="serif">Household Pešić</h3>
+        <div class="farm-card-meta">Bijelo Polje, Montenegro · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-pavicevic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#37402F"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Certified organic farm</span>
+        <h3 class="serif">Household Pavićević</h3>
+        <div class="farm-card-meta">Durmitor plateau, Montenegro · April to December</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-medojevic')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3E4438"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Organic farm and food destination</span>
+        <h3 class="serif">Household Medojević — Ravni</h3>
+        <div class="farm-card-meta">Mojkovac, Montenegro · Year-round</div>
+      </div>
+    </div>
+    <div class="farm-card" role="button" tabindex="0" onclick="openFarm('f-ekooaza')">
+      <div class="farm-card-media"><div class="color-block" style="background-color:#3D4536"></div></div>
+      <div class="farm-card-scrim"></div>
+      <div class="farm-card-body">
+        <span class="farm-card-type">Eco-camping concept</span>
+        <h3 class="serif">Eko Oaza "Tear of Europe"</h3>
+        <div class="farm-card-meta">Dobrilovina, Tara canyon, Montenegro · Summer season</div>
+      </div>
+    </div></div>
         </div>
       </div>
     </section>
