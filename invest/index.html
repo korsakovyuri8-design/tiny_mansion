@@ -52,9 +52,34 @@ a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
 .narrow{max-width:760px;margin:0 auto;padding:0 26px}
 
+/* ── Шапка. Та же, что на сайте, но на здешней типографике: имя
+   гарнитурой EB Garamond, меню — Plex Mono. Держится сверху, чтобы с
+   длинной страницы можно было вернуться, не мотая наверх. ── */
+#site-header{position:sticky;top:0;z-index:20;
+  background:rgba(247,243,237,.94);backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid var(--rule)}
+.header-inner{height:78px;display:flex;align-items:center;gap:16px}
+.wordmark{font-family:var(--serif);font-size:clamp(17px,2vw,23px);font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.nav{display:flex;align-items:center;gap:clamp(12px,2.2vw,34px);
+  margin-left:auto;white-space:nowrap}
+.nav a{font-family:var(--mono);font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;text-decoration:none;color:var(--muted);
+  transition:color .3s ease}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink)}
+@media(max-width:760px){
+  .header-inner{height:auto;flex-wrap:wrap;gap:9px;padding:12px 0}
+  .nav{width:100%;justify-content:space-between;gap:0;margin-left:0}
+  .nav a{font-size:10px;letter-spacing:.04em}
+}
+
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--gold-ink);margin-bottom:20px}
-.dark .eyebrow,.hero .eyebrow,.closing .eyebrow{color:var(--gold)}
+.dark .eyebrow{color:var(--gold)}
+/* Поверх фотографии тёмное золото не держится — берём светлый оттенок,
+   тот же, что на главной странице сайта. */
+.hero .eyebrow,.closing .eyebrow{color:#C7A96B}
 h1{font-weight:400;font-size:clamp(38px,7vw,76px);line-height:1.03;letter-spacing:-.02em}
 h2{font-weight:400;font-size:clamp(28px,5vw,46px);line-height:1.12;
   letter-spacing:-.012em;margin-bottom:22px}
@@ -70,10 +95,15 @@ section{padding:96px 0}
 .dark .note{color:rgba(247,243,237,.5)}
 .tint{background:var(--card)}
 
-.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;
+/* минус шапка, чтобы первый экран по-прежнему складывался целиком */
+.hero{position:relative;min-height:calc(92vh - 78px);display:flex;align-items:flex-end;
   padding:0 0 78px;background:var(--ink) var(--img-hero) center/cover no-repeat;color:var(--cream)}
+/* Второй, горизонтальный слой: без него мелкие капсы тонули в светлой
+   крыше. Правая половина кадра остаётся открытой. */
 .hero::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(20,17,15,.55) 0%,rgba(20,17,15,.15) 38%,rgba(20,17,15,.88) 100%)}
+  background:
+    linear-gradient(to right,rgba(20,17,15,.5) 0%,rgba(20,17,15,.2) 42%,rgba(20,17,15,0) 72%),
+    linear-gradient(to bottom,rgba(20,17,15,.55) 0%,rgba(20,17,15,.18) 34%,rgba(20,17,15,.6) 64%,rgba(20,17,15,.9) 100%)}
 .hero .wrap{position:relative;z-index:2}
 .hero h1{max-width:14em}
 .hero .lede{color:rgba(247,243,237,.8);margin-top:24px}
@@ -235,8 +265,24 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
 </head>
 <body>
 
+<!-- ══ ШАПКА ══ -->
+<header id="site-header">
+  <div class="wrap">
+    <div class="header-inner">
+      <a href="/" class="wordmark">Tiny Mansion</a>
+      <nav class="nav" aria-label="Основная">
+        <a href="/#/all-residences">Резиденции</a>
+        <a href="/#/all-farms">Фермы</a>
+        <a href="/#/about">О нас</a>
+        <a href="/invest/" aria-current="page">Инвесторам</a>
+        <a href="/#/enquiry">Заявка</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
 <!-- ══ HERO ══ -->
-<header class="hero">
+<div class="hero">
   <div class="wrap">
     <p class="eyebrow">Черногория · первый сезон · ранний вход</p>
     <h1>Три дома. Один сезон. Вы у истока сети</h1>
@@ -248,7 +294,7 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
       <span>Доход в евро</span>
     </div>
   </div>
-</header>
+</div>
 
 <!-- ══ ЧТО ЭТО ══ -->
 <section>
