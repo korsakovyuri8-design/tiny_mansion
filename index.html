@@ -822,6 +822,7 @@
     }
     @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
   </style>
+  <script src="analytics.js" defer></script>
 </head>
 <body>
 
@@ -2590,6 +2591,12 @@ function initForms() {
     form.setAttribute('action', MAIL_ENDPOINT || ('https://formsubmit.co/' + siteMail()));
     const next = form.querySelector('input[name="_next"]');
     if (next) next.value = back;
+    /* Которая из двух форм сработала — единственное, что стоит знать:
+       гость и владелец фермы приходят с разных сторон. */
+    form.addEventListener('submit', () => {
+      const which = form.closest('#view-host') ? 'host' : 'guest';
+      if (window.track) window.track('form_submit', { form: which });
+    });
   });
 
   document.querySelectorAll('[data-mail]').forEach(el => {
