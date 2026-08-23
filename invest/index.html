@@ -6,7 +6,10 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Tiny Mansion · Первый сезон сети в Черногории</title>
 <meta name="description" content="Три резиденции, один сезон, вход от €50 000. Проект €700 000 в Черногории: доход в евро, личные ночи в сети, расчёт с открытыми допущениями.">
-<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="alternate" hreflang="ru" href="https://tinymansion.co/invest/">
+<link rel="alternate" hreflang="en" href="https://tinymansion.co/invest/en/">
+<link rel="alternate" hreflang="x-default" href="https://tinymansion.co/invest/en/">
 
 <!-- noindex держит страницу вне поиска, но ссылку всё равно отправляют в
      мессенджере — эти теги отвечают за то, как она там развернётся. -->
@@ -26,289 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════
-   КАРТИНКИ — меняй только здесь.
-   Пять снимков берутся из фотографий сайта (../),
-   пять пока не сняты и стоят как none: плита
-   рисуется цветом, битых запросов нет.
-   Как появится файл — положи его в папку img
-   рядом с этой страницей и подставь путь.
-   ═══════════════════════════════════════════════ */
-:root{
-  --img-hero:      url('../residence-21.jpg');    /* резиденция на ферме, горы */
-  --img-country:   url('../north-empty.jpg');     /* север: ни людей, ни построек — та самая пустота */
-  --img-res21:     url('../residence-21-b.jpg');  /* 21ft спереди */
-  --img-res24:     url('../residence-24.jpg');    /* 24ft на террасе */
-  --img-zone-n:    url('../zone-north.jpg');      /* хвойный лес и скальные вершины */
-  --img-zone-c:    url('../zone-center.jpg');     /* виноградники до горизонта */
-  --img-zone-s:    url('../zone-south.jpg');      /* Которский залив, оливковая терраса над водой */
-  --img-farm:      url('../farm-network.jpg');    /* хутор с амбаром, овцы, резиденции на площадке */
-  --img-interior:  url('../residence-21-d.jpg');  /* интерьер, гостиная с лестницей */
-  --img-closing:   url('../residence-21-c.jpg');  /* торец в сумерках */
-
-  --cream:#F7F3ED; --card:#EFE9DF; --ink:#1A1614; --gold:#9C7A3C;
-  /* Брендовое золото даёт на кремовом только 3,6:1. Мелкие капсы на светлом
-     фоне идут этим более тёмным оттенком — 5,1:1, и это всё ещё золото. */
-  --gold-ink:#7F622E;
-  /* На .60 мелкий текст на карточке давал 4,4:1 — чуть ниже нормы.
-     На .64 выглядит так же, но проходит. */
-  --rule:rgba(26,22,20,.14); --muted:rgba(26,22,20,.64);
-  --cream-muted:rgba(247,243,237,.66);
-  --serif:"EB Garamond",Georgia,serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{background:var(--cream);color:var(--ink);font-family:var(--serif);
-  font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
-.wrap{max-width:1120px;margin:0 auto;padding:0 26px}
-.narrow{max-width:760px;margin:0 auto;padding:0 26px}
-
-/* ── Шапка. Та же, что на сайте, но на здешней типографике: имя
-   гарнитурой EB Garamond, меню — Plex Mono. Держится сверху, чтобы с
-   длинной страницы можно было вернуться, не мотая наверх. ── */
-#site-header{position:sticky;top:0;z-index:20;
-  background:rgba(247,243,237,.94);backdrop-filter:saturate(160%) blur(10px);
-  border-bottom:1px solid var(--rule)}
-.header-inner{height:78px;display:flex;align-items:center;gap:16px}
-.wordmark{font-family:var(--serif);font-size:clamp(17px,2vw,23px);font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
-.nav{display:flex;align-items:center;gap:clamp(12px,2.2vw,34px);
-  margin-left:auto;white-space:nowrap}
-.nav a{font-family:var(--mono);font-size:11px;letter-spacing:.09em;
-  text-transform:uppercase;text-decoration:none;color:var(--muted);
-  transition:color .3s ease}
-.nav a:hover{color:var(--ink)}
-.nav a[aria-current="page"]{color:var(--ink)}
-@media(max-width:760px){
-  .header-inner{height:auto;flex-wrap:wrap;gap:9px;padding:12px 0}
-  .nav{width:100%;justify-content:space-between;gap:0;margin-left:0}
-  .nav a{font-size:10px;letter-spacing:.04em}
-}
-
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--gold-ink);margin-bottom:20px}
-.dark .eyebrow{color:var(--gold)}
-/* Поверх фотографии тёмное золото не держится — берём светлый оттенок,
-   тот же, что на главной странице сайта. */
-.hero .eyebrow,.closing .eyebrow{color:#C7A96B}
-h1{font-weight:400;font-size:clamp(38px,7vw,76px);line-height:1.03;letter-spacing:-.02em}
-/* Кегль поднят примерно на 15%: на телефоне заголовки должны ловиться
-   беглым взглядом, а не вычитываться. */
-h2{font-weight:400;font-size:clamp(32px,5.2vw,48px);line-height:1.1;
-  letter-spacing:-.014em;margin-bottom:22px}
-h3{font-weight:500;font-size:clamp(22px,4.4vw,24px);line-height:1.28;margin-bottom:7px}
-p{margin-bottom:18px}
-p:last-child{margin-bottom:0}
-.lede{font-size:clamp(20px,2.5vw,24px);color:var(--muted);max-width:34em}
-
-section{padding:96px 0}
-.dark{background:var(--ink);color:var(--cream)}
-.dark h2,.dark h3{color:var(--cream)}
-.dark p{color:var(--cream-muted)}
-.dark .note{color:rgba(247,243,237,.5)}
-.tint{background:var(--card)}
-
-/* минус шапка, чтобы первый экран по-прежнему складывался целиком */
-.hero{position:relative;min-height:calc(92vh - 78px);display:flex;align-items:flex-end;
-  padding:0 0 78px;background:var(--ink) var(--img-hero) center/cover no-repeat;color:var(--cream)}
-/* Второй, горизонтальный слой: без него мелкие капсы тонули в светлой
-   крыше. Правая половина кадра остаётся открытой. */
-.hero::after{content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(to right,rgba(20,17,15,.5) 0%,rgba(20,17,15,.2) 42%,rgba(20,17,15,0) 72%),
-    linear-gradient(to bottom,rgba(20,17,15,.55) 0%,rgba(20,17,15,.18) 34%,rgba(20,17,15,.6) 64%,rgba(20,17,15,.9) 100%)}
-.hero .wrap{position:relative;z-index:2}
-.hero h1{max-width:14em}
-.hero .lede{color:rgba(247,243,237,.8);margin-top:24px}
-.hero-meta{margin-top:44px;padding-top:26px;border-top:1px solid rgba(247,243,237,.24);
-  display:flex;flex-wrap:wrap;gap:14px 52px;font-family:var(--mono);
-  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,237,.72)}
-
-/* ── Дисбаланс ночёвок. Обе полосы меряют одну величину — долю ночёвок,
-   поэтому цвет один: разница в длине и есть весь смысл. Золотом идёт не
-   вторая «серия», а подпись-указатель. Значения продублированы текстом,
-   так что смысл не держится на одном цвете. ── */
-.split{margin-top:46px;border-top:1px solid var(--rule);padding-top:28px}
-.split-cap{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.split-row{padding:16px 0;border-bottom:1px solid var(--rule)}
-.split-row dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.split-row dd{display:flex;align-items:center;gap:18px}
-.split-track{position:relative;flex:1;height:12px;background:rgba(26,22,20,.09)}
-.split-bar{position:absolute;left:0;top:0;bottom:0;width:var(--w);
-  background:var(--ink);border-radius:0 3px 3px 0}
-.split-val{font-size:clamp(22px,3vw,30px);line-height:1;letter-spacing:-.02em;
-  min-width:3.6em;text-align:right}
-.split-us{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold-ink);margin-top:12px}
-.split-sum{margin-top:22px;font-size:clamp(19px,2.2vw,22px)}
-@media(max-width:560px){
-  .split-row dd{gap:12px}
-  .split-val{min-width:3.1em}
-}
-
-.plate{height:clamp(300px,58vh,620px);background-color:var(--ink);
-  background-size:cover;background-position:center;position:relative}
-.plate--country{background-image:var(--img-country)}
-.plate--farm{background-image:var(--img-farm)}
-.plate--interior{background-image:var(--img-interior)}
-.plate-cap{position:absolute;left:0;right:0;bottom:0;padding:26px;
-  background:linear-gradient(to top,rgba(20,17,15,.72),transparent);
-  color:var(--cream);font-family:var(--mono);font-size:11px;
-  letter-spacing:.16em;text-transform:uppercase}
-
-.stats{margin-top:44px;border-top:1px solid var(--rule)}
-.stat{padding:26px 0;border-bottom:1px solid var(--rule);
-  display:grid;grid-template-columns:1fr;gap:4px}
-.stat-v{font-size:clamp(38px,7vw,62px);line-height:1;letter-spacing:-.025em}
-.stat-l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted)}
-.stat-n{color:var(--muted);font-size:17px}
-@media(min-width:700px){
-  .stat{grid-template-columns:minmax(0,300px) 1fr;gap:34px;align-items:baseline}
-  .stat > div:first-child{display:flex;flex-direction:column;gap:6px}
-}
-.dark .stats{border-color:rgba(247,243,237,.2)}
-.dark .stat{border-color:rgba(247,243,237,.12)}
-.dark .stat-l{color:rgba(247,243,237,.5)}
-.dark .stat-n{color:var(--cream-muted)}
-.dark .stat-v{color:var(--cream)}
-.stat--flag .stat-v{color:var(--gold)}
-
-.ladder{margin-top:36px;border-top:1px solid rgba(247,243,237,.2)}
-.rung{padding:22px 0;border-bottom:1px solid rgba(247,243,237,.12);
-  display:grid;grid-template-columns:1fr;gap:5px}
-.rung-v{font-size:clamp(30px,6vw,50px);line-height:1;letter-spacing:-.025em;color:var(--cream)}
-.rung-l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:rgba(247,243,237,.5)}
-.rung-n{color:var(--cream-muted);font-size:17px}
-.rung--flag .rung-v{color:var(--gold)}
-@media(min-width:700px){
-  .rung{grid-template-columns:minmax(0,340px) 1fr;gap:34px;align-items:baseline}
-  .rung > div:first-child{display:flex;flex-direction:column;gap:6px}
-}
-
-.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:18px}
-table{width:100%;border-collapse:collapse;font-size:16px;min-width:640px}
-th,td{text-align:left;padding:15px 16px 15px 0;border-bottom:1px solid var(--rule);
-  font-weight:400;vertical-align:top}
-thead th{font-family:var(--mono);font-size:10px;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted)}
-tbody td:first-child{font-family:var(--mono);font-size:11px;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:23%}
-thead th.us{color:var(--gold-ink)}
-td.us{font-weight:500}
-.dark table th,.dark table td{border-color:rgba(247,243,237,.14)}
-.dark thead th,.dark tbody td:first-child{color:rgba(247,243,237,.5)}
-.dark td{color:var(--cream)}
-.dark thead th.us{color:var(--gold)}
-
-.product{border-top:1px solid var(--rule)}
-.product-row{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--rule)}
-.product-img{height:clamp(240px,42vw,420px);background:var(--ink) center/cover no-repeat}
-.product-img--21{background-image:var(--img-res21)}
-.product-img--24{background-image:var(--img-res24)}
-.product-body{padding:38px 0}
-.spec{margin-top:22px;border-top:1px solid var(--rule)}
-.spec div{display:flex;justify-content:space-between;gap:20px;
-  padding:11px 0;border-bottom:1px solid var(--rule)}
-.spec dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted)}
-.spec dd{font-weight:500}
-.price{margin-top:24px;font-size:clamp(30px,5vw,42px);line-height:1;letter-spacing:-.02em}
-.price small{display:block;font-family:var(--mono);font-size:11px;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:8px;font-weight:400}
-@media(min-width:860px){
-  .product-row{grid-template-columns:1fr 1fr;gap:52px;align-items:center}
-  .product-row--flip .product-img{order:2}
-  .product-body{padding:52px 0}
-}
-
-.zones{display:grid;grid-template-columns:1fr;gap:2px;margin-top:40px}
-.zone{position:relative;min-height:330px;display:flex;align-items:flex-end;
-  padding:30px;background:var(--ink) center/cover no-repeat;color:var(--cream)}
-/* Карточка узкая и почти квадратная, а снимки широкие: без сдвига точки
-   кадрирования от центра остаётся один дом и теряется сам ландшафт,
-   ради которого карточка и существует. */
-.zone--n{background-image:var(--img-zone-n);background-position:50% 34%}
-.zone--c{background-image:var(--img-zone-c);background-position:12% 46%}
-.zone--s{background-image:var(--img-zone-s);background-position:52% 42%}
-.zone::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(20,17,15,.93) 0%,rgba(20,17,15,.74) 40%,rgba(20,17,15,.18) 100%)}
-.zone-in{position:relative;z-index:2}
-.zone-pc{font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:#C7A96B;margin-bottom:8px}
-.zone p{color:rgba(247,243,237,.78);font-size:17px}
-@media(min-width:820px){.zones{grid-template-columns:repeat(3,1fr)}}
-
-ol.steps{list-style:none;counter-reset:s;margin-top:34px}
-ol.steps li{counter-increment:s;padding:24px 0 24px 52px;position:relative;
-  border-top:1px solid var(--rule)}
-ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;
-  left:0;top:27px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold-ink)}
-ol.steps p{color:var(--muted);font-size:18px}
-.dark ol.steps li{border-color:rgba(247,243,237,.14)}
-.dark ol.steps li::before{color:var(--gold)}
-.dark ol.steps p{color:var(--cream-muted)}
-
-/* два столбца: приезжаешь / не приезжаешь */
-.duo{display:grid;grid-template-columns:1fr;gap:2px;margin-top:38px}
-.duo > div{padding:34px 30px;background:var(--card)}
-.duo > div.alt{background:var(--ink);color:var(--cream)}
-.duo > div.alt h3{color:var(--cream)}
-.duo > div.alt p{color:var(--cream-muted)}
-.duo p{font-size:17px;margin-bottom:14px}
-@media(min-width:820px){.duo{grid-template-columns:1fr 1fr}}
-
-/* уровни входа */
-.tiers{display:grid;grid-template-columns:1fr;gap:2px;margin-top:38px}
-.tier{padding:34px 30px;background:var(--card)}
-.tier--top{background:var(--ink);color:var(--cream)}
-.tier--top h3,.tier--top .tier-am{color:var(--cream)}
-/* Одинаковый вес с «.tier li» ниже, а идёт раньше — поэтому тёмная карточка
-   получала тёмный текст на тёмном фоне. Поднимаем вес, чтобы правило выиграло. */
-.tier.tier--top li{color:var(--cream-muted);border-color:rgba(247,243,237,.14)}
-.tier-am{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--gold-ink);margin-bottom:10px}
-.tier--top .tier-am{color:var(--gold)}
-.tier ul{list-style:none;margin-top:16px}
-.tier li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px;color:var(--muted)}
-.tier li:last-child{border-bottom:0}
-@media(min-width:860px){.tiers{grid-template-columns:repeat(3,1fr)}}
-
-.ledger{margin-top:34px;border-top:1px solid rgba(247,243,237,.2)}
-.lrow{padding:18px 0;border-bottom:1px solid rgba(247,243,237,.12);
-  display:grid;grid-template-columns:1fr;gap:5px}
-.lmark{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--gold)}
-.lrow--no .lmark{color:rgba(247,243,237,.5)}
-.lrow p{color:var(--cream)}
-.lrow--no p{color:var(--cream-muted)}
-@media(min-width:640px){.lrow{grid-template-columns:150px 1fr;gap:24px;align-items:baseline}}
-
-.closing{position:relative;min-height:82vh;display:flex;align-items:center;
-  background:var(--ink) var(--img-closing) center/cover no-repeat;color:var(--cream);padding:80px 0}
-.closing::after{content:"";position:absolute;inset:0;background:rgba(20,17,15,.7)}
-.closing .narrow{position:relative;z-index:2}
-.cta{display:inline-block;margin-top:14px;padding:16px 30px;
-  border:1px solid var(--gold);color:var(--gold);text-decoration:none;
-  font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
-  transition:background .2s,color .2s}
-.cta:hover,.cta:focus-visible{background:var(--gold);color:var(--ink)}
-
-.note{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--muted);margin-top:24px}
-footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
-</style>
-<script src="../analytics.js" defer></script>
+<link rel="stylesheet" href="/invest/invest.css">
+<script src="/analytics.js" defer></script>
 </head>
 <body>
 
@@ -318,12 +40,17 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
     <div class="header-inner">
       <a href="/" class="wordmark">Tiny Mansion</a>
       <nav class="nav" aria-label="Основная">
-        <a href="/#/all-residences">Резиденции</a>
-        <a href="/#/all-farms">Фермы</a>
-        <a href="/#/about">О нас</a>
+        <a href="/residences/">Резиденции</a>
+        <a href="/farms/">Фермы</a>
+        <a href="/about/">О нас</a>
         <a href="/invest/" aria-current="page">Инвесторам</a>
-        <a href="/#/enquiry">Заявка</a>
+        <a href="/enquiry/">Заявка</a>
       </nav>
+      <div class="lang" role="group" aria-label="Language">
+        <span aria-current="true">RU</span>
+        <span class="sep" aria-hidden="true"></span>
+        <a href="/invest/en/" hreflang="en" lang="en">EN</a>
+      </div>
     </div>
   </div>
 </header>

@@ -841,8 +841,10 @@
           <a href="/residences/" class="nav-link">Residences</a>
           <a href="/farms/" class="nav-link">Farms</a>
           <a href="/about/" class="nav-link">About</a>
-          <!-- A real page, not a hash route: leaves the single-page site. -->
-          <a href="/invest/" class="nav-link">Invest</a>
+          <!-- A separate page, not a view of this one: leaves the site.
+               It exists in both languages as two files, so the link follows
+               whichever one the visitor is reading — see applyLang. -->
+          <a href="/invest/en/" class="nav-link" data-invest="">Invest</a>
           <a href="/enquiry/" class="nav-link">Enquire</a>
         </nav>
         <div class="lang" role="group" aria-label="Language">
@@ -2832,6 +2834,11 @@ function applyLang() {
   });
 
   setHead(location.pathname);
+
+  /* The investor deck is two separate files rather than one page that
+     translates itself, so the link has to pick the right one. */
+  document.querySelectorAll('[data-invest]').forEach(a =>
+    a.setAttribute('href', lang === 'ru' ? '/invest/' : '/invest/en/'));
 
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.classList.toggle('active', b.getAttribute('data-lang') === lang));
