@@ -1552,7 +1552,8 @@ const DATA = {
   countries: {
     montenegro: {
       id: 'montenegro', index: '01', name: 'Montenegro',
-      color: '#3E4438', photo: null /* add montenegro.jpg to the repo to use a photo here */,
+      color: '#3E4438', photo: 'montenegro.jpg',
+      alt: 'Three residences standing on a working farm in Montenegro, vineyard and olive terraces below a limestone massif',
       status: 'Opening Q3 2026', isOpeningSoon: false,
       caption: '25 residences planned',
       desc: 'The first country. Mountains in the north, wine country and a lake in the middle, a short and selective stretch of coast in the south. Small enough that a residence moves between all three in a few hours, which is the whole point.',
@@ -1778,7 +1779,7 @@ function renderCountryPanels() {
   document.getElementById('country-panels').innerHTML =
     Object.values(DATA.countries).map(c => `
       <div class="country-panel" role="button" tabindex="0" onclick="openCountry('${c.id}')">
-        <div class="country-panel-media">${media(c.photo, c.color, c.name)}</div>
+        <div class="country-panel-media">${media(c.photo, c.color, c.alt || c.name)}</div>
         <div class="country-panel-scrim"></div>
         <div class="country-panel-body">
           <span class="country-panel-index">${c.index}</span>
@@ -1824,7 +1825,7 @@ function openCountry(countryId) {
   document.getElementById('country-desc').innerText = c.desc;
   document.getElementById('country-status').innerText = c.status;
   document.getElementById('country-cta-name').innerText = c.name;
-  document.getElementById('country-hero-media').innerHTML = media(c.photo, c.color, c.name, true);
+  document.getElementById('country-hero-media').innerHTML = media(c.photo, c.color, c.alt || c.name, true);
 
   const tabsRow = document.getElementById('country-tabs-row');
   const opening = document.getElementById('country-opening-content');
@@ -2142,6 +2143,8 @@ const RU = {
 
   /* Countries */
   'Montenegro': 'Черногория',
+  'Three residences standing on a working farm in Montenegro, vineyard and olive terraces below a limestone massif':
+    'Три резиденции на действующей ферме в Черногории: виноградник и оливковые террасы под известняковым массивом',
   'Croatia': 'Хорватия',
   'Greece': 'Греция',
   'Switzerland': 'Швейцария',
