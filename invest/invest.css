@@ -165,6 +165,23 @@ section{padding:96px 0}
 .split-us{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--gold-ink);margin-top:12px}
 .split-sum{margin-top:22px;font-size:clamp(19px,2.2vw,22px)}
+
+/* Two photographs of the coast, under the figure that says 89,7% of the
+   country's nights happen there. Everything else on this page is a render;
+   these are not, which is the point of showing them. Held to a narrow
+   column because they came off a phone at 597px — wider would be an
+   upscale, and a soft photograph argues nothing. */
+.pair{margin:44px 0 0;max-width:780px;
+  display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pair figure{margin:0}
+.pair img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;
+  background:var(--card)}
+.pair figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-top:10px;line-height:1.6}
+@media(max-width:620px){
+  .pair{grid-template-columns:1fr;gap:26px;margin-top:34px}
+}
+
 @media(max-width:560px){
   .split-row dd{gap:12px}
   .split-val{min-width:3.1em}
