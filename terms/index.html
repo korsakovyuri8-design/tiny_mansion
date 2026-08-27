@@ -158,10 +158,14 @@
 
     /* Photography runs through real <img> elements so it can carry alt text
        and lazy-load; .photo-block is the shared cover-fit skin. */
-    /* <picture> only exists to offer the browser a choice of file. It must
-       not become a box of its own, or every layout that expects the image
-       to be the child gets an inline wrapper in the way. */
-    picture { display: contents; }
+    /* <picture> only exists to offer the browser a choice of file, but it is
+       still a real element between the container and the image. .photo-block
+       sizes itself at height:100%, so it needs a parent with a height —
+       display:contents leaves that resolving through a box that isn't there,
+       and anywhere that treatment isn't honoured every photograph collapses
+       to nothing. A block that fills the container is the same result by
+       ordinary means, and it keeps the `.media > *` rules below meaningful. */
+    picture { display: block; width: 100%; height: 100%; }
 
     .photo-block {
       display: block; width: 100%; height: 100%;
@@ -856,6 +860,7 @@
     }
     @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
   </style>
+  <script src="/photo-fallback.js" defer=""></script>
   <script src="/analytics.js" defer=""></script>
 </head>
 <body>
@@ -1780,6 +1785,7 @@ function esc(v) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+
 /* Real <img> so photography carries alt text and lazy-loads. Without a file
    the block falls back to the brand colour rather than a broken request. */
 /* How wide this photograph is actually painted, so the browser can pick a
@@ -2567,6 +2573,76 @@ const RU = {
     'Умный замок Nuki — заселяетесь сами. Cerbo GX следит за всеми системами, чтобы ничего не кончилось, пока вы спите.',
 
   /* Farms */
+  /* Every farm's own copy. It only ever appears on that farm's own page, so
+     none of it showed up in a sweep of the pages a visitor lands on first —
+     which is how seven of the eight came to be sitting there in English.
+     The composed lines (city + country, name + city) are keyed whole because
+     that is the single text node applyLang sees. */
+  'Nikšić': 'Никшич',
+  'Durmitor National Park': 'Национальный парк Дурмитор',
+  'Durmitor National Park, Montenegro': 'Национальный парк Дурмитор, Черногория',
+  'Žabljak': 'Жабляк',
+  'Žabljak, Montenegro': 'Жабляк, Черногория',
+  'High-mountain katun': 'Высокогорный катун',
+  'High-mountain katun, Montenegro': 'Высокогорный катун, Черногория',
+  'Bijelo Polje': 'Биело-Поле',
+  'Bijelo Polje, Montenegro': 'Биело-Поле, Черногория',
+  'Durmitor plateau': 'Плато Дурмитор',
+  'Durmitor plateau, Montenegro': 'Плато Дурмитор, Черногория',
+  'Mojkovac': 'Мойковац',
+  'Mojkovac, Montenegro': 'Мойковац, Черногория',
+  'Dobrilovina, Tara canyon': 'Добриловина, каньон Тары',
+  'Dobrilovina, Tara canyon, Montenegro': 'Добриловина, каньон Тары, Черногория',
+
+  /* The one farm whose listing name is a description rather than a family
+     name. Replace this if the household calls itself something in Russian. */
+  'Charming Pony Village House': 'Деревенский дом с пони',
+
+  /* Photograph alt text: name, then where it stands. */
+  'Ethno Household Đedovina, Nikšić': 'Этно-усадьба Đedovina, Никшич',
+  'Household Karadžić, Durmitor National Park': 'Усадьба Karadžić, национальный парк Дурмитор',
+  'Charming Pony Village House, Žabljak': 'Деревенский дом с пони, Жабляк',
+  'Etno Katun Đedov Do, High-mountain katun': 'Этно-катун Đedov Do, высокогорный катун',
+  'Household Pešić, Bijelo Polje': 'Усадьба Pešić, Биело-Поле',
+  'Household Pavićević, Durmitor plateau': 'Усадьба Pavićević, плато Дурмитор',
+  'Household Medojević — Ravni, Mojkovac': 'Усадьба Medojević — Ravni, Мойковац',
+  'Eko Oaza "Tear of Europe", Dobrilovina, Tara canyon':
+    'Eko Oaza «Слеза Европы», Добриловина, каньон Тары',
+
+  'A thirteen-bed working household inside Durmitor National Park, a UNESCO World Heritage site.':
+    'Действующее подворье на тринадцать спальных мест внутри национального парка Дурмитор — объекта Всемирного наследия ЮНЕСКО.',
+  'Horse riding and cooking classes are already on offer. The hosts speak English and Italian.':
+    'Верховая езда и кулинарные занятия уже работают. Хозяева говорят по-английски и по-итальянски.',
+
+  'A mountain household at 1,450m on the Durmitor plateau, in the park buffer zone.':
+    'Горное подворье на высоте 1450 м на плато Дурмитор, в буферной зоне парка.',
+  'A working pony farm with a long history of hosting guests, run by Bogdan.':
+    'Действующая пони-ферма с долгой историей приёма гостей. Хозяин — Богдан.',
+
+  'An authentic katun, the centuries-old high-mountain summer pasture settlement, run today as a heritage stay.':
+    'Настоящий катун — вековое высокогорное летнее пастбищное поселение, сегодня принимающее гостей с сохранённым укладом.',
+  'Traditional cooking and horses on site, in a place that has been used the same way for generations.':
+    'Традиционная кухня и лошади на месте — там, где поколениями всё устроено одинаково.',
+
+  'A working-farm gastronomy destination on the national Gastro Route, with a fifty-person dining hall.':
+    'Гастрономическая точка на действующей ферме, включённая в национальный гастромаршрут, с залом на пятьдесят человек.',
+  'Homemade brandy production and a monthly calendar of farm activities. A large family operation, English spoken.':
+    'Собственное производство ракии и ежемесячный календарь занятий на ферме. Большое семейное хозяйство, говорят по-английски.',
+
+  'A working organic farm at 1,450m inside Durmitor National Park.':
+    'Действующая органическая ферма на высоте 1450 м внутри национального парка Дурмитор.',
+  'Multi-certified: Gastro Route, organic, specialized and protected zone. Russian and English spoken.':
+    'Несколько сертификатов: гастромаршрут, органика, специализированное хозяйство и охраняемая зона. Говорят по-русски и по-английски.',
+
+  'A working organic farm in Bojna Njiva with commercial chokeberry juice production.':
+    'Действующая органическая ферма в Бойна-Ниве с промышленным производством сока из аронии.',
+  'Seven kilometres from Biogradska Gora National Park and its UNESCO beech forests. Good for families.':
+    'В семи километрах от национального парка Биоградска Гора с буковыми лесами под охраной ЮНЕСКО. Хорошо с детьми.',
+
+  'On the Tara, the deepest canyon in Europe, in the Durmitor buffer zone.':
+    'На Таре — самом глубоком каньоне Европы, в буферной зоне Дурмитора.',
+  'Already running off-grid and to sustainability standards close to our own specification.':
+    'Уже работает автономно и по экологическим стандартам, близким к нашей спецификации.',
   'The network': 'Сеть',
   'Working households and highland pastures that host our residences. Each one was already there, doing its own work.':
     'Действующие подворья и горные пастбища, которые принимают наши резиденции. Каждое было здесь и раньше и делало свою работу.',

@@ -6,12 +6,13 @@
    ========================================================== */
 /* ═══════════════════════════════════════════════
    КАРТИНКИ — меняй только здесь.
-   Здесь стоит .webp без запасного .jpg: фолбэк
-   двумя объявлениями работает для обычных свойств,
-   но не для переменных — при var() позднее
-   объявление просто выигрывает. WebP понимают все
-   браузеры с 2020 года, а страницу мы отправляем
-   адресно. Файлы рядом делает images.py.
+   Каждая плита — image-set из webp и jpg: браузер
+   берёт webp, если умеет, и jpg, если нет. Фолбэк
+   двумя объявлениями тут не работает — это
+   переменная, и при var() позднее объявление
+   просто выигрывает, поэтому запасной формат
+   должен лежать внутри одного значения.
+   Файлы рядом делает images.py.
    Пять снимков берутся из фотографий сайта (../),
    пять пока не сняты и стоят как none: плита
    рисуется цветом, битых запросов нет.
@@ -19,16 +20,26 @@
    рядом с этой страницей и подставь путь.
    ═══════════════════════════════════════════════ */
 :root{
-  --img-hero:      url('/residence-21-2048.webp');    /* резиденция на ферме, горы */
-  --img-country:   url('/north-empty-2048.webp');     /* север: ни людей, ни построек — та самая пустота */
-  --img-res21:     url('/residence-21-b-2048.webp');  /* 21ft спереди */
-  --img-res24:     url('/residence-24-2048.webp');    /* 24ft на террасе */
-  --img-zone-n:    url('/zone-north-2048.webp');      /* хвойный лес и скальные вершины */
-  --img-zone-c:    url('/zone-center-2048.webp');     /* виноградники до горизонта */
-  --img-zone-s:    url('/zone-south-2048.webp');      /* Которский залив, оливковая терраса над водой */
-  --img-farm:      url('/farm-network-2048.webp');    /* хутор с амбаром, овцы, резиденции на площадке */
-  --img-interior:  url('/residence-21-d-2048.webp');  /* интерьер, гостиная с лестницей */
-  --img-closing:   url('/residence-21-c-2048.webp');  /* торец в сумерках */
+  --img-hero:      image-set(url('/residence-21-2048.webp') type('image/webp'),
+                       url('/residence-21.jpg') type('image/jpeg'));    /* резиденция на ферме, горы */
+  --img-country:   image-set(url('/north-empty-2048.webp') type('image/webp'),
+                          url('/north-empty.jpg') type('image/jpeg'));     /* север: ни людей, ни построек — та самая пустота */
+  --img-res21:     image-set(url('/residence-21-b-2048.webp') type('image/webp'),
+                        url('/residence-21-b.jpg') type('image/jpeg'));  /* 21ft спереди */
+  --img-res24:     image-set(url('/residence-24-2048.webp') type('image/webp'),
+                        url('/residence-24.jpg') type('image/jpeg'));    /* 24ft на террасе */
+  --img-zone-n:    image-set(url('/zone-north-2048.webp') type('image/webp'),
+                         url('/zone-north.jpg') type('image/jpeg'));      /* хвойный лес и скальные вершины */
+  --img-zone-c:    image-set(url('/zone-center-2048.webp') type('image/webp'),
+                         url('/zone-center.jpg') type('image/jpeg'));     /* виноградники до горизонта */
+  --img-zone-s:    image-set(url('/zone-south-2048.webp') type('image/webp'),
+                         url('/zone-south.jpg') type('image/jpeg'));      /* Которский залив, оливковая терраса над водой */
+  --img-farm:      image-set(url('/farm-network-2048.webp') type('image/webp'),
+                       url('/farm-network.jpg') type('image/jpeg'));    /* хутор с амбаром, овцы, резиденции на площадке */
+  --img-interior:  image-set(url('/residence-21-d-2048.webp') type('image/webp'),
+                           url('/residence-21-d.jpg') type('image/jpeg'));  /* интерьер, гостиная с лестницей */
+  --img-closing:   image-set(url('/residence-21-c-2048.webp') type('image/webp'),
+                          url('/residence-21-c.jpg') type('image/jpeg'));  /* торец в сумерках */
 
   --cream:#F7F3ED; --card:#EFE9DF; --ink:#1A1614; --gold:#9C7A3C;
   /* Брендовое золото даёт на кремовом только 3,6:1. Мелкие капсы на светлом
@@ -48,16 +59,26 @@
    third of the width. */
 @media(max-width:900px){
   :root{
-    --img-hero:      url('/residence-21-1024.webp');
-    --img-country:   url('/north-empty-1024.webp');
-    --img-res21:     url('/residence-21-b-1024.webp');
-    --img-res24:     url('/residence-24-1024.webp');
-    --img-zone-n:    url('/zone-north-1024.webp');
-    --img-zone-c:    url('/zone-center-1024.webp');
-    --img-zone-s:    url('/zone-south-1024.webp');
-    --img-farm:      url('/farm-network-1024.webp');
-    --img-interior:  url('/residence-21-d-1024.webp');
-    --img-closing:   url('/residence-21-c-1024.webp');
+    --img-hero:      image-set(url('/residence-21-1024.webp') type('image/webp'),
+                       url('/residence-21.jpg') type('image/jpeg'));
+    --img-country:   image-set(url('/north-empty-1024.webp') type('image/webp'),
+                          url('/north-empty.jpg') type('image/jpeg'));
+    --img-res21:     image-set(url('/residence-21-b-1024.webp') type('image/webp'),
+                        url('/residence-21-b.jpg') type('image/jpeg'));
+    --img-res24:     image-set(url('/residence-24-1024.webp') type('image/webp'),
+                        url('/residence-24.jpg') type('image/jpeg'));
+    --img-zone-n:    image-set(url('/zone-north-1024.webp') type('image/webp'),
+                         url('/zone-north.jpg') type('image/jpeg'));
+    --img-zone-c:    image-set(url('/zone-center-1024.webp') type('image/webp'),
+                         url('/zone-center.jpg') type('image/jpeg'));
+    --img-zone-s:    image-set(url('/zone-south-1024.webp') type('image/webp'),
+                         url('/zone-south.jpg') type('image/jpeg'));
+    --img-farm:      image-set(url('/farm-network-1024.webp') type('image/webp'),
+                       url('/farm-network.jpg') type('image/jpeg'));
+    --img-interior:  image-set(url('/residence-21-d-1024.webp') type('image/webp'),
+                           url('/residence-21-d.jpg') type('image/jpeg'));
+    --img-closing:   image-set(url('/residence-21-c-1024.webp') type('image/webp'),
+                          url('/residence-21-c.jpg') type('image/jpeg'));
   }
 }
 *{box-sizing:border-box;margin:0;padding:0}
