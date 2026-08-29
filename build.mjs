@@ -78,6 +78,7 @@ const routes = await page.evaluate(() => {
   const out = Object.keys(VIEW_PATH).map(v => VIEW_PATH[v]);
   Object.keys(DATA.countries).forEach(id => out.push('/country/' + id + '/'));
   RESIDENCES.forEach(r => out.push('/residence/' + r.id + '/'));
+  UNITS.forEach(u => out.push('/bar/' + u.id + '/'));
   Object.values(DATA.countries).forEach(c =>
     (c.farms || []).forEach(f => out.push('/farm/' + f.id + '/')));
   return out;
@@ -91,8 +92,8 @@ console.log(routes.length + ' addresses\n');
 
 /* Clear what the last build wrote, so a farm removed from index.html stops
    having a page rather than lingering as an orphan in search results. */
-['residences', 'farms', 'enquiry', 'host', 'about', 'terms', 'privacy',
- 'thanks', 'country', 'residence', 'farm'].forEach(d => {
+['residences', 'farms', 'bars', 'enquiry', 'host', 'about', 'terms', 'privacy',
+ 'thanks', 'country', 'residence', 'farm', 'bar'].forEach(d => {
   fs.rmSync(path.join(ROOT, d), { recursive: true, force: true });
 });
 
