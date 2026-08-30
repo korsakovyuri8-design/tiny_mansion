@@ -862,73 +862,6 @@
       border-left: 2px solid var(--rule); padding-left: 18px; max-width: 62ch;
     }
 
-    /* ── configurator ── */
-    .cfg { display: grid; gap: 34px; margin-top: 40px; }
-    @media (min-width: 900px) { .cfg { grid-template-columns: minmax(240px, 320px) 1fr; gap: clamp(34px, 5vw, 64px); align-items: start; } }
-    .cfg-group { border: 0; padding: 0; margin: 0 0 26px; }
-    .cfg-legend {
-      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--gold-ink); padding: 0; margin-bottom: 12px;
-    }
-    .cfg-options { display: flex; flex-wrap: wrap; gap: 8px; }
-    .cfg-opt {
-      font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.04em;
-      padding: 10px 16px; border: 1px solid var(--rule); background: none;
-      color: var(--body); cursor: pointer; transition: border-color .2s, color .2s, background .2s;
-    }
-    .cfg-opt:hover { border-color: var(--ink); color: var(--ink); }
-    .cfg-opt[aria-checked="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg-cream); }
-    .cfg-opt:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
-
-    .cfg-plan { margin: 0; }
-    .cfg-plan svg { width: 100%; height: auto; display: block; background: var(--card); }
-    .cfg-cap {
-      font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted); margin-top: 12px; line-height: 1.6;
-    }
-
-    .cfg-out { display: grid; gap: 0; margin-top: 34px; }
-    @media (min-width: 700px) { .cfg-out { grid-template-columns: repeat(3, 1fr); column-gap: clamp(20px, 3vw, 44px); } }
-    .cfg-out > div { padding: 17px 0; border-top: 1px solid var(--rule); }
-    .cfg-out dt { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
-    .cfg-out dd { font-family: var(--font-serif); font-size: 21px; line-height: 1.25; }
-
-    /* ── payback ── */
-    .roi { display: grid; gap: 40px; margin-top: 40px; }
-    @media (min-width: 900px) { .roi { grid-template-columns: minmax(260px, 360px) 1fr; gap: clamp(40px, 6vw, 80px); align-items: start; } }
-    .roi-field { padding: 14px 0; border-top: 1px solid var(--rule); }
-    .roi-field label { display: block; font-size: 12px; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
-    .roi-field input {
-      width: 100%; font-family: var(--font-serif); font-size: 21px; color: var(--ink);
-      background: none; border: 0; border-bottom: 1px solid var(--rule);
-      padding: 5px 0; -moz-appearance: textfield;
-    }
-    .roi-field input::-webkit-outer-spin-button,
-    .roi-field input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    .roi-field input:focus { outline: none; border-bottom-color: var(--ink); }
-
-    .roi-out { background: var(--card); padding: clamp(26px, 4vw, 44px); }
-    .roi-lead-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-ink); }
-    /* The headline answer. One number, set at display size — a chart here would
-       decorate an arithmetic result that is already a single figure. */
-    .roi-lead {
-      font-family: var(--font-serif); font-size: clamp(40px, 6vw, 68px);
-      line-height: 1.02; letter-spacing: -0.01em; margin-top: 10px;
-    }
-    .roi-meter { height: 6px; background: rgba(26,22,20,.12); margin-top: 22px; overflow: hidden; }
-    .roi-meter span {
-      display: block; height: 100%; width: 0;
-      background: var(--gold-ink); border-radius: 0 3px 3px 0;
-      transition: width .35s cubic-bezier(.2,.7,.2,1);
-    }
-    .roi-meter-cap { font-size: 12px; line-height: 1.6; color: var(--muted); margin-top: 10px; }
-    .roi-tiles { display: grid; gap: 0; margin-top: 26px; }
-    @media (min-width: 560px) { .roi-tiles { grid-template-columns: 1fr 1fr; column-gap: clamp(20px, 3vw, 40px); } }
-    .roi-tiles > div { padding: 15px 0; border-top: 1px solid var(--rule); }
-    .roi-tiles dt { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-    .roi-tiles dd { font-family: var(--font-serif); font-size: 25px; line-height: 1.1; }
-    .roi-tiles dd.is-loss { color: #8C3A2B; }
-
     /* Footer */
     .footer { background: var(--ink); color: var(--bg-cream); padding: clamp(56px, 8vw, 90px) 0 44px; margin-top: 0; }
     .footer-content { display: flex; flex-direction: column; gap: 44px; }
@@ -1442,88 +1375,12 @@
 
         <div id="unit-rows" style="margin-top:10px;"></div>
 
-        <!-- ── configurator ── -->
-        <div class="section-pad" id="configure">
-          <span class="eyebrow">Configure</span>
-          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Draw your counter</h2>
-          <p class="page-lede" style="margin-top:16px;">Length, counter and serving windows. The plan below is drawn to scale as you change them, and the numbers under it are what that choice actually gives you.</p>
-
-          <div class="cfg">
-            <div class="cfg-controls">
-              <fieldset class="cfg-group">
-                <legend class="cfg-legend">Length</legend>
-                <div class="cfg-options" id="cfg-length" role="radiogroup" aria-label="Length"></div>
-              </fieldset>
-              <fieldset class="cfg-group">
-                <legend class="cfg-legend">Counter</legend>
-                <div class="cfg-options" id="cfg-counter" role="radiogroup" aria-label="Counter"></div>
-              </fieldset>
-              <fieldset class="cfg-group">
-                <legend class="cfg-legend">Serving windows</legend>
-                <div class="cfg-options" id="cfg-windows" role="radiogroup" aria-label="Serving windows"></div>
-              </fieldset>
-            </div>
-
-            <figure class="cfg-plan">
-              <div id="cfg-svg" role="img" aria-labelledby="cfg-plan-cap"></div>
-              <figcaption class="cfg-cap" id="cfg-plan-cap">Plan view, drawn to scale. Not a substitute for the production drawing.</figcaption>
-            </figure>
-          </div>
-
-          <dl class="cfg-out" id="cfg-out"></dl>
-
-          <a class="btn btn-solid" href="/enquiry/" data-cfg-send="" style="margin-top:30px;">Send this configuration</a>
-        </div>
-
-        <!-- ── EU compliance ── -->
-        <div class="section-pad">
-          <span class="eyebrow">Paperwork</span>
-          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What the unit is delivered with</h2>
-          <p class="page-lede" style="margin-top:16px;">A trailer you cannot register is a trailer you cannot work. These are the documents and standards each build is specified against, and they are quoted in writing before you order.</p>
-
-          <div class="specstrip" style="margin-top:44px;">
-            <div class="specstrip-item">
-              <h3 class="serif">Registration in the EU</h3>
-              <p>Built to EU category O2 — a braked trailer up to 3.5 t — and delivered with the Certificate of Conformity and the type-approval paperwork the registering authority asks for. Dimensions stay inside the limits for towing on ordinary roads, so nothing needs an escort or a permit.</p>
-            </div>
-            <div class="specstrip-item">
-              <h3 class="serif">Food hygiene</h3>
-              <p>Specified against EU food-hygiene rules and a HACCP plan: food-grade stainless surfaces, washable walls and ceiling, separate hand-wash and food sinks, food-grade water tanks, and extraction sized for the heat it sits over.</p>
-            </div>
-            <div class="specstrip-item">
-              <h3 class="serif">Electrical and gas</h3>
-              <p>CEE connections — 230V single phase, 400V three phase on the larger builds — with RCD protection, and CE-marked equipment throughout. Where a build carries gas, it is delivered with its own certificate.</p>
-            </div>
-          </div>
-
-          <p class="fineprint" style="margin-top:34px;">Every line above is a specification we build and document to, quoted per order. Ask for the document pack for your country before you sign anything — from us or from anyone else.</p>
-        </div>
-
         <!-- ── delivery ── -->
         <div class="section-pad">
           <span class="eyebrow">Delivery</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">To your yard, not to a port</h2>
           <p class="page-lede" style="margin-top:16px;">The unit is built in Istanbul and delivered to the address you give us — Germany, France, the Netherlands, Spain, anywhere in the EU. Customs clearance and the import paperwork are handled as part of the delivery, and the price we quote is the price at your gate.</p>
           <p class="page-lede" style="margin-top:14px;">It arrives ready to work: on its own wheels, within towing dimensions, with the document pack in a folder rather than a promise to follow.</p>
-        </div>
-
-        <!-- ── ROI ── -->
-        <div class="section-pad" id="roi">
-          <span class="eyebrow">The numbers</span>
-          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What it has to earn back</h2>
-          <p class="page-lede" style="margin-top:16px;">Your figures, not ours. Put in what a pitch costs you and what you take at one, and this says how long the unit takes to pay for itself. Nothing here is a promise — it is arithmetic you can check.</p>
-
-          <div class="roi">
-            <div class="roi-inputs" id="roi-inputs"></div>
-            <div class="roi-out">
-              <p class="roi-lead-label">Pays for itself in</p>
-              <p class="roi-lead" id="roi-payback">—</p>
-              <div class="roi-meter" aria-hidden="true"><span id="roi-meter-fill"></span></div>
-              <p class="roi-meter-cap" id="roi-meter-cap">One season's profit against the price of the unit.</p>
-              <dl class="roi-tiles" id="roi-tiles"></dl>
-            </div>
-          </div>
-          <p class="fineprint" style="margin-top:30px;">Takings minus the cost of what you sold, minus what the event itself costs you. It does not count your own time, VAT, insurance or the tow vehicle — put those in the event cost if you want them counted.</p>
         </div>
 
         <!-- ── financing ── -->
@@ -1587,8 +1444,7 @@
         </div>
 
         <div class="section-pad">
-          <a class="btn btn-solid" href="/bars/#configure">Configure a unit</a>
-          <a class="btn btn-line" href="/enquiry/" style="margin-left:10px;">Ask for a quotation</a>
+          <a class="btn btn-solid" href="/enquiry/">Ask for a quotation</a>
         </div>
       </div>
     </section>
@@ -2388,7 +2244,7 @@ function showView(viewId) {
   }
   if (viewId === 'all-residences') renderResidenceRows('all-residence-rows');
   if (viewId === 'all-farms') renderAllFarms();
-  if (viewId === 'all-units') { renderUnitRows(); renderConfigurator(); renderRoi(); updateRoi(); }
+  if (viewId === 'all-units') renderUnitRows();
   if (viewId === 'enquiry') prefillEnquiry();
   if (window.__updateHeader) window.__updateHeader();
   refreshReveal();
@@ -2706,10 +2562,6 @@ function swapPhoto(el, index) {
    visitor was looking at into the form rather than make them retype it.
    Runs from showView, so it works however the form was reached. */
 function prefillEnquiry() {
-  /* Arriving from the configurator: carry the choice, or the buyer has to
-     describe in prose what they just clicked. */
-  const mf = document.getElementById('enq-message');
-  if (mf && !mf.value && sentConfig) { mf.value = sentConfig; sentConfig = ''; }
   const rf = document.getElementById('enquiry-residence');
   if (rf && !rf.value && currentResidence) rf.value = T(currentResidence.name);
   const cf = document.getElementById('enquiry-country');
@@ -2756,6 +2608,8 @@ function openFarm(farmId) {
    ========================================================== */
 function unitOf(id) { return UNITS.find(u => u.id === id) || null; }
 
+let currentUnit = null;
+
 function renderUnitRows() {
   document.getElementById('unit-rows').innerHTML = UNITS.map((u, i) => `
     <div class="res-row ${i % 2 ? 'flip' : ''} reveal">
@@ -2801,254 +2655,6 @@ function openUnit(unitId) {
   setPath('/bar/' + unitId + '/');
   showView('unit');
   return true;
-}
-
-/* ── configurator ─────────────────────────────────────────────
-   A plan drawn to scale, not a 3D model: it answers how much counter
-   a length buys and where the windows land, which is what the choice
-   is actually about. A viewer with real geometry needs the production
-   models, which do not exist yet. */
-const CFG = {
-  length: 6,
-  counter: 'fold',
-  windows: 2,
-  LENGTHS: [4, 6, 8],
-  COUNTERS: [
-    { id: 'fixed', label: 'Fixed',     gain: 0,   note: 'Nothing to deploy, nothing to fail.' },
-    { id: 'fold',  label: 'Fold-out',  gain: 0.6, note: 'Folds down along the serving side.' },
-    { id: 'slide', label: 'Slide-out', gain: 1.1, note: 'Slides out on runners, deepest working side.' }
-  ],
-  WINDOWS: [1, 2, 3]
-};
-let currentUnit = null;
-let sentConfig = '';
-
-/* The link out of the configurator, so the form arrives already describing
-   the unit rather than asking the buyer to retype it. */
-document.addEventListener('click', (e) => {
-  const a = e.target.closest && e.target.closest('[data-cfg-send]');
-  if (!a) return;
-  const n = cfgNumbers();
-  sentConfig = T('Configuration: %1 m, %2 counter, %3 serving window(s). About %4 m of counter.')
-    .replace('%1', CFG.length)
-    .replace('%2', T(cfgCounter().label).toLowerCase())
-    .replace('%3', CFG.windows)
-    .replace('%4', n.counter.toFixed(1));
-}, true);   /* capture: the router handles this same click on the way up */
-
-function cfgCounter() { return CFG.COUNTERS.find(c => c.id === CFG.counter); }
-
-/* Inside width is fixed by what may be towed without a permit. */
-const CFG_INSIDE_W = 2.30;
-
-function cfgNumbers() {
-  const usable = CFG.length - 0.9;                     /* less the door and the tow end */
-  const counter = usable + cfgCounter().gain;
-  const perWindow = 55;                                /* servings an hour, one window */
-  return {
-    counter: counter,
-    floor: usable * CFG_INSIDE_W,
-    hourly: CFG.windows * perWindow
-  };
-}
-
-/* Numbers in the reader's own notation: Russian writes 5,7 and м. */
-function cfgNum(v, digits) {
-  return v.toFixed(digits === undefined ? 1 : digits).replace('.', lang === 'ru' ? ',' : '.');
-}
-
-function cfgPlan() {
-  const L = CFG.length, W = CFG_INSIDE_W;
-  const SCALE = 96, PAD = 30, LABEL = 40;
-  const bw = L * SCALE, bh = W * SCALE;
-  const gain = cfgCounter().gain * SCALE;
-  const w = bw + PAD * 2, h = bh + PAD * 2 + LABEL + gain;
-  const x0 = PAD, y0 = PAD + gain;                  /* room above for the extension */
-
-  const ink = '#1A1614', gold = '#9C7A3C', card = '#EFEAE1';
-  const COUNTER_D = 0.62 * SCALE;                   /* counter depth */
-  const KIT_D = 0.70 * SCALE;                       /* equipment run, far side */
-
-  /* Serving windows along the top edge, evenly spread. */
-  const winW = 0.95 * SCALE;
-  const gap = (bw - CFG.windows * winW) / (CFG.windows + 1);
-  let windows = '';
-  for (let i = 0; i < CFG.windows; i++) {
-    const x = x0 + gap * (i + 1) + winW * i;
-    windows += `<rect x="${x.toFixed(1)}" y="${(y0 - 4).toFixed(1)}" width="${winW.toFixed(1)}" height="8" fill="${gold}"></rect>`;
-  }
-
-  /* The deployed counter, where there is one. */
-  const deploy = gain > 0 ? `
-    <rect x="${x0}" y="${(y0 - gain).toFixed(1)}" width="${bw}" height="${gain.toFixed(1)}"
-          fill="${gold}" opacity=".12" stroke="${gold}" stroke-width="1.4" stroke-dasharray="6 4"></rect>
-    <text x="${(x0 + bw - 14).toFixed(1)}" y="${(y0 - gain / 2 + 4).toFixed(1)}" text-anchor="end"
-          font-family="Jost, sans-serif" font-size="10.5" letter-spacing="1.7"
-          fill="#7F622E">${(lang === 'ru' ? 'РАСКЛАДЫВАЕТСЯ' : 'DEPLOYED')}</text>` : '';
-
-  /* Door: a gap in the far wall with the leaf swung inward, so nothing is
-     ever drawn outside the body. */
-  const dw = 0.85 * SCALE;
-  const dx = x0 + bw - dw - 0.35 * SCALE, dy = y0 + bh;
-  const door = `
-    <rect x="${dx.toFixed(1)}" y="${(dy - 3).toFixed(1)}" width="${dw.toFixed(1)}" height="6" fill="${card}"></rect>
-    <path d="M ${(dx + dw).toFixed(1)} ${dy.toFixed(1)} L ${(dx + dw).toFixed(1)} ${(dy - dw).toFixed(1)}"
-          stroke="${ink}" stroke-width="1.2" opacity=".45"></path>
-    <path d="M ${dx.toFixed(1)} ${dy.toFixed(1)} A ${dw.toFixed(1)} ${dw.toFixed(1)} 0 0 0 ${(dx + dw).toFixed(1)} ${(dy - dw).toFixed(1)}"
-          fill="none" stroke="${ink}" stroke-width="1" opacity=".26" stroke-dasharray="3 3"></path>`;
-
-  const tick = (x, y1, y2) => `<path d="M ${x} ${y1} L ${x} ${y2}" stroke="${ink}" stroke-width="1" opacity=".34"></path>`;
-  const dimY = y0 + bh + 30;
-
-  return `<svg viewBox="0 0 ${w.toFixed(0)} ${h.toFixed(0)}" xmlns="http://www.w3.org/2000/svg">
-    ${deploy}
-    <rect x="${x0}" y="${y0.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}"
-          fill="${card}" stroke="${ink}" stroke-width="1.6"></rect>
-
-    <!-- counter along the serving side -->
-    <rect x="${(x0 + 6).toFixed(1)}" y="${(y0 + 6).toFixed(1)}" width="${(bw - 12).toFixed(1)}" height="${COUNTER_D.toFixed(1)}"
-          fill="${ink}" opacity=".82"></rect>
-    <text x="${(x0 + 16).toFixed(1)}" y="${(y0 + 6 + COUNTER_D / 2 + 4).toFixed(1)}"
-          font-family="Jost, sans-serif" font-size="10.5" letter-spacing="1.7"
-          fill="${card}" opacity=".9">${(lang === 'ru' ? 'СТОЙКА' : 'COUNTER')}</text>
-
-    <!-- equipment run against the far wall -->
-    <rect x="${(x0 + 6).toFixed(1)}" y="${(y0 + bh - KIT_D - 6).toFixed(1)}" width="${(bw - 12 - 1.4 * SCALE).toFixed(1)}" height="${KIT_D.toFixed(1)}"
-          fill="${ink}" opacity=".13"></rect>
-    <text x="${(x0 + 16).toFixed(1)}" y="${(y0 + bh - KIT_D / 2 - 2).toFixed(1)}"
-          font-family="Jost, sans-serif" font-size="10.5" letter-spacing="1.7"
-          fill="${ink}" opacity=".62">${(lang === 'ru' ? 'ОБОРУДОВАНИЕ' : 'EQUIPMENT')}</text>
-
-    ${windows}
-    ${door}
-
-    <!-- axle -->
-    <circle cx="${(x0 + bw * 0.58).toFixed(1)}" cy="${(y0 + bh + 11).toFixed(1)}" r="6.5" fill="${ink}" opacity=".5"></circle>
-    <circle cx="${(x0 + bw * 0.70).toFixed(1)}" cy="${(y0 + bh + 11).toFixed(1)}" r="6.5" fill="${ink}" opacity=".5"></circle>
-
-    <!-- overall length -->
-    ${tick(x0, dimY - 5, dimY + 5)}${tick(x0 + bw, dimY - 5, dimY + 5)}
-    <path d="M ${x0} ${dimY} L ${(x0 + bw).toFixed(1)} ${dimY}" stroke="${ink}" stroke-width="1" opacity=".34"></path>
-    <text x="${(x0 + bw / 2).toFixed(1)}" y="${(dimY + 20).toFixed(1)}" text-anchor="middle"
-          font-family="Jost, sans-serif" font-size="12" letter-spacing="1.6"
-          fill="${ink}" opacity=".62">${cfgNum(L)} ${lang === 'ru' ? 'м' : 'm'}</text>
-  </svg>`;
-}
-
-function cfgPill(group, value, label, checked) {
-  return `<button type="button" class="cfg-opt" role="radio" aria-checked="${checked}"
-    onclick="cfgSet('${group}', ${typeof value === 'number' ? value : "'" + value + "'"})">${esc(label)}</button>`;
-}
-
-function cfgSet(group, value) { CFG[group] = value; renderConfigurator(); }
-
-function renderConfigurator() {
-  const host = document.getElementById('cfg-length');
-  if (!host) return;
-  const M = lang === 'ru' ? '\u043c' : 'm';
-  host.innerHTML = CFG.LENGTHS.map(l =>
-    cfgPill('length', l, l + ' ' + M, l === CFG.length)).join('');
-  document.getElementById('cfg-counter').innerHTML = CFG.COUNTERS.map(c =>
-    cfgPill('counter', c.id, c.label, c.id === CFG.counter)).join('');
-  document.getElementById('cfg-windows').innerHTML = CFG.WINDOWS.map(n =>
-    cfgPill('windows', n, String(n), n === CFG.windows)).join('');
-
-  document.getElementById('cfg-svg').innerHTML = cfgPlan();
-  const n = cfgNumbers();
-  document.getElementById('cfg-out').innerHTML =
-    `<div><dt>Counter length</dt><dd>${cfgNum(n.counter)} ${M}</dd></div>` +
-    `<div><dt>Floor area</dt><dd>${cfgNum(n.floor)} ${M}\u00B2</dd></div>` +
-    `<div><dt>Servings an hour</dt><dd>${T('about %1').replace('%1', n.hourly)}</dd></div>`;
-  /* The labels are English in the markup and translated by the caller;
-     the values are composed here, already in the right language. */
-}
-
-/* ── payback ─────────────────────────────────────────────────
-   The answer is one number, so it is set as one number. The meter
-   beside it shows a single season against the price of the unit. */
-const ROI_FIELDS = [
-  { id: 'price',   label: 'Price of the unit, €',        value: 48000, step: 1000 },
-  { id: 'events',  label: 'Events in a season',          value: 24,    step: 1 },
-  { id: 'guests',  label: 'Guests served at an event',   value: 350,   step: 10 },
-  { id: 'check',   label: 'Average spend per guest, €',  value: 9,     step: 1 },
-  { id: 'margin',  label: 'Margin on what you sell, %',  value: 72,    step: 1 },
-  { id: 'cost',    label: 'Cost of one event, €',        value: 900,   step: 50 }
-];
-
-function roiRead(id) {
-  const el = document.getElementById('roi-' + id);
-  const v = el ? parseFloat(el.value) : NaN;
-  return isNaN(v) ? 0 : Math.max(0, v);
-}
-
-function roiMoney(v) {
-  /* The sign belongs in front of the currency, not between it and the digits. */
-  const n = Math.round(v);
-  return (n < 0 ? '\u2212' : '') + '\u20AC' +
-         Math.abs(n).toLocaleString(lang === 'ru' ? 'ru-RU' : 'en-GB');
-}
-
-/* Russian agrees the noun with the number, and a fraction always takes the
-   genitive singular — "1,5 сезона" but "5 сезонов". English just adds an s. */
-function roiSeasons(n) {
-  if (Math.abs(n - 1) < 0.05) return T('One season');
-  const txt = n.toFixed(1).replace(/\.0$/, '');
-  if (lang !== 'ru') return txt + ' ' + T('seasons');
-  if (txt.indexOf('.') !== -1) return txt.replace('.', ',') + ' сезона';
-  const i = parseInt(txt, 10), t = i % 100, u = i % 10;
-  const word = (t >= 11 && t <= 14) ? 'сезонов'
-             : u === 1 ? 'сезон' : (u >= 2 && u <= 4) ? 'сезона' : 'сезонов';
-  return txt + ' ' + word;
-}
-
-function updateRoi() {
-  if (!document.getElementById('roi-price')) return;
-  const price = roiRead('price'), events = roiRead('events');
-  const takings = roiRead('guests') * roiRead('check');
-  const perEvent = takings * (roiRead('margin') / 100) - roiRead('cost');
-  const season = perEvent * events;
-
-  const lead = document.getElementById('roi-payback');
-  const fill = document.getElementById('roi-meter-fill');
-  const cap = document.getElementById('roi-meter-cap');
-
-  if (season <= 0) {
-    lead.innerText = T('Not at these numbers');
-    fill.style.width = '0%';
-    cap.innerText = T('At this cost per event the unit does not pay for itself. Raise the takings, or lower what the event costs.');
-  } else {
-    lead.innerText = roiSeasons(price / season);
-    fill.style.width = Math.min(100, (season / price) * 100).toFixed(1) + '%';
-    cap.innerText = T('One season against the price of the unit.');
-  }
-
-  document.getElementById('roi-tiles').innerHTML =
-    `<div><dt>${T('Profit per event')}</dt><dd class="${perEvent < 0 ? 'is-loss' : ''}">${roiMoney(perEvent)}</dd></div>` +
-    `<div><dt>${T('Profit per season')}</dt><dd class="${season < 0 ? 'is-loss' : ''}">${roiMoney(season)}</dd></div>` +
-    `<div><dt>${T('Takings per event')}</dt><dd>${roiMoney(takings)}</dd></div>` +
-    `<div><dt>${T('Events in a season')}</dt><dd>${Math.round(events)}</dd></div>`;
-}
-
-let roiWired = false;
-
-function renderRoi() {
-  const host = document.getElementById('roi-inputs');
-  if (!host) return;
-  /* The fields may already be in the markup: the build renders this page and
-     writes out what it saw. Only draw them if they are actually missing, and
-     hold the "listener attached" flag in a variable — a DOM flag would be
-     written into the file too, and then no page would ever attach it. */
-  if (host.querySelector('.roi-field')) {
-    if (!roiWired) { roiWired = true; host.addEventListener('input', updateRoi); }
-    return;
-  }
-  host.innerHTML = ROI_FIELDS.map(f => `
-    <div class="roi-field">
-      <label for="roi-${f.id}">${esc(f.label)}</label>
-      <input type="number" id="roi-${f.id}" value="${f.value}" step="${f.step}" min="0" inputmode="numeric">
-    </div>`).join('');
-  roiWired = true;
-  host.addEventListener('input', updateRoi);
 }
 
 /* ==========================================================
@@ -3243,8 +2849,8 @@ const RU = {
   'See the residence': 'Смотреть резиденцию',
   'See Residence 21ft': 'Смотреть Residence 21ft',
   'See Grand Residence 24ft': 'Смотреть Grand Residence 24ft',
-  'Length': 'Длина',
   'Width': 'Ширина',
+  'Length': 'Длина',
   'Guests': 'Гости',
   'Autonomy': 'Автономность',
   'Chassis': 'Шасси',
@@ -3294,7 +2900,6 @@ const RU = {
   'The same chassis and the same build discipline as the residences, fitted out to serve. Towed to your pitch anywhere in the EU, on plates you can register.':
     'То же шасси и та же сборка, что у резиденций, но начинка под выдачу. Прицепляется и едет на вашу площадку в любую точку ЕС — на номерах, которые можно поставить на учёт.',
   'See the unit': 'Смотреть юнит',
-  'Configure a unit': 'Собрать конфигурацию',
   'Ask for a quotation': 'Запросить расчёт',
   'What is in it': 'Что внутри',
   'Fitted with': 'Оснащение',
@@ -3349,36 +2954,7 @@ const RU = {
   'Three sinks: hands, food, wash-up': 'Три мойки: руки, продукты, посуда',
   'Washable wall and ceiling surfaces throughout': 'Моющиеся стены и потолок по всему объёму',
 
-  'Configure': 'Конфигуратор',
-  'Draw your counter': 'Соберите свою стойку',
-  'Length, counter and serving windows. The plan below is drawn to scale as you change them, and the numbers under it are what that choice actually gives you.':
-    'Длина, стойка и окна выдачи. План ниже перерисовывается в масштабе, а числа под ним — то, что этот выбор реально даёт.',
-  'Length': 'Длина', 'Serving windows': 'Окна выдачи',
-  'Fixed': 'Фиксированная', 'Fold-out': 'Откидная', 'Slide-out': 'Выдвижная',
-  'Plan view, drawn to scale. Not a substitute for the production drawing.':
-    'Вид сверху, в масштабе. Не заменяет производственный чертёж.',
-  'about %1': 'примерно %1',
-  '4 m': '4 м', '6 m': '6 м', '8 m': '8 м',
-  'Counter length': 'Длина стойки', 'Floor area': 'Площадь пола', 'Servings an hour': 'Выдач в час',
-  'Send this configuration': 'Отправить эту конфигурацию',
-  'Configuration: %1 m, %2 counter, %3 serving window(s). About %4 m of counter.':
-    'Конфигурация: %1 м, стойка %2, окон выдачи: %3. Стойки около %4 м.',
 
-  'Paperwork': 'Документы',
-  'What the unit is delivered with': 'С чем юнит приезжает',
-  'A trailer you cannot register is a trailer you cannot work. These are the documents and standards each build is specified against, and they are quoted in writing before you order.':
-    'Прицеп, который нельзя поставить на учёт, — это прицеп, на котором нельзя работать. Ниже документы и стандарты, под которые проектируется каждая сборка; всё это фиксируется письменно до заказа.',
-  'Registration in the EU': 'Регистрация в ЕС',
-  'Built to EU category O2 — a braked trailer up to 3.5 t — and delivered with the Certificate of Conformity and the type-approval paperwork the registering authority asks for. Dimensions stay inside the limits for towing on ordinary roads, so nothing needs an escort or a permit.':
-    'Строится под категорию ЕС O2 — тормозной прицеп до 3,5 т — и поставляется с сертификатом соответствия (COC) и документами одобрения типа, которые запрашивает регистрирующий орган. Габариты остаются в пределах для буксировки по обычным дорогам, так что ни сопровождение, ни разрешение не нужны.',
-  'Food hygiene': 'Пищевая гигиена',
-  'Specified against EU food-hygiene rules and a HACCP plan: food-grade stainless surfaces, washable walls and ceiling, separate hand-wash and food sinks, food-grade water tanks, and extraction sized for the heat it sits over.':
-    'Проектируется под пищевые нормы ЕС и план HACCP: поверхности из пищевой нержавеющей стали, моющиеся стены и потолок, раздельные мойки для рук и продуктов, пищевые баки для воды и вытяжка, рассчитанная под тепловую линию под ней.',
-  'Electrical and gas': 'Электрика и газ',
-  'CEE connections — 230V single phase, 400V three phase on the larger builds — with RCD protection, and CE-marked equipment throughout. Where a build carries gas, it is delivered with its own certificate.':
-    'Разъёмы CEE — 230В однофазный, 400В трёхфазный на крупных сборках — с УЗО и оборудованием с маркировкой CE. Если в сборке есть газ, она поставляется с отдельным сертификатом на него.',
-  'Every line above is a specification we build and document to, quoted per order. Ask for the document pack for your country before you sign anything — from us or from anyone else.':
-    'Каждая строка выше — спецификация, по которой мы строим и оформляем документы, фиксируется в заказе. Запрашивайте пакет документов под вашу страну до подписания — у нас и у кого угодно другого.',
 
   'Delivery': 'Доставка',
   'To your yard, not to a port': 'На вашу площадку, а не в порт',
@@ -3387,29 +2963,6 @@ const RU = {
   'It arrives ready to work: on its own wheels, within towing dimensions, with the document pack in a folder rather than a promise to follow.':
     'Приезжает готовым к работе: на своих колёсах, в габаритах для буксировки, с пакетом документов в папке, а не с обещанием дослать.',
 
-  'The numbers': 'Цифры',
-  'What it has to earn back': 'Что он должен отбить',
-  'Your figures, not ours. Put in what a pitch costs you and what you take at one, and this says how long the unit takes to pay for itself. Nothing here is a promise — it is arithmetic you can check.':
-    'Ваши числа, не наши. Введите, во что обходится мероприятие и сколько вы на нём собираете, — и получите срок окупаемости юнита. Это не обещание, а арифметика, которую можно проверить.',
-  'Pays for itself in': 'Окупается за',
-  'One season': 'Один сезон',
-  'seasons': 'сезона',
-  'Not at these numbers': 'При таких числах — нет',
-  'One season against the price of the unit.': 'Один сезон против цены юнита.',
-  "One season's profit against the price of the unit.": 'Прибыль за сезон против цены юнита.',
-  'At this cost per event the unit does not pay for itself. Raise the takings, or lower what the event costs.':
-    'При такой стоимости мероприятия юнит не окупается. Поднимите сбор или снизьте затраты на выезд.',
-  'Price of the unit, €': 'Цена юнита, €',
-  'Events in a season': 'Мероприятий за сезон',
-  'Guests served at an event': 'Гостей за мероприятие',
-  'Average spend per guest, €': 'Средний чек на гостя, €',
-  'Margin on what you sell, %': 'Маржа на том, что продаёте, %',
-  'Cost of one event, €': 'Стоимость одного мероприятия, €',
-  'Profit per event': 'Прибыль с мероприятия',
-  'Profit per season': 'Прибыль за сезон',
-  'Takings per event': 'Сбор с мероприятия',
-  'Takings minus the cost of what you sold, minus what the event itself costs you. It does not count your own time, VAT, insurance or the tow vehicle — put those in the event cost if you want them counted.':
-    'Сбор минус себестоимость проданного минус то, во что обошёлся сам выезд. Своё время, НДС, страховку и тягач расчёт не учитывает — если хотите их учесть, заложите в стоимость мероприятия.',
 
   'Buying it': 'Как купить',
   'Leasing and fleet terms': 'Лизинг и условия для парка',
@@ -3810,12 +3363,8 @@ function setLang(next) {
   lang = next;
   try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* private mode */ }
   applyLang();
-  /* Both of these compose their own values in script, so the walk above
-     cannot reach them — they have to be redrawn in the new language. */
-  renderConfigurator();
-  updateRoi();
+  /* Composed in script, so the walk above cannot reach it. */
   writeUnitLengths(currentUnit);
-  applyLang();   /* the labels the redraw just wrote are still English */
 }
 
 function initLang() {
