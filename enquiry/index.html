@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register your interest — Tiny Mansion</title>
-  <meta name="description" content="Booking is not open yet. Tell us which country and which residence interests you, and we will write when dates open.">
+  <meta name="description" content="Booking is not open yet for the residences. Tell us which country and which residence interests you, and we will write when dates open. Trade enquiries about a bar or coffee unit are answered with a quotation.">
 
   <!-- Live address of the site. The CNAME file in the repository root is what
        points GitHub Pages at this domain; keep the two in step. -->
@@ -16,7 +16,7 @@
   <meta property="og:site_name" content="Tiny Mansion">
   <meta property="og:url" content="https://tinymansion.co/enquiry/">
   <meta property="og:title" content="Register your interest — Tiny Mansion">
-  <meta property="og:description" content="Booking is not open yet. Tell us which country and which residence interests you, and we will write when dates open.">
+  <meta property="og:description" content="Booking is not open yet for the residences. Tell us which country and which residence interests you, and we will write when dates open. Trade enquiries about a bar or coffee unit are answered with a quotation.">
   <meta property="og:image" content="https://tinymansion.co/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -24,7 +24,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Register your interest — Tiny Mansion">
-  <meta name="twitter:description" content="Booking is not open yet. Tell us which country and which residence interests you, and we will write when dates open.">
+  <meta name="twitter:description" content="Booking is not open yet for the residences. Tell us which country and which residence interests you, and we will write when dates open. Trade enquiries about a bar or coffee unit are answered with a quotation.">
   <meta name="twitter:image" content="https://tinymansion.co/og.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -862,7 +862,13 @@
       border-left: 2px solid var(--rule); padding-left: 18px; max-width: 62ch;
     }
 
-/* ── economics ── */
+    /* ── questions ── */
+    .qa { margin-top: 34px; border-top: 1px solid var(--rule); }
+    .qa > div { padding: 22px 0; border-bottom: 1px solid var(--rule); }
+    .qa h3 { font-size: clamp(18px, 1.7vw, 22px); line-height: 1.3; margin-bottom: 9px; }
+    .qa p { font-size: 15px; line-height: 1.75; color: var(--body); max-width: 64ch; }
+
+    /* ── economics ── */
     .fig { margin: 34px 0 0; overflow-x: auto; }
     .fig table {
       width: 100%; min-width: 460px; border-collapse: collapse;
@@ -1355,11 +1361,26 @@
         <div class="section-pad">
           <span class="eyebrow">For the trade</span>
           <h1 class="page-title serif">Mobile bars and kitchens</h1>
-          <p class="page-lede">The same chassis and the same build discipline as the residences, fitted out to serve. Towed to your pitch anywhere in the EU, on plates you can register.</p>
+          <p class="page-lede">The same chassis and the same build discipline as the residences, fitted out to serve. Built within European towing dimensions and delivered to your pitch anywhere in the EU.</p>
         </div>
 
         <div id="unit-rows" style="margin-top:10px;"></div>
 
+
+        <!-- ── autonomy ── -->
+        <div class="section-pad">
+          <span class="eyebrow">On site</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">It brings its own everything</h2>
+          <p class="page-lede" style="margin-top:16px;">A pitch that can host one of these needs to be a piece of level ground and nothing else. That is what makes a field, a courtyard or a car park bookable at the same rate as a venue with services already in it.</p>
+          <ul class="kit-list">
+            <li>Its own water, carried in a tank and filtered on board, so no standpipe is needed at the pitch.</li>
+            <li>Waste water stays with the unit in a grey tank and is emptied back at your own yard.</li>
+            <li>Its own refrigeration, holding temperature while the unit is towed and while it stands.</li>
+            <li>A battery bank runs the lights, the pumps and the till through a full outing.</li>
+            <li>Shore power is used where there is any, and is not needed where there is none.</li>
+            <li>Everything the unit serves with travels with it; the ground supplies nothing but the ground.</li>
+          </ul>
+        </div>
 
         <!-- ── economics ── -->
         <div class="section-pad">
@@ -1408,7 +1429,7 @@
           <span class="eyebrow">Delivery</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">To your yard, not to a port</h2>
           <p class="page-lede" style="margin-top:16px;">The unit is built in Istanbul and delivered to the address you give us — Germany, France, the Netherlands, Spain, anywhere in the EU. Customs clearance and the import paperwork are handled as part of the delivery, and the price we quote is the price at your gate.</p>
-          <p class="page-lede" style="margin-top:14px;">It arrives ready to work: on its own wheels, within towing dimensions, with the document pack in a folder rather than a promise to follow.</p>
+          <p class="page-lede" style="margin-top:14px;">It arrives ready to work: on its own wheels, within towing dimensions, tested and cleaned down before it leaves the yard.</p>
         </div>
 
         <!-- ── financing ── -->
@@ -1418,7 +1439,7 @@
           <div class="duo-block">
             <div>
               <h3 class="serif">Leasing for an EU company</h3>
-              <p>A unit is movable equipment on a registration document, which is what a leasing company needs to write against it. We prepare the invoice, the specification and the conformity papers in the form a lessor asks for, and work with the provider you already bank with.</p>
+              <p>A unit is movable equipment with a serial number and an invoice, which is what a leasing company writes against. We prepare the invoice and the full build specification, and work with the provider you already bank with — tell us what else your lessor wants to see and we put it together.</p>
             </div>
             <div>
               <h3 class="serif">Fleets and white label</h3>
@@ -1426,6 +1447,38 @@
             </div>
           </div>
           <p class="fineprint" style="margin-top:30px;">Terms are agreed per order, in writing. Tell us the number of units and the country the company is registered in, and you get a quotation rather than a range.</p>
+        </div>
+
+        <!-- ── questions ── -->
+        <div class="section-pad">
+          <span class="eyebrow">Before you ask the price</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Questions we are asked first</h2>
+          <div class="qa">
+            <div>
+              <h3 class="serif">Whose name is on the outside?</h3>
+              <p>Yours. The unit is delivered unbranded, or finished in your own livery at the factory — painted into the build rather than wrapped over it afterwards. Nothing of ours appears on it.</p>
+            </div>
+            <div>
+              <h3 class="serif">Can I tow it with the vehicle I already have?</h3>
+              <p>Both units are built within European towing dimensions, and the loaded weight is confirmed in writing before the build starts. You know which vehicle and which licence it needs before you commit to anything.</p>
+            </div>
+            <div>
+              <h3 class="serif">Can the layout be changed?</h3>
+              <p>Inside the shell, yes: which side the counter faces, how many taps, which machine, where the till sits. The chassis, the shell and the services are fixed, and that is what holds the price where it is.</p>
+            </div>
+            <div>
+              <h3 class="serif">How long does it take to build?</h3>
+              <p>A build slot is reserved against your order and the date comes with the quotation. We would rather give you a date we can hold than a lead time that reads well in an email.</p>
+            </div>
+            <div>
+              <h3 class="serif">What is not in the price?</h3>
+              <p>The vehicle that tows it, your insurance, and whatever your own municipality asks of a business serving food or drink. The unit, its fit-out and delivery to your gate are in it.</p>
+            </div>
+            <div>
+              <h3 class="serif">What happens when something breaks?</h3>
+              <p>The fit-out is commercial equipment you can already get parts for in Europe, not fittings of our own design. A machine, a tap or a fridge is replaced by whoever services the rest of your bar.</p>
+            </div>
+          </div>
         </div>
 
         <div class="section-pad">
@@ -1519,12 +1572,13 @@
           <span class="eyebrow">Q3 2026</span>
           <h1 class="page-title serif">Be there for the first season</h1>
           <p class="page-lede">Booking is not open. The first residences deploy in Montenegro in Q3 2026, and we contact this list before anything else. Tell us roughly when you'd want to come and we'll write when those dates exist.</p>
+          <p class="page-lede" style="margin-top:14px;">Buying a bar or a coffee unit is a different conversation, and that one is open now. Say which unit in the box below and you get a quotation rather than a place on a list.</p>
 
           <!-- action and _next are filled in by initForms() so the address is not
                sitting in the markup for scrapers, and the redirect follows whatever
                domain the site is actually served from. -->
           <form method="POST" class="form" data-mailform="" style="margin-top:48px;">
-            <input type="hidden" name="_subject" value="Tiny Mansion — guest enquiry">
+            <input type="hidden" name="_subject" value="Tiny Mansion — enquiry">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_next" value="https://tinymansion.co/thanks/">
@@ -1539,10 +1593,10 @@
             <div class="form-row">
               <label class="sr-only" for="enquiry-country">Country you're interested in</label>
               <input type="text" name="country" placeholder="Country you're interested in" id="enquiry-country">
-              <label class="sr-only" for="enquiry-residence">Residence (21ft or 24ft)</label>
-              <input type="text" name="residence" placeholder="Residence (21ft or 24ft)" id="enquiry-residence">
+              <label class="sr-only" for="enquiry-interest">What you are asking about</label>
+              <input type="text" name="interest" placeholder="Residence, bar or coffee unit" id="enquiry-interest">
             </div>
-            <label class="sr-only" for="enq-when">Roughly when you would want to come</label>
+            <label class="sr-only" for="enq-when">Roughly when you would want it</label>
             <input type="text" id="enq-when" name="when" placeholder="Roughly when (e.g. late summer 2026)">
             <label class="sr-only" for="enq-message">Anything else we should know</label>
             <textarea id="enq-message" name="message" placeholder="Anything else we should know"></textarea>
@@ -2166,11 +2220,11 @@ const HEAD_META = {
   },
   '/bars/': {
     title: 'Mobile bars and kitchens — Tiny Mansion',
-    desc:  'Draft bars, espresso and cocktail lounges, street-food kitchens on a road-legal EU trailer. Delivered to your yard anywhere in the EU with the papers to register it.'
+    desc:  'A draft bar and an espresso bar on a trailer built to European towing dimensions, carrying your own brand. Delivered to your yard anywhere in the EU, with the economics written out.'
   },
   '/enquiry/': {
     title: 'Register your interest — Tiny Mansion',
-    desc:  'Booking is not open yet. Tell us which country and which residence interests you, and we will write when dates open.'
+    desc:  'Booking is not open yet for the residences. Tell us which country and which residence interests you, and we will write when dates open. Trade enquiries about a bar or coffee unit are answered with a quotation.'
   },
   '/host/': {
     title: 'Host a residence on your farm — Tiny Mansion',
@@ -2944,16 +2998,58 @@ const RU = {
     'Учтено: ваша ставка минус персонал, продукт, топливо и обслуживание юнита. Не учтено: НДС, страховка, стоимость денег, тягач и остаточная стоимость самого юнита — первые четыре удлиняют срок, последняя укорачивает. Труд везде посчитан по €18 в час.',
 
 
+/* ── Автономность и вопросы ── */
+  'On site': 'На площадке',
+  'It brings its own everything': 'Всё привозит с собой',
+  'A pitch that can host one of these needs to be a piece of level ground and nothing else. That is what makes a field, a courtyard or a car park bookable at the same rate as a venue with services already in it.':
+    'Площадке под такой юнит нужно быть ровным куском земли — и больше ничем. Именно поэтому поле, двор или парковка продаются по той же ставке, что и площадка с уже подведёнными коммуникациями.',
+  'Its own water, carried in a tank and filtered on board, so no standpipe is needed at the pitch.':
+    'Своя вода: везётся в баке и фильтруется на борту, поэтому колонка на площадке не нужна.',
+  'Waste water stays with the unit in a grey tank and is emptied back at your own yard.':
+    'Стоки остаются в юните, в баке серой воды, и сливаются уже на вашей базе.',
+  'Its own refrigeration, holding temperature while the unit is towed and while it stands.':
+    'Своё холодильное оборудование: держит температуру и в движении, и на стоянке.',
+  'A battery bank runs the lights, the pumps and the till through a full outing.':
+    'Аккумуляторный блок тянет свет, насосы и кассу весь выезд.',
+  'Shore power is used where there is any, and is not needed where there is none.':
+    'Внешнее питание используется там, где оно есть, и не требуется там, где его нет.',
+  'Everything the unit serves with travels with it; the ground supplies nothing but the ground.':
+    'Всё, чем юнит работает, едет вместе с ним; от площадки нужна только площадка.',
+
+  'Before you ask the price': 'До вопроса о цене',
+  'Questions we are asked first': 'Вопросы, которые задают первыми',
+  'Whose name is on the outside?': 'Чьё имя снаружи?',
+  'Yours. The unit is delivered unbranded, or finished in your own livery at the factory — painted into the build rather than wrapped over it afterwards. Nothing of ours appears on it.':
+    'Ваше. Юнит приезжает либо без брендинга, либо уже в вашей ливрее, покрашенной на производстве, а не оклеенной сверху потом. Ничего нашего на нём нет.',
+  'Can I tow it with the vehicle I already have?': 'Потяну ли я его тем, что уже есть?',
+  'Both units are built within European towing dimensions, and the loaded weight is confirmed in writing before the build starts. You know which vehicle and which licence it needs before you commit to anything.':
+    'Оба юнита собираются в европейских габаритах для буксировки, а снаряжённая масса подтверждается письменно до начала сборки. Какой тягач и какая категория прав нужны, вы знаете до того, как на что-то подписались.',
+  'Can the layout be changed?': 'Можно ли поменять планировку?',
+  'Inside the shell, yes: which side the counter faces, how many taps, which machine, where the till sits. The chassis, the shell and the services are fixed, and that is what holds the price where it is.':
+    'Внутри корпуса — да: в какую сторону смотрит стойка, сколько кранов, какая машина, где касса. Шасси, корпус и инженерия зафиксированы, и именно это держит цену на месте.',
+  'How long does it take to build?': 'Сколько идёт сборка?',
+  'A build slot is reserved against your order and the date comes with the quotation. We would rather give you a date we can hold than a lead time that reads well in an email.':
+    'Слот на производстве резервируется под ваш заказ, и дата приходит вместе с расчётом. Нам важнее назвать срок, который мы удержим, чем срок, который хорошо выглядит в письме.',
+  'What is not in the price?': 'Что не входит в цену?',
+  'The vehicle that tows it, your insurance, and whatever your own municipality asks of a business serving food or drink. The unit, its fit-out and delivery to your gate are in it.':
+    'Тягач, ваша страховка и всё, что ваш муниципалитет спрашивает с бизнеса, который наливает и кормит. Сам юнит, его начинка и доставка до ваших ворот — входят.',
+  'What happens when something breaks?': 'Что делать, если что-то сломается?',
+  'The fit-out is commercial equipment you can already get parts for in Europe, not fittings of our own design. A machine, a tap or a fridge is replaced by whoever services the rest of your bar.':
+    'Начинка — это серийное профессиональное оборудование, на которое в Европе и так есть запчасти, а не наши собственные узлы. Машину, кран или холодильник меняет тот же сервис, который обслуживает остальной ваш бар.',
+
+  'Buying a bar or a coffee unit is a different conversation, and that one is open now. Say which unit in the box below and you get a quotation rather than a place on a list.':
+    'Покупка бара или кофейного юнита — отдельный разговор, и он открыт уже сейчас. Напишите в поле ниже, какой юнит, и вы получите расчёт, а не место в списке.',
+
   /* ── Мобильные бары и кухни ── */
   'Bars': 'Бары',
   'Mobile bars': 'Мобильные бары',
   'For the trade': 'Для бизнеса',
   'Mobile bars and kitchens': 'Мобильные бары и кухни',
   'Mobile bars and kitchens — Tiny Mansion': 'Мобильные бары и кухни — Tiny Mansion',
-  'Draft bars, espresso and cocktail lounges, street-food kitchens on a road-legal EU trailer. Delivered to your yard anywhere in the EU with the papers to register it.':
-    'Разливные бары, кофейно-коктейльные лаунжи и street-food кухни на прицепе с допуском на дороги ЕС. Доставка на вашу площадку в любую точку ЕС, с документами для постановки на учёт.',
-  'The same chassis and the same build discipline as the residences, fitted out to serve. Towed to your pitch anywhere in the EU, on plates you can register.':
-    'То же шасси и та же сборка, что у резиденций, но начинка под выдачу. Прицепляется и едет на вашу площадку в любую точку ЕС — на номерах, которые можно поставить на учёт.',
+  'A draft bar and an espresso bar on a trailer built to European towing dimensions, carrying your own brand. Delivered to your yard anywhere in the EU, with the economics written out.':
+    'Разливной бар и эспрессо-бар на прицепе в европейских габаритах для буксировки, под вашим собственным брендом. Доставка на вашу площадку в любую точку ЕС, с посчитанной экономикой.',
+  'The same chassis and the same build discipline as the residences, fitted out to serve. Built within European towing dimensions and delivered to your pitch anywhere in the EU.':
+    'То же шасси и та же сборка, что у резиденций, но начинка под выдачу. Собран в европейских габаритах для буксировки и доставляется на вашу площадку в любую точку ЕС.',
   'See the unit': 'Смотреть юнит',
   'Ask for a quotation': 'Запросить расчёт',
   'What is in it': 'Что внутри',
@@ -3000,15 +3096,15 @@ const RU = {
   'To your yard, not to a port': 'На вашу площадку, а не в порт',
   'The unit is built in Istanbul and delivered to the address you give us — Germany, France, the Netherlands, Spain, anywhere in the EU. Customs clearance and the import paperwork are handled as part of the delivery, and the price we quote is the price at your gate.':
     'Юнит строится в Стамбуле и доставляется по адресу, который вы назовёте, — Германия, Франция, Нидерланды, Испания, любая точка ЕС. Таможенная очистка и импортные документы входят в доставку, а названная цена — это цена у ваших ворот.',
-  'It arrives ready to work: on its own wheels, within towing dimensions, with the document pack in a folder rather than a promise to follow.':
-    'Приезжает готовым к работе: на своих колёсах, в габаритах для буксировки, с пакетом документов в папке, а не с обещанием дослать.',
+  'It arrives ready to work: on its own wheels, within towing dimensions, tested and cleaned down before it leaves the yard.':
+    'Приезжает готовым к работе: на своих колёсах, в габаритах для буксировки, проверенным и вымытым до выхода с площадки.',
 
 
   'Buying it': 'Как купить',
   'Leasing and fleet terms': 'Лизинг и условия для парка',
   'Leasing for an EU company': 'Лизинг для компании в ЕС',
-  'A unit is movable equipment on a registration document, which is what a leasing company needs to write against it. We prepare the invoice, the specification and the conformity papers in the form a lessor asks for, and work with the provider you already bank with.':
-    'Юнит — движимое оборудование с регистрационным документом, а это ровно то, подо что лизинговая компания может его оформить. Мы готовим счёт, спецификацию и документы соответствия в том виде, который запрашивает лизингодатель, и работаем с тем провайдером, с которым вы уже работаете.',
+  'A unit is movable equipment with a serial number and an invoice, which is what a leasing company writes against. We prepare the invoice and the full build specification, and work with the provider you already bank with — tell us what else your lessor wants to see and we put it together.':
+    'Юнит — движимое оборудование с серийным номером и счётом, а это ровно то, подо что оформляет лизинговая компания. Мы готовим счёт и полную спецификацию сборки и работаем с тем провайдером, с которым вы уже работаете: скажите, что ещё хочет видеть ваш лизингодатель, и мы это соберём.',
   'Fleets and white label': 'Парк и white label',
   'Caterers and event agencies ordering more than one unit get fleet terms and a build slot reserved across the order. Units can be delivered unbranded, or finished in your own livery from the factory rather than wrapped afterwards.':
     'Кейтеринги и ивент-агентства, заказывающие больше одного юнита, получают условия для парка и забронированные слоты производства на весь заказ. Юниты поставляются без брендинга или сразу в вашей ливрее с завода, а не оклеенными потом.',
@@ -3159,9 +3255,10 @@ const RU = {
     'Бронирование ещё не открыто. Первые резиденции встанут в Черногории в III квартале 2026, и мы пишем по этому списку раньше, чем куда-либо ещё. Скажите примерно, когда хотели бы приехать, — напишем, как только даты появятся.',
   'Your name': 'Ваше имя',
   "Country you're interested in": 'Интересующая страна',
-  'Residence (21ft or 24ft)': 'Резиденция (21ft или 24ft)',
+  'What you are asking about': 'О чём спрашиваете',
+  'Residence, bar or coffee unit': 'Резиденция, бар или кофейный юнит',
   'Roughly when (e.g. late summer 2026)': 'Примерно когда (например, конец лета 2026)',
-  'Roughly when you would want to come': 'Примерно когда хотели бы приехать',
+  'Roughly when you would want it': 'Примерно когда это нужно',
   'Anything else we should know': 'Что ещё нам стоит знать',
   'Send': 'Отправить',
   'We answer every message ourselves, from': 'Мы отвечаем на каждое сообщение сами, с адреса',
