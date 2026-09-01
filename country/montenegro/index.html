@@ -114,6 +114,16 @@
     }
 
     /* Visible to screen readers, out of the layout for everyone else. */
+    /* Off screen until it is focused, then a real button at the top left. */
+    .skip-link {
+      position: absolute; left: 8px; top: -60px; z-index: 200;
+      background: var(--ink); color: var(--bg-cream);
+      padding: 10px 18px; border-radius: 2px;
+      font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.04em;
+      transition: top 0.15s ease;
+    }
+    .skip-link:focus { top: 8px; }
+
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -488,7 +498,7 @@
       font-family: var(--font-serif); font-size: clamp(40px, 5vw, 72px);
       line-height: 1; color: var(--rule); display: block; margin-bottom: 14px;
     }
-    .res-text h3 { font-size: var(--t-display); line-height: 1.02; letter-spacing: -0.015em; }
+    .res-text h2, .res-text h3 { font-size: var(--t-display); line-height: 1.02; letter-spacing: -0.015em; }
     .res-text .lede { font-size: var(--t-lede); line-height: 1.6; color: var(--body); margin-top: 16px; max-width: 40ch; }
 
     .res-specs {
@@ -513,6 +523,13 @@
     /* ==========================================================
        SPEC STRIP
        ========================================================== */
+    /* A quiet doorway for the trade buyer, who is not the guest the rest
+       of this page is written for. Deliberately plain: it should read as
+       a signpost, not a second pitch competing with the first. */
+    .trade-band { padding: var(--band) 0; border-top: 1px solid var(--rule); }
+    .trade-band .section-head { padding-bottom: 26px; }
+    .trade-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
     .specstrip { padding: var(--band) 0; border-top: 1px solid var(--rule); }
     .specstrip-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
     @media (min-width: 860px) { .specstrip-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -521,7 +538,7 @@
       .specstrip-item { padding: 34px clamp(20px, 3vw, 44px) 34px 0; }
       .specstrip-item + .specstrip-item { border-left: 1px solid var(--rule); padding-left: clamp(20px, 3vw, 44px); }
     }
-    .specstrip-item h3 { font-size: clamp(22px, 2vw, 29px); line-height: 1.1; margin-bottom: 12px; }
+    .specstrip-item h2, .specstrip-item h3 { font-size: clamp(22px, 2vw, 29px); line-height: 1.1; margin-bottom: 12px; }
     .specstrip-item p { font-size: 15px; line-height: 1.68; color: var(--body); }
     .specstrip-num { font-family: var(--font-serif); font-size: 13px; letter-spacing: 0.2em; color: var(--gold-ink); display: block; margin-bottom: 16px; }
 
@@ -641,7 +658,7 @@
     .res-card-media .photo-block { transition: transform 1s cubic-bezier(.2,.7,.2,1); }
     .res-card:hover .res-card-media .photo-block { transform: scale(1.05); }
     .res-card-body { padding: 22px 4px 30px; }
-    .res-card-body h3 { font-size: clamp(23px, 2vw, 30px); line-height: 1.08; }
+    .res-card-body h2, .res-card-body h3 { font-size: clamp(23px, 2vw, 30px); line-height: 1.08; }
     .res-card-meta { font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
     .res-card-rate { font-family: var(--font-serif); font-size: 19px; margin-top: 8px; }
 
@@ -665,7 +682,7 @@
       font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
       color: #C7A96B; display: block; margin-bottom: 8px;
     }
-    .farm-card-body h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; color: var(--bg-cream); }
+    .farm-card-body h2, .farm-card-body h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; color: var(--bg-cream); }
     .farm-card-meta {
       font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
       color: rgba(247,243,237,0.7); margin-top: 10px; padding-top: 10px;
@@ -674,7 +691,7 @@
 
     /* Experience card */
     .exp-card { border-top: 1px solid var(--rule); padding: 26px 0; }
-    .exp-card h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; }
+    .exp-card h2, .exp-card h3 { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.1; }
     .exp-card p { font-size: 15px; line-height: 1.65; color: var(--body); margin-top: 10px; max-width: 46ch; }
     .exp-meta { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-ink); margin-top: 12px; }
 
@@ -924,6 +941,9 @@
   <script src="/analytics.js" defer=""></script>
 </head>
 <body>
+  <!-- Seven navigation links and a language switch stand between the top of
+       the document and the content on every page. This is the way past. -->
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- HEADER -->
   <header id="site-header" class="">
@@ -957,7 +977,7 @@
     </div>
   </noscript>
 
-  <main>
+  <main id="main">
 
     <!-- ======================================================
          HOME
@@ -1150,6 +1170,21 @@
         </div>
       </section>
 
+      <!-- TRADE -->
+      <section class="trade-band">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">A different buyer</span>
+            <h2 class="serif">The same chassis, fitted out to serve</h2>
+            <p>Bars and coffee units are the other half of what we build. They go to venues that already have a name, they carry that name on the outside rather than ours, and they are sold with the arithmetic written out instead of a promise. If you run a bar rather than book one, start here.</p>
+          </div>
+          <div class="trade-actions reveal d1">
+            <a class="btn btn-line" href="/bars/">See the units</a>
+            <a class="btn btn-line" href="/bars/economics/">Read the financial model</a>
+          </div>
+        </div>
+      </section>
+
       <!-- CTA -->
       <div class="cta-band">
         <div class="cta-band-media"></div>
@@ -1199,7 +1234,7 @@
     <div class="res-card" role="button" tabindex="0" onclick="openResidence('residence-21')">
       <div class="res-card-media"><picture><source type="image/webp" srcset="/residence-21-1024.webp 1024w, /residence-21-1440.webp 1440w, /residence-21-2048.webp 2048w" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"><img class="photo-block" src="/residence-21.jpg" alt="Residence 21ft" loading="lazy" decoding="async"></picture></div>
       <div class="res-card-body">
-        <h3 class="serif">Residence 21ft</h3>
+        <h2 class="serif">Residence 21ft</h2>
         <div class="res-card-meta">2 guests · 7 days off-grid</div>
         <div class="res-card-rate">from €280 / night</div>
       </div>
@@ -1207,7 +1242,7 @@
     <div class="res-card" role="button" tabindex="0" onclick="openResidence('residence-24')">
       <div class="res-card-media"><picture><source type="image/webp" srcset="/residence-24-1024.webp 1024w, /residence-24-1440.webp 1440w, /residence-24-2048.webp 2048w" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"><img class="photo-block" src="/residence-24.jpg" alt="Grand Residence 24ft" loading="lazy" decoding="async"></picture></div>
       <div class="res-card-body">
-        <h3 class="serif">Grand Residence 24ft</h3>
+        <h2 class="serif">Grand Residence 24ft</h2>
         <div class="res-card-meta">2-4 guests · 7+ days off-grid</div>
         <div class="res-card-rate">from €320 / night</div>
       </div>
@@ -1222,7 +1257,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Heritage farm</span>
-        <h3 class="serif">Ethno Household Đedovina</h3>
+        <h2 class="serif">Ethno Household Đedovina</h2>
         <div class="farm-card-meta">Nikšić · Year-round</div>
       </div>
     </div>
@@ -1231,7 +1266,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Inside a national park</span>
-        <h3 class="serif">Household Karadžić</h3>
+        <h2 class="serif">Household Karadžić</h2>
         <div class="farm-card-meta">Durmitor National Park · Year-round</div>
       </div>
     </div>
@@ -1240,7 +1275,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Working pony farm</span>
-        <h3 class="serif">Charming Pony Village House</h3>
+        <h2 class="serif">Charming Pony Village House</h2>
         <div class="farm-card-meta">Žabljak · Summer season</div>
       </div>
     </div>
@@ -1249,7 +1284,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Traditional summer pasture</span>
-        <h3 class="serif">Etno Katun Đedov Do</h3>
+        <h2 class="serif">Etno Katun Đedov Do</h2>
         <div class="farm-card-meta">High-mountain katun · Summer season</div>
       </div>
     </div>
@@ -1258,7 +1293,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Gastronomy and working farm</span>
-        <h3 class="serif">Household Pešić</h3>
+        <h2 class="serif">Household Pešić</h2>
         <div class="farm-card-meta">Bijelo Polje · Year-round</div>
       </div>
     </div>
@@ -1267,7 +1302,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Certified organic farm</span>
-        <h3 class="serif">Household Pavićević</h3>
+        <h2 class="serif">Household Pavićević</h2>
         <div class="farm-card-meta">Durmitor plateau · April to December</div>
       </div>
     </div>
@@ -1276,7 +1311,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Organic farm and food destination</span>
-        <h3 class="serif">Household Medojević — Ravni</h3>
+        <h2 class="serif">Household Medojević — Ravni</h2>
         <div class="farm-card-meta">Mojkovac · Year-round</div>
       </div>
     </div>
@@ -1285,7 +1320,7 @@
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">Eco-camping concept</span>
-        <h3 class="serif">Eko Oaza "Tear of Europe"</h3>
+        <h2 class="serif">Eko Oaza "Tear of Europe"</h2>
         <div class="farm-card-meta">Dobrilovina, Tara canyon · Summer season</div>
       </div>
     </div></div>
@@ -1294,22 +1329,22 @@
         <div id="tab-experiences" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-experiences">
           <div id="country-experiences-grid">
     <div class="exp-card">
-      <h3 class="serif">Farm dinner</h3>
+      <h2 class="serif">Farm dinner</h2>
       <p>Cooked by the household you are staying with, from what the farm produced that week.</p>
       <div class="exp-meta">Run by the farm · price on request</div>
     </div>
     <div class="exp-card">
-      <h3 class="serif">Wine tasting</h3>
+      <h2 class="serif">Wine tasting</h2>
       <p>In the cellar, with the person who made it. Central Montenegro, Crmnica.</p>
       <div class="exp-meta">Run by the farm · price on request</div>
     </div>
     <div class="exp-card">
-      <h3 class="serif">Riding and mountain walks</h3>
+      <h2 class="serif">Riding and mountain walks</h2>
       <p>Horses on the farm, and routes into Durmitor and the Tara canyon.</p>
       <div class="exp-meta">Run by the farm · price on request</div>
     </div>
     <div class="exp-card">
-      <h3 class="serif">Cooking and craft classes</h3>
+      <h2 class="serif">Cooking and craft classes</h2>
       <p>Traditional cooking, brandy, cheese and handwork, taught in the kitchen where it happens.</p>
       <div class="exp-meta">Run by the farm · price on request</div>
     </div></div>
@@ -1882,17 +1917,17 @@
           <div class="specstrip-grid" style="margin:60px 0;">
             <div class="specstrip-item">
               <span class="specstrip-num">01</span>
-              <h3 class="serif">No rent, in either direction</h3>
+              <h2 class="serif">No rent, in either direction</h2>
               <p>There is no lease and no site fee either way. What you get instead is guests: people who arrive, eat, buy and book what you already offer.</p>
             </div>
             <div class="specstrip-item">
               <span class="specstrip-num">02</span>
-              <h3 class="serif">You sell your own produce</h3>
+              <h2 class="serif">You sell your own produce</h2>
               <p>Farm Store sales run through the platform and you keep 85%. Dinners, tastings, riding, walks and classes are yours to price and yours to run.</p>
             </div>
             <div class="specstrip-item">
               <span class="specstrip-num">03</span>
-              <h3 class="serif">Nothing to build</h3>
+              <h2 class="serif">Nothing to build</h2>
               <p>The residence brings its own power, water and sanitation. No connections, no groundwork, no building permit on your side.</p>
             </div>
           </div>
@@ -2756,7 +2791,11 @@ function renderCountryPanels() {
       </div>`).join('');
 }
 
+/* On the home page these rows sit under a section head, so they are h3.
+   On /residences/ they follow the page title with nothing in between, and
+   an outline that jumps from h1 to h3 has a hole in it. */
 function renderResidenceRows(targetId) {
+  const h = targetId === 'residence-rows' ? 'h3' : 'h2';
   document.getElementById(targetId).innerHTML = RESIDENCES.map((r, i) => `
     <div class="res-row ${i % 2 ? 'flip' : ''} reveal">
       <div class="res-media" role="button" tabindex="0" aria-label="See ${esc(r.name)}" onclick="openResidence('${r.id}')">
@@ -2764,7 +2803,7 @@ function renderResidenceRows(targetId) {
       </div>
       <div class="res-text">
         <span class="res-index serif">${r.index}</span>
-        <h3 class="serif">${r.name}</h3>
+        <${h} class="serif">${r.name}</${h}>
         <p class="lede">${r.tagline}</p>
         <div class="res-specs">
           ${r.specs.slice(0, 4).map(s => `
@@ -2859,7 +2898,7 @@ function renderCountryResidences() {
     <div class="res-card" role="button" tabindex="0" onclick="openResidence('${r.id}')">
       <div class="res-card-media">${media(r.photo, r.color, r.name, false, 'card')}</div>
       <div class="res-card-body">
-        <h3 class="serif">${r.name}</h3>
+        <h2 class="serif">${r.name}</h2>
         <div class="res-card-meta">${r.specs[2][1]} guests \u00B7 ${r.specs[3][1]}</div>
         <div class="res-card-rate">from \u20AC${r.rate} / night</div>
       </div>
@@ -2879,7 +2918,7 @@ function renderCountryFarms(region) {
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">${f.type}</span>
-        <h3 class="serif">${f.name}</h3>
+        <h2 class="serif">${f.name}</h2>
         <div class="farm-card-meta">${f.city} \u00B7 ${f.season}</div>
       </div>
     </div>`).join('');
@@ -2889,7 +2928,7 @@ function renderCountryFarms(region) {
 function renderCountryExperiences() {
   document.getElementById('country-experiences-grid').innerHTML = EXPERIENCES.map(e => `
     <div class="exp-card">
-      <h3 class="serif">${e.name}</h3>
+      <h2 class="serif">${e.name}</h2>
       <p>${e.desc}</p>
       <div class="exp-meta">${e.meta}</div>
     </div>`).join('');
@@ -3076,7 +3115,7 @@ function renderAllFarms() {
       <div class="farm-card-scrim"></div>
       <div class="farm-card-body">
         <span class="farm-card-type">${f.type}</span>
-        <h3 class="serif">${f.name}</h3>
+        <h2 class="serif">${f.name}</h2>
         <div class="farm-card-meta">${f.city}, ${f.countryName} \u00B7 ${f.season}</div>
       </div>
     </div>`).join('');
@@ -3502,6 +3541,16 @@ const RU = {
   '€89,064': '€89 064',
   '€94,032': '€94 032',
   '€98,960': '€98 960',
+
+/* ── Дверь для коммерческого покупателя на главной ── */
+  'A different buyer': 'Другой покупатель',
+  'The same chassis, fitted out to serve': 'То же шасси, но начинка под выдачу',
+  'Bars and coffee units are the other half of what we build. They go to venues that already have a name, they carry that name on the outside rather than ours, and they are sold with the arithmetic written out instead of a promise. If you run a bar rather than book one, start here.':
+    'Бары и кофейные юниты — вторая половина того, что мы строим. Они уходят заведениям, у которых уже есть имя, везут снаружи это имя, а не наше, и продаются с посчитанной арифметикой, а не с обещанием. Если вы держите бар, а не бронируете его, начинайте отсюда.',
+  'See the units': 'Смотреть юниты',
+  'Read the financial model': 'Читать финмодель',
+
+  'Skip to content': 'Перейти к содержанию',
 
   /* ── Мобильные бары и кухни ── */
   'Bars': 'Бары',

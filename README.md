@@ -20,6 +20,9 @@ Also hand-written:
 | `404.html` | What GitHub Pages serves for an address that does not exist. |
 | `analytics.js` | Inert until `SRC` and `ID` are filled in. See the comment at the top of it. |
 | `build.mjs` | The build described below. |
+| `model.py` | The cost derivation and the buyer's financial model for the bars. Run it (`python3 model.py`) to see the whole working printed. |
+| `gen_econ_page.py` | Writes the `/bars/economics/` page into `src/index.html` out of `model.py`. Not part of the build — run it by hand when the model changes. |
+| `images.py` | Makes the WebP derivatives that `<picture>` offers. |
 
 ## Building
 
@@ -48,6 +51,28 @@ still moves between them in the browser without a reload. Addresses shared
 back when the site used `#/` still work; they rewrite themselves to the real
 one.
 
+## The bar economics page
+
+`/bars/economics/` is the only page not written by hand. `gen_econ_page.py`
+reads the figures out of `model.py` and writes the section — markup and both
+languages — into `src/index.html`, so the page on the site and the
+arithmetic behind it cannot drift apart.
+
+To change a figure, change it in `model.py`, then:
+
+```
+git checkout src/index.html   # the generator appends, it does not replace
+python3 gen_econ_page.py
+node build.mjs
+```
+
+Two things the generator has to get right, and both have bitten:
+
+- A dictionary key must carry a bare `&`, not `&amp;`. The walk matches the
+  text node the browser built, where the entity is already resolved.
+- A table cell is one text node, so `320 × €4.00` is keyed whole. Keying the
+  amount inside it never fires.
+
 ## Adding a farm, a country or a residence
 
 Add the record to `DATA` in `src/index.html` and run the build. Its page,
@@ -72,3 +97,12 @@ visitor who switches language gets the translation of the same strings.
   forwarded.
 - Terms still has no registration number or postal address, and the
   cancellation terms have to be decided before booking opens.
+- The bar figures rest on two North American operators. They want checking
+  against European ones before anyone is quoted against them.
+- `model.py` prices the build from the residences, not from a bill of
+  materials. Every figure in it moves once a real one exists.
+- Both bar units have `photo: null` and render as colour blocks until there
+  are renders.
+- Every page carries every view, so each file is around 250 KB (68 KB
+  gzipped) and grows with each section added. If the commercial line keeps
+  growing, it wants its own document, the way `invest/` has one.
