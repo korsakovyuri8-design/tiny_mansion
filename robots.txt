@@ -1,8 +1,10 @@
 # The investor deck is by invitation, not for search.
 # /src/ is the document every page here is built from, not a page.
+# /deck/ is the source of a PDF presentation, not a page of the site.
 User-agent: *
 Disallow: /invest/
 Disallow: /thanks/
 Disallow: /src/
+Disallow: /deck/
 
 Sitemap: https://tinymansion.co/sitemap.xml
