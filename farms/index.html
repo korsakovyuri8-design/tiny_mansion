@@ -862,6 +862,33 @@
       border-left: 2px solid var(--rule); padding-left: 18px; max-width: 62ch;
     }
 
+/* ── economics ── */
+    .fig { margin: 34px 0 0; overflow-x: auto; }
+    .fig table {
+      width: 100%; min-width: 460px; border-collapse: collapse;
+      font-family: var(--font-sans); font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+    .fig caption {
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold-ink); text-align: left; padding-bottom: 12px;
+    }
+    .fig th, .fig td { padding: 12px 16px 12px 0; text-align: left; border-bottom: 1px solid var(--rule); }
+    .fig th {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); font-weight: 400; border-bottom-color: var(--ink);
+    }
+    .fig td.n, .fig th.n { text-align: right; padding-right: 0; white-space: nowrap; }
+    .fig td.lbl { font-family: var(--font-serif); font-size: 16px; }
+    .fig tr.tot td { border-bottom: 2px solid var(--ink); font-weight: 500; }
+    /* Below the line a buyer will act on; above it they will not. */
+    .fig td.good { color: #3F5730; font-weight: 500; }
+    .fig td.slow { color: var(--muted); }
+    .fig-note {
+      font-size: 13px; line-height: 1.7; color: var(--muted);
+      margin-top: 14px; max-width: 62ch;
+    }
+
     /* Footer */
     .footer { background: var(--ink); color: var(--bg-cream); padding: clamp(56px, 8vw, 90px) 0 44px; margin-top: 0; }
     .footer-content { display: flex; flex-direction: column; gap: 44px; }
@@ -1332,6 +1359,49 @@
         </div>
 
         <div id="unit-rows" style="margin-top:10px;"></div>
+
+
+        <!-- ── economics ── -->
+        <div class="section-pad">
+          <span class="eyebrow">The numbers</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What it earns, and when it is paid off</h2>
+          <p class="page-lede" style="margin-top:16px;">The rates below are not our projections. They are the published price lists of two working operators — a mobile pub in Ohio and a mobile coffee bar in Alberta — converted at $1 = €0.92. If a unit like this earns that there, the arithmetic is worth checking here.</p>
+
+          <figure class="fig">
+            <table>
+              <caption>What one outing brings in</caption>
+              <thead><tr><th>Line</th><th class="n">Coffee</th><th class="n">Bar</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl">Charged for the outing</td><td class="n">€1,610</td><td class="n">€1,610</td></tr>
+                <tr><td class="lbl">Staff</td><td class="n">−€108</td><td class="n">−€144</td></tr>
+                <tr><td class="lbl">Cost of what is served</td><td class="n">−€165</td><td class="n">—</td></tr>
+                <tr><td class="lbl">Fuel and towing</td><td class="n">−€60</td><td class="n">−€60</td></tr>
+                <tr><td class="lbl">Cleaning, consumables, line service</td><td class="n">−€40</td><td class="n">−€100</td></tr>
+                <tr class="tot"><td class="lbl">Left over</td><td class="n">€1,237</td><td class="n">€1,306</td></tr>
+              </tbody>
+            </table>
+            <figcaption class="fig-note">The coffee figure covers three hours and 150 drinks with one barista — the package the Alberta operator sells. The bar has no drinks cost because the client brings the kegs, which is how the Ohio operator writes it; in exchange the outing costs more to run, since a pub has to be towed, set up and taken down by two people.</figcaption>
+          </figure>
+
+          <figure class="fig">
+            <table>
+              <caption>Seasons to earn the unit back, at €1,237 left over per outing</caption>
+              <thead>
+                <tr><th>Price of the unit</th><th class="n">18 outings</th><th class="n">24</th><th class="n">30</th><th class="n">40</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="lbl">€70,000</td><td class="n slow">3.1</td><td class="n good">2.4</td><td class="n good">1.9</td><td class="n good">1.4</td></tr>
+                <tr><td class="lbl">€80,000</td><td class="n slow">3.6</td><td class="n slow">2.7</td><td class="n good">2.2</td><td class="n good">1.6</td></tr>
+                <tr><td class="lbl">€90,000</td><td class="n slow">4.0</td><td class="n slow">3.0</td><td class="n good">2.4</td><td class="n good">1.8</td></tr>
+                <tr><td class="lbl">€110,000</td><td class="n slow">4.9</td><td class="n slow">3.7</td><td class="n slow">3.0</td><td class="n good">2.2</td></tr>
+                <tr><td class="lbl">€130,000</td><td class="n slow">5.8</td><td class="n slow">4.4</td><td class="n slow">3.5</td><td class="n slow">2.6</td></tr>
+              </tbody>
+            </table>
+            <figcaption class="fig-note">Taken at the coffee figure, the lower of the two; the bar pays back a little faster. Read it against your own diary rather than ours. A season of private events in Europe is roughly twenty weekends, so a busy operator lands between 24 and 40 outings. Anything at two and a half seasons or under is marked: that is the point at which the unit is a piece of equipment rather than a bet.</figcaption>
+          </figure>
+
+          <p class="fineprint" style="margin-top:34px;">Counted: what you charge, less staff, stock, fuel and the running of the unit. Not counted: VAT, insurance, the cost of borrowing, the vehicle that tows it, or what the unit is still worth when it is paid off — the first three lengthen the payback and the last one shortens it. Every figure is at €18 an hour for labour.</p>
+        </div>
 
         <!-- ── delivery ── -->
         <div class="section-pad">
@@ -2894,7 +2964,59 @@ const RU = {
   'A Nuki smart lock, so you let yourself in. Cerbo GX watches every system so nothing runs out while you sleep.':
     'Умный замок Nuki — заселяетесь сами. Cerbo GX следит за всеми системами, чтобы ничего не кончилось, пока вы спите.',
 
-/* ── Мобильные бары и кухни ── */
+  /* ── Экономика ── */
+  /* Числа в таблицах экономики: по-русски разряды отбиваются
+     пробелом, а дробь — запятой. */
+  '1.4': '1,4',
+  '1.6': '1,6',
+  '1.8': '1,8',
+  '1.9': '1,9',
+  '2.2': '2,2',
+  '2.4': '2,4',
+  '2.6': '2,6',
+  '2.7': '2,7',
+  '3.0': '3,0',
+  '3.1': '3,1',
+  '3.5': '3,5',
+  '3.6': '3,6',
+  '3.7': '3,7',
+  '4.0': '4,0',
+  '4.4': '4,4',
+  '4.9': '4,9',
+  '5.8': '5,8',
+  '€1,237': '€1 237',
+  '€1,306': '€1 306',
+  '€1,610': '€1 610',
+  '€110,000': '€110 000',
+  '€130,000': '€130 000',
+  '€70,000': '€70 000',
+  '€80,000': '€80 000',
+  '€90,000': '€90 000',
+  'The numbers': 'Цифры',
+  'What it earns, and when it is paid off': 'Что он приносит и когда окупается',
+  'The rates below are not our projections. They are the published price lists of two working operators — a mobile pub in Ohio and a mobile coffee bar in Alberta — converted at $1 = €0.92. If a unit like this earns that there, the arithmetic is worth checking here.':
+    'Ставки ниже — не наши прогнозы. Это опубликованные прайсы двух работающих операторов: мобильного паба в Огайо и мобильной кофейни в Альберте, пересчитано по курсу $1 = €0,92. Если такой юнит зарабатывает столько там, арифметику стоит проверить и здесь.',
+  'What one outing brings in': 'Что приносит один выезд',
+  'Line': 'Строка', 'Coffee': 'Кофе', 'Bar': 'Бар',
+  'Charged for the outing': 'Ставка за выезд',
+  'Staff': 'Персонал',
+  'Cost of what is served': 'Себестоимость того, что подаёте',
+  'Fuel and towing': 'Топливо и буксировка',
+  'Cleaning, consumables, line service': 'Уборка, расходники, обслуживание линии',
+  'Left over': 'Остаётся',
+  'The coffee figure covers three hours and 150 drinks with one barista — the package the Alberta operator sells. The bar has no drinks cost because the client brings the kegs, which is how the Ohio operator writes it; in exchange the outing costs more to run, since a pub has to be towed, set up and taken down by two people.':
+    'Цифра по кофе — это три часа и 150 напитков с одним бариста, ровно тот пакет, который продаёт оператор в Альберте. У бара нет себестоимости напитков, потому что кегу привозит заказчик — так это устроено у оператора в Огайо; зато дороже сам выезд: паб надо привезти, поставить и забрать вдвоём.',
+  'Seasons to earn the unit back, at €1,237 left over per outing':
+    'Сезонов до возврата вложенного, при €1 237 остатка с выезда',
+  'Price of the unit': 'Цена юнита',
+  '18 outings': '18 выездов',
+  'Taken at the coffee figure, the lower of the two; the bar pays back a little faster. Read it against your own diary rather than ours. A season of private events in Europe is roughly twenty weekends, so a busy operator lands between 24 and 40 outings. Anything at two and a half seasons or under is marked: that is the point at which the unit is a piece of equipment rather than a bet.':
+    'Считано по кофейной цифре, она ниже; у бара выходит чуть быстрее. Смотрите по своему календарю, а не по нашему. Сезон частных мероприятий в Европе — это примерно двадцать выходных, поэтому загруженный оператор укладывается в 24–40 выездов. Отмечено всё, что укладывается в два с половиной сезона и быстрее: с этого места юнит становится оборудованием, а не ставкой.',
+  'Counted: what you charge, less staff, stock, fuel and the running of the unit. Not counted: VAT, insurance, the cost of borrowing, the vehicle that tows it, or what the unit is still worth when it is paid off — the first three lengthen the payback and the last one shortens it. Every figure is at €18 an hour for labour.':
+    'Учтено: ваша ставка минус персонал, продукт, топливо и обслуживание юнита. Не учтено: НДС, страховка, стоимость денег, тягач и остаточная стоимость самого юнита — первые четыре удлиняют срок, последняя укорачивает. Труд везде посчитан по €18 в час.',
+
+
+  /* ── Мобильные бары и кухни ── */
   'Bars': 'Бары',
   'Mobile bars': 'Мобильные бары',
   'For the trade': 'Для бизнеса',
