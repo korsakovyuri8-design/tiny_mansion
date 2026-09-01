@@ -27,6 +27,11 @@
   <meta name="twitter:description" content="Seven days off-grid, on a working farm.">
   <meta name="twitter:image" content="https://tinymansion.co/og.jpg">
 
+  <!-- Structured data. writeJsonLd() fills this from what the page actually
+       shows, so the machine-readable copy cannot drift away from the visible
+       one, and the build bakes the right graph into every static file. -->
+  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","legalName":"TinyArc Group d.o.o.","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","address":{"@type":"PostalAddress","addressLocality":"Bar","addressCountry":"ME"}}]}</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
@@ -1166,7 +1171,7 @@
     <section id="view-country" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
-          <a class="breadcrumb-item" href="/">Countries</a>
+          <a class="breadcrumb-item" href="/">Home</a>
           <span>/</span>
           <span class="breadcrumb-current" id="country-breadcrumb-name">Country</span>
         </div>
@@ -1522,6 +1527,14 @@
           <span class="eyebrow">Fitted with</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What is in it</h2>
           <ul class="kit-list" id="unit-kit"></ul>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">The numbers</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What one outing leaves you</h2>
+          <p class="page-lede" style="margin-top:16px;" id="unit-money"></p>
+          <p class="fineprint" style="margin-top:26px;">The rate is not our projection. It is what two working operators publish for a booking of this kind, converted from dollars. Your own diary decides how many outings a season holds.</p>
+          <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/">See how that is worked out</a></p>
         </div>
 
         <div class="section-pad">
@@ -1952,6 +1965,9 @@ const UNITS = [
     photo: null, color: '#3A342C',
     desc: 'A pouring bar built around a glycol line, so what comes out of the last tap at midnight is the same temperature as the first one at noon. Sized for a festival queue rather than a kitchen.',
     lengths: [4, 6, 8],
+    /* Left over after staff, stock, fuel and running, at the rate the two
+       reference operators publish. The full working is on /bars/. */
+    money: { outing: '1,306', s24: '31,000', s30: '39,000' },
     specs: [
       ['Taps', '4 to 12, by length'],
       ['Cooling', 'Glycol chiller, insulated python'],
@@ -1977,6 +1993,7 @@ const UNITS = [
     photo: null, color: '#37312B',
     desc: 'Two services in one trailer, because a wedding needs coffee at eleven and negronis at seven. The machine side and the bar station are separated so neither waits on the other.',
     lengths: [4, 6, 8],
+    money: { outing: '1,237', s24: '30,000', s30: '37,000' },
     specs: [
       ['Coffee', 'Two-group commercial machine'],
       ['Grinders', 'Two, on-demand'],
@@ -2345,6 +2362,53 @@ function setHead(p) {
   set('meta[name="twitter:description"]', 'content', tw);
 }
 
+/* Read off the rendered page rather than kept in a second list: a
+   breadcrumb or a question that changes in the markup changes here too. */
+function writeJsonLd() {
+  const el = document.getElementById('ld-graph');
+  if (!el) return;
+
+  const graph = [{
+    '@type': 'Organization',
+    '@id': SITE + '/#org',
+    name: 'Tiny Mansion',
+    legalName: 'TinyArc Group d.o.o.',
+    url: SITE + '/',
+    logo: SITE + '/og.jpg',
+    address: { '@type': 'PostalAddress', addressLocality: 'Bar', addressCountry: 'ME' }
+  }];
+
+  const trail = [];
+  document.querySelectorAll('.view-section.active .breadcrumbs > *').forEach(c => {
+    if (c.classList.contains('breadcrumb-item')) {
+      trail.push({ name: c.textContent.trim(), item: new URL(c.getAttribute('href'), SITE + '/').href });
+    } else if (c.classList.contains('breadcrumb-current')) {
+      trail.push({ name: c.textContent.trim(), item: SITE + location.pathname });
+    }
+  });
+  if (trail.length > 1) {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      itemListElement: trail.map((t, i) =>
+        ({ '@type': 'ListItem', position: i + 1, name: t.name, item: t.item }))
+    });
+  }
+
+  const qa = document.querySelectorAll('.view-section.active .qa > div');
+  if (qa.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      mainEntity: Array.prototype.map.call(qa, d => ({
+        '@type': 'Question',
+        name: d.querySelector('h3').textContent.trim(),
+        acceptedAnswer: { '@type': 'Answer', text: d.querySelector('p').textContent.trim() }
+      }))
+    });
+  }
+
+  el.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+}
+
 /* Only paths that stay inside the site and that we can render. Anything
    else (a real file, another origin, a download) is left to the browser. */
 function internalPath(a) {
@@ -2687,6 +2751,17 @@ function renderUnitRows() {
 }
 
 /* Composed in script, so the language walk cannot reach it: redraw instead. */
+function writeUnitMoney(u) {
+  const el = document.getElementById('unit-money');
+  if (!el || !u || !u.money) return;
+  /* Russian groups thousands with a space, English with a comma. */
+  const n = v => '\u20AC' + (lang === 'ru' ? v.replace(',', '\u00A0') : v);
+  el.innerText = T('At the published European rate of €1,610 an outing, this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.')
+    .replace('{n}', n(u.money.outing))
+    .replace('{s24}', n(u.money.s24))
+    .replace('{s30}', n(u.money.s30));
+}
+
 function writeUnitLengths(u) {
   const el = document.getElementById('unit-lengths');
   if (!el || !u) return;
@@ -2704,6 +2779,7 @@ function openUnit(unitId) {
   document.getElementById('unit-eyebrow').innerText = 'Unit ' + u.index;
   document.getElementById('unit-title').innerText = u.name;
   writeUnitLengths(u);
+  writeUnitMoney(u);
   document.getElementById('unit-media').innerHTML = media(u.photo, u.color, u.name, true, 'hero');
   document.getElementById('unit-desc').innerText = u.desc;
   document.getElementById('unit-specs').innerHTML = u.specs.map(sp =>
@@ -3039,6 +3115,14 @@ const RU = {
 
   'Buying a bar or a coffee unit is a different conversation, and that one is open now. Say which unit in the box below and you get a quotation rather than a place on a list.':
     'Покупка бара или кофейного юнита — отдельный разговор, и он открыт уже сейчас. Напишите в поле ниже, какой юнит, и вы получите расчёт, а не место в списке.',
+
+/* ── Цифры на странице юнита ── */
+  'What one outing leaves you': 'Что остаётся с одного выезда',
+  'At the published European rate of €1,610 an outing, this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.':
+    'При опубликованной европейской ставке €1 610 за выезд юнит оставляет около {n} после персонала, продукта, топлива и собственного обслуживания. Сезон из двадцати четырёх выездов — это примерно {s24}, из тридцати — примерно {s30}.',
+  'The rate is not our projection. It is what two working operators publish for a booking of this kind, converted from dollars. Your own diary decides how many outings a season holds.':
+    'Ставка — не наш прогноз. Это то, что два работающих оператора публикуют за такую бронь, пересчитано с долларов. Сколько выездов помещается в сезон, решает ваш календарь.',
+  'See how that is worked out': 'Как это посчитано',
 
   /* ── Мобильные бары и кухни ── */
   'Bars': 'Бары',
@@ -3493,6 +3577,10 @@ function applyLang() {
 
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+
+  /* Last, because it reads the page it has just finished rendering.
+     showView() ends with applyLang(), so this runs after every render. */
+  writeJsonLd();
 }
 
 function setLang(next) {
@@ -3502,6 +3590,7 @@ function setLang(next) {
   applyLang();
   /* Composed in script, so the walk above cannot reach it. */
   writeUnitLengths(currentUnit);
+  writeUnitMoney(currentUnit);
 }
 
 function initLang() {
