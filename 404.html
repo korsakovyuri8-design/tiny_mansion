@@ -124,17 +124,51 @@
   <main>
     <div class="panel">
       <p class="eyebrow">404</p>
-      <h1>Nothing stands at this address.</h1>
-      <p>The page you asked for has moved, or it never existed. Neither is your fault, and there is not much more to say about it.</p>
-      <p>The residences, the farms and the countries are all one click away.</p>
+      <h1 data-t>Nothing stands at this address.</h1>
+      <p data-t>The page you asked for has moved, or it never existed. Neither is your fault, and there is not much more to say about it.</p>
+      <p data-t>The residences, the farms and the mobile bars are all one click away.</p>
       <div class="links">
-        <a class="btn btn-solid" href="/">Back to the start</a>
-        <a class="btn btn-line" href="/residences/">The residences</a>
-        <a class="btn btn-line" href="/farms/">The farms</a>
+        <a class="btn btn-solid" href="/" data-t>Back to the start</a>
+        <a class="btn btn-line" href="/residences/" data-t>The residences</a>
+        <a class="btn btn-line" href="/farms/" data-t>The farms</a>
+        <a class="btn btn-line" href="/bars/" data-t>Mobile bars</a>
       </div>
     </div>
   </main>
 
   <footer>&copy; 2026 TinyArc Group</footer>
+
+  <!-- The rest of the site remembers the visitor's language in localStorage.
+       This page is served by GitHub Pages for anything it cannot find, so it
+       cannot share that code — but it can read the same key and honour the
+       same choice. English is what the markup says; if the script never runs,
+       the page is still a whole page. -->
+  <script>
+  (function () {
+    var RU = {
+      'Nothing at this address — Tiny Mansion': 'По этому адресу ничего нет — Tiny Mansion',
+      'Nothing stands at this address.': 'По этому адресу ничего не стоит.',
+      'The page you asked for has moved, or it never existed. Neither is your fault, and there is not much more to say about it.':
+        'Страница, которую вы запросили, переехала или её никогда не было. Ни то, ни другое — не ваша вина, и добавить к этому особо нечего.',
+      'The residences, the farms and the mobile bars are all one click away.':
+        'Резиденции, фермы и мобильные бары — в одном клике отсюда.',
+      'Back to the start': 'В начало',
+      'The residences': 'Резиденции',
+      'The farms': 'Фермы',
+      'Mobile bars': 'Мобильные бары'
+    };
+    var lang = null;
+    try { lang = localStorage.getItem('tm-lang'); } catch (e) { /* private mode */ }
+    if (!lang) lang = (navigator.language || '').slice(0, 2) === 'ru' ? 'ru' : 'en';
+    if (lang !== 'ru') return;
+    document.documentElement.lang = 'ru';
+    if (RU[document.title]) document.title = RU[document.title];
+    var nodes = document.querySelectorAll('[data-t]');
+    for (var i = 0; i < nodes.length; i++) {
+      var ru = RU[nodes[i].textContent.trim()];
+      if (ru) nodes[i].textContent = ru;
+    }
+  })();
+  </script>
 </body>
 </html>
