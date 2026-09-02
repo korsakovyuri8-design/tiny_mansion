@@ -754,9 +754,10 @@
       padding: 0; border: 0; font: inherit; color: inherit; display: block;
     }
     /* auto-fit is right for a residence, which has seven photographs and
-       reflows to whatever fits. A unit has three, and auto-fit leaves the
-       third one alone on its own row on a phone. Three columns always. */
-    .res-thumbs--three { grid-template-columns: repeat(3, 1fr); }
+       reflows to whatever fits. A unit has four, and auto-fit leaves an
+       orphan on a phone. Two and four divide four at every width. */
+    .res-thumbs--four { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 760px) { .res-thumbs--four { grid-template-columns: repeat(4, 1fr); } }
     .res-thumb .photo-block { transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
     .res-thumb:hover .photo-block { transform: scale(1.06); }
     .res-thumb::after {
@@ -1199,7 +1200,7 @@
           </div>
           <div class="trade-strip reveal d1">
             <a href="/bar/bar-draft/" aria-label="Draft &amp; Craft Bar"><picture><source type="image/webp" srcset="/bar-kerryman-1024.webp 1024w, /bar-kerryman-1440.webp 1440w, /bar-kerryman-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/bar-kerryman.jpg" alt="A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it" loading="lazy" decoding="async"></picture></a>
-            <a href="/bar/bar-espresso/" aria-label="Espresso &amp; Cocktail Lounge"><picture><source type="image/webp" srcset="/cafe-servery-1024.webp 1024w, /cafe-servery-1440.webp 1440w, /cafe-servery-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/cafe-servery.jpg" alt="A red barn-boarded unit with the serving hatch propped open and a timber counter run along the side" loading="lazy" decoding="async"></picture></a>
+            <a href="/bar/bar-espresso/" aria-label="Espresso &amp; Cocktail Lounge"><picture><source type="image/webp" srcset="/cafe-alpine-1024.webp 1024w, /cafe-alpine-1440.webp 1440w, /cafe-alpine-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/cafe-alpine.jpg" alt="A dark timber coffee unit lit from inside at dusk, the hatch open over a counter of coffee gear, snow and mountains behind it" loading="lazy" decoding="async"></picture></a>
           </div>
           <div class="trade-actions reveal d1" style="margin-top:36px;">
             <a class="btn btn-line" href="/bars/">See the units</a>
@@ -1445,11 +1446,11 @@
           </ul>
           <div class="unit-plate">
             <picture>
-              <source type="image/webp" srcset="/unit-konoba-1024.webp 1024w, /unit-konoba-1440.webp 1440w, /unit-konoba-2048.webp 2048w" sizes="100vw">
-              <img class="photo-block" src="/unit-konoba.jpg" alt="A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer" loading="lazy" decoding="async">
+              <source type="image/webp" srcset="/cafe-winter-1024.webp 1024w, /cafe-winter-1440.webp 1440w, /cafe-winter-2048.webp 2048w" sizes="100vw">
+              <img class="photo-block" src="/cafe-winter.jpg" alt="A dark timber coffee unit standing on snow at dusk, string lights along the eaves, a fire bowl and a sheepskin bench beside the steps" loading="lazy" decoding="async">
             </picture>
           </div>
-          <p class="plate-note">Stone cladding, the same detail as the residences, on a unit that serves rather than sleeps. The images on these pages are renders: the outside is drawn to a customer's brief, the chassis and the equipment behind it are the specification.</p>
+          <p class="plate-note">A field in the snow with no standpipe, no drain and no building on it. That is the pitch the specification above is written for, and it is why a unit like this can be booked where a catering tent cannot. The images on these pages are renders: the outside is drawn to a customer's brief, the chassis and the equipment behind it are the specification.</p>
         </div>
 
         <!-- ── как это устроено ── -->
@@ -1600,10 +1601,11 @@
         </div>
       </div>
 
-      <div class="res-thumbs res-thumbs--three" id="unit-thumbnails">
-    <button type="button" class="res-thumb active" data-photo-i="1" data-photo-n="3" onclick="swapUnitPhoto(this, 0)" aria-label="Show photo 1 of 3: A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it"><picture><source type="image/webp" srcset="/bar-kerryman-1024.webp 1024w, /bar-kerryman-1440.webp 1440w, /bar-kerryman-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/bar-kerryman.jpg" alt="A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it" loading="lazy" decoding="async"></picture></button>
-    <button type="button" class="res-thumb " data-photo-i="2" data-photo-n="3" onclick="swapUnitPhoto(this, 1)" aria-label="Show photo 2 of 3: A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane"><picture><source type="image/webp" srcset="/bar-public-house-1024.webp 1024w, /bar-public-house-1440.webp 1440w, /bar-public-house-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/bar-public-house.jpg" alt="A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane" loading="lazy" decoding="async"></picture></button>
-    <button type="button" class="res-thumb " data-photo-i="3" data-photo-n="3" onclick="swapUnitPhoto(this, 2)" aria-label="Show photo 3 of 3: A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it"><picture><source type="image/webp" srcset="/bar-wine-1024.webp 1024w, /bar-wine-1440.webp 1440w, /bar-wine-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/bar-wine.jpg" alt="A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it" loading="lazy" decoding="async"></picture></button></div>
+      <div class="res-thumbs res-thumbs--four" id="unit-thumbnails">
+    <button type="button" class="res-thumb active" data-photo-i="1" data-photo-n="4" onclick="swapUnitPhoto(this, 0)" aria-label="Show photo 1 of 4: A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it"><picture><source type="image/webp" srcset="/bar-kerryman-1024.webp 1024w, /bar-kerryman-1440.webp 1440w, /bar-kerryman-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/bar-kerryman.jpg" alt="A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="2" data-photo-n="4" onclick="swapUnitPhoto(this, 1)" aria-label="Show photo 2 of 4: A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane"><picture><source type="image/webp" srcset="/bar-public-house-1024.webp 1024w, /bar-public-house-1440.webp 1440w, /bar-public-house-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/bar-public-house.jpg" alt="A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="3" data-photo-n="4" onclick="swapUnitPhoto(this, 2)" aria-label="Show photo 3 of 4: A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it"><picture><source type="image/webp" srcset="/bar-wine-1024.webp 1024w, /bar-wine-1440.webp 1440w, /bar-wine-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/bar-wine.jpg" alt="A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it" loading="lazy" decoding="async"></picture></button>
+    <button type="button" class="res-thumb " data-photo-i="4" data-photo-n="4" onclick="swapUnitPhoto(this, 3)" aria-label="Show photo 4 of 4: A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer"><picture><source type="image/webp" srcset="/unit-konoba-1024.webp 1024w, /unit-konoba-1440.webp 1440w, /unit-konoba-2048.webp 2048w" sizes="(max-width: 700px) 25vw, 120px"><img class="photo-block" src="/unit-konoba.jpg" alt="A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer" loading="lazy" decoding="async"></picture></button></div>
 
       <div class="container">
         <div class="section-pad">
@@ -2268,7 +2270,8 @@ const UNITS = [
     photos: [
       { src: 'bar-kerryman.jpg',    alt: 'A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it' },
       { src: 'bar-public-house.jpg', alt: 'A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane' },
-      { src: 'bar-wine.jpg',        alt: 'A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it' }
+      { src: 'bar-wine.jpg',        alt: 'A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it' },
+      { src: 'unit-konoba.jpg',     alt: 'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer' }
     ],
     desc: 'A pouring bar built around a glycol line, so what comes out of the last tap at midnight is the same temperature as the first one at noon. Sized for a festival queue rather than a kitchen.',
     lengths: [4, 6, 8],
@@ -2297,11 +2300,12 @@ const UNITS = [
     index: '02',
     name: 'Espresso & Cocktail Lounge',
     tagline: 'Coffee in the morning, cocktails by the evening, one unit.',
-    photo: 'cafe-servery.jpg', color: '#37312B',
+    photo: 'cafe-alpine.jpg', color: '#37312B',
     photos: [
+      { src: 'cafe-alpine.jpg',  alt: 'A dark timber coffee unit lit from inside at dusk, the hatch open over a counter of coffee gear, snow and mountains behind it' },
+      { src: 'cafe-winter.jpg',  alt: 'A dark timber coffee unit standing on snow at dusk, string lights along the eaves, a fire bowl and a sheepskin bench beside the steps' },
       { src: 'cafe-servery.jpg', alt: 'A red barn-boarded unit with the serving hatch propped open and a timber counter run along the side' },
-      { src: 'cafe-cart.jpg',    alt: 'A weathered timber coffee unit under a curved roof, canvas awning rolled out over the hatch and two rattan stools at the counter' },
-      { src: 'unit-konoba.jpg',  alt: 'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer' }
+      { src: 'cafe-cart.jpg',    alt: 'A weathered timber coffee unit under a curved roof, canvas awning rolled out over the hatch and two rattan stools at the counter' }
     ],
     desc: 'Two services in one trailer, because a wedding needs coffee at eleven and negronis at seven. The machine side and the bar station are separated so neither waits on the other.',
     lengths: [4, 6, 8],
@@ -3693,11 +3697,15 @@ const RU = {
     'Юнит, обшитый красной амбарной доской, с поднятым окном выдачи и деревянной стойкой вдоль борта',
   'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer':
     'Юнит выдачи в каменной облицовке с надписью konoba, ставни на окнах, травы у двери, стоит на собственном прицепе',
+  'A dark timber coffee unit lit from inside at dusk, the hatch open over a counter of coffee gear, snow and mountains behind it':
+    'Кофейный юнит из тёмного дерева, подсвеченный изнутри в сумерках, окно выдачи поднято над стойкой с кофейным оборудованием, позади снег и горы',
+  'A dark timber coffee unit standing on snow at dusk, string lights along the eaves, a fire bowl and a sheepskin bench beside the steps':
+    'Кофейный юнит из тёмного дерева стоит на снегу в сумерках, гирлянда по свесу крыши, у ступеней чаша с огнём и скамья с овчиной',
 
   'The images are renders. Livery, timber and signwriting are drawn to a customer\'s own brief, which is what they are for; the chassis, the counter line and the equipment behind them are the specification below.':
     'Изображения — рендеры. Ливрея, дерево и вывеска рисуются под бриф заказчика, для того они и нужны; шасси, линия стойки и оборудование за ними — это спецификация ниже.',
-  'Stone cladding, the same detail as the residences, on a unit that serves rather than sleeps. The images on these pages are renders: the outside is drawn to a customer\'s brief, the chassis and the equipment behind it are the specification.':
-    'Каменная облицовка, та же деталь, что у резиденций, но на юните, который обслуживает, а не спит. Изображения на этих страницах — рендеры: внешний вид рисуется под бриф заказчика, шасси и оборудование за ним — это спецификация.',
+  'A field in the snow with no standpipe, no drain and no building on it. That is the pitch the specification above is written for, and it is why a unit like this can be booked where a catering tent cannot. The images on these pages are renders: the outside is drawn to a customer\'s brief, the chassis and the equipment behind it are the specification.':
+    'Поле в снегу, где нет ни водоразборной колонки, ни слива, ни строения. Именно под такую площадку написана спецификация выше, и именно поэтому такой юнит можно поставить там, где кейтеринговый шатёр не поставить. Изображения на этих страницах — рендеры: внешний вид рисуется под бриф заказчика, шасси и оборудование за ним — это спецификация.',
 
 
 
