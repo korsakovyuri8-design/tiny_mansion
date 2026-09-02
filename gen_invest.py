@@ -221,6 +221,10 @@ def page(lang):
             'The tractor, the platform, the listings and the farm agreements belong to the '
             'network. The onboarding fee buys a service, not a share of any of it.'))))
 
+    w('<div class="plate plate--interior"><p class="plate-cap">'
+      + t(T('Интерьер резиденции · рендер', 'Inside the residence · render'))
+      + '</p></div>')
+
     # ── РЫНОК ────────────────────────────────────────────────────────────
     w('''
 <section class="tint">
@@ -422,6 +426,11 @@ def page(lang):
             'not sit and hope for next season — see the next section.'
             % (P(breaks_at(CHEQUE_HIGH)), E(CHEQUE_HIGH),
                P(breaks_at(CHEQUE_LOW)), E(CHEQUE_LOW))))))
+
+    w('<div class="plate plate--farm"><p class="plate-cap">'
+      + t(T('Ферма-партнёр · три резиденции на площадке',
+            'A partner farm · three residences on site'))
+      + '</p></div>')
 
     # ── ПЛАН Б ───────────────────────────────────────────────────────────
     apt_rows = ''
