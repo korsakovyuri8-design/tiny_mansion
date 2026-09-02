@@ -361,3 +361,14 @@ ol.steps p{color:var(--muted);font-size:18px}
 .note{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--muted);margin-top:24px}
 footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+
+/* Пометка на выданной цитате — рамка слева, в отличие от .note,
+   который набран моноширинным и служит мелким шрифтом. */
+.callout{border-left:2px solid var(--gold);padding:2px 0 2px 18px;margin:26px 0;
+  font-size:16px;line-height:1.7;color:var(--muted);max-width:62ch}
+.callout strong{color:var(--ink);font-weight:500}
+
+/* Незаполненное значение. Нарочно кричит: страница с такими метками
+   не должна уходить в прод, и это должно быть видно с одного взгляда. */
+.tbd{background:#B3261E;color:#fff;padding:1px 7px;border-radius:2px;
+  font-family:var(--mono);font-size:.85em;letter-spacing:.04em;white-space:nowrap}

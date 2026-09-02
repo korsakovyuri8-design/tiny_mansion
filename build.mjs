@@ -170,11 +170,13 @@ fs.writeFileSync(path.join(ROOT, 'robots.txt'),
   '# The investor deck is by invitation, not for search.\n' +
   '# /src/ is the document every page here is built from, not a page.\n' +
   '# /deck/ is the source of a PDF presentation, not a page of the site.\n' +
+  '# /drafts/ is work not yet approved for publication.\n' +
   'User-agent: *\n' +
   'Disallow: /invest/\n' +
   'Disallow: /thanks/\n' +
   'Disallow: /src/\n' +
   'Disallow: /deck/\n' +
+  'Disallow: /drafts/\n' +
   '\n' +
   'Sitemap: ' + SITE + '/sitemap.xml\n');
 
