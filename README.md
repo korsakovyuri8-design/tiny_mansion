@@ -25,6 +25,8 @@ Also hand-written:
 | `images.py` | Makes the WebP derivatives that `<picture>` offers. |
 | `club.py` | The club offer: what a buyer pays, what the house earns, what the network takes. Run it to see the whole working. |
 | `gen_invest.py` | Writes both investor pages out of `club.py`. Run it after any change there. |
+| `bars.py` | The commercial line: build cost from named components, retail at a fixed margin, and payback per market. |
+| `gen_bars.py` | Rewrites `/bars/economics/` out of `bars.py`. Replaces the section rather than appending, so it is safe to re-run. |
 
 ## Building
 
@@ -67,6 +69,22 @@ English cannot drift apart and neither can drift from the arithmetic. To
 change a figure, change it in `club.py` and re-run.
 
 ## The bar economics page
+
+`/bars/economics/` is generated:
+
+```
+python3 bars.py       # see the model
+python3 gen_bars.py   # rewrite the page in src/index.html
+node build.mjs
+```
+
+`gen_bars.py` replaces everything between the `MOBILE BARS — the working`
+comment and `ALL FARMS`, and everything in the RU dictionary between the
+`Финмодель` and `Мобильные бары` markers. Do not put unrelated dictionary
+entries in that range — it ate a batch once, and the entries for the home
+page's trade band now live above the first marker for that reason.
+
+## The old bar economics page
 
 `/bars/economics/` is the only page not written by hand. `gen_econ_page.py`
 reads the figures out of `model.py` and writes the section — markup and both
