@@ -218,7 +218,10 @@
     header.over-hero .wordmark,
     header.over-hero .nav-link { color: var(--bg-cream); }
 
-    .header-inner { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .header-inner {
+      min-height: 78px; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
 
     .wordmark {
       font-family: var(--font-serif);
@@ -228,7 +231,11 @@
       transition: color 0.3s ease;
     }
 
-    .nav { display: flex; gap: clamp(12px, 2.2vw, 34px); align-items: center; white-space: nowrap; margin-left: auto; }
+    .nav {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 8px clamp(12px, 2.2vw, 34px);
+      white-space: nowrap; margin-left: auto;
+    }
     .nav-link {
       font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase;
       text-decoration: none; cursor: pointer; transition: color 0.3s ease;
@@ -250,12 +257,17 @@
     header.over-hero .lang-btn:not(.active):hover { color: var(--bg-cream); }
     header.over-hero .lang-sep { background: rgba(247, 243, 237, 0.3); }
 
-    @media (max-width: 700px) {
-      /* Wordmark and language on the first line, nav wrapping onto the second. */
-      .header-inner { height: auto; flex-wrap: wrap; align-items: center; gap: 10px; padding: 13px 0; }
+    @media (max-width: 780px) {
+      /* Wordmark and language on the first line, nav on the second. */
+      .header-inner { min-height: 0; height: auto; align-items: center; gap: 10px; padding: 13px 0; }
       .wordmark { order: 1; }
       .lang { order: 2; margin-left: auto; }
-      .nav { order: 3; width: 100%; justify-content: space-between; gap: 0; }
+      /* gap: 0 here left the words separated by nothing but the space
+         space-between happened to have left over. English had some. Russian
+         did not, and the six labels fused into one unreadable run — which is
+         how "Бары" disappeared from the Russian header on a phone. A real
+         column gap, and a second row when even that will not fit. */
+      .nav { order: 3; width: 100%; justify-content: space-between; gap: 9px 12px; }
       .nav-link { font-size: 10.5px; letter-spacing: 0.06em; }
     }
 
