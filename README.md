@@ -137,6 +137,13 @@ visitor who switches language gets the translation of the same strings.
 - The bar and cafe imagery is renders, not photographs — no unit has been
   built to production specification. The pages say so beside the pictures;
   keep that note wherever the renders are used.
+- The internal dimensions in `inside` on each unit are read off those
+  renders, not off an engineering drawing. Internal width and ridge height
+  are carried across from the cafe renders to the bar because it is the
+  same shell; nothing in the bar renders states them. Confirm the whole
+  list against the manufacturer's drawing before it is quoted to anyone.
+- The mint cafe render has "Exterior tch" lettered into it where it should
+  read "Exterior hatch". It has to be fixed in the render, not in markup.
 - Every page carries every view, so each file is around 250 KB (68 KB
   gzipped) and grows with each section added. If the commercial line keeps
   growing, it wants its own document, the way `invest/` has one.

@@ -881,14 +881,17 @@
        Squat on a phone, letterboxed on a desktop, so it never eats a screen. */
     .unit-plate { margin-top: 40px; aspect-ratio: 3 / 2; overflow: hidden; background: var(--card); }
     @media (min-width: 860px) { .unit-plate { aspect-ratio: 21 / 9; } }
+    /* A dimensioned drawing is read, not glanced at: the letterbox crop cuts
+       the very figures the list beside it quotes. This one keeps its frame. */
+    .unit-plate--full, .unit-plate--full:where(*) { aspect-ratio: 3 / 2; }
     .unit-plate > *, .unit-plate .photo-block { width: 100%; height: 100%; }
     .plate-note { font-size: 13px; line-height: 1.65; color: var(--muted); margin-top: 14px; max-width: 62ch; }
 
     /* Two units side by side where the text has only named them. */
     .trade-strip { display: grid; grid-template-columns: 1fr; gap: 2px; background: var(--rule); margin-top: 36px; }
     @media (min-width: 760px) { .trade-strip { grid-template-columns: 1fr 1fr; } }
-    .trade-strip > a { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--card); }
-    .trade-strip > a > *, .trade-strip .photo-block { width: 100%; height: 100%; }
+    .trade-strip > * { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--card); }
+    .trade-strip > * > *, .trade-strip .photo-block { width: 100%; height: 100%; }
     .trade-strip .photo-block { transition: transform 1.1s cubic-bezier(.2,.7,.2,1); }
     .trade-strip > a:hover .photo-block { transform: scale(1.05); }
 
@@ -1426,6 +1429,11 @@
               <p>Warranty on what we built, and parts. The fit-out is commercial equipment with European service, so anything inside it can be fixed by whoever services the rest of your bar.</p>
             </div>
           </div>
+          <div class="trade-strip">
+            <div><picture><source type="image/webp" srcset="/bar-pub-inside-1024.webp 1024w, /bar-pub-inside-1440.webp 1440w, /bar-pub-inside-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/bar-pub-inside.jpg" alt="Inside the bar fitted out as a Victorian public house: dark green walls, a panelled back bar of glasses and bottles, a wood stove and a pew along one wall, with dimensions marked" loading="lazy" decoding="async"></picture></div>
+            <div><picture><source type="image/webp" srcset="/bar-white-inside-1024.webp 1024w, /bar-white-inside-1440.webp 1440w, /bar-white-inside-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/bar-white-inside.jpg" alt="The same shell fitted out in white boarding: a zinc bar with two stools, a bench and table down one wall and a small wood stove" loading="lazy" decoding="async"></picture></div>
+          </div>
+          <p class="plate-note">One shell, two briefs. Nothing structural differs between these two rooms — the chassis, the width, the aisle and the standing height are the same unit. What changes is everything a customer of yours will actually notice.</p>
           <p class="fineprint" style="margin-top:30px;">This is the opposite of how the residences work, and the difference is deliberate. There we place the house on a farm and run the guests, because the owner is buying an income. Here you already have a business, a name and customers — you are buying equipment for it, not a service from us.</p>
         </div>
 
@@ -1576,6 +1584,15 @@
           <span class="eyebrow">Fitted with</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What is in it</h2>
           <ul class="kit-list" id="unit-kit"></ul>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Inside</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">The room you work in</h2>
+          <p class="page-lede" style="margin-top:16px;" id="unit-inside-lede"></p>
+          <div class="unit-plate unit-plate--full" id="unit-inside-media"></div>
+          <p class="plate-note">Drawn for the 6 m unit. The finish is yours to specify and every one of these pictures is a different brief; the shell, the aisle and the standing height are the same unit underneath. Confirmed against the manufacturer's drawing before an order is placed.</p>
+          <dl class="res-specs" id="unit-inside-specs"></dl>
         </div>
 
         <div class="section-pad">
@@ -2225,7 +2242,27 @@ const UNITS = [
       { src: 'bar-kerryman.jpg',    alt: 'A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it' },
       { src: 'bar-public-house.jpg', alt: 'A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane' },
       { src: 'bar-wine.jpg',        alt: 'A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it' },
-      { src: 'unit-konoba.jpg',     alt: 'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer' }
+      { src: 'unit-konoba.jpg',     alt: 'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer' },
+      { src: 'bar-pub-inside.jpg',   alt: 'Inside the bar fitted out as a Victorian public house: dark green walls, a panelled back bar of glasses and bottles, a wood stove and a pew along one wall, with dimensions marked' },
+      { src: 'bar-pub-inside-b.jpg', alt: 'The public-house counter seen along its length, tall stools at the front and the fitted back bar behind, with dimensions marked' },
+      { src: 'bar-white-inside.jpg', alt: 'The same shell fitted out in white boarding: a zinc bar with two stools, a bench and table down one wall and a small wood stove' },
+      { src: 'bar-white-inside-b.jpg', alt: 'The white fit-out with its dimensions marked: bar and stool heights, bench and table sizes, and the width of the working aisle' }
+    ],
+    /* Taken off the design drawings for the 6 m unit. The fit-out changes
+       with the brief; the shell, the aisle and the standing height do not. */
+    insidePhoto: 'bar-pub-inside-b.jpg',
+    insideLede: 'Two of the pictures above are the same shell. One is a public house in dark green with a pew and a stove, the other is white boarding with a zinc bar. What does not change is the room, and the room is what decides whether a service works.',
+    inside: [
+      ['Internal width', '2.20 m'],
+      ['Height at the ridge', '2.35 m'],
+      ['Height at the wall', '2.10 m'],
+      ['Working aisle', '0.70\u20130.85 m'],
+      ['Bar counter', '0.90 m high, 0.60 m deep'],
+      ['Back bar', 'three shelf bands to 1.65 m'],
+      ['Bar stools', '0.75 m seat, 0.35 m across'],
+      ['Wall bench', '4.00\u20136.00 m long, 0.45 m high'],
+      ['Tables', '0.60 \u00D7 0.45 m'],
+      ['Door', '0.75 \u00D7 1.95 m']
     ],
     desc: 'A pouring bar built around a glycol line, so what comes out of the last tap at midnight is the same temperature as the first one at noon. Sized for a festival queue rather than a kitchen.',
     lengths: [4, 6, 8],
@@ -2259,7 +2296,25 @@ const UNITS = [
       { src: 'cafe-alpine.jpg',  alt: 'A dark timber coffee unit lit from inside at dusk, the hatch open over a counter of coffee gear, snow and mountains behind it' },
       { src: 'cafe-winter.jpg',  alt: 'A dark timber coffee unit standing on snow at dusk, string lights along the eaves, a fire bowl and a sheepskin bench beside the steps' },
       { src: 'cafe-servery.jpg', alt: 'A red barn-boarded unit with the serving hatch propped open and a timber counter run along the side' },
-      { src: 'cafe-cart.jpg',    alt: 'A weathered timber coffee unit under a curved roof, canvas awning rolled out over the hatch and two rattan stools at the counter' }
+      { src: 'cafe-cart.jpg',    alt: 'A weathered timber coffee unit under a curved roof, canvas awning rolled out over the hatch and two rattan stools at the counter' },
+      { src: 'cafe-piazza.jpg',  alt: 'The coffee unit in mint green and cream under a striped awning, standing on a stone piazza with the hatch open and the machine visible inside' },
+      { src: 'cafe-mint-inside.jpg', alt: 'Inside the coffee unit in mint green and brass: counters down both sides, a herringbone splashback and the espresso machine at the open hatch, with dimensions marked' },
+      { src: 'cafe-oak-inside.jpg',  alt: 'The coffee unit fitted out in pale oak and zinc: wine racks at the far end, a chalkboard menu and the espresso machine at the hatch, with dimensions marked' },
+      { src: 'cafe-oak-inside-b.jpg', alt: 'The pale oak fit-out seen from the door: zinc counters down both sides, cups and a grinder to the right and a wine rack filling the end wall' }
+    ],
+    insidePhoto: 'cafe-mint-inside.jpg',
+    insideLede: 'Counters down both sides, the machine at the hatch and the till by the door, so a barista turns rather than walks. The aisle between them is the figure that decides whether two people can work a queue without standing on each other.',
+    inside: [
+      ['Internal width', '2.20 m'],
+      ['Internal length', '6.00 m on the 6 m unit'],
+      ['Height at the ridge', '2.35\u20132.50 m'],
+      ['Height at the wall', '2.10 m'],
+      ['Working aisle', '0.70\u20130.85 m'],
+      ['Counters', '0.60 m deep, both sides'],
+      ['Serving hatch', '1.20 m wide'],
+      ['Exterior shelf', '0.60 m deep'],
+      ['Windows', '0.50 \u00D7 0.50 m'],
+      ['Door', '0.75 \u00D7 1.95 m']
     ],
     desc: 'Two services in one trailer, because a wedding needs coffee at eleven and negronis at seven. The machine side and the bar station are separated so neither waits on the other.',
     lengths: [4, 6, 8],
@@ -3074,10 +3129,22 @@ function openUnit(unitId) {
   document.getElementById('unit-specs').innerHTML = u.specs.map(sp =>
     `<div class="res-spec"><dt>${esc(sp[0])}</dt><dd>${esc(sp[1])}</dd></div>`).join('');
   document.getElementById('unit-kit').innerHTML = u.kit.map(k => `<li>${esc(k)}</li>`).join('');
+  document.getElementById('unit-inside-lede').innerText = u.insideLede;
+  document.getElementById('unit-inside-media').innerHTML =
+    media(u.insidePhoto, u.color, insideAltOf(u), false, 'hero');
+  document.getElementById('unit-inside-specs').innerHTML = u.inside.map(sp =>
+    `<div class="res-spec"><dt>${esc(sp[0])}</dt><dd>${esc(sp[1])}</dd></div>`).join('');
 
   setPath('/bar/' + unitId + '/');
   showView('unit');
   return true;
+}
+
+/* The inside plate is one of the gallery photographs shown large. Reuse the
+   alt already written for it instead of describing the same picture twice. */
+function insideAltOf(u) {
+  const p = (u.photos || []).find(x => x.src === u.insidePhoto);
+  return p ? p.alt : u.name;
 }
 
 function swapUnitPhoto(el, index) {
@@ -3662,6 +3729,67 @@ const RU = {
     'Поле в снегу, где нет ни водоразборной колонки, ни слива, ни строения. Именно под такую площадку написана спецификация выше, и именно поэтому такой юнит можно поставить там, где кейтеринговый шатёр не поставить. Изображения на этих страницах — рендеры: внешний вид рисуется под бриф заказчика, шасси и оборудование за ним — это спецификация.',
 
 
+
+  /* ── Интерьеры юнитов и внутренние размеры ── */
+  'Inside the bar fitted out as a Victorian public house: dark green walls, a panelled back bar of glasses and bottles, a wood stove and a pew along one wall, with dimensions marked':
+    'Бар в отделке под викторианский паб: тёмно-зелёные стены, филёнчатый бэк-бар со стеклом и бутылками, дровяная печь и церковная скамья вдоль стены, с проставленными размерами',
+  'The public-house counter seen along its length, tall stools at the front and the fitted back bar behind, with dimensions marked':
+    'Барная стойка паба вдоль всей длины, высокие табуреты с фасада и встроенный бэк-бар позади, с проставленными размерами',
+  'The same shell fitted out in white boarding: a zinc bar with two stools, a bench and table down one wall and a small wood stove':
+    'Тот же корпус в отделке белой доской: цинковая стойка с двумя табуретами, скамья со столом вдоль стены и небольшая дровяная печь',
+  'The white fit-out with its dimensions marked: bar and stool heights, bench and table sizes, and the width of the working aisle':
+    'Белая отделка с проставленными размерами: высота стойки и табуретов, размеры скамьи и стола, ширина рабочего прохода',
+  'The coffee unit in mint green and cream under a striped awning, standing on a stone piazza with the hatch open and the machine visible inside':
+    'Кофейный юнит в мятно-кремовом цвете под полосатым маркизом стоит на каменной площади, окно выдачи поднято, внутри видна кофемашина',
+  'Inside the coffee unit in mint green and brass: counters down both sides, a herringbone splashback and the espresso machine at the open hatch, with dimensions marked':
+    'Кофейный юнит внутри, мята и латунь: стойки по обеим сторонам, фартук «ёлочкой» и эспрессо-машина у открытого окна выдачи, с проставленными размерами',
+  'The coffee unit fitted out in pale oak and zinc: wine racks at the far end, a chalkboard menu and the espresso machine at the hatch, with dimensions marked':
+    'Кофейный юнит в отделке светлым дубом и цинком: винные стеллажи в торце, меловое меню и эспрессо-машина у окна выдачи, с проставленными размерами',
+  'The pale oak fit-out seen from the door: zinc counters down both sides, cups and a grinder to the right and a wine rack filling the end wall':
+    'Отделка светлым дубом от двери: цинковые стойки по обеим сторонам, чашки и кофемолка справа, торцевую стену занимает винный стеллаж',
+
+  'Inside': 'Внутри',
+  'The room you work in': 'Помещение, в котором вы работаете',
+  'Two of the pictures above are the same shell. One is a public house in dark green with a pew and a stove, the other is white boarding with a zinc bar. What does not change is the room, and the room is what decides whether a service works.':
+    'Две картинки выше — это один и тот же корпус. В одной паб в тёмно-зелёном со скамьёй и печью, в другой белая доска и цинковая стойка. Не меняется помещение, а именно оно решает, работает подача или нет.',
+  'Counters down both sides, the machine at the hatch and the till by the door, so a barista turns rather than walks. The aisle between them is the figure that decides whether two people can work a queue without standing on each other.':
+    'Стойки по обеим сторонам, машина у окна выдачи, касса у двери — бариста поворачивается, а не ходит. Проход между ними и есть та цифра, которая решает, смогут ли двое работать на очередь, не мешая друг другу.',
+  'Drawn for the 6 m unit. The finish is yours to specify and every one of these pictures is a different brief; the shell, the aisle and the standing height are the same unit underneath. Confirmed against the manufacturer\'s drawing before an order is placed.':
+    'Начерчено для юнита 6 м. Отделку задаёте вы, и каждая из этих картинок — отдельный бриф; корпус, проход и высота в полный рост под ними одни и те же. Сверяется с чертежом производителя до размещения заказа.',
+  'One shell, two briefs. Nothing structural differs between these two rooms \u2014 the chassis, the width, the aisle and the standing height are the same unit. What changes is everything a customer of yours will actually notice.':
+    'Один корпус, два брифа. Конструктивно между этими двумя помещениями нет никакой разницы: шасси, ширина, проход и высота — один и тот же юнит. Меняется всё то, что ваш гость как раз и замечает.',
+
+  'Internal width': 'Внутренняя ширина',
+  'Internal length': 'Внутренняя длина',
+  'Height at the ridge': 'Высота в коньке',
+  'Height at the wall': 'Высота у стены',
+  'Working aisle': 'Рабочий проход',
+  'Bar counter': 'Барная стойка',
+  'Back bar': 'Бэк-бар',
+  'Bar stools': 'Барные табуреты',
+  'Wall bench': 'Скамья вдоль стены',
+  'Tables': 'Столы',
+  'Door': 'Дверь',
+  'Counters': 'Стойки',
+  'Serving hatch': 'Окно выдачи',
+  'Exterior shelf': 'Наружная полка',
+  'Windows': 'Окна',
+  '2.20 m': '2,20 м',
+  '2.35 m': '2,35 м',
+  '2.10 m': '2,10 м',
+  '6.00 m on the 6 m unit': '6,00 м на юните 6 м',
+  '2.35\u20132.50 m': '2,35\u20132,50 м',
+  '0.70\u20130.85 m': '0,70\u20130,85 м',
+  '0.90 m high, 0.60 m deep': 'высота 0,90 м, глубина 0,60 м',
+  'three shelf bands to 1.65 m': 'три полочных яруса до 1,65 м',
+  '0.75 m seat, 0.35 m across': 'сиденье 0,75 м, диаметр 0,35 м',
+  '4.00\u20136.00 m long, 0.45 m high': 'длина 4,00\u20136,00 м, высота 0,45 м',
+  '0.60 \u00D7 0.45 m': '0,60 \u00D7 0,45 м',
+  '0.75 \u00D7 1.95 m': '0,75 \u00D7 1,95 м',
+  '0.60 m deep, both sides': 'глубина 0,60 м, с обеих сторон',
+  '1.20 m wide': 'ширина 1,20 м',
+  '0.60 m deep': 'глубина 0,60 м',
+  '0.50 \u00D7 0.50 m': '0,50 \u00D7 0,50 м',
 
   'Delivery': 'Доставка',
   'To your yard, not to a port': 'На вашу площадку, а не в порт',
