@@ -139,16 +139,16 @@ def page(lang):
 
     # ── ГЕРОЙ ────────────────────────────────────────────────────────────
     w('''
-<div class="hero">
+<section style="padding-top:72px">
   <div class="wrap">
     <p class="eyebrow">%s</p>
     <h1>%s</h1>
-    <p class="lede">%s</p>
-    <div class="hero-meta">
+    <p class="lede" style="margin-top:24px">%s</p>
+    <div class="keyline">
       <span>%s</span><span>%s</span><span>%s</span><span>%s</span>
     </div>
   </div>
-</div>''' % (
+</section>''' % (
         t(T('Черногория · первое размещение Q3 2026',
             'Montenegro · first deployment Q3 2026')),
         t(T('Дом в вашей собственности,<br>который переезжает за сезоном',
@@ -174,7 +174,7 @@ def page(lang):
     <p class="eyebrow">%s</p>
     <h2>%s</h2>
     <p class="lede">%s</p>
-    <dl class="spec">
+    <dl class="terms">
       <div><dt>%s</dt><dd>%s</dd></div>
       <div><dt>%s</dt><dd>%s</dd></div>
       <div><dt>%s</dt><dd>%s</dd></div>
@@ -229,9 +229,9 @@ def page(lang):
     <h2>%s</h2>
     <p class="lede">%s</p>
     <div class="stats">
-      <div class="stat"><div><span class="stat-l">%s</span><span class="stat-v">89,7%%</span></div><p class="stat-n">%s</p></div>
-      <div class="stat"><div><span class="stat-l">%s</span><span class="stat-v">2,9%%</span></div><p class="stat-n">%s</p></div>
-      <div class="stat"><div><span class="stat-l">%s</span><span class="stat-v">€1,3%s</span></div><p class="stat-n">%s</p></div>
+      <div class="stat"><div><span class="stat-l">%s</span><span class="stat-v">%s</span></div><p class="stat-n">%s</p></div>
+      <div class="stat"><div><span class="stat-l">%s</span><span class="stat-v">%s</span></div><p class="stat-n">%s</p></div>
+      <div class="stat"><div><span class="stat-l">%s</span><span class="stat-v">%s</span></div><p class="stat-n">%s</p></div>
     </div>
   </div>
 </section>
@@ -242,14 +242,14 @@ def page(lang):
             'вся она приходится на четыре месяца на одной полосе у моря.',
             'Montenegro takes over a billion euro in tourism revenue a year, and almost all of '
             'it lands in four months on one strip by the sea.')),
-        t(T('Ночёвок на побережье', 'Nights on the coast')),
+        t(T('Ночёвок на побережье', 'Nights on the coast')), P(0.897),
         t(T('Сентябрь 2025. Страна фактически работает одной полосой берега.',
             'September 2025. The country effectively runs on a single strip of shoreline.')),
-        t(T('Ночёвок в горах', 'Nights in the mountains')),
+        t(T('Ночёвок в горах', 'Nights in the mountains')), P(0.029),
         t(T('Дурмитор, Биоградска Гора, Комови. Природа мирового уровня, гостей почти нет.',
             'Durmitor, Biogradska Gora, Komovi. World-class landscape, almost no guests.')),
         t(T('Туристическая выручка, 2025', 'Tourism revenue, 2025')),
-        t(T(' млрд', 'bn+')),
+        t(T('€1,3 млрд', '€1.3bn+')),
         t(T('Рекордный год: более 2,7 млн приездов и свыше 15 млн ночёвок.',
             'A record year: over 2.7m arrivals and more than 15m overnight stays.')),
         t(T('Север Черногории · 2,9% ночёвок страны',
@@ -322,7 +322,7 @@ def page(lang):
     <p class="eyebrow">%s</p>
     <h2>%s</h2>
     <p class="lede">%s</p>
-    <dl class="spec">%s</dl>
+    <dl class="terms">%s</dl>
     <p class="note">%s</p>
     <div class="tblwrap" style="margin-top:38px"><table>
       <thead><tr><th>%s</th><th>%s</th><th>%s</th><th class="us">%s</th></tr></thead>
@@ -515,7 +515,7 @@ def page(lang):
     led += ''.join('<div class="lrow"><span class="lmark">%s</span><p>%s</p></div>'
                    % (t(T('Сильнее', 'Stronger')), esc(t(x))) for x in strong)
     w('''
-<section class="tint">
+<section class="dark">
   <div class="wrap">
     <p class="eyebrow">%s</p>
     <h2>%s</h2>
@@ -533,7 +533,7 @@ def page(lang):
 
     # ── ЗАКРЫТИЕ ─────────────────────────────────────────────────────────
     w('''
-<section class="closing">
+<section class="dark">
   <div class="wrap">
     <p class="eyebrow">%s</p>
     <h2>%s</h2>

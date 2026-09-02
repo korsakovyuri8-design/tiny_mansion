@@ -372,3 +372,21 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
    не должна уходить в прод, и это должно быть видно с одного взгляда. */
 .tbd{background:#B3261E;color:#fff;padding:1px 7px;border-radius:2px;
   font-family:var(--mono);font-size:.85em;letter-spacing:.04em;white-space:nowrap}
+
+/* Пара «метка — объяснение» на всю ширину. В отличие от .spec, где
+   значение прижато вправо, здесь текст читается как текст: метка
+   сверху, объяснение под ней, обе по левому краю. */
+.terms{margin-top:26px;border-top:1px solid var(--rule)}
+.terms > div{padding:20px 0;border-bottom:1px solid var(--rule)}
+.terms dt{font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--gold-ink);margin-bottom:8px}
+.terms dd{margin:0;font-size:17px;line-height:1.6;max-width:70ch}
+.dark .terms,.dark .terms > div{border-color:rgba(247,243,237,.18)}
+.dark .terms dt{color:var(--gold)}
+.dark .terms dd{color:rgba(247,243,237,.86)}
+
+/* Плашки под заголовком первой секции — то же, что .hero-meta,
+   но на светлом фоне. */
+.keyline{margin-top:38px;padding-top:24px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:14px 38px;font-family:var(--mono);
+  font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-ink)}
