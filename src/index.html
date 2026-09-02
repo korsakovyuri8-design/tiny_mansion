@@ -215,6 +215,11 @@
       background: transparent; backdrop-filter: none;
       border-bottom-color: rgba(247, 243, 237, 0.22);
     }
+    header.over-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(180deg, rgba(26, 22, 20, 0.46), rgba(26, 22, 20, 0.10));
+    }
+    header > .container { position: relative; z-index: 1; }
     header.over-hero .wordmark,
     header.over-hero .nav-link { color: var(--bg-cream); }
 
@@ -252,7 +257,7 @@
     .lang-btn.active { color: var(--ink); }
     .lang-btn:not(.active):hover { color: var(--ink); }
     .lang-sep { width: 1px; height: 11px; background: var(--rule); }
-    header.over-hero .lang-btn { color: rgba(247, 243, 237, 0.5); }
+    header.over-hero .lang-btn { color: rgba(247, 243, 237, 0.72); }
     header.over-hero .lang-btn.active,
     header.over-hero .lang-btn:not(.active):hover { color: var(--bg-cream); }
     header.over-hero .lang-sep { background: rgba(247, 243, 237, 0.3); }
@@ -3237,6 +3242,12 @@ const RU = {
   'Terms': 'Условия',
   'Privacy': 'Конфиденциальность',
   'Host a residence': 'Разместить резиденцию',
+  /* The footer's own label for /bars/economics/. The home page button says
+     'Read the financial model' and is a separate key — changing one does
+     not translate the other, which is how this one stayed in English. */
+  'The financial model': 'Финансовая модель',
+  /* First thing a keyboard reaches on every page, so it is chrome too. */
+  'Skip to content': 'Перейти к содержимому',
   '© 2026 TinyArc Group': '© 2026 TinyArc Group',
   'Off-grid residences on working farms. A TinyArc Group project. First deployment Montenegro, Q3 2026.':
     'Автономные резиденции на действующих фермах. Проект TinyArc Group. Первое развёртывание — Черногория, III квартал 2026.',
