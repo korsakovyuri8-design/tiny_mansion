@@ -9,4 +9,24 @@ Disallow: /src/
 Disallow: /deck/
 Disallow: /drafts/
 
+# The deck is sent as a link in a message, and a link in a message needs
+# a card. These fetch a page to build that card and do not index it; the
+# noindex on the page itself is what keeps it out of search. A crawler
+# obeys only the most specific group that names it and ignores the one
+# above, so this group repeats every rule it still keeps.
+User-agent: TelegramBot
+User-agent: WhatsApp
+User-agent: Twitterbot
+User-agent: facebookexternalhit
+User-agent: LinkedInBot
+User-agent: Slackbot
+User-agent: Slackbot-LinkExpanding
+User-agent: Discordbot
+User-agent: SkypeUriPreview
+User-agent: vkShare
+Disallow: /thanks/
+Disallow: /src/
+Disallow: /deck/
+Disallow: /drafts/
+
 Sitemap: https://tinymansion.co/sitemap.xml

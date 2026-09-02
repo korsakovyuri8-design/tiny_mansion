@@ -178,6 +178,26 @@ fs.writeFileSync(path.join(ROOT, 'robots.txt'),
   'Disallow: /deck/\n' +
   'Disallow: /drafts/\n' +
   '\n' +
+  '# The deck is sent as a link in a message, and a link in a message needs\n' +
+  '# a card. These fetch a page to build that card and do not index it; the\n' +
+  '# noindex on the page itself is what keeps it out of search. A crawler\n' +
+  '# obeys only the most specific group that names it and ignores the one\n' +
+  '# above, so this group repeats every rule it still keeps.\n' +
+  'User-agent: TelegramBot\n' +
+  'User-agent: WhatsApp\n' +
+  'User-agent: Twitterbot\n' +
+  'User-agent: facebookexternalhit\n' +
+  'User-agent: LinkedInBot\n' +
+  'User-agent: Slackbot\n' +
+  'User-agent: Slackbot-LinkExpanding\n' +
+  'User-agent: Discordbot\n' +
+  'User-agent: SkypeUriPreview\n' +
+  'User-agent: vkShare\n' +
+  'Disallow: /thanks/\n' +
+  'Disallow: /src/\n' +
+  'Disallow: /deck/\n' +
+  'Disallow: /drafts/\n' +
+  '\n' +
   'Sitemap: ' + SITE + '/sitemap.xml\n');
 
 console.log('\n' + built + ' files, ' + indexed.length + ' in sitemap.xml');
