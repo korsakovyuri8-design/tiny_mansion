@@ -204,6 +204,11 @@
     /* ==========================================================
        HEADER
        ========================================================== */
+    /* The header is sticky, so an anchor landing at the top of the viewport
+       lands underneath it. This is what the eyebrow line needs to clear it. */
+    [id] { scroll-margin-top: 96px; }
+    @media (max-width: 780px) { [id] { scroll-margin-top: 120px; } }
+
     header {
       position: sticky; top: 0; z-index: 60;
       background: rgba(247, 243, 237, 0.92);
@@ -1604,6 +1609,36 @@
           <p class="fineprint" style="margin-top:30px;">This is the opposite of how the residences work, and the difference is deliberate. There we place the house on a farm and run the guests, because the owner is buying an income. Here you already have a business, a name and customers — you are buying equipment for it, not a service from us.</p>
         </div>
 
+        <!-- ── the first season ──
+             The bar buyer is an operator, not an investor: he is counting a
+             payback, not choosing a way to live. A welded trailer is not an
+             advantage, because anyone can weld one. What he cannot buy off a
+             shelf is the first season written down. -->
+        <div class="section-pad" id="first-season">
+          <span class="eyebrow">Included</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">The unit, and the first season with it</h2>
+          <p class="page-lede" style="margin-top:16px;">A trailer is a trailer. Anyone with a welder and a chassis can build one, and the ones that fail do not fail because the steel was wrong. They fail on the year that follows: the licence that took four months, the event whose calendar had closed in January, the supplier found in week nine. So the unit is handed over with that year written down.</p>
+          <div class="duo-block">
+            <div>
+              <h3 class="serif">Permits, for the countries you name</h3>
+              <p>Which licence the unit needs where you intend to trade, who issues it, what it costs and how long it takes end to end. Written for the countries you give us rather than as a general page, because the answer in Croatia is not the answer in Austria.</p>
+            </div>
+            <div>
+              <h3 class="serif">What an outing is worth to you</h3>
+              <p>The arithmetic further down this page, redone on your rates, your wages, your fuel and your season length — so when you quote a client you are quoting your own numbers, not ours.</p>
+            </div>
+            <div>
+              <h3 class="serif">Who to buy from</h3>
+              <p>The suppliers behind the fit-out: kegs and cellar gas, glassware, coffee, consumables — and, which matters more, who services the machine in your region when it stops on a Saturday.</p>
+            </div>
+            <div>
+              <h3 class="serif">How the diary fills</h3>
+              <p>Where the bookings actually come from: which organisers to approach, when their calendars close, what a deposit and a weather clause should look like, and what to charge for the outing that runs long.</p>
+            </div>
+          </div>
+          <p class="fineprint" style="margin-top:30px;">It comes with the unit at no separate charge, and it is a document rather than a service: we are not running your diary, taking a share or standing between you and your customer. It is not legal advice either — your own lawyer signs the licence off. It is the list of things you would otherwise spend a first season finding out one at a time.</p>
+        </div>
+
         <!-- ── economics ── -->
         <div class="section-pad">
           <span class="eyebrow">The numbers</span>
@@ -1768,6 +1803,13 @@
           <p class="page-lede" style="margin-top:16px;" id="unit-money"></p>
           <p class="fineprint" style="margin-top:26px;">The rate is not our projection. It is what two working operators publish for a booking of this kind, converted from dollars. Your own diary decides how many outings a season holds.</p>
           <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/economics/">See how that is worked out</a></p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Included</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">You are not buying a trailer</h2>
+          <p class="page-lede" style="margin-top:16px;">The unit is handed over with the first season written down: the permits for the countries you name, this arithmetic redone on your own rates, the suppliers behind the fit-out, and how the diary actually fills. It costs nothing extra and it is the part of this you cannot weld.</p>
+          <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/#first-season">See what is in it</a></p>
         </div>
 
         <div class="section-pad">
@@ -3963,6 +4005,30 @@ const RU = {
   '1.20 m wide': 'ширина 1,20 м',
   '0.60 m deep': 'глубина 0,60 м',
   '0.50 \u00D7 0.50 m': '0,50 \u00D7 0,50 м',
+
+  /* ── Первый сезон: комплект, а не железо ── */
+  'Included': 'Входит в поставку',
+  'You are not buying a trailer': 'Вы покупаете не прицеп',
+  'The unit is handed over with the first season written down: the permits for the countries you name, this arithmetic redone on your own rates, the suppliers behind the fit-out, and how the diary actually fills. It costs nothing extra and it is the part of this you cannot weld.':
+    'Юнит передаётся с расписанным первым сезоном: разрешения по тем странам, которые вы назовёте, этот расчёт, пересчитанный на ваши ставки, поставщики под эту начинку и то, как на самом деле заполняется календарь. Это ничего не стоит сверху и это как раз та часть, которую нельзя сварить.',
+  'See what is in it': 'Посмотреть, что внутри',
+  'The unit, and the first season with it': 'Юнит и первый сезон вместе с ним',
+  'A trailer is a trailer. Anyone with a welder and a chassis can build one, and the ones that fail do not fail because the steel was wrong. They fail on the year that follows: the licence that took four months, the event whose calendar had closed in January, the supplier found in week nine. So the unit is handed over with that year written down.':
+    'Прицеп есть прицеп. Собрать его может любой, у кого есть сварка и шасси, и те, кто прогорает, прогорают не из-за металла. Они прогорают на следующем годе: разрешение, которое заняло четыре месяца; мероприятие, у которого календарь закрылся ещё в январе; поставщик, найденный на девятой неделе. Поэтому юнит передаётся вместе с этим годом, расписанным на бумаге.',
+  'Permits, for the countries you name': 'Разрешения по странам, которые вы назовёте',
+  'Which licence the unit needs where you intend to trade, who issues it, what it costs and how long it takes end to end. Written for the countries you give us rather than as a general page, because the answer in Croatia is not the answer in Austria.':
+    'Какая лицензия нужна юниту там, где вы собираетесь работать, кто её выдаёт, сколько она стоит и сколько занимает от начала до конца. Пишется под те страны, которые назовёте вы, а не общей страницей: ответ по Хорватии — не ответ по Австрии.',
+  'What an outing is worth to you': 'Сколько выезд стоит именно вам',
+  'The arithmetic further down this page, redone on your rates, your wages, your fuel and your season length — so when you quote a client you are quoting your own numbers, not ours.':
+    'Расчёт ниже на этой странице, пересчитанный на ваши ставки, ваши зарплаты, ваше топливо и вашу длину сезона, — чтобы, называя клиенту цену, вы называли свои цифры, а не наши.',
+  'Who to buy from': 'У кого покупать',
+  'The suppliers behind the fit-out: kegs and cellar gas, glassware, coffee, consumables — and, which matters more, who services the machine in your region when it stops on a Saturday.':
+    'Поставщики под эту начинку: кеги и газ, стекло, кофе, расходники — и, что важнее, кто обслуживает машину в вашем регионе, когда она встала в субботу.',
+  'How the diary fills': 'Как заполняется календарь',
+  'Where the bookings actually come from: which organisers to approach, when their calendars close, what a deposit and a weather clause should look like, and what to charge for the outing that runs long.':
+    'Откуда на самом деле берутся брони: к каким организаторам идти, когда у них закрывается календарь, как выглядят предоплата и оговорка о погоде и сколько брать за выезд, который затянулся.',
+  'It comes with the unit at no separate charge, and it is a document rather than a service: we are not running your diary, taking a share or standing between you and your customer. It is not legal advice either \u2014 your own lawyer signs the licence off. It is the list of things you would otherwise spend a first season finding out one at a time.':
+    'Идёт вместе с юнитом без отдельной платы, и это документ, а не услуга: мы не ведём ваш календарь, не берём долю и не встаём между вами и вашим клиентом. Это и не юридическая консультация — лицензию подписывает ваш юрист. Это перечень того, что иначе вы будете выяснять по одному пункту весь первый сезон.',
 
   'Delivery': 'Доставка',
   'To your yard, not to a port': 'На вашу площадку, а не в порт',
