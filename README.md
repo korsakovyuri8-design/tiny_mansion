@@ -16,13 +16,15 @@ Also hand-written:
 
 | File | What it is |
 | --- | --- |
-| `invest/index.html` | The investor deck. A separate page, Russian only, kept out of search. |
+| `invest/invest.css` | Styles shared by both investor pages. The pages themselves are generated — see below. |
 | `404.html` | What GitHub Pages serves for an address that does not exist. |
 | `analytics.js` | Inert until `SRC` and `ID` are filled in. See the comment at the top of it. |
 | `build.mjs` | The build described below. |
 | `model.py` | The cost derivation and the buyer's financial model for the bars. Run it (`python3 model.py`) to see the whole working printed. |
 | `gen_econ_page.py` | Writes the `/bars/economics/` page into `src/index.html` out of `model.py`. Not part of the build — run it by hand when the model changes. |
 | `images.py` | Makes the WebP derivatives that `<picture>` offers. |
+| `club.py` | The club offer: what a buyer pays, what the house earns, what the network takes. Run it to see the whole working. |
+| `gen_invest.py` | Writes both investor pages out of `club.py`. Run it after any change there. |
 
 ## Building
 
@@ -50,6 +52,19 @@ its own file, its own title, description and canonical — while the site
 still moves between them in the browser without a reload. Addresses shared
 back when the site used `#/` still work; they rewrite themselves to the real
 one.
+
+## The investor pages
+
+`/invest/` and `/invest/en/` are **generated**, not hand-written:
+
+```
+python3 club.py        # see the model and check it
+python3 gen_invest.py  # write both pages from it
+```
+
+Both languages come out of one pass over one model, so the Russian and the
+English cannot drift apart and neither can drift from the arithmetic. To
+change a figure, change it in `club.py` and re-run.
 
 ## The bar economics page
 
