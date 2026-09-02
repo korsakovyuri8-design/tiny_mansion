@@ -134,8 +134,9 @@ visitor who switches language gets the translation of the same strings.
   against European ones before anyone is quoted against them.
 - `model.py` prices the build from the residences, not from a bill of
   materials. Every figure in it moves once a real one exists.
-- Both bar units have `photo: null` and render as colour blocks until there
-  are renders.
+- The bar and cafe imagery is renders, not photographs — no unit has been
+  built to production specification. The pages say so beside the pictures;
+  keep that note wherever the renders are used.
 - Every page carries every view, so each file is around 250 KB (68 KB
   gzipped) and grows with each section added. If the commercial line keeps
   growing, it wants its own document, the way `invest/` has one.

@@ -753,6 +753,10 @@
       overflow: hidden; position: relative;
       padding: 0; border: 0; font: inherit; color: inherit; display: block;
     }
+    /* auto-fit is right for a residence, which has seven photographs and
+       reflows to whatever fits. A unit has three, and auto-fit leaves the
+       third one alone on its own row on a phone. Three columns always. */
+    .res-thumbs--three { grid-template-columns: repeat(3, 1fr); }
     .res-thumb .photo-block { transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
     .res-thumb:hover .photo-block { transform: scale(1.06); }
     .res-thumb::after {
@@ -871,6 +875,21 @@
       padding: 17px 0; border-top: 1px solid var(--rule);
       font-family: var(--font-serif); font-size: 17px; line-height: 1.6;
     }
+
+    /* A photograph carrying a whole section rather than sitting in a card.
+       Squat on a phone, letterboxed on a desktop, so it never eats a screen. */
+    .unit-plate { margin-top: 40px; aspect-ratio: 3 / 2; overflow: hidden; background: var(--card); }
+    @media (min-width: 860px) { .unit-plate { aspect-ratio: 21 / 9; } }
+    .unit-plate > *, .unit-plate .photo-block { width: 100%; height: 100%; }
+    .plate-note { font-size: 13px; line-height: 1.65; color: var(--muted); margin-top: 14px; max-width: 62ch; }
+
+    /* Two units side by side where the text has only named them. */
+    .trade-strip { display: grid; grid-template-columns: 1fr; gap: 2px; background: var(--rule); margin-top: 36px; }
+    @media (min-width: 760px) { .trade-strip { grid-template-columns: 1fr 1fr; } }
+    .trade-strip > a { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--card); }
+    .trade-strip > a > *, .trade-strip .photo-block { width: 100%; height: 100%; }
+    .trade-strip .photo-block { transition: transform 1.1s cubic-bezier(.2,.7,.2,1); }
+    .trade-strip > a:hover .photo-block { transform: scale(1.05); }
 
     .duo-block { display: grid; gap: 34px; margin-top: 40px; }
     @media (min-width: 820px) { .duo-block { grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 70px); } }
@@ -1178,7 +1197,11 @@
             <h2 class="serif">The same chassis, fitted out to serve</h2>
             <p>Bars and coffee units are the other half of what we build. They go to venues that already have a name, they carry that name on the outside rather than ours, and they are sold with the arithmetic written out instead of a promise. If you run a bar rather than book one, start here.</p>
           </div>
-          <div class="trade-actions reveal d1">
+          <div class="trade-strip reveal d1">
+            <a href="/bar/bar-draft/" aria-label="Draft &amp; Craft Bar"><picture><source type="image/webp" srcset="/bar-kerryman-1024.webp 1024w, /bar-kerryman-1440.webp 1440w, /bar-kerryman-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/bar-kerryman.jpg" alt="A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it" loading="lazy" decoding="async"></picture></a>
+            <a href="/bar/bar-espresso/" aria-label="Espresso &amp; Cocktail Lounge"><picture><source type="image/webp" srcset="/cafe-servery-1024.webp 1024w, /cafe-servery-1440.webp 1440w, /cafe-servery-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/cafe-servery.jpg" alt="A red barn-boarded unit with the serving hatch propped open and a timber counter run along the side" loading="lazy" decoding="async"></picture></a>
+          </div>
+          <div class="trade-actions reveal d1" style="margin-top:36px;">
             <a class="btn btn-line" href="/bars/">See the units</a>
             <a class="btn btn-line" href="/bars/economics/">Read the financial model</a>
           </div>
@@ -1433,6 +1456,13 @@
             <li>Shore power is used where there is any, and is not needed where there is none.</li>
             <li>Everything the unit serves with travels with it; the ground supplies nothing but the ground.</li>
           </ul>
+          <div class="unit-plate">
+            <picture>
+              <source type="image/webp" srcset="/unit-konoba-1024.webp 1024w, /unit-konoba-1440.webp 1440w, /unit-konoba-2048.webp 2048w" sizes="100vw">
+              <img class="photo-block" src="/unit-konoba.jpg" alt="A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <p class="plate-note">Stone cladding, the same detail as the residences, on a unit that serves rather than sleeps. The images on these pages are renders: the outside is drawn to a customer's brief, the chassis and the equipment behind it are the specification.</p>
         </div>
 
         <!-- ── как это устроено ── -->
@@ -1583,10 +1613,15 @@
         </div>
       </div>
 
+      <div class="res-thumbs res-thumbs--three" id="unit-thumbnails"></div>
+
       <div class="container">
         <div class="section-pad">
           <div class="res-intro">
-            <p class="res-intro-copy" id="unit-desc"></p>
+            <div>
+              <p class="res-intro-copy" id="unit-desc"></p>
+              <p class="plate-note">The images are renders. Livery, timber and signwriting are drawn to a customer's own brief, which is what they are for; the chassis, the counter line and the equipment behind them are the specification below.</p>
+            </div>
             <dl class="res-specs" id="unit-specs"></dl>
           </div>
         </div>
@@ -2226,16 +2261,25 @@ const EXPERIENCES = [
    The second line: trailers built to serve rather than to sleep. Same
    chassis discipline as the residences, a different interior.
 
-   Photography: none of these exist as a built unit yet, so photo is null
-   and every card falls back to its colour. Do not point these at the
-   residence photographs — a bar is not a house with a counter in it. */
+   Photography: renders, not photographs — no unit has been built to
+   production specification yet, and the pages say so beside them. They are
+   the unit's own imagery all the same: do not point these at the residence
+   photographs, because a bar is not a house with a counter in it.
+
+   photos[0] is the hero and repeats the file in photo, exactly as the
+   residences do, so the thumbnail strip starts on what the hero shows. */
 const UNITS = [
   {
     id: 'bar-draft',
     index: '01',
     name: 'Draft & Craft Bar',
     tagline: 'Beer, cider and wine on tap, cold from the first pour to the last.',
-    photo: null, color: '#3A342C',
+    photo: 'bar-kerryman.jpg', color: '#3A342C',
+    photos: [
+      { src: 'bar-kerryman.jpg',    alt: 'A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it' },
+      { src: 'bar-public-house.jpg', alt: 'A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane' },
+      { src: 'bar-wine.jpg',        alt: 'A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it' }
+    ],
     desc: 'A pouring bar built around a glycol line, so what comes out of the last tap at midnight is the same temperature as the first one at noon. Sized for a festival queue rather than a kitchen.',
     lengths: [4, 6, 8],
     /* Left over after staff, stock, fuel and running, at the rate the two
@@ -2263,7 +2307,12 @@ const UNITS = [
     index: '02',
     name: 'Espresso & Cocktail Lounge',
     tagline: 'Coffee in the morning, cocktails by the evening, one unit.',
-    photo: null, color: '#37312B',
+    photo: 'cafe-servery.jpg', color: '#37312B',
+    photos: [
+      { src: 'cafe-servery.jpg', alt: 'A red barn-boarded unit with the serving hatch propped open and a timber counter run along the side' },
+      { src: 'cafe-cart.jpg',    alt: 'A weathered timber coffee unit under a curved roof, canvas awning rolled out over the hatch and two rattan stools at the counter' },
+      { src: 'unit-konoba.jpg',  alt: 'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer' }
+    ],
     desc: 'Two services in one trailer, because a wedding needs coffee at eleven and negronis at seven. The machine side and the bar station are separated so neither waits on the other.',
     lengths: [4, 6, 8],
     money: { outing: '1,237', s24: '30,000', s30: '37,000' },
@@ -3066,7 +3115,13 @@ function openUnit(unitId) {
   document.getElementById('unit-title').innerText = u.name;
   writeUnitLengths(u);
   writeUnitMoney(u);
-  document.getElementById('unit-media').innerHTML = media(u.photo, u.color, u.name, true, 'hero');
+  document.getElementById('unit-media').innerHTML =
+    media(u.photo, u.color, (u.photos && u.photos[0] && u.photos[0].alt) || u.name, true, 'hero');
+  /* Same strip as a residence, same aria label composed in applyLang(). */
+  document.getElementById('unit-thumbnails').innerHTML = (u.photos || []).map((ph, i) => `
+    <button type="button" class="res-thumb ${i === 0 ? 'active' : ''}"
+            data-photo-i="${i + 1}" data-photo-n="${u.photos.length}"
+            onclick="swapUnitPhoto(this, ${i})">${media(ph.src, u.color, ph.alt, false, 'thumb')}</button>`).join('');
   document.getElementById('unit-desc').innerText = u.desc;
   document.getElementById('unit-specs').innerHTML = u.specs.map(sp =>
     `<div class="res-spec"><dt>${esc(sp[0])}</dt><dd>${esc(sp[1])}</dd></div>`).join('');
@@ -3075,6 +3130,16 @@ function openUnit(unitId) {
   setPath('/bar/' + unitId + '/');
   showView('unit');
   return true;
+}
+
+function swapUnitPhoto(el, index) {
+  const ph = currentUnit && currentUnit.photos && currentUnit.photos[index];
+  if (!ph) return;
+  document.getElementById('unit-media').innerHTML =
+    media(ph.src, currentUnit.color, ph.alt, true, 'hero');
+  document.querySelectorAll('#unit-thumbnails .res-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  applyLang();
 }
 
 /* ==========================================================
@@ -3624,6 +3689,25 @@ const RU = {
   'Professional bar station: speed rail, ice well, gastronorm inserts': 'Профессиональная барная станция: спидрейл, ванна для льда, гастроёмкости',
   'Under-counter refrigeration and a freezer drawer': 'Подстоечный холод и морозильный ящик',
   'Blender and shaker station on a sound-damped worktop': 'Блендер и шейкерная станция на шумопоглощающей столешнице',
+
+  /* Подписи к рендерам юнитов. Ключ — английский alt, слово в слово. */
+  'A green public-house unit lettered in gold on a barrel roof, whiskey barrels and stools set out on the gravel beside it':
+    'Зелёный паб-юнит с золотыми буквами под бочкообразной крышей, рядом на гравии выставлены бочки и табуреты',
+  'A black and green Victorian bar unit with etched glass, brass fittings and a brick skirt, standing on a lane':
+    'Чёрно-зелёный барный юнит в викторианском стиле: травлёное стекло, латунная фурнитура, кирпичный цоколь, стоит на просёлке',
+  'A pale wine bar unit with a burgundy awning over the serving hatch, cases and a bottle rack behind the counter, vines behind it':
+    'Светлый винный юнит с бордовым маркизом над окном выдачи, ящики и бутылочная стойка за прилавком, позади виноградник',
+  'A weathered timber coffee unit under a curved roof, canvas awning rolled out over the hatch and two rattan stools at the counter':
+    'Кофейный юнит из выбеленного дерева под изогнутой крышей, парусиновый маркиз раскатан над окном, у стойки два ротанговых табурета',
+  'A red barn-boarded unit with the serving hatch propped open and a timber counter run along the side':
+    'Юнит, обшитый красной амбарной доской, с поднятым окном выдачи и деревянной стойкой вдоль борта',
+  'A stone-clad serving unit lettered konoba, shuttered windows, herbs hung by the door, standing on its own trailer':
+    'Юнит выдачи в каменной облицовке с надписью konoba, ставни на окнах, травы у двери, стоит на собственном прицепе',
+
+  'The images are renders. Livery, timber and signwriting are drawn to a customer\'s own brief, which is what they are for; the chassis, the counter line and the equipment behind them are the specification below.':
+    'Изображения — рендеры. Ливрея, дерево и вывеска рисуются под бриф заказчика, для того они и нужны; шасси, линия стойки и оборудование за ними — это спецификация ниже.',
+  'Stone cladding, the same detail as the residences, on a unit that serves rather than sleeps. The images on these pages are renders: the outside is drawn to a customer\'s brief, the chassis and the equipment behind it are the specification.':
+    'Каменная облицовка, та же деталь, что у резиденций, но на юните, который обслуживает, а не спит. Изображения на этих страницах — рендеры: внешний вид рисуется под бриф заказчика, шасси и оборудование за ним — это спецификация.',
 
 
 
