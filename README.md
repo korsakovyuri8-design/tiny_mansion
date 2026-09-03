@@ -122,6 +122,37 @@ Page titles and descriptions live in `HEAD_META` and go through the same
 dictionary. The build runs in English, which is what a crawler reads; a
 visitor who switches language gets the translation of the same strings.
 
+## The launch date
+
+The whole site turns on one promise — "first residences deploy Q3 2026" —
+written out in about forty places: markup, dictionary keys, dictionary
+values, the footer, both investor pages. A dictionary key is the English
+string, so editing the English by hand and forgetting the key silently
+drops the translation. Hence a script rather than find-and-replace:
+
+    python3 relaunch.py --check                        # where it stands today
+    python3 relaunch.py "Q4 2026" "IV квартал 2026"    # change it everywhere
+    node build.mjs && python3 gen_invest.py            # then rebuild
+
+It handles the Russian prepositional case ("в IV квартале") separately.
+After a run, update `EN_OLD` and `RU_OLD` at the top of the script.
+
+A date like this rots without anything breaking: no test fails, and one day
+the site is advertising a quarter that has already ended. So `build.mjs`
+reads the quarter back out of the source and says so when it is past or
+within sixty days of ending.
+
+## The contact address
+
+`siteMail()` is the only place it is written. Everywhere it appears on the
+site is a `<span data-mail></span>` that `initForms()` turns into a link at
+boot — which the build then bakes into the static files, so a crawler and a
+visitor with no script both get a real address.
+
+The one exception is the `<noscript>` notice, which by definition cannot run
+script and spells the address out by hand. Moving to a mailbox on the domain
+means those two places and nothing else.
+
 ## Still to do
 
 - `analytics.js` needs an account: fill in `SRC` and `ID`.

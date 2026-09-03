@@ -203,5 +203,31 @@ fs.writeFileSync(path.join(ROOT, 'robots.txt'),
 console.log('\n' + built + ' files, ' + indexed.length + ' in sitemap.xml');
 console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
 
+/* ---------- the advertised launch date ----------
+   The whole site turns on one promise — "first residences deploy Q3 2026" —
+   repeated in about forty places. A date like that rots silently: nothing
+   breaks, no test fails, and one day the site is advertising a quarter that
+   has already ended to somebody reading it. So the build says so.
+   python3 relaunch.py "Q4 2026" "IV квартал 2026" changes it everywhere. */
+const source = fs.readFileSync(SOURCE, 'utf8');
+const quarters = [...source.matchAll(/\bQ([1-4]) (20\d\d)\b/g)]
+  .map(m => ({ q: +m[1], y: +m[2] }));
+if (quarters.length) {
+  const seen = new Map();
+  quarters.forEach(x => seen.set(x.q + '/' + x.y, x));
+  const now = new Date();
+  for (const x of seen.values()) {
+    const ends = new Date(Date.UTC(x.y, x.q * 3, 0, 23, 59, 59));
+    const days = Math.round((ends - now) / 86400000);
+    const label = 'Q' + x.q + ' ' + x.y;
+    if (days < 0)
+      console.log('\n  ВНИМАНИЕ: сайт обещает ' + label + ', а этот квартал кончился ' +
+                  (-days) + ' дн. назад. python3 relaunch.py --check');
+    else if (days <= 60)
+      console.log('\n  ВНИМАНИЕ: сайт обещает ' + label + ', до конца квартала ' +
+                  days + ' дн. python3 relaunch.py --check');
+  }
+}
+
 await browser.close();
 server.close();

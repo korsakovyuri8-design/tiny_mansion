@@ -1018,6 +1018,8 @@
   <noscript>
     <div style="background:#1A1614;color:#F7F3ED;padding:20px 5vw;font-family:'Jost',sans-serif;font-size:14px;line-height:1.6;">
       This site needs JavaScript to move between the residences, the farms and the enquiry form.
+      <!-- No script here by definition, so this one address is written out.
+           It is the only copy that siteMail() does not cover: change both. -->
       Turn it on, or write to us at <span style="text-decoration:underline">korsakovyuri8 [at] gmail [dot] com</span>.
     </div>
   </noscript>
@@ -2705,6 +2707,16 @@ function headMetaFor(p) {
   const parts = p.replace(/^\/|\/$/g, '').split('/').filter(Boolean);
   if (parts.length !== 2) return null;
   const clamp = (s, n) => (s.length <= n ? s : s.slice(0, s.lastIndexOf(' ', n - 1)) + '…');
+  /* A snippet is about 155 characters and a tagline is one line, so these
+     pages were spending a third of the room they had.
+
+     Two rules rather than one, because the records differ. A residence and
+     a unit have a tagline and a description that say different things, so
+     they join. A country's openingDesc deliberately restates its desc —
+     "Alpine valleys and lake regions" then "Alpine valleys and lake regions
+     are on the map for 2029" — so there the longer one wins alone. */
+  const join = (a, b) => (!b || a.length >= 120 ? a : a + ' ' + b);
+  const longer = (a, b) => ((b || '').length > (a || '').length ? b : a);
   /* Built from the same record the page renders from, and through the same
      dictionary, so the tab matches what is on screen in either language. */
   const t = s => (typeof T === 'function' ? T(s) : s);
@@ -2712,17 +2724,20 @@ function headMetaFor(p) {
   if (parts[0] === 'country') {
     const c = DATA.countries[parts[1]];
     if (!c) return null;
-    return { title: t(c.name) + ' — Tiny Mansion', desc: clamp(t(c.desc), 155) };
+    return { title: t(c.name) + ' — Tiny Mansion',
+             desc: clamp(longer(t(c.desc), t(c.openingDesc || '')), 155) };
   }
   if (parts[0] === 'bar') {
     const u = UNITS.find(x => x.id === parts[1]);
     if (!u) return null;
-    return { title: t(u.name) + ' — Tiny Mansion', desc: clamp(t(u.tagline), 155) };
+    return { title: t(u.name) + ' — Tiny Mansion',
+             desc: clamp(join(t(u.tagline), t(u.desc || '')), 155) };
   }
   if (parts[0] === 'residence') {
     const r = RESIDENCES.find(x => x.id === parts[1]);
     if (!r) return null;
-    return { title: t(r.name) + ' — Tiny Mansion', desc: clamp(t(r.tagline || r.desc || ''), 155) };
+    return { title: t(r.name) + ' — Tiny Mansion',
+             desc: clamp(join(t(r.tagline || ''), t(r.desc || '')), 155) };
   }
   if (parts[0] === 'farm') {
     let f = null;
@@ -3329,6 +3344,12 @@ const RU = {
   'Terms': 'Условия',
   'Privacy': 'Конфиденциальность',
   'Host a residence': 'Разместить резиденцию',
+  /* Живут только в HEAD_META, поэтому на экране их не видно и обычная
+     проверка перевода до них не достаёт. */
+  'Every component we costed, what each one adds to the price, and the arithmetic of a season — separately for the draft bar and for the espresso bar.':
+    'Каждый узел, который мы посчитали, сколько каждый добавляет к цене и арифметика сезона — отдельно для разливного бара и отдельно для эспрессо-бара.',
+  'Booking is not open yet for the residences. Tell us which country and which residence interests you, and we will write when dates open. Trade enquiries about a bar or coffee unit are answered with a quotation.':
+    'Бронирование резиденций ещё не открыто. Напишите, какая страна и какая резиденция вам интересны, и мы напишем, когда откроются даты. На запросы по бару или кофейне отвечаем расчётом.',
   /* The footer's own label for /bars/economics/. The home page button says
      'Read the financial model' and is a separate key — changing one does
      not translate the other, which is how this one stayed in English. */
@@ -4366,6 +4387,10 @@ function initLang() {
    ========================================================== */
 const MAIL_ENDPOINT = null; /* e.g. 'https://formsubmit.co/a1b2c3d4e5f6' */
 
+/* The one place the contact address is written. Everywhere it appears on the
+   site is a <span data-mail></span> that initForms turns into a link, so
+   moving to a mailbox on the domain is this line plus the noscript notice —
+   which cannot use script and so spells the address out by hand. */
 function siteMail() { return ['korsakovyuri8', 'gmail.com'].join('@'); }
 
 function initForms() {
