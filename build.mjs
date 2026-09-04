@@ -203,6 +203,28 @@ fs.writeFileSync(path.join(ROOT, 'robots.txt'),
 console.log('\n' + built + ' files, ' + indexed.length + ' in sitemap.xml');
 console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
 
+/* ---------- duplicate dictionary keys ----------
+   RU is a JavaScript object literal, so two entries with the same key are
+   not an error: the later one silently wins and the earlier translation is
+   dead text in the file. Two had been sitting there — 'Power' and 'On site',
+   each wanted in two places with two different Russian words. The key is the
+   English string, so the only cure is different English, and the only way to
+   notice is to look. */
+{
+  const ru = fs.readFileSync(SOURCE, 'utf8');
+  const body = ru.slice(ru.indexOf('const RU = {'));
+  const seen = new Map();
+  const clash = [];
+  for (const m of body.matchAll(/^\s{2}'((?:[^'\\]|\\.)*)':\s*\n?\s*'((?:[^'\\]|\\.)*)'/gm)) {
+    const [, k, v] = m;
+    if (seen.has(k) && seen.get(k) !== v) clash.push(k + ': "' + seen.get(k) + '" / "' + v + '"');
+    seen.set(k, v);
+  }
+  if (clash.length)
+    console.log('\n  ВНИМАНИЕ: один ключ словаря с разными переводами, ' +
+                'побеждает последний:\n    ' + clash.join('\n    '));
+}
+
 /* ---------- the advertised launch date ----------
    The whole site turns on one promise — "first residences deploy Q3 2026" —
    repeated in about forty places. A date like that rots silently: nothing

@@ -70,6 +70,14 @@ change a figure, change it in `club.py` and re-run.
 
 ## The bar economics page
 
+Each component row in `bars.py` is `(english, russian, cheap, dear)`. The
+English name is not decoration: `gen_bars.py` puts it in the markup and the
+Russian one in the dictionary. When the rows were Russian-only the English
+page showed Cyrillic in its own cost tables — a chassis, a glycol chiller and
+an espresso machine, in Russian, to a German buyer. Keep both names on the
+row: that way they can only drift together with the price.
+
+
 `/bars/economics/` is generated:
 
 ```
