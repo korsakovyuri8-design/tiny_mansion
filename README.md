@@ -176,6 +176,11 @@ means those two places and nothing else.
 
 ## Still to do
 
+- Georgia is on /bars/permits/ alongside Montenegro and Croatia while we
+  find out whether there is demand there. It is a market we are testing,
+  not one we have committed to.
+- Not one of the eight farms has a photograph. Every farm page is a colour
+  block, and /farms/ is a page about farms with no farm on it.
 - `analytics.js` needs an account: fill in `SRC` and `ID`.
 - FormSubmit needs its one-time activation — send the form once from the
   live site and confirm the email it sends back, or submissions are not

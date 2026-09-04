@@ -1182,7 +1182,7 @@
           
             <dl class="res-spec"><dt>Length</dt><dd>24 ft / 7.3 m</dd></dl>
             <dl class="res-spec"><dt>Width</dt><dd>100" / 2.54 m</dd></dl>
-            <dl class="res-spec"><dt>Guests</dt><dd>2-4</dd></dl>
+            <dl class="res-spec"><dt>Guests</dt><dd>2–4</dd></dl>
             <dl class="res-spec"><dt>Autonomy</dt><dd>7+ days off-grid</dd></dl>
         </div>
         <div class="res-cta">
@@ -1222,7 +1222,7 @@
         <div class="container">
           <div class="section-head reveal">
             <span class="eyebrow">A different buyer</span>
-            <h2 class="serif">The same chassis, fitted out to serve</h2>
+            <h2 class="serif">Built the same way, fitted out to serve</h2>
             <p>Bars and coffee units are the other half of what we build. They go to venues that already have a name, they carry that name on the outside rather than ours, and they are sold with the arithmetic written out instead of a promise. If you run a bar rather than book one, start here.</p>
           </div>
           <div class="trade-strip reveal d1">
@@ -1294,7 +1294,7 @@
       <div class="res-card-media"><picture><source type="image/webp" srcset="/residence-24-1024.webp 1024w, /residence-24-1440.webp 1440w, /residence-24-2048.webp 2048w" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"><img class="photo-block" src="/residence-24.jpg" alt="Grand Residence 24ft" loading="lazy" decoding="async"></picture></div>
       <div class="res-card-body">
         <h2 class="serif">Grand Residence 24ft</h2>
-        <div class="res-card-meta">2-4 guests · 7+ days off-grid</div>
+        <div class="res-card-meta">2–4 guests · 7+ days off-grid</div>
         <div class="res-card-rate">from €320 / night</div>
       </div>
     </div></div>
@@ -1559,8 +1559,8 @@
 
         <div class="section-pad">
           <span class="eyebrow">For the trade</span>
-          <h1 class="page-title serif">Mobile bars and kitchens</h1>
-          <p class="page-lede">The same chassis and the same build discipline as the residences, fitted out to serve. Built within European towing dimensions and delivered to your pitch anywhere in the EU.</p>
+          <h1 class="page-title serif">Mobile bars and coffee units</h1>
+          <p class="page-lede">Built to the same discipline as the residences, on a shorter chassis of its own and fitted out to serve. Within European towing dimensions, delivered to your pitch anywhere in the EU.</p>
         </div>
 
         <div id="unit-rows" style="margin-top:10px;"></div>
@@ -2615,7 +2615,7 @@ const RESIDENCES = [
     specs: [
       ['Length', '24 ft / 7.3 m'],
       ['Width', '100" / 2.54 m'],
-      ['Guests', '2-4'],
+      ['Guests', '2\u20134'],
       ['Autonomy', '7+ days off-grid'],
       ['Chassis', 'Trailer Made'],
       ['Climate', '-10\u00B0C to 40\u00B0C']
@@ -2982,7 +2982,7 @@ const HEAD_META = {
     desc:  'The working farms hosting the residences: national parks, high-mountain pastures, organic smallholdings and heritage households.'
   },
   '/bars/': {
-    title: 'Mobile bars and kitchens — Tiny Mansion',
+    title: 'Mobile bars and coffee units — Tiny Mansion',
     desc:  'A draft bar and an espresso bar on a trailer built to European towing dimensions, carrying your own brand. Delivered to your yard anywhere in the EU, with the economics written out.'
   },
   '/bars/economics/': {
@@ -3672,7 +3672,7 @@ const RU = {
   /* Живут только в HEAD_META, поэтому на экране их не видно и обычная
      проверка перевода до них не достаёт. */
   'Every component we costed, what each one adds to the price, and the arithmetic of a season — separately for the draft bar and for the espresso bar.':
-    'Каждый узел, который мы посчитали, сколько каждый добавляет к цене и арифметика сезона — отдельно для разливного бара и отдельно для эспрессо-бара.',
+    'Каждый узел, который мы посчитали, сколько каждый из них добавляет к цене, и арифметика сезона — отдельно для разливного бара и отдельно для эспрессо-бара.',
   'Booking is not open yet for the residences. Tell us which country and which residence interests you, and we will write when dates open. Trade enquiries about a bar or coffee unit are answered with a quotation.':
     'Бронирование резиденций ещё не открыто. Напишите, какая страна и какая резиденция вам интересны, и мы напишем, когда откроются даты. На запросы по бару или кофейне отвечаем расчётом.',
   /* The footer's own label for /bars/economics/. The home page button says
@@ -3813,11 +3813,14 @@ const RU = {
   '21 ft / 6.4 m': '21 фут / 6,4 м',
   '24 ft / 7.3 m': '24 фута / 7,3 м',
   '100" / 2.54 m': '100″ / 2,54 м',
-  '7 days off-grid': '7 дней автономии',
-  '7+ days off-grid': '7+ дней автономии',
+  '7 days off-grid': '7 дней без подключений',
+  /* Собирается в карточке резиденции из двух ячеек спецификации:
+     `${r.specs[2][1]} guests · ${r.specs[3][1]}`. В разметке такой
+     строки нет, поэтому её легко счесть мёртвой — она не мёртвая. */
+  '2 guests \u00B7 7 days off-grid': '2 гостя \u00B7 7 дней без подключений',
+  '2\u20134 guests \u00B7 7+ days off-grid': '2\u20134 гостя \u00B7 7+ дней без подключений',
+  '7+ days off-grid': '7+ дней без подключений',
   '-10°C to 40°C': 'от −10 °C до 40 °C',
-  '2 guests · 7 days off-grid': '2 гостя · 7 дней автономии',
-  '2-4 guests · 7+ days off-grid': '2–4 гостя · 7+ дней автономии',
   'from €280 / night': 'от €280 / ночь',
   'from €320 / night': 'от €320 / ночь',
   '€280 / night': '€280 / ночь',
@@ -3966,7 +3969,7 @@ const RU = {
      «Финмодель» до «Мобильные бары», и записи, лежащие на границе,
      он однажды уже стёр. */
   'A different buyer': 'Другой покупатель',
-  'The same chassis, fitted out to serve': 'То же шасси, но начинка под выдачу',
+  'Built the same way, fitted out to serve': 'Собраны так же, но начинка под выдачу',
   'Bars and coffee units are the other half of what we build. They go to venues that already have a name, they carry that name on the outside rather than ours, and they are sold with the arithmetic written out instead of a promise. If you run a bar rather than book one, start here.':
     'Бары и кофейные юниты — вторая половина того, что мы строим. Они уходят заведениям, у которых уже есть имя, везут снаружи это имя, а не наше, и продаются с посчитанной арифметикой, а не с обещанием. Если вы держите бар, а не бронируете его, начинайте отсюда.',
   'See the units': 'Смотреть юниты',
@@ -4022,7 +4025,7 @@ const RU = {
   'Espresso bar, mid-range equipment': 'Кофейня, оборудование среднего класса',
   'Espresso bar, top-tier equipment': 'Кофейня, оборудование верхнего класса',
   'Every component we costed, what each one adds, and the arithmetic of a season — separately for the bar and for the coffee bar. Disagree with a line rather than with the conclusion.':
-    'Каждый узел, который мы посчитали, что он добавляет, и арифметика сезона — отдельно для бара и отдельно для кофейни. Спорьте со строкой, а не с выводом.',
+    'Каждый узел, который мы посчитали, сколько каждый из них добавляет, и арифметика сезона — отдельно для бара и отдельно для кофейни. Спорьте со строкой, а не с выводом.',
   'Font tower, six taps': 'Башня-колонна, шесть кранов',
   'Frame and insulated sandwich panels, body': 'Каркас и утеплённые сэндвич-панели, корпус',
   'Fuel and towing': 'Топливо и буксировка',
@@ -4145,12 +4148,12 @@ const RU = {
   'Bars': 'Бары',
   'Mobile bars': 'Мобильные бары',
   'For the trade': 'Для бизнеса',
-  'Mobile bars and kitchens': 'Мобильные бары и кухни',
-  'Mobile bars and kitchens — Tiny Mansion': 'Мобильные бары и кухни — Tiny Mansion',
+  'Mobile bars and coffee units': 'Мобильные бары и кофейни',
+  'Mobile bars and coffee units — Tiny Mansion': 'Мобильные бары и кофейни — Tiny Mansion',
   'A draft bar and an espresso bar on a trailer built to European towing dimensions, carrying your own brand. Delivered to your yard anywhere in the EU, with the economics written out.':
     'Разливной бар и эспрессо-бар на прицепе в европейских габаритах для буксировки, под вашим собственным брендом. Доставка на вашу площадку в любую точку ЕС, с посчитанной экономикой.',
-  'The same chassis and the same build discipline as the residences, fitted out to serve. Built within European towing dimensions and delivered to your pitch anywhere in the EU.':
-    'То же шасси и та же сборка, что у резиденций, но начинка под выдачу. Собран в европейских габаритах для буксировки и доставляется на вашу площадку в любую точку ЕС.',
+  'Built to the same discipline as the residences, on a shorter chassis of its own and fitted out to serve. Within European towing dimensions, delivered to your pitch anywhere in the EU.':
+    'Собран с той же строгостью, что и резиденции, но на своём, более коротком шасси и с начинкой под выдачу. В европейских габаритах для буксировки, с доставкой на вашу площадку в любую точку ЕС.',
   'See the unit': 'Смотреть юнит',
   'Ask for a quotation': 'Запросить расчёт',
   'What is in it': 'Что внутри',
@@ -4176,7 +4179,7 @@ const RU = {
   'Water': 'Вода', 'Food-grade tanks, pressurised rinse': 'пищевые танки, ополаскиватель под давлением',
   'Coffee': 'Кофе', 'Two-group commercial machine': 'двухгруппная профессиональная машина',
   'Grinders': 'Кофемолки', 'Two, on-demand': 'две, по требованию',
-  'Bar station': 'Барная станция', 'Speed rail, ice well, gastronorm inserts': 'спидрейл, ледогенераторная ванна, гастроёмкости',
+  'Bar station': 'Барная станция', 'Speed rail, ice well, gastronorm inserts': 'спидрейл, ванна для льда, гастроёмкости',
   'Cold': 'Холод', 'Under-counter fridge and freezer': 'подстоечный холодильник и морозильник',
 
   'Glycol chiller and insulated python to every tap': 'Гликолевый чиллер и изолированный питон к каждому крану',

@@ -328,7 +328,7 @@ PAGE = '''    <!-- ======================================================
           <p class="page-lede">''' + t(
   'Every component we costed, what each one adds, and the arithmetic of a season — separately '
   'for the bar and for the coffee bar. Disagree with a line rather than with the conclusion.',
-  'Каждый узел, который мы посчитали, что он добавляет, и арифметика сезона — отдельно для бара '
+  'Каждый узел, который мы посчитали, сколько каждый из них добавляет, и арифметика сезона — отдельно для бара '
   'и отдельно для кофейни. Спорьте со строкой, а не с выводом.') + '''</p>
         </div>
 

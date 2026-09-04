@@ -149,7 +149,7 @@ def page(lang):
     </div>
   </div>
 </section>''' % (
-        t(T('Черногория · первое размещение Q3 2026',
+        t(T('Черногория · первое размещение — III квартал 2026',
             'Montenegro · first deployment Q3 2026')),
         t(T('Дом в вашей собственности,<br>который переезжает за сезоном',
             'A house you own outright,<br>that moves to where the season is')),
