@@ -43,8 +43,8 @@ def retail(cost):
 # ── корпус: общий для обеих версий ───────────────────────────────────────
 # Обычный коммерческий прицеп под выдачу, не автономный дом.
 SHELL = [
-    ('Twin-axle braked chassis, 6.4 m, EU type approval',
-     'Шасси двухосное с тормозами, 6,4 м, допуск ЕС',      4_500,  6_000),
+    ('Twin-axle braked chassis, 18 ft, EU type approval',
+     'Шасси двухосное с тормозами, 18 футов, допуск ЕС',   4_500,  6_000),
     ('Frame and insulated sandwich panels, body',
      'Каркас и утеплённые сэндвич-панели, корпус',         5_000,  7_000),
     ('Serving hatch, roller shutter, awning',
