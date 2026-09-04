@@ -1673,7 +1673,7 @@
         <div class="section-pad">
           <span class="eyebrow">The numbers</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What it earns, and when it is paid off</h2>
-          <p class="page-lede" style="margin-top:16px;">The rates below are not our projections. They are the published price lists of two working operators — a mobile pub in Ohio and a mobile coffee bar in Alberta — converted at $1 = €0.92. If a unit like this earns that there, the arithmetic is worth checking here.</p>
+          <p class="page-lede" style="margin-top:16px;">The rates below are not our projections. They are the published price lists of two working operators — a mobile pub in Ohio and a mobile coffee bar in Alberta — converted at $1 = €0.92. We do not model at that rate: every figure on the unit pages uses €1,450, our middle estimate for a European diary, which is below what these two charge.</p>
 
           <figure class="fig">
             <table>
@@ -1835,7 +1835,7 @@
           <span class="eyebrow">The numbers</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What one outing leaves you</h2>
           <p class="page-lede" style="margin-top:16px;" id="unit-money"></p>
-          <p class="fineprint" style="margin-top:26px;">The rate is not our projection. It is what two working operators publish for a booking of this kind, converted from dollars. Your own diary decides how many outings a season holds.</p>
+          <p class="fineprint" style="margin-top:26px;">€1,450 is an estimate, and we say so. The rate we can actually cite is North American: two working operators publish €1,610 for a booking of this kind, converted from dollars. We model below what they charge rather than at it, and your own diary decides how many outings a season holds.</p>
           <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/economics/">See how that is worked out</a></p>
           <p style="margin-top:18px;"><a class="btn btn-line" href="/bars/spec/">The full specification</a></p>
         </div>
@@ -2686,7 +2686,7 @@ const UNITS = [
     desc: 'A pouring bar built around a glycol line, so what comes out of the last tap at midnight is the same temperature as the first one at noon. Sized for a festival queue rather than a kitchen.',
     /* Left over after staff, stock, fuel and running, at the rate the two
        reference operators publish. The full working is on /bars/. */
-    money: { outing: '1,306', s24: '31,000', s30: '39,000' },
+    money: { outing: '1,146', s24: '28,000', s30: '34,000' },
     specs: [
       ['Taps', 'Six as standard, four to twelve possible'],
       ['Cooling', 'Glycol chiller, insulated python'],
@@ -2735,7 +2735,7 @@ const UNITS = [
       ['Door', '0.75 \u00D7 1.95 m']
     ],
     desc: 'Two services in one trailer, because a wedding needs coffee at eleven and negronis at seven. The machine side and the bar station are separated so neither waits on the other.',
-    money: { outing: '1,237', s24: '30,000', s30: '37,000' },
+    money: { outing: '1,077', s24: '26,000', s30: '32,000' },
     specs: [
       ['Coffee', 'Two-group commercial machine'],
       ['Grinders', 'Two, on-demand'],
@@ -3535,7 +3535,7 @@ function writeUnitMoney(u) {
   if (!el || !u || !u.money) return;
   /* Russian groups thousands with a space, English with a comma. */
   const n = v => '\u20AC' + (lang === 'ru' ? v.replace(',', '\u00A0') : v);
-  el.innerText = T('At the published European rate of €1,610 an outing, this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.')
+  el.innerText = T('At €1,450 an outing — our middle estimate for a European diary — this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.')
     .replace('{n}', n(u.money.outing))
     .replace('{s24}', n(u.money.s24))
     .replace('{s30}', n(u.money.s30));
@@ -3877,8 +3877,8 @@ const RU = {
   '€90,000': '€90 000',
   'The numbers': 'Цифры',
   'What it earns, and when it is paid off': 'Что он приносит и когда окупается',
-  'The rates below are not our projections. They are the published price lists of two working operators — a mobile pub in Ohio and a mobile coffee bar in Alberta — converted at $1 = €0.92. If a unit like this earns that there, the arithmetic is worth checking here.':
-    'Ставки ниже — не наши прогнозы. Это опубликованные прайсы двух работающих операторов: мобильного паба в Огайо и мобильной кофейни в Альберте, пересчитано по курсу $1 = €0,92. Если такой юнит зарабатывает столько там, арифметику стоит проверить и здесь.',
+  'The rates below are not our projections. They are the published price lists of two working operators — a mobile pub in Ohio and a mobile coffee bar in Alberta — converted at $1 = €0.92. We do not model at that rate: every figure on the unit pages uses €1,450, our middle estimate for a European diary, which is below what these two charge.':
+    'Ставки ниже — не наши прогнозы. Это опубликованные прайсы двух работающих операторов: мобильного паба в Огайо и мобильной кофейни в Альберте, пересчитано по курсу $1 = €0,92. По этой ставке мы не считаем: все цифры на страницах юнитов берут €1 450 — нашу среднюю оценку для европейского календаря, а она ниже того, что берут эти двое.',
   'What one outing brings in': 'Что приносит один выезд',
   'Line': 'Строка', 'Coffee': 'Кофе', 'Bar': 'Бар',
   'Charged for the outing': 'Ставка за выезд',
@@ -3943,10 +3943,10 @@ const RU = {
 
 /* ── Цифры на странице юнита ── */
   'What one outing leaves you': 'Что остаётся с одного выезда',
-  'At the published European rate of €1,610 an outing, this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.':
-    'При опубликованной европейской ставке €1 610 за выезд юнит оставляет около {n} после персонала, продукта, топлива и собственного обслуживания. Сезон из двадцати четырёх выездов — это примерно {s24}, из тридцати — примерно {s30}.',
-  'The rate is not our projection. It is what two working operators publish for a booking of this kind, converted from dollars. Your own diary decides how many outings a season holds.':
-    'Ставка — не наш прогноз. Это то, что два работающих оператора публикуют за такую бронь, пересчитано с долларов. Сколько выездов помещается в сезон, решает ваш календарь.',
+  'At €1,450 an outing — our middle estimate for a European diary — this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.':
+    'При €1 450 за выезд — это наша средняя оценка для европейского календаря — юнит оставляет около {n} после персонала, продукта, топлива и собственного обслуживания. Сезон из двадцати четырёх выездов — это примерно {s24}, из тридцати — примерно {s30}.',
+  '\u20AC1,450 is an estimate, and we say so. The rate we can actually cite is North American: two working operators publish \u20AC1,610 for a booking of this kind, converted from dollars. We model below what they charge rather than at it, and your own diary decides how many outings a season holds.':
+    '\u20AC1 450 — это оценка, и мы это говорим прямо. Ставка, на которую мы можем сослаться, североамериканская: два работающих оператора публикуют \u20AC1 610 за такую бронь, пересчитано с долларов. Мы считаем ниже того, что берут они, а не вровень, — а сколько выездов помещается в сезон, решает ваш календарь.',
   'See how that is worked out': 'Как это посчитано',
 
   /* ── Как устроена покупка бара ── */
