@@ -982,6 +982,23 @@
     }
     @media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
   </style>
+  <!-- Решает язык до того, как начнёт рисоваться страница, и только для
+       русского синхронно подтягивает словарь. Английскому посетителю
+       143 КБ русских строк не отдаются вообще: build.mjs выносит словарь
+       из каждой страницы в /ru.js. Выбор языка живёт здесь в одном месте,
+       initLang() ниже читает готовый результат. -->
+  <script>
+  (function () {
+    var l = null;
+    try { l = localStorage.getItem('tm-lang'); } catch (e) { /* приватный режим */ }
+    if (l !== 'ru' && l !== 'en')
+      l = String(navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en';
+    window.__lang = l;
+    /* Синхронно и только здесь: к моменту applyLang() словарь уже на месте,
+       поэтому русский посетитель не видит вспышки английского. */
+    if (l === 'ru') document.write('<scr' + 'ipt src="/ru.js"></scr' + 'ipt>');
+  })();
+  </script>
   <script src="/photo-fallback.js" defer></script>
   <script src="/analytics.js" defer=""></script>
 </head>
@@ -3499,7 +3516,7 @@ function renderAllFarms() {
    data-i18n-html key and are swapped whole.
    ========================================================== */
 
-const RU = {
+let RU = {
   /* Chrome and navigation */
   'Residences': 'Резиденции',
   'Farms': 'Фермы',
@@ -4736,27 +4753,48 @@ function applyLang() {
   writeJsonLd();
 }
 
+/* The built pages carry an empty RU and fetch /ru.js; src/index.html keeps
+   the literal inline so it still works opened on its own. Either way this
+   calls back once there is something to translate with, or once it is clear
+   there will not be — in which case the page simply stays in English. */
+function withDict(done) {
+  if (window.RU) { RU = window.RU; return done(); }
+  if (Object.keys(RU).length) return done();
+  const s = document.createElement('script');
+  s.src = '/ru.js';
+  s.onload = () => { RU = window.RU || RU; done(); };
+  s.onerror = done;
+  document.head.appendChild(s);
+}
+
 function setLang(next) {
   if (next === lang) return;
-  lang = next;
-  try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* private mode */ }
-  applyLang();
-  /* Composed in script, so the walk above cannot reach it. */
-  writeUnitLengths(currentUnit);
-  writeUnitMoney(currentUnit);
+  const go = () => {
+    lang = next;
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* private mode */ }
+    applyLang();
+    /* Composed in script, so the walk above cannot reach it. */
+    writeUnitLengths(currentUnit);
+    writeUnitMoney(currentUnit);
+  };
+  if (next === 'ru') withDict(go); else go();
 }
 
 function initLang() {
-  let saved = null;
-  try { saved = localStorage.getItem(LANG_KEY); } catch (e) { /* private mode */ }
-  /* A remembered choice wins; otherwise follow the browser. */
+  /* The head decided this already and, for Russian, has the dictionary
+     loaded by now. Falling back to the same rule keeps src/index.html
+     working when it is opened without that bootstrap. */
+  let saved = window.__lang || null;
+  if (saved !== 'ru' && saved !== 'en') {
+    try { saved = localStorage.getItem(LANG_KEY); } catch (e) { /* private mode */ }
+  }
   lang = (saved === 'ru' || saved === 'en') ? saved
        : (String(navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en');
 
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.addEventListener('click', () => setLang(b.getAttribute('data-lang'))));
 
-  applyLang();
+  if (lang === 'ru') withDict(applyLang); else applyLang();
 }
 
 /* ==========================================================

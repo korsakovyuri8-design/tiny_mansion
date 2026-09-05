@@ -89,6 +89,7 @@ const routes = await page.evaluate(() => {
 const NOINDEX = ['/thanks/'];
 
 console.log(routes.length + ' addresses\n');
+let dictionary = null;
 
 /* Clear what the last build wrote, so a farm removed from index.html stops
    having a page rather than lingering as an orphan in search results. */
@@ -112,7 +113,7 @@ for (const route of routes) {
     continue;
   }
 
-  const html = await page.evaluate((noindex) => {
+  let html = await page.evaluate((noindex) => {
     const doc = document.documentElement.cloneNode(true);
 
     /* Reveal-on-scroll is left alone: the class has to survive into the
@@ -143,6 +144,15 @@ for (const route of routes) {
     return '<!DOCTYPE html>\n' + doc.outerHTML;
   }, NOINDEX.indexOf(route) !== -1);
 
+  /* The Russian dictionary is 143 KB of every page and an English visitor
+     never reads a line of it. It leaves here for /ru.js, which the head
+     bootstrap fetches only when the visitor is reading Russian. The source
+     keeps the literal, so every generator still writes to one place. */
+  const m = html.match(/\nlet RU = \{[\s\S]*?\n\};\n/);
+  if (!m) throw new Error('не нашёл словарь RU в ' + route);
+  if (!dictionary) dictionary = m[0].replace(/^\nlet RU = /, '').replace(/;\n$/, '');
+  html = html.replace(m[0], '\nlet RU = window.RU || {};\n');
+
   const dir = route === '/' ? ROOT : path.join(ROOT, route);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), html);
@@ -151,6 +161,13 @@ for (const route of routes) {
   console.log('  ' + route.padEnd(34) + Math.round(html.length / 1024) + ' KB  ' + title);
   built++;
 }
+
+/* ---------- the dictionary, once, beside the pages ---------- */
+fs.writeFileSync(path.join(ROOT, 'ru.js'),
+  '/* Собран build.mjs из словаря RU в src/index.html. Не править руками:\n' +
+  '   правки уйдут при следующей сборке. Грузится только для русской\n' +
+  '   версии — загрузчиком в <head> каждой страницы. */\n' +
+  'window.RU = ' + dictionary + ';\n');
 
 /* ---------- sitemap and robots ---------- */
 const indexed = routes.filter(r => NOINDEX.indexOf(r) === -1);
@@ -212,7 +229,7 @@ console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
    notice is to look. */
 {
   const ru = fs.readFileSync(SOURCE, 'utf8');
-  const body = ru.slice(ru.indexOf('const RU = {'));
+  const body = ru.slice(ru.indexOf('let RU = {'));
   const seen = new Map();
   const clash = [];
   for (const m of body.matchAll(/^\s{2}'((?:[^'\\]|\\.)*)':\s*\n?\s*'((?:[^'\\]|\\.)*)'/gm)) {

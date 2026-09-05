@@ -120,6 +120,22 @@ changing its dictionary key too**, or that string stops being translated.
 Page titles and descriptions live in `HEAD_META` and go through the same
 dictionary.
 
+### Where the dictionary lives
+
+The `RU` literal stays in `src/index.html`, which is where every generator
+splices into it. `build.mjs` cuts it out of each built page and writes it
+once to `/ru.js`, leaving `let RU = window.RU || {};` behind.
+
+A bootstrap in `<head>` decides the language before anything paints — a
+remembered choice, else the browser's — and only for Russian does it pull
+`/ru.js` in synchronously, so a Russian reader never sees a flash of English.
+An English reader never downloads a byte of it: 350 KB a page became 209 KB,
+and 96 KB gzipped became 52 KB. When an English reader clicks RU, `withDict`
+fetches it then; if that fetch fails the page simply stays in English.
+
+`src/index.html` opened on its own still has the literal inline, so it works
+without any of this.
+
 A key that looks unused usually is not. Three ways a string reaches the
 dictionary without appearing in the markup, all of which have caught me:
 it is composed at render time (`${r.specs[2][1]} guests · ${r.specs[3][1]}`
