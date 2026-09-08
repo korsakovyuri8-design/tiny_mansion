@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en" style="--header-h: 79px;"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The farms — Tiny Mansion</title>
@@ -74,6 +74,18 @@
 
       --gutter:   clamp(20px, 5vw, 90px);
       --band:     clamp(64px, 11vh, 150px);
+    }
+
+    /* Самые узкие телефоны. Нижняя граница шкалы рассчитана на английский, а
+       «Конфиденциальность» одним словом длиннее всей полосы набора: на 320px
+       заголовок ломался пополам и оставлял висячее «сть». Здесь кегль просто
+       меньше — выше 340px ничего не меняется. */
+    @media (max-width: 340px) {
+      :root {
+        --t-hero:    2.4rem;
+        --t-display: 1.95rem;
+        --t-section: 1.7rem;
+      }
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -205,9 +217,14 @@
        HEADER
        ========================================================== */
     /* The header is sticky, so an anchor landing at the top of the viewport
-       lands underneath it. This is what the eyebrow line needs to clear it. */
-    [id] { scroll-margin-top: 96px; }
-    @media (max-width: 780px) { [id] { scroll-margin-top: 120px; } }
+       lands underneath it. Two hand-written numbers used to say how far to
+       scroll past it, and both went stale the moment the header changed
+       height: raising the tap targets by eighteen pixels put every anchor on
+       a phone four to fourteen pixels behind it. So the header measures
+       itself into --header-h instead (see initHeaderHeight), and the values
+       below are only the fallback for the first paint and for no script. */
+    [id] { scroll-margin-top: calc(var(--header-h, 96px) + 20px); }
+    @media (max-width: 780px) { [id] { scroll-margin-top: calc(var(--header-h, 120px) + 20px); } }
 
     header {
       position: sticky; top: 0; z-index: 60;
@@ -249,6 +266,7 @@
     .nav-link {
       font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase;
       text-decoration: none; cursor: pointer; transition: color 0.3s ease;
+      display: inline-flex; align-items: center; min-height: 26px;
     }
     .nav-link:hover { text-decoration: underline; text-underline-offset: 5px; }
 
@@ -256,7 +274,10 @@
     .lang { display: flex; align-items: center; gap: 9px; margin-left: clamp(14px, 2.2vw, 30px); }
     .lang-btn {
       font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em;
-      text-transform: uppercase; background: none; border: 0; padding: 4px 1px;
+      text-transform: uppercase; background: none; border: 0;
+      /* WCAG 2.5.8 просит не меньше 24×24. Текст здесь 11px, поэтому размер
+         цели держится на отступах, а не на кегле: 20×20 пальцем не берётся. */
+      padding: 7px 8px; min-height: 26px;
       color: var(--muted); cursor: pointer; transition: color 0.3s ease;
     }
     .lang-btn.active { color: var(--ink); }
@@ -518,7 +539,10 @@
 
     .res-index {
       font-family: var(--font-serif); font-size: clamp(40px, 5vw, 72px);
-      line-height: 1; color: var(--rule); display: block; margin-bottom: 14px;
+      /* Порядковый номер стоял цветом линейки — 1.38 к фону, единственное
+         место на сайте, не проходящее AA. Крупному тексту нужно 3.0; этот
+         песочный тон даёт 3.26 и остаётся тише заголовка под ним. */
+      line-height: 1; color: #93856E; display: block; margin-bottom: 14px;
     }
     .res-text h2, .res-text h3 { font-size: var(--t-display); line-height: 1.02; letter-spacing: -0.015em; }
     .res-text .lede { font-size: var(--t-lede); line-height: 1.6; color: var(--body); margin-top: 16px; max-width: 40ch; }
@@ -615,6 +639,14 @@
     .breadcrumb-item { cursor: pointer; text-decoration: none; }
     .breadcrumb-item:hover { color: var(--ink); }
     .breadcrumb-current { color: var(--ink); }
+
+    /* Русский даёт слова, которые не влезают в узкий экран целиком:
+       «Конфиденциальность» на 320px вылезала за край и тащила вбок весь
+       документ — body{overflow-x:hidden} этого не ловит, его overflow
+       передаётся вьюпорту. Перенос по слогам там, где браузер умеет, и
+       разрыв слова как гарантия там, где нет. Обычный заголовок не трогает:
+       правило срабатывает, только когда слово иначе не помещается. */
+    h1, h2, h3, .page-title { overflow-wrap: break-word; hyphens: auto; }
 
     .page-title { font-size: var(--t-display); line-height: 1.02; letter-spacing: -0.015em; }
     .page-lede { font-size: var(--t-lede); line-height: 1.6; color: var(--body); max-width: 56ch; margin-top: 18px; }
@@ -842,7 +874,11 @@
     .farm-story p:first-child { font-family: var(--font-serif); font-size: clamp(20px, 2vw, 26px); line-height: 1.4; margin-bottom: 18px; }
     .farm-story p { font-size: 16px; line-height: 1.72; color: var(--body); }
     .farm-actions { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
-    .back-link { font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+    .back-link {
+      font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+      text-decoration: underline; text-underline-offset: 4px; cursor: pointer;
+      display: inline-flex; align-items: center; min-height: 26px;
+    }
 
     /* Prose + team */
     .prose { max-width: 660px; }
@@ -962,7 +998,8 @@
 
     .calc-del {
       border: 0; background: none; cursor: pointer; color: var(--muted);
-      font-size: 20px; line-height: 1; padding: 6px 0 6px 12px;
+      font-size: 20px; line-height: 1; padding: 6px 4px 6px 14px;
+      min-width: 26px; min-height: 26px;
     }
     .calc-del:hover { color: var(--ink); }
 
@@ -1124,7 +1161,11 @@
     .footer-column { display: flex; flex-direction: column; gap: 13px; }
     .footer-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C7A96B; }
     .footer-links { display: flex; flex-direction: column; gap: 10px; list-style: none; }
-    .footer-link { font-size: 14px; font-weight: 300; color: var(--bg-cream); text-decoration: none; cursor: pointer; transition: opacity 0.2s ease; }
+    .footer-link {
+      font-size: 14px; font-weight: 300; color: var(--bg-cream); text-decoration: none;
+      cursor: pointer; transition: opacity 0.2s ease;
+      display: inline-flex; align-items: center; min-height: 26px;
+    }
     .footer-link:hover { opacity: 0.65; }
     .footer-bottom {
       margin-top: 54px; padding-top: 24px; border-top: 1px solid rgba(247,243,237,0.15);
@@ -1480,7 +1521,7 @@
         <hr class="rule">
         <div style="padding:40px 0 90px;font-size:16px;color:var(--body);">
           Do you run a farm in <strong id="country-cta-name">this country</strong>?
-          <a href="/host/" style="text-decoration:underline;text-underline-offset:4px;margin-left:6px;">Host a residence</a>
+          <a href="/host/" style="text-decoration:underline;text-underline-offset:4px;margin-left:6px;display:inline-flex;align-items:center;min-height:26px;">Host a residence</a>
         </div>
       </div>
     </section>
@@ -2799,7 +2840,7 @@
             <label class="sr-only" for="enq-message">Anything else we should know</label>
             <textarea id="enq-message" name="message" placeholder="Anything else we should know"></textarea>
             <button type="submit" class="btn btn-solid">Send</button>
-            <p class="form-hint">We answer every message ourselves, from <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px;">yuri@korsakovgroup.com</a>.</p>
+            <p class="form-hint">We answer every message ourselves, from <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 26px;">yuri@korsakovgroup.com</a>.</p>
           </form>
         </div>
       </div>
@@ -2951,7 +2992,7 @@
           <h1 class="page-title serif" style="margin-bottom:34px;">Terms</h1>
 
           <h2 class="serif">Who you are dealing with</h2>
-          <p>Korsakov Group d.o.o., registered in Tivat, Montenegro. Email: <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px;">yuri@korsakovgroup.com</a>.</p>
+          <p>Korsakov Group d.o.o., registered in Tivat, Montenegro. Email: <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 26px;">yuri@korsakovgroup.com</a>.</p>
 
           <h2 class="serif">Enquiries and bookings</h2>
           <p>Nothing on this site is a booking or an offer of one. Sending the form registers your interest and starts a conversation by email. Rates shown are indicative and are not confirmed until booking opens.</p>
@@ -2983,7 +3024,7 @@
         <div class="section-pad prose">
           <h1 class="page-title serif" style="margin-bottom:34px;">Privacy</h1>
 
-          <p>Korsakov Group d.o.o., Tivat, Montenegro, <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px;">yuri@korsakovgroup.com</a>, decides how your data is used on this site.</p>
+          <p>Korsakov Group d.o.o., Tivat, Montenegro, <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 26px;">yuri@korsakovgroup.com</a>, decides how your data is used on this site.</p>
 
           <h2 class="serif">What we collect</h2>
           <p>Only what you type into a form: your name, your email, and whatever you write in the message. We ask for nothing else and we set no tracking cookies.</p>
@@ -2995,7 +3036,7 @@
           <p>Form submissions pass through FormSubmit, which forwards them to our inbox. Email goes through Google. Fonts load from Google Fonts, which sees your IP address as part of serving them. Each has its own privacy policy.</p>
 
           <h2 class="serif">Your rights</h2>
-          <p>Write to <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px;">yuri@korsakovgroup.com</a> and we'll tell you what we hold about you, correct it, or delete it.</p>
+          <p>Write to <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 26px;">yuri@korsakovgroup.com</a> and we'll tell you what we hold about you, correct it, or delete it.</p>
         </div>
       </div>
     </section>
@@ -3007,7 +3048,7 @@
       <div class="container" style="max-width:680px;text-align:center;padding-top:120px;padding-bottom:120px;">
         <span class="eyebrow centered">Received</span>
         <h1 class="page-title serif">Thank you</h1>
-        <p class="page-lede" style="margin:20px auto 36px;">We have your message. We answer from <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px;">yuri@korsakovgroup.com</a>, usually within a few days.</p>
+        <p class="page-lede" style="margin:20px auto 36px;">We have your message. We answer from <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 26px;">yuri@korsakovgroup.com</a>, usually within a few days.</p>
         <a class="btn btn-solid" href="/">Back to the start</a>
       </div>
     </section>
@@ -3060,7 +3101,7 @@
 
       <div class="footer-bottom">
         <span>© 2026 Korsakov Group</span>
-        <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px;">yuri@korsakovgroup.com</a>
+        <a href="mailto:yuri@korsakovgroup.com" style="text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 26px;">yuri@korsakovgroup.com</a>
       </div>
     </div>
   </footer>
@@ -4547,6 +4588,19 @@ const MAIL_ENDPOINT = null; /* e.g. 'https://formsubmit.co/a1b2c3d4e5f6' */
    which cannot use script and so spells the address out by hand. */
 function siteMail() { return ['yuri', 'korsakovgroup.com'].join('@'); }
 
+/* Высота шапки уезжает от ширины экрана, от языка и от любой правки в ней,
+   а якоря должны вставать под ней при любой из них. Поэтому её измеряет
+   ResizeObserver, а не константа в таблице стилей. */
+function initHeaderHeight() {
+  const h = document.querySelector('header');
+  if (!h) return;
+  const set = () => document.documentElement.style
+    .setProperty('--header-h', Math.round(h.getBoundingClientRect().height) + 'px');
+  set();
+  if (window.ResizeObserver) new ResizeObserver(set).observe(h);
+  else window.addEventListener('resize', set);
+}
+
 function initForms() {
   /* Thanks is a real page now, so the form has somewhere to land that
      works on its own. The value in the markup is the live address;
@@ -4571,6 +4625,11 @@ function initForms() {
     a.textContent = siteMail();
     a.style.textDecoration = 'underline';
     a.style.textUnderlineOffset = '3px';
+    /* Ссылку строит скрипт, поэтому ни одно правило таблицы стилей её не
+       достаёт: размер цели задаётся здесь. */
+    a.style.display = 'inline-flex';
+    a.style.alignItems = 'center';
+    a.style.minHeight = '26px';
     el.replaceWith(a);
   });
 }
@@ -4584,6 +4643,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderResidenceRows('residence-rows');
   initReveal();
   initHeaderState();
+  initHeaderHeight();
   initForms();
   calcBind();
   initLang();

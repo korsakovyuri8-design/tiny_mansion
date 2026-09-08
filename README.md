@@ -27,7 +27,7 @@ Also hand-written:
 | `gen_bars.py` | Rewrites `/bars/economics/` out of `bars.py`. Replaces the section rather than appending, so it is safe to re-run. |
 | `gen_deck.py` | Rewrites the money slides of `deck/deck.html` out of `club.py` and `bars.py`. |
 | `relaunch.py` | Changes the advertised launch quarter everywhere at once. |
-| `checks/` | Eleven browser checks that run against the built site. See **The checks** below. |
+| `checks/` | Eighteen browser checks that run against the built site. See **The checks** below. |
 
 ## Building
 
@@ -157,6 +157,15 @@ reach it: `drawCalc()` runs again on a language switch. A seeded menu
 follows the language; an edited one never gets overwritten, which is what
 `calc.dirty` is for. The menu is kept in `localStorage` under `tm-calc`
 and never leaves the browser.
+
+## Type on the narrowest phones
+
+The type scale's lower bound was set against English. Russian words are longer
+and «Конфиденциальность» is longer than the whole measure at 320px, so below
+340px the scale steps down (`--t-hero`, `--t-display`, `--t-section`). Every
+heading also carries `overflow-wrap: break-word` and `hyphens: auto`, which do
+nothing until a word genuinely will not fit — the guard for the next long word
+rather than a fix for this one. `checks/longword.mjs` is what notices.
 
 ## Wide tables on a phone
 
@@ -298,21 +307,32 @@ actually cite, above what we model at.
 
 ## The checks
 
-`node checks/all.mjs` runs all eleven in turn: addresses and the language
-round-trip, internal links, who the site says it is, Cyrillic left in English,
-Latin left in Russian,
-English prose left in Russian, thousands grouped the wrong way round, titles
-and descriptions, landmarks and focus rings and alt text, text clipped at 390
-and 1280 in both languages, and anything pushing the page sideways. Each
-starts its own static server and prints its own summary, so a failure is read
-from the output rather than an exit code. **Build first** — they read the
-built pages, not `src/`.
+`node checks/all.mjs` runs all eighteen in turn. Each starts its own static
+server and prints its own summary, so a failure is read from the output rather
+than an exit code. **Build first** — they read the built pages, not `src/`. The
+whole set takes around forty minutes; `devices` and `clip` are most of that.
+
+| | |
+| --- | --- |
+| `routes` | addresses, the language round-trip, the reveal |
+| `links` | internal links and subresources |
+| `identity` | company, city, mailbox and the advertised quarter |
+| `live` | the calculator, forms, gallery and language switch, actually clicked |
+| `resilient` | no JavaScript, no dictionary, back and forward |
+| `cyr` `latin` `untranslated` | one language leaking into the other |
+| `money` | thousands grouped the wrong way round |
+| `meta` | titles and descriptions |
+| `a11y` | landmarks, focus rings, alt text |
+| `contrast` | text against its background |
+| `tap` | touch targets against WCAG 2.5.8 |
+| `anchors` | in-page anchors clearing the sticky header |
+| `clip` `longword` `ovf` `devices` | anything that does not fit the screen |
 
 They need Playwright with Chromium; `checks/pw.mjs` resolves it normally and
-falls back to a global install.
+falls back to a global install. `checks/srv.mjs` is the shared static server.
 
-
-Two of them are newer than the rest and worth knowing about.
+Several of them exist because they caught something, and those are worth
+knowing about.
 
 `checks/latin.mjs` flags any Latin letter left in the Russian rendering,
 text and translated attributes alike. `untranslated.mjs` only catches Latin
@@ -330,6 +350,38 @@ that in script, but a figure written straight into markup needs its own
 dictionary key or it stays comma-grouped in Russian — which is how the salon
 economics tables first shipped, with `€10,770` in a table above prose
 reading `€10 770`.
+
+`checks/longword.mjs` walks text nodes with a `Range`, not elements. A word
+too long for the screen overflows its block while the block's own box stays
+put, so an element scan cannot see it — «Конфиденциальность» hung 21px past
+the edge of a 320px screen and dragged the whole page sideways. It also has to
+stop its clipping walk at `<body>`: `overflow-x: hidden` there does not clip,
+it propagates to the viewport, and a check that believes it reports zero while
+the page slides. The fix was a type step below 340px, plus `overflow-wrap` and
+`hyphens` on headings as the general guard.
+
+`checks/tap.mjs` measures every control at 390px against **WCAG 2.5.8 (AA),
+which is 24×24** — not the 44×44 of 2.5.5 (AAA), which on a phone would make
+the sticky header eat a third of the screen. It found 46 controls under the
+line, the language switch among them at 20×20 on every page. Links inside
+prose are exempt: there the line of text is the target, not a button.
+
+`checks/anchors.mjs` clicks every in-page anchor and checks where it lands
+relative to the header. Raising those tap targets made the header eighteen
+pixels taller and put seven anchors behind it, because `scroll-margin-top` was
+two hand-written numbers. The header now measures itself into `--header-h`
+with a `ResizeObserver`, so the numbers left in the stylesheet are only the
+fallback for the first paint and for no script.
+
+`checks/live.mjs` and `checks/resilient.mjs` are the ones that click things:
+add and delete a calculator row, switch units, edit a price and watch the
+payback move, switch language and switch back on four views, open a gallery
+thumbnail, read the form's action and `_next`. Then the same site with
+JavaScript off, with `/ru.js` blocked, and with the back button. Two of the
+three failures they first reported were bugs in the probe, not the site —
+`form[data-mailform]` matches two forms on every page, and an edited menu is
+not supposed to be overwritten when you switch units. Read a failure here
+twice before believing it.
 
 ## Still to do
 
