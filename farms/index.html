@@ -1046,7 +1046,16 @@
     .qa p { font-size: 15px; line-height: 1.75; color: var(--body); max-width: 64ch; }
 
     /* ── economics ── */
-    .fig { margin: 34px 0 0; overflow-x: auto; }
+    /* A wide table scrolls inside its figure rather than pushing the page
+       sideways. The right-hand shade is attached to the scroll position, so it
+       appears only while there is more table to the right and fades as it is
+       reached — otherwise nobody on a phone knows the column is there. */
+    .fig {
+      margin: 34px 0 0; overflow-x: auto;
+      background:
+        linear-gradient(to left, var(--bg-cream), rgba(247, 243, 237, 0)) right / 34px 100% no-repeat local,
+        radial-gradient(farthest-side at 100% 50%, rgba(26, 22, 20, 0.14), rgba(26, 22, 20, 0)) right / 12px 100% no-repeat scroll;
+    }
     .fig table {
       width: 100%; min-width: 460px; border-collapse: collapse;
       font-family: var(--font-sans); font-size: 14px;
@@ -1061,12 +1070,44 @@
       font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--muted); font-weight: 400; border-bottom-color: var(--ink);
     }
-    .fig td.n, .fig th.n { text-align: right; padding-right: 0; white-space: nowrap; }
+    /* Right-aligned columns have no right padding, so without a left one two
+       of them side by side touch exactly — visible as fused headers. */
+    .fig td.n, .fig th.n { text-align: right; padding: 12px 0 12px 20px; white-space: nowrap; }
     .fig td.lbl { font-family: var(--font-serif); font-size: 16px; }
     .fig tr.tot td { border-bottom: 2px solid var(--ink); font-weight: 500; }
     /* Below the line a buyer will act on; above it they will not. */
     .fig td.good { color: #3F5730; font-weight: 500; }
     .fig td.slow { color: var(--muted); }
+    /* Five columns of money do not fit a phone, and the two that matter are the
+       last two — a reader should not have to scroll sideways to reach them. Below
+       620px each row becomes a card. The labels come off data-label, which
+       applyLang() translates like any other attribute. */
+    @media (max-width: 620px) {
+      .fig--cards { overflow-x: visible; background: none; }
+      .fig--cards table { min-width: 0; display: block; }
+      .fig--cards thead { display: none; }
+      .fig--cards tbody { display: block; }
+      .fig--cards tbody tr {
+        display: block; border: 1px solid var(--rule); border-radius: 3px;
+        padding: 4px 16px; margin-bottom: 12px;
+      }
+      .fig--cards tbody tr.tot { border-color: var(--ink); }
+      .fig--cards caption { display: block; }
+      .fig--cards tbody td, .fig--cards tbody td.n {
+        display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+        padding: 10px 0; border-bottom: 1px solid var(--rule); text-align: left;
+      }
+      .fig--cards tbody tr td:last-child { border-bottom: 0; }
+      .fig--cards tbody td::before {
+        content: attr(data-label);
+        font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--muted); flex: 0 1 auto;
+      }
+      .fig--cards tbody td.lbl { font-size: 20px; }
+      .fig--cards tbody tr.tot td { border-bottom-color: var(--rule); font-weight: 400; }
+      .fig--cards tbody tr.tot td:last-child { border-bottom: 0; }
+    }
+
     .fig-note {
       font-size: 13px; line-height: 1.7; color: var(--muted);
       margin-top: 14px; max-width: 62ch;
@@ -1126,6 +1167,7 @@
           <a href="/residences/" class="nav-link">Residences</a>
           <a href="/farms/" class="nav-link">Farms</a>
           <a href="/bars/" class="nav-link">Bars</a>
+          <a href="/salons/" class="nav-link">Salons</a>
           <a href="/about/" class="nav-link">About</a>
           <!-- A separate page, not a view of this one: leaves the site.
                It exists in both languages as two files, so the link follows
@@ -1357,7 +1399,8 @@
             <a href="/bar/bar-espresso/" aria-label="Espresso &amp; Cocktail Lounge"><picture><source type="image/webp" srcset="/cafe-alpine-1024.webp 1024w, /cafe-alpine-1440.webp 1440w, /cafe-alpine-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/cafe-alpine.jpg" alt="A dark timber coffee unit lit from inside at dusk, the hatch open over a counter of coffee gear, snow and mountains behind it" loading="lazy" decoding="async"></picture></a>
           </div>
           <div class="trade-actions reveal d1" style="margin-top:36px;">
-            <a class="btn btn-line" href="/bars/">See the units</a>
+            <a class="btn btn-line" href="/bars/">Bars and coffee</a>
+            <a class="btn btn-line" href="/salons/">Nails and barbering</a>
             <a class="btn btn-line" href="/bars/economics/">Read the financial model</a>
           </div>
         </div>
@@ -1655,6 +1698,7 @@
             <div><picture><source type="image/webp" srcset="/bar-white-inside-1024.webp 1024w, /bar-white-inside-1440.webp 1440w, /bar-white-inside-2048.webp 2048w" sizes="(max-width: 760px) 100vw, 50vw"><img class="photo-block" src="/bar-white-inside.jpg" alt="The same shell fitted out in white boarding: a zinc bar with two stools, a bench and table down one wall and a small wood stove" loading="lazy" decoding="async"></picture></div>
           </div>
           <p class="plate-note">One shell, two briefs. Nothing structural differs between these two rooms — the chassis, the width, the aisle and the standing height are the same unit. What changes is everything a customer of yours will actually notice.</p>
+          <p style="margin-top:30px;"><a class="btn btn-line" href="/salons/">The same platform as a nail studio or a barbershop</a></p>
           <p class="fineprint" style="margin-top:30px;">This is the opposite of how the residences work, and the difference is deliberate. There we place the house on a farm and run the guests, because the owner is buying an income. Here you already have a business, a name and customers — you are buying equipment for it, not a service from us.</p>
         </div>
 
@@ -1876,6 +1920,284 @@
 
 
 
+
+
+    <!-- ======================================================
+         MOBILE SALONS
+         ====================================================== -->
+    <section id="view-salons" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <a class="breadcrumb-item" href="/">Home</a>
+          <span>/</span><span class="breadcrumb-current">Mobile salons</span>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">For the trade</span>
+          <h1 class="page-title serif">Mobile salons</h1>
+          <p class="page-lede">A nail studio of four stations and a three-chair barbershop, on the same 18 ft platform as the bars. Both run off the grid as standard, which the bars do not — a salon's load is light enough to carry.</p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">The deal</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">We build it and sell it</h2>
+          <p class="page-lede" style="margin-top:16px;">We do not rent it, we do not take a share of what you earn, and we do not operate it for you.</p>
+          <p style="margin-top:22px;max-width:62ch;">Each unit is built to your specification: your layout within the platform, your finishes, your equipment. Prices move with the build, so the figures here are ranges rather than a fixed list.</p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">The platform</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">The same 18 ft chassis</h2>
+          <p class="page-lede" style="margin-top:16px;">One platform for both configurations, and the same one the bars are built on.</p>
+          <dl class="res-specs" style="max-width:none;">
+            <div class="res-spec"><dt>Body length</dt><dd>5.5 m</dd></div>
+            <div class="res-spec"><dt>Body width</dt><dd>2.55 m</dd></div>
+            <div class="res-spec"><dt>Total height</dt><dd>about 3.4 m</dd></div>
+            <div class="res-spec"><dt>Internal floor</dt><dd>5.10 × 2.20 m</dd></div>
+            <div class="res-spec"><dt>Internal area</dt><dd>11 m²</dd></div>
+            <div class="res-spec"><dt>Internal ceiling</dt><dd>2.10 m at the walls, 2.35 m at the ridge</dd></div>
+            <div class="res-spec"><dt>Gross weight</dt><dd>under 3,500 kg</dd></div>
+          </dl>
+          <p class="fineprint" style="margin-top:30px;">Under 3,500 kg the unit is an ordinary braked trailer: towed by a pickup or van on a BE or B96 licence, moved by you or by any local haulier, with no heavy-transport carrier and no special movement permit. Width and height are within road-legal limits.</p>
+          <p style="margin-top:26px;max-width:62ch;">Entry is on the short end wall. That is not a styling choice: a side door costs a metre of usable length and breaks the line of workstations, and without it the fourth station does not fit.</p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Nail studio</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Four working stations in 11 m²</h2>
+          <figure class="fig">
+            <table>
+              <caption>Along the length of the unit</caption>
+              <thead><tr><th>Zone</th><th class="n">Length</th><th>What is in it</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl">Entry</td><td class="n">0.6 m</td><td>Door in the end wall, coat hooks, no vestibule</td></tr>
+                <tr><td class="lbl">Manicure</td><td class="n">1.9 m</td><td>Two stations across the width: table, client chair, technician stool, task lamp, extraction at the table edge. Walkway 0.85 m</td></tr>
+                <tr><td class="lbl">Pedicure</td><td class="n">1.8 m</td><td>Two stations, chairs offset by 0.5 m so technicians are not back to back. Walkway 0.6 m</td></tr>
+                <tr><td class="lbl">Service</td><td class="n">0.8 m</td><td>Sterilisation cabinet, sink, closed storage, payment counter</td></tr>
+              </tbody>
+            </table>
+            <figcaption class="fig-note">Eight people are in this room at full occupancy: four technicians and four clients. Climate control and extraction are not options here — they are what makes that possible.</figcaption>
+          </figure>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Barbershop</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Three chairs and a backwash</h2>
+          <p class="page-lede" style="margin-top:16px;">Four chairs do not fit on this platform. A barber needs clear floor around the chair, and a backwash unit is not optional.</p>
+          <figure class="fig">
+            <table>
+              <caption>Along the length of the unit</caption>
+              <thead><tr><th>Zone</th><th class="n">Length</th><th>What is in it</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl">Entry</td><td class="n">0.6 m</td><td>Door in the end wall, coat rail</td></tr>
+                <tr><td class="lbl">Chairs</td><td class="n">3.3 m</td><td>Three chairs along one wall, mirror and console at each, 1.1 m per chair</td></tr>
+                <tr><td class="lbl">Backwash</td><td class="n">1.0 m</td><td>Reclining chair, basin, water heater in a closed cabinet behind</td></tr>
+                <tr><td class="lbl">Storage</td><td class="n">0.2 m</td><td>Closed storage at the end wall</td></tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Power</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Off the grid as standard, and no generator</h2>
+          <p class="page-lede" style="margin-top:16px;">Both configurations run off-grid as standard and both accept shore power where it exists. This is where a salon differs from a bar: an espresso machine and a keg fridge draw continuously, so those units expect a socket. A salon's load is light and comes in pulses, so it can carry its own.</p>
+          <div class="duo-block">
+            <div>
+              <h3 class="serif">Nail studio</h3>
+              <p>LiFePO4 battery, 15 kWh. Inverter 3 kW. Solar 1.5 to 2 kW on the roof. Typical draw 0.6 to 0.9 kW; a shift takes 6 to 9 kWh, or 10 to 15 with air conditioning in summer.</p>
+              <p style="margin-top:14px;">Curing lamps run in pulses and a dust extractor draws 60 to 100 W. The unit charges overnight at base and works the day on the battery, with solar covering most of the cooling in summer.</p>
+            </div>
+            <div>
+              <h3 class="serif">Barbershop</h3>
+              <p>The same 15 kWh battery and 1.5 to 2 kW of solar, but a 5 kW inverter with 10 kW of peak. Dryers are brushless, 1.0 to 1.2 kW each. Water and cabin heat come from a diesel heater rather than an element.</p>
+              <p style="margin-top:14px;">Hair dryers are the hard part, and they are solved in layers rather than with a generator.</p>
+            </div>
+          </div>
+          <ul class="kit-list">
+            <li>Brushless dryers do the same work at half the draw, because the air speed does the drying rather than the heat: three of them peak at 3.0 to 3.6 kW instead of 6 to 7.</li>
+            <li>A load manager stops all three running at full power at once, which brings the peak down again.</li>
+            <li>Dryers run for minutes, not hours. Over a full shift, drying accounts for 2 to 3 kWh — what matters is the peak, and that is what the 10 kW of inverter headroom is for.</li>
+            <li>The larger consumer is not the dryers but hot water. An electric instant heater would draw 5 to 7 kW for as long as the basin runs, so the water is heated with diesel instead: the same fuel as the tow vehicle, almost no electricity, and cabin heat in winter as well.</li>
+          </ul>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Water</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Small tanks, because the water goes round</h2>
+          <p class="page-lede" style="margin-top:16px;">A closed-loop recirculation system filters and returns the water, so the tanks are there for make-up and the first fill rather than for a full day's supply.</p>
+          <figure class="fig">
+            <table>
+              <thead><tr><th>Tank</th><th class="n">Nail studio</th><th class="n">Barbershop</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl">Fresh</td><td class="n">60 l</td><td class="n">100 l</td></tr>
+                <tr><td class="lbl">Grey</td><td class="n">80 l</td><td class="n">120 l</td></tr>
+              </tbody>
+            </table>
+            <figcaption class="fig-note">Grey capacity is always larger than fresh, so the waste tank cannot overflow before the fresh water runs out. Tanks travel empty and fill on site.</figcaption>
+          </figure>
+          <p class="fineprint" style="margin-top:30px;">Against the conventional 400 and 500 litre arrangement this saves roughly 700 kg — and that saving is precisely what makes the off-grid pack fit under 3,500 kg.</p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Climate and air</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">More air handling than a coffee unit, not less</h2>
+          <ul class="kit-list">
+            <li>Inverter split heat pump, heating and cooling from one unit.</li>
+            <li>Insulation: 60 mm PIR in the walls, 80 mm in the roof, 50 mm in the floor, a thermal break at the frame, double glazing.</li>
+            <li>Nail studio: source extraction at every station plus ridge ducting. Acetone vapour and filing dust are the reason this configuration carries more air handling than a unit that serves coffee.</li>
+            <li>Barbershop: ridge extraction, with the diesel heater providing cabin heat.</li>
+          </ul>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Weight</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">A budget, and every option spends from it</h2>
+          <figure class="fig">
+            <table>
+              <thead><tr><th>Item</th><th class="n">Approximately</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl">Recirculation instead of large tanks</td><td class="n">saves 700 kg</td></tr>
+                <tr><td class="lbl">Off-grid pack: battery, inverter, solar</td><td class="n">200 to 250 kg</td></tr>
+                <tr><td class="lbl">Lifting side panel and tent, if specified</td><td class="n">150 to 200 kg</td></tr>
+              </tbody>
+            </table>
+          </figure>
+          <p class="fineprint" style="margin-top:30px;">The consequence is worth stating plainly: a maximum-equipment build and a maximum-autonomy build pull against each other. We tell you where the trade sits for your configuration rather than discovering it at handover.</p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Options</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Three things worth deciding early</h2>
+          <div class="duo-block">
+            <div>
+              <h3 class="serif">Lifting side panel</h3>
+              <p>The long side is hinged at the roof line and lifts on gas struts to form a canopy, with a tent enclosing three sides and a deck at floor level. In summer it adds two working stations outdoors; in winter it stays shut and the unit works on its internal stations alone. Available on all configurations.</p>
+            </div>
+            <div>
+              <h3 class="serif">Mirrored glazing</h3>
+              <p>One-way mirror film on the side windows, and worth knowing how it behaves: the effect depends on the light being brighter outside than in, so it reverses after dark when the interior is lit. If evening privacy matters, specify switchable glass or blinds alongside it. It also cuts solar gain noticeably, which is a real saving on cooling in an Adriatic summer.</p>
+            </div>
+            <div>
+              <h3 class="serif">Shore power package</h3>
+              <p>230 V 16 A inlet, distribution board and external socket, for sites where mains is available.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Handover</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">Lead time, documents, warranty</h2>
+          <p class="page-lede" style="margin-top:16px;">Two to three months from deposit to a finished unit, plus about a week for delivery. The build slot is confirmed when the order is placed.</p>
+          <p style="margin-top:22px;max-width:62ch;">We are not a reseller. We specify the unit, control the build at every stage, and hand it over ourselves. The warranty is ours.</p>
+          <ul class="kit-list">
+            <li>Chassis registration documents and plates, and EU type approval.</li>
+            <li>Declaration of conformity for the body.</li>
+            <li>CE documentation and manuals for every installed item.</li>
+            <li>Electrical certificate for the on-board installation.</li>
+            <li>Technical file: drawings, weights, tank capacities, wiring and plumbing diagrams.</li>
+            <li>A written permit guide for the country where the unit will operate.</li>
+          </ul>
+          <dl class="res-specs" style="margin-top:30px;">
+            <div class="res-spec"><dt>Body, structure and joinery</dt><dd>3 years</dd></div>
+            <div class="res-spec"><dt>Chassis, axles and brakes</dt><dd>2 years</dd></div>
+            <div class="res-spec"><dt>Water, electrical and solar</dt><dd>2 years</dd></div>
+            <div class="res-spec"><dt>Installed equipment</dt><dd>The manufacturer's own warranty, registered in your name and handled by us</dd></div>
+          </dl>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Permits</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">A unit on wheels is still not a building</h2>
+          <p class="page-lede" style="margin-top:16px;">The principle is the same as for the bars: movable property rather than construction, so there is no building permit. What you need instead is the right to be on the land, a registered business, a local placement approval where the municipality requires one, and registered chassis and insurance.</p>
+          <p style="margin-top:22px;max-width:62ch;">One difference matters for a salon. A beauty or barbering service carries its own sanitary and hygiene licensing, separate from the food rules that apply to bars and coffee units, and it is usually the sterilisation and waste requirements an inspector looks at first. The unit is built to meet them: a sterilisation cabinet, a hand basin separate from the service basins, and closed waste storage. The licence itself is issued to you as the operator, and your municipality or health authority confirms what it requires.</p>
+          <p class="fineprint" style="margin-top:30px;">This describes the framework we build to. It is not legal advice, and the requirements on your specific plot are confirmed by your own lawyer or your municipality before the unit is placed.</p>
+          <p style="margin-top:30px;"><a class="btn btn-line" href="/bars/permits/">The legal status in full, country by country</a></p>
+        </div>
+
+        <div class="section-pad">
+          <p><a class="btn btn-line" href="/salons/economics/">What the unit earns</a></p>
+          <p style="margin-top:26px;"><a class="btn btn-solid" href="/enquiry/">Ask for a quotation</a></p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================
+         MOBILE SALONS — what the unit earns
+         ====================================================== -->
+    <section id="view-salon-economics" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <a class="breadcrumb-item" href="/">Home</a>
+          <span>/</span>
+          <a class="breadcrumb-item" href="/salons/">Mobile salons</a>
+          <span>/</span><span class="breadcrumb-current">What it earns</span>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">The numbers</span>
+          <h1 class="page-title serif">What a nail studio earns</h1>
+          <p class="page-lede">These are our working assumptions, not a promise. They are set out line by line so you can argue with them rather than take them on faith.</p>
+          <p style="margin-top:22px;max-width:62ch;">The model is a nail studio: four stations, eighteen shifts a month, an average ticket in line with current Montenegrin pricing. A unit at €45,000.</p>
+        </div>
+
+        <div class="section-pad">
+          <figure class="fig fig--cards">
+            <table>
+              <caption>One month, three levels of occupancy</caption>
+              <thead><tr><th>Occupancy</th><th class="n">Revenue</th><th class="n">Costs, technicians included</th><th class="n">Owner's profit</th><th class="n">Pays the unit back in</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl" data-label="Occupancy">70%</td><td class="n" data-label="Revenue">€8,870</td><td class="n" data-label="Costs, technicians included">−€6,565</td><td class="n" data-label="Owner's profit">€2,305</td><td class="n" data-label="Pays the unit back in">20 months</td></tr>
+                <tr><td class="lbl" data-label="Occupancy">85%</td><td class="n" data-label="Revenue">€10,770</td><td class="n" data-label="Costs, technicians included">−€7,630</td><td class="n" data-label="Owner's profit">€3,140</td><td class="n" data-label="Pays the unit back in">14 months</td></tr>
+                <tr class="tot"><td class="lbl" data-label="Occupancy">100%</td><td class="n" data-label="Revenue">€12,670</td><td class="n" data-label="Costs, technicians included">−€8,690</td><td class="n" data-label="Owner's profit">€3,980</td><td class="n" data-label="Pays the unit back in">11 months</td></tr>
+              </tbody>
+            </table>
+            <figcaption class="fig-note">Revenue moves in proportion to occupancy; costs do not, because about €1,600 a month of them is there whether the chairs are full or empty.</figcaption>
+          </figure>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Where it goes</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">The technician is the product</h2>
+          <p class="page-lede" style="margin-top:16px;">At 85% occupancy the technicians take 45% of revenue — about €4,850 of €10,770. Materials are 10 to 12%, and fuel and local fees are most of the rest.</p>
+          <p style="margin-top:22px;max-width:62ch;">Technician pay is the largest line by a wide margin, and it is a share of revenue rather than of profit. That is how this trade works: the person is what the client is booking.</p>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Before you use these</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">What the table leaves out</h2>
+          <ul class="kit-list">
+            <li>Payroll taxes are not in it. If technicians are employed, contributions sit on top; if they are registered as sole traders working for a percentage, which is the norm in this trade, the picture is different. Your accountant decides which applies to you.</li>
+            <li>The tow vehicle is not in the unit price, and a return should be worked out on what you actually spend rather than on the unit alone.</li>
+            <li>The first two or three months will not reach 70%. A new format takes time to fill a diary, and six months to working occupancy is the realistic assumption.</li>
+          </ul>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">The case that changes it</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">If you are the technician</h2>
+          <p class="page-lede" style="margin-top:16px;">Most buyers of a unit like this work in it. Then the 45% is not paid out, and the arithmetic looks quite different — but exactly how different depends on how many of the four stations are worked by someone on a percentage.</p>
+          <figure class="fig">
+            <table>
+              <caption>At 85% occupancy, monthly, to the owner</caption>
+              <thead><tr><th>Who works the four stations</th><th class="n">To you</th></tr></thead>
+              <tbody>
+                <tr><td class="lbl">Four technicians, each on a share</td><td class="n">€3,140</td></tr>
+                <tr><td class="lbl">You at one station, three on a share</td><td class="n">€4,350</td></tr>
+                <tr class="tot"><td class="lbl">Nobody on a share — you and people who are not paid a percentage</td><td class="n">€7,990</td></tr>
+              </tbody>
+            </table>
+            <figcaption class="fig-note">The last line is the one worth reading carefully. One person cannot work four stations, so it only holds where the others are family or partners rather than technicians on 45%. It is the ceiling of this model, not its expected case.</figcaption>
+          </figure>
+        </div>
+
+        <div class="section-pad">
+          <p><a class="btn btn-line" href="/salons/">Back to the units</a></p>
+          <p style="margin-top:26px;"><a class="btn btn-solid" href="/enquiry/">Ask for a quotation</a></p>
+        </div>
+      </div>
+    </section>
 
     <!-- ======================================================
          MOBILE BARS — your menu, your payback
@@ -2709,6 +3031,7 @@
               <li><a href="/residences/" class="footer-link">Residences</a></li>
               <li><a href="/farms/" class="footer-link">Farms</a></li>
               <li><a href="/bars/" class="footer-link">Mobile bars</a></li>
+              <li><a href="/salons/" class="footer-link">Mobile salons</a></li>
               <li><a href="/bars/economics/" class="footer-link">The financial model</a></li>
               <li><a href="/bars/calculator/" class="footer-link">Your own numbers</a></li>
               <li><a href="/bars/spec/" class="footer-link">Specification</a></li>
@@ -3123,6 +3446,8 @@ const VIEW_PATH = {
   'unit-spec':       '/bars/spec/',
   'unit-calculator': '/bars/calculator/',
   'unit-permits':    '/bars/permits/',
+  'salons':          '/salons/',
+  'salon-economics': '/salons/economics/',
   'enquiry':         '/enquiry/',
   'host':            '/host/',
   'about':           '/about/',
@@ -3139,6 +3464,7 @@ const LEGACY_HASH = {
   'all-units': '/bars/', 'unit-economics': '/bars/economics/',
   'unit-spec': '/bars/spec/', 'unit-permits': '/bars/permits/',
   'unit-calculator': '/bars/calculator/',
+  'salons': '/salons/', 'salon-economics': '/salons/economics/',
   'enquiry': '/enquiry/', 'host': '/host/', 'about': '/about/',
   'terms': '/terms/', 'privacy': '/privacy/', 'thanks': '/thanks/'
 };
@@ -3174,6 +3500,14 @@ const HEAD_META = {
   '/bars/economics/': {
     title: 'What a mobile bar costs — Tiny Mansion',
     desc:  'Every component we costed, what each one adds to the price, and the arithmetic of a season — separately for the draft bar and for the espresso bar.'
+  },
+  '/salons/': {
+    title: 'Mobile salons — Tiny Mansion',
+    desc:  'A nail studio of four stations and a three-chair barbershop on the same 18 ft platform. Off-grid as standard, sold outright, built to your specification.'
+  },
+  '/salons/economics/': {
+    title: 'What a mobile salon earns — Tiny Mansion',
+    desc:  'Four stations, eighteen shifts a month, three levels of occupancy: revenue, costs, the owner\'s profit, how long the unit takes to pay for itself, and what the table leaves out.'
   },
   '/bars/calculator/': {
     title: 'Your menu, your payback — Tiny Mansion',

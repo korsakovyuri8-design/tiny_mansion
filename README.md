@@ -27,6 +27,7 @@ Also hand-written:
 | `gen_bars.py` | Rewrites `/bars/economics/` out of `bars.py`. Replaces the section rather than appending, so it is safe to re-run. |
 | `gen_deck.py` | Rewrites the money slides of `deck/deck.html` out of `club.py` and `bars.py`. |
 | `relaunch.py` | Changes the advertised launch quarter everywhere at once. |
+| `checks/` | Ten browser checks that run against the built site. See **The checks** below. |
 
 ## Building
 
@@ -42,6 +43,12 @@ what it renders to a static file at that address. It also writes
 
 Commit the generated files along with the source — GitHub Pages serves what
 is in the repository, there is no build step on their side.
+
+Then run the checks:
+
+```
+node checks/all.mjs
+```
 
 ## Why the build exists
 
@@ -105,6 +112,32 @@ There is one platform, `PLATFORM` in `src/index.html`: 18 ft, 5.5 m body.
 It replaced a 4/6/8 m offering, so anything that names a bar's length is
 reading from that constant or from the `inside` list on each unit.
 
+## The mobile salons
+
+`/salons/` and `/salons/economics/` are the second commercial line: a
+four-station nail studio and a three-chair barbershop on the same 18 ft
+platform as the bars. Both are hand-written views in `src/index.html`.
+
+The one thing worth knowing before editing them: a salon is **off-grid as
+standard and the bars are not**, and that is a load argument rather than a
+positioning one. An espresso machine and a keg fridge draw continuously, so
+those units expect a socket; a salon's load is light and comes in pulses, so
+it can carry its own. The recirculating water system is what buys the
+budget — 60/80 litre tanks instead of 400/500 saves about 700 kg, which is
+what lets the off-grid pack fit under 3,500 kg. Change one of those numbers
+and the weight section stops adding up.
+
+`€45,000` for a salon is a **price point, not a derived figure**. The
+€66,000 bar and coffee retail comes out of the component model in
+`bars.py`; nothing in the repo builds up a salon from parts yet. When a
+salon bill of materials exists it belongs in a model file like the others.
+
+The owner's-profit table on `/salons/economics/` deliberately runs three
+rows rather than one number. Four technicians on 45% leaves €3,140 a month;
+nobody on a share leaves €7,990 — but one person cannot work four stations,
+so the last row only holds where the others are family or partners. It is
+the ceiling of the model, not its expected case, and the caption says so.
+
 ## The payback calculator
 
 `/bars/calculator/` lets an operator type their own menu in and get the
@@ -124,6 +157,20 @@ reach it: `drawCalc()` runs again on a language switch. A seeded menu
 follows the language; an edited one never gets overwritten, which is what
 `calc.dirty` is for. The menu is kept in `localStorage` under `tm-calc`
 and never leaves the browser.
+
+## Wide tables on a phone
+
+`.fig` scrolls its table sideways rather than pushing the page, with a
+right-hand shade attached to the scroll position so a phone reader can see
+there is another column. Right-aligned cells carry a left padding: without
+one, two numeric columns side by side touch exactly, which showed up as
+fused headers ("ВЫРУЧКАРАСХОДЫ") on the salon economics page.
+
+Where the last columns are the ones that matter, scrolling to reach them is
+not good enough. `.fig--cards` turns each row into a card below 620px; the
+labels come off `data-label`, which is in `I18N_ATTRS` and so translates
+like any other attribute. Only the five-column occupancy table uses it — a
+matrix like the bars payback grid does not card usefully and stays a scroll.
 
 ## Adding a farm, a country or a residence
 
@@ -218,6 +265,40 @@ of the same site answered the same question differently. Everything models
 at €1,450 now, and the North American rate appears only as the thing we can
 actually cite, above what we model at.
 
+## The checks
+
+`node checks/all.mjs` runs all ten in turn: addresses and the language
+round-trip, internal links, Cyrillic left in English, Latin left in Russian,
+English prose left in Russian, thousands grouped the wrong way round, titles
+and descriptions, landmarks and focus rings and alt text, text clipped at 390
+and 1280 in both languages, and anything pushing the page sideways. Each
+starts its own static server and prints its own summary, so a failure is read
+from the output rather than an exit code. **Build first** — they read the
+built pages, not `src/`.
+
+They need Playwright with Chromium; `checks/pw.mjs` resolves it normally and
+falls back to a global install.
+
+
+Two of them are newer than the rest and worth knowing about.
+
+`checks/latin.mjs` flags any Latin letter left in the Russian rendering,
+text and translated attributes alike. `untranslated.mjs` only catches Latin
+prose of two words and twelve characters or more, so `11 m²` sat
+untranslated on a Russian page for a while, along with three `aria-label`s.
+The vocabulary that is meant to stay Latin — Victron, LiFePO₄, PIR, CE,
+Morsko dobro, the farm names — is struck out by the `KEEP` list at the top,
+so **the target is zero**: a new hit is either a missing dictionary key or a
+term that belongs on that list. Run against the English build it reports
+around 1,245, which is the check proving it is looking.
+
+`checks/money.mjs` catches thousands grouped the wrong way round. Russian
+uses a space (`€36 000`) and English a comma (`€36,000`); `calcMoney()` does
+that in script, but a figure written straight into markup needs its own
+dictionary key or it stays comma-grouped in Russian — which is how the salon
+economics tables first shipped, with `€10,770` in a table above prose
+reading `€10 770`.
+
 ## Still to do
 
 - Georgia is on /bars/permits/ alongside Montenegro and Croatia while we
@@ -244,6 +325,14 @@ actually cite, above what we model at.
   are carried across from the cafe renders to the bar because it is the
   same shell; nothing in the bar renders states them. Confirm the whole
   list against the manufacturer's drawing before it is quoted to anyone.
+- The salon pages have no imagery at all — not even renders. Both layouts
+  are described in words and a table.
+- `€45,000` for a salon has no bill of materials behind it, unlike the
+  €66,000 bar. It is the figure the economics page is built on, so it is
+  the first thing to replace when real component prices exist.
+- The salon revenue model assumes eighteen shifts a month and an average
+  ticket at current Montenegrin pricing. Neither has been checked against
+  an operating salon.
 - The mint cafe render has "Exterior tch" lettered into it where it should
   read "Exterior hatch". It has to be fixed in the render, not in markup.
 - Every page carries every view, so each file is around 250 KB (68 KB

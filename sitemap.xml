@@ -41,6 +41,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://tinymansion.co/salons/</loc>
+    <lastmod>2026-09-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tinymansion.co/salons/economics/</loc>
+    <lastmod>2026-09-08</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://tinymansion.co/enquiry/</loc>
     <lastmod>2026-09-08</lastmod>
     <priority>0.8</priority>
