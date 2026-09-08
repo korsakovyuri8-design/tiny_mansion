@@ -105,6 +105,26 @@ There is one platform, `PLATFORM` in `src/index.html`: 18 ft, 5.5 m body.
 It replaced a 4/6/8 m offering, so anything that names a bar's length is
 reading from that constant or from the `inside` list on each unit.
 
+## The payback calculator
+
+`/bars/calculator/` lets an operator type their own menu in and get the
+payback on a unit. It runs the same sum as `/bars/economics/` — takings,
+less what is served, less staff, fuel and running — with the first two
+lines coming from their menu instead of our estimate. The cost lines start
+at the figures in `bars.py` and are editable.
+
+Two things to keep straight. The published economics are a **hire**: an
+organiser pays a fixed fee for the outing and on a draft bar often brings
+the stock. The calculator is **the till**: guests buy, the stock is the
+operator's. Both are real, they give different paybacks, and the page says
+so before the first field.
+
+Everything on the page is composed in script, so the language walk cannot
+reach it: `drawCalc()` runs again on a language switch. A seeded menu
+follows the language; an edited one never gets overwritten, which is what
+`calc.dirty` is for. The menu is kept in `localStorage` under `tm-calc`
+and never leaves the browser.
+
 ## Adding a farm, a country or a residence
 
 Add the record to `DATA` in `src/index.html` and run the build. Its page,

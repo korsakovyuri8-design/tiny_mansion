@@ -833,6 +833,84 @@ window.RU = {
   '5.10 × 2.20 m': '5,10 × 2,20 м',
   'up to 5.00 m long, 0.45 m high': 'длина до 5,00 м, высота 0,45 м',
 
+  /* ── Калькулятор окупаемости ── */
+  'Price, €': 'Цена, €',
+  'Cost, €': 'Себестоимость, €',
+  'Staff for the outing, €': 'Персонал на выезд, €',
+  'Fuel and towing, €': 'Топливо и перегон, €',
+  'Cleaning, consumables, line service, €': 'Уборка, расходники, обслуживание линии, €',
+  'What the unit costs you, €': 'Во что вам обходится юнит, €',
+  'Run it on your own menu': 'Посчитать на своём меню',
+  'Your own numbers': 'Ваши цифры',
+  'Your menu': 'Ваше меню',
+  'Your numbers': 'Ваши цифры',
+  'Put your own prices in': 'Подставьте свои цены',
+  'Your menu, your payback — Tiny Mansion': 'Ваше меню, ваша окупаемость — Tiny Mansion',
+  'Put your own menu in — every line, your prices, your cost of goods — and see what an outing leaves and how many seasons the unit takes to pay for itself.':
+    'Введите своё меню — каждую позицию, свои цены, свою себестоимость — и увидите, сколько оставляет выезд и за сколько сезонов окупается юнит.',
+  'Type your menu in below — every line you would actually serve — and the same arithmetic that is published on the economics page runs on your numbers instead of ours.':
+    'Введите ниже своё меню — каждую позицию, которую вы реально подаёте, — и тот же расчёт, что опубликован на странице экономики, посчитается на ваших цифрах вместо наших.',
+  'One difference worth naming before you start. The figures we publish are a':
+    'Одно различие, которое стоит назвать сразу. Цифры, которые мы публикуем, — это',
+  'hire': 'аренда',
+  ': an organiser books the unit for a fixed fee, and on a draft bar they often bring the stock themselves. This page is the other way of earning —':
+    ': организатор бронирует юнит за фиксированную сумму, а на разливном баре нередко привозит товар сам. Эта страница — про другой способ зарабатывать,',
+  'the till': 'про кассу',
+  ', where guests buy from you and the stock is yours. Most operators do both, and the two give different paybacks on the same unit, which is exactly why it is worth putting your own numbers in.':
+    ': гости покупают у вас, и товар ваш. Большинство операторов делают и то и другое, и на одном и том же юните это даёт разную окупаемость — потому и стоит подставить свои цифры.',
+  'Espresso bar': 'Эспрессо-бар',
+  'What you sell': 'Что вы продаёте',
+  'One outing, line by line': 'Один выезд, по строкам',
+  'Price is what the guest pays. Cost is what the contents cost you — the beer, the beans, the milk, the cup. Quantity is how many of that line go out in a single outing.':
+    'Цена — это то, что платит гость. Себестоимость — во что содержимое обходится вам: пиво, зерно, молоко, стакан. Количество — сколько таких позиций уходит за один выезд.',
+  'Item': 'Позиция',
+  'Cost': 'Себестоимость',
+  'Per outing': 'За выезд',
+  'Leaves': 'Оставляет',
+  'Remove': 'Удалить',
+  'Remove this line': 'Удалить эту строку',
+  'Add a line': 'Добавить строку',
+  'Start again': 'Начать заново',
+  'Kept in this browser, not sent anywhere.':
+    'Хранится в этом браузере и никуда не отправляется.',
+  'What the outing costs you': 'Во что вам обходится выезд',
+  'The lines that do not come off the menu': 'Строки, которых нет в меню',
+  'These start at the figures behind the economics page. Change any of them to your own.':
+    'Здесь подставлены цифры, стоящие за страницей экономики. Любую можно заменить своей.',
+  'Staff for the outing': 'Персонал на выезд',
+  'Outings you can fill in a season': 'Сколько выездов вы наберёте за сезон',
+  'What the unit costs you': 'Во что вам обходится юнит',
+  'What it comes to': 'Что получается',
+  'One outing, one season, and the payback': 'Выезд, сезон и окупаемость',
+  'What the menu takes': 'Сколько берёт меню',
+  'Staff, fuel, running': 'Персонал, топливо, обслуживание',
+  'One outing leaves': 'Выезд оставляет',
+  'A season of {n} outings': 'Сезон из {n} выездов',
+  'Payback': 'Окупаемость',
+  '{n} seasons': '{n} сезона',
+  'Never, on these numbers': 'На этих цифрах — никогда',
+  'An outing costs more than it takes. Raise a price, cut a cost line, or serve more of something — the sum above shows which line is doing it.':
+    'Выезд обходится дороже, чем приносит. Поднимите цену, срежьте расход или подавайте чего-то больше — расчёт выше показывает, какая строка это делает.',
+  'At two and a half seasons or under, the unit is a piece of equipment rather than a bet. That is the line we hold ourselves to.':
+    'Два с половиной сезона и меньше — это уже оборудование, а не ставка. Эту границу мы держим для себя.',
+  'Above two and a half seasons we would rather talk before you order. Either the diary needs more outings in it, or the unit needs less equipment in it — both are things we can change.':
+    'Выше двух с половиной сезонов мы предпочтём поговорить до заказа. Либо в календаре не хватает выездов, либо в юните слишком много оборудования — и то и другое поправимо.',
+  'This is your arithmetic, not our promise. It assumes every outing sells the quantities you typed and nothing spoils, and it leaves out what your own business already costs you — the vehicle that tows it, insurance, your accountant, the diary you have to fill. Nothing is sent anywhere: the numbers stay in this browser.':
+    'Это ваш расчёт, а не наше обещание. Он исходит из того, что каждый выезд продаёт вбитые вами количества и ничего не пропадает, и не учитывает того, во что вам уже обходится ваш бизнес: тягач, страховку, бухгалтера, календарь, который надо заполнять. Никуда ничего не уходит: цифры остаются в этом браузере.',
+  'Where our own figures come from': 'Откуда наши собственные цифры',
+  'Send us your numbers and we will price the unit around them':
+    'Пришлите свои цифры — посчитаем юнит под них',
+  'Pint of lager': 'Пинта лагера',
+  'Craft beer, 0.4': 'Крафт, 0,4',
+  'Glass of wine': 'Бокал вина',
+  'Cider': 'Сидр',
+  'Soft drink': 'Безалкогольное',
+  'Cappuccino': 'Капучино',
+  'Espresso': 'Эспрессо',
+  'Filter coffee': 'Фильтр-кофе',
+  'Pastry': 'Выпечка',
+  'Cold drink': 'Холодный напиток',
+
   'Delivery': 'Доставка',
   'To your yard, not to a port': 'На вашу площадку, а не в порт',
   'The unit is built in Istanbul and delivered to the address you give us — Germany, France, the Netherlands, Spain, anywhere in the EU. Customs clearance and the import paperwork are handled as part of the delivery, and the price we quote is the price at your gate.':

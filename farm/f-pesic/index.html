@@ -917,6 +917,116 @@
     .trade-strip .photo-block { transition: transform 1.1s cubic-bezier(.2,.7,.2,1); }
     .trade-strip > a:hover .photo-block { transform: scale(1.05); }
 
+    /* ==========================================================
+       CALCULATOR
+       ==========================================================
+       An operator's own menu, priced through the same arithmetic that is
+       published on /bars/economics/. Inputs look like the rules around
+       them: a line, not a box. */
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    }
+    .calc { margin-top: 34px; }
+    .calc-tabs { display: flex; gap: 2px; background: var(--rule); margin-bottom: 30px; }
+    .calc-tab {
+      flex: 1; padding: 14px 10px; background: var(--card); border: 0;
+      font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--muted); cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .calc-tab.active { background: var(--ink); color: var(--bg-cream); }
+
+    .calc-table { width: 100%; border-collapse: collapse; }
+    .calc-table th {
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); font-weight: 400; text-align: left;
+      padding: 0 10px 9px 0; border-bottom: 1px solid var(--ink);
+    }
+    .calc-table th.n, .calc-table td.n { text-align: right; }
+    .calc-table td { padding: 0; border-bottom: 1px solid var(--rule); }
+    .calc-table td.n { padding-right: 0; }
+
+    .calc-in {
+      width: 100%; border: 0; background: none; padding: 12px 10px 12px 0;
+      font-family: var(--font-sans); font-size: 15px; color: var(--ink);
+      -moz-appearance: textfield;
+    }
+    .calc-in::-webkit-outer-spin-button, .calc-in::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .calc-in.n { text-align: right; padding-right: 0; }
+    .calc-in:focus { outline: 2px solid var(--gold); outline-offset: -2px; }
+    .calc-in::placeholder { color: var(--muted); opacity: 0.7; }
+    .calc-line { font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: 10px; }
+
+    .calc-del {
+      border: 0; background: none; cursor: pointer; color: var(--muted);
+      font-size: 20px; line-height: 1; padding: 6px 0 6px 12px;
+    }
+    .calc-del:hover { color: var(--ink); }
+
+    .calc-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; align-items: center; }
+    .calc-note { font-size: 12px; color: var(--muted); }
+
+    .calc-out { margin-top: 46px; border-top: 2px solid var(--ink); }
+    .calc-row {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+      padding: 13px 0; border-bottom: 1px solid var(--rule);
+    }
+    .calc-row dt { font-size: 15px; color: var(--body); }
+    .calc-row dd {
+      font-variant-numeric: tabular-nums; white-space: nowrap;
+      font-size: 16px; color: var(--ink);
+    }
+    .calc-row.sum { border-bottom: 2px solid var(--ink); }
+    .calc-row.sum dt, .calc-row.sum dd {
+      font-family: var(--font-serif); font-size: clamp(19px, 2vw, 25px); color: var(--ink);
+    }
+    .calc-answer {
+      margin-top: 34px; background: var(--ink); color: var(--bg-cream);
+      padding: clamp(26px, 4vw, 44px);
+    }
+    .calc-answer .eyebrow { color: rgba(247, 243, 237, 0.62); }
+    .calc-answer strong {
+      display: block; font-family: var(--font-serif); font-weight: 400;
+      font-size: clamp(30px, 5vw, 52px); line-height: 1.05; margin-top: 12px;
+    }
+    .calc-answer p { font-size: 15px; line-height: 1.65; color: rgba(247, 243, 237, 0.72); margin-top: 16px; max-width: 60ch; }
+
+    /* Шесть колонок в 390 пикселей не помещаются ни на каком языке, а по-русски
+       подписи ещё длиннее. На телефоне строка меню becomes карточка: название
+       во всю ширину, под ним поля со своими подписями. */
+    @media (max-width: 620px) {
+      .calc-table--menu thead { display: none; }
+      .calc-table--menu, .calc-table--menu tbody,
+      .calc-table--menu tr, .calc-table--menu td { display: block; width: 100%; }
+      .calc-table--menu tr { padding: 16px 0 12px; border-bottom: 1px solid var(--rule); }
+      .calc-table--menu td { border: 0; padding: 0; }
+      .calc-table--menu td[data-label] {
+        display: flex; align-items: baseline; justify-content: space-between;
+        gap: 14px; padding: 5px 0;
+      }
+      .calc-table--menu td[data-label]::before {
+        content: attr(data-label); flex: none;
+        font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--muted);
+      }
+      .calc-table--menu .calc-in { padding: 6px 0; }
+      .calc-table--menu .calc-in.n { width: 7em; }
+      .calc-table--menu .calc-name { font-size: 16px; padding-bottom: 8px; }
+      .calc-table--menu .calc-foot { padding-top: 8px; }
+      /* подпись слева, сумма и крестик держатся вместе справа */
+      .calc-table--menu .calc-foot::before { margin-right: auto; }
+      .calc-table--menu .calc-del { padding: 4px 0 4px 12px; }
+
+      .calc-table--lines tr { display: flex; align-items: baseline; gap: 12px; }
+      .calc-table--lines td { border: 0; }
+      .calc-table--lines td:first-child { flex: 1; }
+      .calc-table--lines .calc-line { padding: 12px 0; display: block; white-space: normal; }
+      .calc-table--lines .calc-in.n { width: 6.5em; }
+    }
+
     .duo-block { display: grid; gap: 34px; margin-top: 40px; }
     @media (min-width: 820px) { .duo-block { grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 70px); } }
     .duo-block h3 { font-size: clamp(21px, 2vw, 27px); line-height: 1.15; margin-bottom: 14px; }
@@ -1622,6 +1732,7 @@
 
           <p style="margin-top:34px;"><a class="btn btn-line" href="/bars/economics/">See the whole working</a></p>
           <div class="trade-actions" style="margin-top:20px;">
+            <a class="btn btn-line" href="/bars/calculator/">Run it on your own menu</a>
             <a class="btn btn-line" href="/bars/spec/">The full specification</a>
             <a class="btn btn-line" href="/bars/permits/">Permits, country by country</a>
           </div>
@@ -1749,6 +1860,7 @@
           <p class="page-lede" style="margin-top:16px;" id="unit-money"></p>
           <p class="fineprint" style="margin-top:26px;">€1,450 is an estimate, and we say so. The rate we can actually cite is North American: two working operators publish €1,610 for a booking of this kind, converted from dollars. We model below what they charge rather than at it, and your own diary decides how many outings a season holds.</p>
           <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/economics/">See how that is worked out</a></p>
+          <p style="margin-top:18px;"><a class="btn btn-line" href="/bars/calculator/">Run it on your own menu</a></p>
           <p style="margin-top:18px;"><a class="btn btn-line" href="/bars/spec/">The full specification</a></p>
         </div>
 
@@ -1766,6 +1878,96 @@
     </section>
 
 
+
+
+    <!-- ======================================================
+         MOBILE BARS — your menu, your payback
+         ====================================================== -->
+    <section id="view-unit-calculator" class="view-section">
+      <div class="container page-top">
+        <div class="breadcrumbs">
+          <a class="breadcrumb-item" href="/">Home</a>
+          <span>/</span>
+          <a class="breadcrumb-item" href="/bars/">Mobile bars</a>
+          <span>/</span><span class="breadcrumb-current">Your numbers</span>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">Your menu</span>
+          <h1 class="page-title serif">Put your own prices in</h1>
+          <p class="page-lede">Type your menu in below — every line you would actually serve — and the same arithmetic that is published on the economics page runs on your numbers instead of ours.</p>
+          <p style="margin-top:22px;max-width:62ch;">One difference worth naming before you start. The figures we publish are a <strong>hire</strong>: an organiser books the unit for a fixed fee, and on a draft bar they often bring the stock themselves. This page is the other way of earning — <strong>the till</strong>, where guests buy from you and the stock is yours. Most operators do both, and the two give different paybacks on the same unit, which is exactly why it is worth putting your own numbers in.</p>
+        </div>
+
+        <div class="section-pad">
+          <div class="calc-tabs" role="group" aria-label="Which unit">
+            <button type="button" class="calc-tab active" data-kind="bar">Draft bar</button>
+            <button type="button" class="calc-tab" data-kind="coffee">Espresso bar</button>
+          </div>
+
+          <span class="eyebrow">What you sell</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">One outing, line by line</h2>
+          <p class="page-lede" style="margin-top:16px;">Price is what the guest pays. Cost is what the contents cost you — the beer, the beans, the milk, the cup. Quantity is how many of that line go out in a single outing.</p>
+
+          <div class="calc">
+            <table class="calc-table calc-table--menu">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th class="n">Price, €</th>
+                  <th class="n">Cost, €</th>
+                  <th class="n">Per outing</th>
+                  <th class="n">Leaves</th>
+                  <th><span class="visually-hidden">Remove</span></th>
+                </tr>
+              </thead>
+              <tbody id="calc-rows"></tbody>
+            </table>
+            <div class="calc-actions">
+              <button type="button" class="btn btn-line" id="calc-add">Add a line</button>
+              <button type="button" class="btn btn-line" id="calc-reset">Start again</button>
+              <span class="calc-note" id="calc-saved"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">What the outing costs you</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">The lines that do not come off the menu</h2>
+          <p class="page-lede" style="margin-top:16px;">These start at the figures behind the economics page. Change any of them to your own.</p>
+          <div class="calc">
+            <table class="calc-table calc-table--lines">
+              <tbody>
+                <tr><td><label class="calc-line" for="calc-staff">Staff for the outing, €</label></td>
+                    <td class="n"><input class="calc-in n" id="calc-staff" type="number" min="0" step="1" inputmode="decimal"></td></tr>
+                <tr><td><label class="calc-line" for="calc-fuel">Fuel and towing, €</label></td>
+                    <td class="n"><input class="calc-in n" id="calc-fuel" type="number" min="0" step="1" inputmode="decimal"></td></tr>
+                <tr><td><label class="calc-line" for="calc-run">Cleaning, consumables, line service, €</label></td>
+                    <td class="n"><input class="calc-in n" id="calc-run" type="number" min="0" step="1" inputmode="decimal"></td></tr>
+                <tr><td><label class="calc-line" for="calc-outings">Outings you can fill in a season</label></td>
+                    <td class="n"><input class="calc-in n" id="calc-outings" type="number" min="1" step="1" inputmode="numeric"></td></tr>
+                <tr><td><label class="calc-line" for="calc-price">What the unit costs you, €</label></td>
+                    <td class="n"><input class="calc-in n" id="calc-price" type="number" min="0" step="500" inputmode="numeric"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section-pad">
+          <span class="eyebrow">What it comes to</span>
+          <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">One outing, one season, and the payback</h2>
+          <dl class="calc-out" id="calc-out"></dl>
+          <div class="calc-answer">
+            <span class="eyebrow on-dark">Payback</span>
+            <strong id="calc-payback">—</strong>
+            <p id="calc-verdict"></p>
+          </div>
+          <p class="fineprint" style="margin-top:34px;">This is your arithmetic, not our promise. It assumes every outing sells the quantities you typed and nothing spoils, and it leaves out what your own business already costs you — the vehicle that tows it, insurance, your accountant, the diary you have to fill. Nothing is sent anywhere: the numbers stay in this browser.</p>
+          <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/economics/">Where our own figures come from</a></p>
+          <p style="margin-top:18px;"><a class="btn btn-solid" href="/enquiry/">Send us your numbers and we will price the unit around them</a></p>
+        </div>
+      </div>
+    </section>
 
     <!-- ======================================================
          MOBILE BARS — the unit, specified
@@ -2439,6 +2641,7 @@
               <li><a href="/farms/" class="footer-link">Farms</a></li>
               <li><a href="/bars/" class="footer-link">Mobile bars</a></li>
               <li><a href="/bars/economics/" class="footer-link">The financial model</a></li>
+              <li><a href="/bars/calculator/" class="footer-link">Your own numbers</a></li>
               <li><a href="/bars/spec/" class="footer-link">Specification</a></li>
               <li><a href="/bars/permits/" class="footer-link">Permits</a></li>
               <li><a href="/enquiry/" class="footer-link">Enquire</a></li>
@@ -2849,6 +3052,7 @@ const VIEW_PATH = {
   'all-units':       '/bars/',
   'unit-economics':  '/bars/economics/',
   'unit-spec':       '/bars/spec/',
+  'unit-calculator': '/bars/calculator/',
   'unit-permits':    '/bars/permits/',
   'enquiry':         '/enquiry/',
   'host':            '/host/',
@@ -2865,6 +3069,7 @@ const LEGACY_HASH = {
   'home': '/', 'all-residences': '/residences/', 'all-farms': '/farms/',
   'all-units': '/bars/', 'unit-economics': '/bars/economics/',
   'unit-spec': '/bars/spec/', 'unit-permits': '/bars/permits/',
+  'unit-calculator': '/bars/calculator/',
   'enquiry': '/enquiry/', 'host': '/host/', 'about': '/about/',
   'terms': '/terms/', 'privacy': '/privacy/', 'thanks': '/thanks/'
 };
@@ -2900,6 +3105,10 @@ const HEAD_META = {
   '/bars/economics/': {
     title: 'What a mobile bar costs — Tiny Mansion',
     desc:  'Every component we costed, what each one adds to the price, and the arithmetic of a season — separately for the draft bar and for the espresso bar.'
+  },
+  '/bars/calculator/': {
+    title: 'Your menu, your payback — Tiny Mansion',
+    desc:  'Put your own menu in — every line, your prices, your cost of goods — and see what an outing leaves and how many seasons the unit takes to pay for itself.'
   },
   '/bars/spec/': {
     title: 'The unit, specified — Tiny Mansion',
@@ -3003,6 +3212,7 @@ function showView(viewId) {
   if (viewId === 'all-residences') renderResidenceRows('all-residence-rows');
   if (viewId === 'all-farms') renderAllFarms();
   if (viewId === 'all-units') renderUnitRows();
+  if (viewId === 'unit-calculator') initCalc();
   if (viewId === 'enquiry') prefillEnquiry();
   if (window.__updateHeader) window.__updateHeader();
   refreshReveal();
@@ -3503,6 +3713,236 @@ function insideAltOf(u) {
   return p ? p.alt : u.name;
 }
 
+/* ==========================================================
+   THE OPERATOR'S OWN ARITHMETIC
+   ==========================================================
+   /bars/calculator/ runs the same sum as /bars/economics/ — revenue less
+   what is served, less staff, fuel and running — except the first two lines
+   come from the visitor's own menu instead of our estimate of a European
+   diary. The cost lines start where bars.py leaves them and are editable.
+
+   Everything here is composed in script, so the language walk cannot reach
+   it: drawCalc() runs again on a language switch, and the seeded menu is
+   re-seeded in the new language only while the visitor has not edited it. */
+
+const CALC_KEY = 'tm-calc';
+
+/* Staff, fuel and running as bars.py has them at €18 an hour: a bar is two
+   people for four hours and costs more to set up; a coffee unit is one for
+   six. Stock is not here — it comes off the menu below. */
+const CALC_SEED = {
+  bar: {
+    staff: 144, fuel: 60, run: 100, outings: 30, price: 66000,
+    rows: [
+      ['Pint of lager',        6.5,  1.6, 120],
+      ['Craft beer, 0.4',      7.5,  2.3,  70],
+      ['Glass of wine',        6.0,  1.7,  45],
+      ['Cider',                6.5,  1.9,  30],
+      ['Soft drink',           3.0,  0.5,  35]
+    ]
+  },
+  coffee: {
+    staff: 108, fuel: 60, run: 40, outings: 30, price: 66000,
+    rows: [
+      ['Cappuccino',           3.5,  0.55, 160],
+      ['Espresso',             2.5,  0.35,  60],
+      ['Filter coffee',        3.0,  0.40,  50],
+      ['Pastry',               3.5,  1.20,  70],
+      ['Cold drink',           3.5,  0.90,  40]
+    ]
+  }
+};
+
+let calc = null;
+
+function calcNum(v, fallback) {
+  const n = parseFloat(String(v).replace(',', '.'));
+  return isFinite(n) && n >= 0 ? n : fallback;
+}
+
+/* €1,146 in English, €1 146 in Russian, and a decimal comma where there is
+   a decimal at all. The site formats money this way everywhere else. */
+function calcMoney(v, dp) {
+  const d = dp === undefined ? 0 : dp;
+  const s = Math.abs(v).toFixed(d);
+  const parts = s.split('.');
+  const group = lang === 'ru' ? ' ' : ',';
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
+  const joined = parts.length > 1
+    ? parts[0] + (lang === 'ru' ? ',' : '.') + parts[1]
+    : parts[0];
+  return (v < 0 ? '−' : '') + '€' + joined;
+}
+
+function calcSave() {
+  try { localStorage.setItem(CALC_KEY, JSON.stringify(calc)); } catch (e) { /* private mode */ }
+  const el = document.getElementById('calc-saved');
+  if (el) el.innerText = T('Kept in this browser, not sent anywhere.');
+}
+
+function calcSeed(kind) {
+  const seed = CALC_SEED[kind];
+  return {
+    kind: kind, dirty: false,
+    staff: seed.staff, fuel: seed.fuel, run: seed.run,
+    outings: seed.outings, price: seed.price,
+    rows: seed.rows.map(r => ({ name: T(r[0]), price: r[1], cost: r[2], qty: r[3] }))
+  };
+}
+
+function initCalc() {
+  if (!calc) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CALC_KEY) || 'null');
+      if (saved && saved.rows && saved.rows.length) calc = saved;
+    } catch (e) { /* private mode, or something we did not write */ }
+  }
+  if (!calc) calc = calcSeed('bar');
+  drawCalc();
+}
+
+function drawCalc() {
+  const body = document.getElementById('calc-rows');
+  if (!body) return;
+
+  /* An untouched menu follows the language; an edited one is the visitor's
+     own words and is never overwritten. */
+  if (!calc.dirty) {
+    const seed = CALC_SEED[calc.kind].rows;
+    calc.rows.forEach((r, i) => { if (seed[i]) r.name = T(seed[i][0]); });
+  }
+
+  document.querySelectorAll('.calc-tab').forEach(b =>
+    b.classList.toggle('active', b.getAttribute('data-kind') === calc.kind));
+
+  /* data-label carries the column heading down to the phone layout, where
+     the header row is hidden — and it is one of the attributes applyLang
+     translates, so it follows the language like everything else. */
+  body.innerHTML = calc.rows.map((r, i) => `
+    <tr>
+      <td><input class="calc-in calc-name" data-f="name" data-i="${i}" value="${esc(r.name)}"
+                 aria-label="${esc(T('Item'))}" placeholder="${esc(T('Item'))}"></td>
+      <td class="n" data-label="${esc(T('Price, €'))}"><input class="calc-in n" data-f="price" data-i="${i}"
+                 type="number" min="0" step="0.1" inputmode="decimal" value="${r.price}"
+                 aria-label="${esc(T('Price, €'))}"></td>
+      <td class="n" data-label="${esc(T('Cost, €'))}"><input class="calc-in n" data-f="cost" data-i="${i}"
+                 type="number" min="0" step="0.1" inputmode="decimal" value="${r.cost}"
+                 aria-label="${esc(T('Cost, €'))}"></td>
+      <td class="n" data-label="${esc(T('Per outing'))}"><input class="calc-in n" data-f="qty" data-i="${i}"
+                 type="number" min="0" step="1" inputmode="numeric" value="${r.qty}"
+                 aria-label="${esc(T('Per outing'))}"></td>
+      <td class="n calc-foot" data-label="${esc(T('Leaves'))}"><span class="calc-line">${calcMoney((r.price - r.cost) * r.qty)}</span>
+        <button type="button" class="calc-del" data-del="${i}"
+                aria-label="${esc(T('Remove this line'))}">&times;</button></td>
+    </tr>`).join('');
+
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  set('calc-staff', calc.staff); set('calc-fuel', calc.fuel); set('calc-run', calc.run);
+  set('calc-outings', calc.outings); set('calc-price', calc.price);
+
+  recalcCalc();
+}
+
+function recalcCalc() {
+  const out = document.getElementById('calc-out');
+  if (!out || !calc) return;
+
+  const gross = calc.rows.reduce((a, r) => a + r.price * r.qty, 0);
+  const goods = calc.rows.reduce((a, r) => a + r.cost * r.qty, 0);
+  const running = calc.staff + calc.fuel + calc.run;
+  const left = gross - goods - running;
+  const season = left * calc.outings;
+
+  const rows = [
+    [T('What the menu takes'), calcMoney(gross)],
+    [T('Cost of what is served'), '−' + calcMoney(goods)],
+    [T('Staff, fuel, running'), '−' + calcMoney(running)]
+  ];
+  out.innerHTML = rows.map(r =>
+    `<div class="calc-row"><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join('') +
+    `<div class="calc-row sum"><dt>${esc(T('One outing leaves'))}</dt>` +
+    `<dd>${esc(calcMoney(left))}</dd></div>` +
+    `<div class="calc-row"><dt>${esc(T('A season of {n} outings').replace('{n}', calc.outings))}</dt>` +
+    `<dd>${esc(calcMoney(season))}</dd></div>`;
+
+  const pay = document.getElementById('calc-payback');
+  const verdict = document.getElementById('calc-verdict');
+  if (!pay || !verdict) return;
+
+  if (left <= 0) {
+    pay.innerText = T('Never, on these numbers');
+    verdict.innerText = T('An outing costs more than it takes. Raise a price, cut a cost line, or serve more of something — the sum above shows which line is doing it.');
+    return;
+  }
+  const seasons = calc.price / season;
+  const n = lang === 'ru' ? seasons.toFixed(1).replace('.', ',') : seasons.toFixed(1);
+  pay.innerText = T('{n} seasons').replace('{n}', n);
+  verdict.innerText = seasons <= 2.5
+    ? T('At two and a half seasons or under, the unit is a piece of equipment rather than a bet. That is the line we hold ourselves to.')
+    : T('Above two and a half seasons we would rather talk before you order. Either the diary needs more outings in it, or the unit needs less equipment in it — both are things we can change.');
+}
+
+function calcBind() {
+  const wrap = document.getElementById('view-unit-calculator');
+  if (!wrap || wrap.__bound) return;
+  wrap.__bound = true;
+
+  wrap.addEventListener('input', e => {
+    const t = e.target;
+    if (!calc) return;
+    if (t.dataset && t.dataset.f !== undefined) {
+      const r = calc.rows[+t.dataset.i];
+      if (!r) return;
+      if (t.dataset.f === 'name') { r.name = t.value; calc.dirty = true; }
+      else r[t.dataset.f] = calcNum(t.value, 0);
+      /* Redrawing here would move the caret, so only the line total changes. */
+      const cell = t.closest('tr').querySelector('.calc-line');
+      if (cell) cell.textContent = calcMoney((r.price - r.cost) * r.qty);
+      recalcCalc(); calcSave(); return;
+    }
+    const map = { 'calc-staff': 'staff', 'calc-fuel': 'fuel', 'calc-run': 'run',
+                  'calc-outings': 'outings', 'calc-price': 'price' };
+    if (map[t.id]) {
+      calc[map[t.id]] = calcNum(t.value, t.id === 'calc-outings' ? 1 : 0);
+      if (t.id === 'calc-outings' && calc.outings < 1) calc.outings = 1;
+      recalcCalc(); calcSave();
+    }
+  });
+
+  wrap.addEventListener('click', e => {
+    const tab = e.target.closest('.calc-tab');
+    if (tab) {
+      const kind = tab.getAttribute('data-kind');
+      if (kind === calc.kind) return;
+      /* Switching the unit replaces an untouched menu and keeps an edited
+         one — losing someone's typing to a mis-click would be rude. */
+      if (calc.dirty) { calc.kind = kind; Object.assign(calc, {
+          staff: CALC_SEED[kind].staff, fuel: CALC_SEED[kind].fuel, run: CALC_SEED[kind].run }); }
+      else calc = calcSeed(kind);
+      drawCalc(); calcSave(); return;
+    }
+    const del = e.target.closest('[data-del]');
+    if (del) {
+      if (calc.rows.length > 1) calc.rows.splice(+del.getAttribute('data-del'), 1);
+      calc.dirty = true; drawCalc(); calcSave(); return;
+    }
+    if (e.target.closest('#calc-add')) {
+      calc.rows.push({ name: '', price: 0, cost: 0, qty: 0 });
+      calc.dirty = true; drawCalc(); calcSave();
+      const last = document.querySelectorAll('#calc-rows input[data-f="name"]');
+      if (last.length) last[last.length - 1].focus();
+      return;
+    }
+    if (e.target.closest('#calc-reset')) {
+      calc = calcSeed(calc.kind);
+      try { localStorage.removeItem(CALC_KEY); } catch (err) { /* private mode */ }
+      drawCalc();
+      const el = document.getElementById('calc-saved');
+      if (el) el.innerText = '';
+    }
+  });
+}
+
 function swapUnitPhoto(el, index) {
   const ph = currentUnit && currentUnit.photos && currentUnit.photos[index];
   if (!ph) return;
@@ -3665,6 +4105,7 @@ function setLang(next) {
     /* Composed in script, so the walk above cannot reach it. */
     writeUnitLengths(currentUnit);
     writeUnitMoney(currentUnit);
+    if (calc) drawCalc();
   };
   if (next === 'ru') withDict(go); else go();
 }
@@ -3741,6 +4182,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initHeaderState();
   initForms();
+  calcBind();
   initLang();
 
   const q = new URLSearchParams(location.search);

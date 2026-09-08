@@ -2,35 +2,35 @@
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy — Tiny Mansion</title>
-  <meta name="description" content="What we collect from a form, what we do with it, who else sees it, and how to have it corrected or deleted.">
+  <title>Your menu, your payback — Tiny Mansion</title>
+  <meta name="description" content="Put your own menu in — every line, your prices, your cost of goods — and see what an outing leaves and how many seasons the unit takes to pay for itself.">
 
   <!-- Live address of the site. The CNAME file in the repository root is what
        points GitHub Pages at this domain; keep the two in step. -->
-  <link rel="canonical" href="https://tinymansion.co/privacy/">
+  <link rel="canonical" href="https://tinymansion.co/bars/calculator/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="theme-color" content="#1A1614">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tiny Mansion">
-  <meta property="og:url" content="https://tinymansion.co/privacy/">
-  <meta property="og:title" content="Privacy — Tiny Mansion">
-  <meta property="og:description" content="What we collect from a form, what we do with it, who else sees it, and how to have it corrected or deleted.">
+  <meta property="og:url" content="https://tinymansion.co/bars/calculator/">
+  <meta property="og:title" content="Your menu, your payback — Tiny Mansion">
+  <meta property="og:description" content="Put your own menu in — every line, your prices, your cost of goods — and see what an outing leaves and how many seasons the unit takes to pay for itself.">
   <meta property="og:image" content="https://tinymansion.co/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Residence 21ft standing on a working farm in Montenegro">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Privacy — Tiny Mansion">
-  <meta name="twitter:description" content="What we collect from a form, what we do with it, who else sees it, and how to have it corrected or deleted.">
+  <meta name="twitter:title" content="Your menu, your payback — Tiny Mansion">
+  <meta name="twitter:description" content="Put your own menu in — every line, your prices, your cost of goods — and see what an outing leaves and how many seasons the unit takes to pay for itself.">
   <meta name="twitter:image" content="https://tinymansion.co/og.jpg">
 
   <!-- Structured data. writeJsonLd() fills this from what the page actually
        shows, so the machine-readable copy cannot drift away from the visible
        one, and the build bakes the right graph into every static file. -->
-  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","legalName":"TinyArc Group d.o.o.","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","address":{"@type":"PostalAddress","addressLocality":"Bar","addressCountry":"ME"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tinymansion.co/"},{"@type":"ListItem","position":2,"name":"Privacy","item":"https://tinymansion.co/privacy/"}]}]}</script>
+  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","legalName":"TinyArc Group d.o.o.","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","address":{"@type":"PostalAddress","addressLocality":"Bar","addressCountry":"ME"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tinymansion.co/"},{"@type":"ListItem","position":2,"name":"Mobile bars","item":"https://tinymansion.co/bars/"},{"@type":"ListItem","position":3,"name":"Your numbers","item":"https://tinymansion.co/bars/calculator/"}]}]}</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -1880,7 +1880,7 @@
     <!-- ======================================================
          MOBILE BARS — your menu, your payback
          ====================================================== -->
-    <section id="view-unit-calculator" class="view-section">
+    <section id="view-unit-calculator" class="view-section active">
       <div class="container page-top">
         <div class="breadcrumbs">
           <a class="breadcrumb-item" href="/">Home</a>
@@ -1918,7 +1918,47 @@
                   <th><span class="visually-hidden">Remove</span></th>
                 </tr>
               </thead>
-              <tbody id="calc-rows"></tbody>
+              <tbody id="calc-rows">
+    <tr>
+      <td><input class="calc-in calc-name" data-f="name" data-i="0" value="Pint of lager" aria-label="Item" placeholder="Item"></td>
+      <td class="n" data-label="Price, €"><input class="calc-in n" data-f="price" data-i="0" type="number" min="0" step="0.1" inputmode="decimal" value="6.5" aria-label="Price, €"></td>
+      <td class="n" data-label="Cost, €"><input class="calc-in n" data-f="cost" data-i="0" type="number" min="0" step="0.1" inputmode="decimal" value="1.6" aria-label="Cost, €"></td>
+      <td class="n" data-label="Per outing"><input class="calc-in n" data-f="qty" data-i="0" type="number" min="0" step="1" inputmode="numeric" value="120" aria-label="Per outing"></td>
+      <td class="n calc-foot" data-label="Leaves"><span class="calc-line">€588</span>
+        <button type="button" class="calc-del" data-del="0" aria-label="Remove this line">×</button></td>
+    </tr>
+    <tr>
+      <td><input class="calc-in calc-name" data-f="name" data-i="1" value="Craft beer, 0.4" aria-label="Item" placeholder="Item"></td>
+      <td class="n" data-label="Price, €"><input class="calc-in n" data-f="price" data-i="1" type="number" min="0" step="0.1" inputmode="decimal" value="7.5" aria-label="Price, €"></td>
+      <td class="n" data-label="Cost, €"><input class="calc-in n" data-f="cost" data-i="1" type="number" min="0" step="0.1" inputmode="decimal" value="2.3" aria-label="Cost, €"></td>
+      <td class="n" data-label="Per outing"><input class="calc-in n" data-f="qty" data-i="1" type="number" min="0" step="1" inputmode="numeric" value="70" aria-label="Per outing"></td>
+      <td class="n calc-foot" data-label="Leaves"><span class="calc-line">€364</span>
+        <button type="button" class="calc-del" data-del="1" aria-label="Remove this line">×</button></td>
+    </tr>
+    <tr>
+      <td><input class="calc-in calc-name" data-f="name" data-i="2" value="Glass of wine" aria-label="Item" placeholder="Item"></td>
+      <td class="n" data-label="Price, €"><input class="calc-in n" data-f="price" data-i="2" type="number" min="0" step="0.1" inputmode="decimal" value="6" aria-label="Price, €"></td>
+      <td class="n" data-label="Cost, €"><input class="calc-in n" data-f="cost" data-i="2" type="number" min="0" step="0.1" inputmode="decimal" value="1.7" aria-label="Cost, €"></td>
+      <td class="n" data-label="Per outing"><input class="calc-in n" data-f="qty" data-i="2" type="number" min="0" step="1" inputmode="numeric" value="45" aria-label="Per outing"></td>
+      <td class="n calc-foot" data-label="Leaves"><span class="calc-line">€194</span>
+        <button type="button" class="calc-del" data-del="2" aria-label="Remove this line">×</button></td>
+    </tr>
+    <tr>
+      <td><input class="calc-in calc-name" data-f="name" data-i="3" value="Cider" aria-label="Item" placeholder="Item"></td>
+      <td class="n" data-label="Price, €"><input class="calc-in n" data-f="price" data-i="3" type="number" min="0" step="0.1" inputmode="decimal" value="6.5" aria-label="Price, €"></td>
+      <td class="n" data-label="Cost, €"><input class="calc-in n" data-f="cost" data-i="3" type="number" min="0" step="0.1" inputmode="decimal" value="1.9" aria-label="Cost, €"></td>
+      <td class="n" data-label="Per outing"><input class="calc-in n" data-f="qty" data-i="3" type="number" min="0" step="1" inputmode="numeric" value="30" aria-label="Per outing"></td>
+      <td class="n calc-foot" data-label="Leaves"><span class="calc-line">€138</span>
+        <button type="button" class="calc-del" data-del="3" aria-label="Remove this line">×</button></td>
+    </tr>
+    <tr>
+      <td><input class="calc-in calc-name" data-f="name" data-i="4" value="Soft drink" aria-label="Item" placeholder="Item"></td>
+      <td class="n" data-label="Price, €"><input class="calc-in n" data-f="price" data-i="4" type="number" min="0" step="0.1" inputmode="decimal" value="3" aria-label="Price, €"></td>
+      <td class="n" data-label="Cost, €"><input class="calc-in n" data-f="cost" data-i="4" type="number" min="0" step="0.1" inputmode="decimal" value="0.5" aria-label="Cost, €"></td>
+      <td class="n" data-label="Per outing"><input class="calc-in n" data-f="qty" data-i="4" type="number" min="0" step="1" inputmode="numeric" value="35" aria-label="Per outing"></td>
+      <td class="n calc-foot" data-label="Leaves"><span class="calc-line">€88</span>
+        <button type="button" class="calc-del" data-del="4" aria-label="Remove this line">×</button></td>
+    </tr></tbody>
             </table>
             <div class="calc-actions">
               <button type="button" class="btn btn-line" id="calc-add">Add a line</button>
@@ -1953,11 +1993,11 @@
         <div class="section-pad">
           <span class="eyebrow">What it comes to</span>
           <h2 class="serif" style="font-size:var(--t-section);line-height:1.08;letter-spacing:-0.01em;margin-top:14px;">One outing, one season, and the payback</h2>
-          <dl class="calc-out" id="calc-out"></dl>
+          <dl class="calc-out" id="calc-out"><div class="calc-row"><dt>What the menu takes</dt><dd>€1,875</dd></div><div class="calc-row"><dt>Cost of what is served</dt><dd>−€504</dd></div><div class="calc-row"><dt>Staff, fuel, running</dt><dd>−€304</dd></div><div class="calc-row sum"><dt>One outing leaves</dt><dd>€1,067</dd></div><div class="calc-row"><dt>A season of 30 outings</dt><dd>€32,010</dd></div></dl>
           <div class="calc-answer">
             <span class="eyebrow on-dark">Payback</span>
-            <strong id="calc-payback">—</strong>
-            <p id="calc-verdict"></p>
+            <strong id="calc-payback">2.1 seasons</strong>
+            <p id="calc-verdict">At two and a half seasons or under, the unit is a piece of equipment rather than a bet. That is the line we hold ourselves to.</p>
           </div>
           <p class="fineprint" style="margin-top:34px;">This is your arithmetic, not our promise. It assumes every outing sells the quantities you typed and nothing spoils, and it leaves out what your own business already costs you — the vehicle that tows it, insurance, your accountant, the diary you have to fill. Nothing is sent anywhere: the numbers stay in this browser.</p>
           <p style="margin-top:26px;"><a class="btn btn-line" href="/bars/economics/">Where our own figures come from</a></p>
@@ -2580,7 +2620,7 @@
     <!-- ======================================================
          PRIVACY
          ====================================================== -->
-    <section id="view-privacy" class="view-section active">
+    <section id="view-privacy" class="view-section">
       <div class="container page-top">
         <div class="breadcrumbs">
           <a class="breadcrumb-item" href="/">Home</a>
