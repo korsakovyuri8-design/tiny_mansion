@@ -10,7 +10,7 @@ const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
 
 /* Stays Latin in Russian on purpose. */
 const KEEP = [
-  /TINY MANSION/g, /TinyArc Group(\s+d\.o\.o\.)?/g, /Best Western/g,
+  /TINY MANSION/g, /Korsakov Group(\s+d\.o\.o\.)?/g, /Best Western/g,
   /\bI{1,3}V?\b/g,   /* Roman quarters: I, II, III, IV */ /\bEN\b/g, /\bRU\b/g,
   /Grand Residence 24ft/g, /Residence 2\dft/g, /Trailer Made/g,
   /Đedov(ina|\s+Do)?/g, /Ravni/g, /Eko Oaza/g, /Karadžić/g, /Pavićević/g, /Pešić/g, /Medojević/g,

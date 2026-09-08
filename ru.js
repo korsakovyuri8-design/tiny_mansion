@@ -33,24 +33,24 @@ window.RU = {
   'The financial model': 'Финансовая модель',
   /* First thing a keyboard reaches on every page, so it is chrome too. */
   'Skip to content': 'Перейти к содержимому',
-  '© 2026 TinyArc Group': '© 2026 TinyArc Group',
-  'Off-grid residences on working farms. A TinyArc Group project. First deployment Montenegro, Q3 2026.':
-    'Автономные резиденции на действующих фермах. Проект TinyArc Group. Первое развёртывание — Черногория, III квартал 2026.',
+  '© 2026 Korsakov Group': '© 2026 Korsakov Group',
+  'Off-grid residences on working farms. A Korsakov Group project. First deployment Montenegro, Q1 2027.':
+    'Автономные резиденции на действующих фермах. Проект Korsakov Group. Первое развёртывание — Черногория, I квартал 2027.',
   'Write to us': 'Напишите нам',
 
   /* Hero and ticker */
-  'First residences deploy Q3 2026': 'Первые резиденции — III квартал 2026',
+  'First residences deploy Q1 2027': 'Первые резиденции — I квартал 2027',
   'Off-grid stone-clad residences placed on working farms. Seven days without a single connection to anything.':
     'Автономные резиденции в каменной облицовке на действующих фермах. Семь дней без единого подключения.',
   'Choose a country': 'Выбрать страну',
   'See the residences': 'Смотреть резиденции',
-  'TinyArc Group  ·  Montenegro': 'TinyArc Group  ·  Черногория',
+  'Korsakov Group  ·  Montenegro': 'Korsakov Group  ·  Черногория',
   'Seven days off-grid': 'Семь дней автономии',
   'Two to four guests': 'От двух до четырёх гостей',
   'On a working farm': 'На действующей ферме',
   'No septic, no mains': 'Ни септика, ни сетей',
   'Moves with the season': 'Едет вслед за сезоном',
-  'Montenegro, Q3 2026': 'Черногория, III кв. 2026',
+  'Montenegro, Q1 2027': 'Черногория, I кв. 2027',
 
   /* Manifesto and home sections */
   'The idea': 'Идея',
@@ -92,8 +92,8 @@ window.RU = {
     'Ни фундамента, ни земляных работ, ни подключения к сетям. Уезжает — и поле снова просто поле.',
   'Not open yet': 'Пока не открыто',
   'Be there for the first season': 'Быть здесь в первый сезон',
-  'The first residences deploy in Montenegro in Q3 2026. Leave your details and we write to you when dates open, before anything goes public.':
-    'Первые резиденции встанут в Черногории в III квартале 2026. Оставьте контакты — напишем, когда откроются даты, раньше любых публичных анонсов.',
+  'The first residences deploy in Montenegro in Q1 2027. Leave your details and we write to you when dates open, before anything goes public.':
+    'Первые резиденции встанут в Черногории в I квартале 2027. Оставьте контакты — напишем, когда откроются даты, раньше любых публичных анонсов.',
   'Register your interest': 'Оставить заявку',
 
   /* Countries */
@@ -106,7 +106,7 @@ window.RU = {
   'Greece': 'Греция',
   'Switzerland': 'Швейцария',
   'this country': 'эта страна',
-  'Opening Q3 2026': 'Открытие — III квартал 2026',
+  'Opening Q1 2027': 'Открытие — I квартал 2027',
   'Planned 2028': 'План на 2028',
   'Planned 2029': 'План на 2029',
   '25 residences planned': '25 резиденций в плане',
@@ -197,8 +197,8 @@ window.RU = {
   '/ night, indicative': '/ ночь, ориентировочно',
   'Indicative opening rate': 'Ориентировочная цена на старте',
   'Register interest in this residence': 'Оставить заявку на эту резиденцию',
-  'Booking is not open. Rates are indicative and confirmed when the first season opens, Q3 2026.':
-    'Бронирование ещё не открыто. Цены ориентировочные и подтверждаются к открытию первого сезона, III квартал 2026.',
+  'Booking is not open. Rates are indicative and confirmed when the first season opens, Q1 2027.':
+    'Бронирование ещё не открыто. Цены ориентировочные и подтверждаются к открытию первого сезона, I квартал 2027.',
   'Specification': 'Спецификация',
   'What is inside': 'Что внутри',
   'Systems': 'Системы',
@@ -1287,9 +1287,9 @@ window.RU = {
   'Run by the farm · price on request': 'Проводит ферма · цена по запросу',
 
   /* Enquiry, host and thanks */
-  'Q3 2026': 'III квартал 2026',
-  "Booking is not open. The first residences deploy in Montenegro in Q3 2026, and we contact this list before anything else. Tell us roughly when you'd want to come and we'll write when those dates exist.":
-    'Бронирование ещё не открыто. Первые резиденции встанут в Черногории в III квартале 2026, и мы пишем по этому списку раньше, чем куда-либо ещё. Скажите примерно, когда хотели бы приехать, — напишем, как только даты появятся.',
+  'Q1 2027': 'I квартал 2027',
+  "Booking is not open. The first residences deploy in Montenegro in Q1 2027, and we contact this list before anything else. Tell us roughly when you'd want to come and we'll write when those dates exist.":
+    'Бронирование ещё не открыто. Первые резиденции встанут в Черногории в I квартале 2027, и мы пишем по этому списку раньше, чем куда-либо ещё. Скажите примерно, когда хотели бы приехать, — напишем, как только даты появятся.',
   'Your name': 'Ваше имя',
   "Country you're interested in": 'Интересующая страна',
   'What you are asking about': 'О чём спрашиваете',
@@ -1341,8 +1341,8 @@ window.RU = {
     'Поэтому мы сделали другое. Резиденцию, спроектированную как яхта и зарегистрированную как транспортное средство, способную неделю работать без подключённых электричества, воды и канализации. Она стоит на ферме сезон, а потом уезжает дальше.',
   "We don't own land and don't intend to. Across Europe there are farms with owners, with land, and with almost no income, and they are better places to wake up than anything we could buy. We work with them instead.":
     'Мы не владеем землёй и не собираемся. По всей Европе есть фермы — с хозяевами, с землёй и почти без дохода, — и просыпаться там лучше, чем в чём угодно, что мы могли бы купить. Мы работаем с ними.',
-  'The first twenty-five residences deploy across Montenegro from Q3 2026: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.':
-    'Первые двадцать пять резиденций встанут по Черногории с III квартала 2026: горы на севере, винный край посередине и несколько площадок на побережье юга. Следом Хорватия, дальше — шире.',
+  'The first twenty-five residences deploy across Montenegro from Q1 2027: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.':
+    'Первые двадцать пять резиденций встанут по Черногории с I квартала 2027: горы на севере, винный край посередине и несколько площадок на побережье юга. Следом Хорватия, дальше — шире.',
   'The people': 'Люди',
   'Who we are': 'Кто мы',
   'Yuri Korsakov': 'Юрий Корсаков',
@@ -1368,10 +1368,10 @@ window.RU = {
      reading the head follow the page rather than the site. */
   'Tiny Mansion — off-grid residences on working farms':
     'Tiny Mansion — автономные резиденции на действующих фермах',
-  'Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q3 2026.':
-    'Автономные резиденции премиум-класса на действующих фермах. Семь дней автономии, системы яхтенного класса. Первые резиденции — Черногория, III квартал 2026.',
-  'Seven days off-grid, on a working farm. First residences deploy in Montenegro, Q3 2026.':
-    'Семь дней автономии, на действующей ферме. Первые резиденции — Черногория, III квартал 2026.',
+  'Premium off-grid residences placed on working farms. Seven-day autonomy, yacht-class systems. First residences deploy in Montenegro, Q1 2027.':
+    'Автономные резиденции премиум-класса на действующих фермах. Семь дней автономии, системы яхтенного класса. Первые резиденции — Черногория, I квартал 2027.',
+  'Seven days off-grid, on a working farm. First residences deploy in Montenegro, Q1 2027.':
+    'Семь дней автономии, на действующей ферме. Первые резиденции — Черногория, I квартал 2027.',
   'Seven days off-grid, on a working farm.':
     'Семь дней автономии, на действующей ферме.',
   'The residences — Tiny Mansion': 'Резиденции — Tiny Mansion',
@@ -1385,8 +1385,8 @@ window.RU = {
   'We place residences on working farms and share the revenue. No construction, no permits, no capital from you.':
     'Мы ставим резиденции на действующие фермы и делим выручку. Без стройки, без разрешений, без ваших вложений.',
   'About us — Tiny Mansion': 'О нас — Tiny Mansion',
-  'A TinyArc Group project. Who builds the residences, who places them, and why the farm comes before the house.':
-    'Проект TinyArc Group. Кто строит резиденции, кто их размещает и почему ферма важнее дома.',
+  'A Korsakov Group project. Who builds the residences, who places them, and why the farm comes before the house.':
+    'Проект Korsakov Group. Кто строит резиденции, кто их размещает и почему ферма важнее дома.',
   'Terms — Tiny Mansion': 'Условия — Tiny Mansion',
   'Who you are dealing with, what an enquiry is and is not, rates, cancellation and the law these terms run under.':
     'С кем вы имеете дело, что такое заявка и чем она не является, цены, отмена и применимое право.',
@@ -1399,8 +1399,8 @@ window.RU = {
 
   /* Terms and privacy */
   'Who you are dealing with': 'С кем вы имеете дело',
-  'TinyArc Group d.o.o., registered in Bar, Montenegro. Email:':
-    'TinyArc Group d.o.o., зарегистрировано в Баре, Черногория. Email:',
+  'Korsakov Group d.o.o., registered in Tivat, Montenegro. Email:':
+    'Korsakov Group d.o.o., зарегистрировано в Тивате, Черногория. Email:',
   'Enquiries and bookings': 'Заявки и бронирование',
   'Nothing on this site is a booking or an offer of one. Sending the form registers your interest and starts a conversation by email. Rates shown are indicative and are not confirmed until booking opens.':
     'Ничто на этом сайте не является бронированием или офертой. Отправка формы фиксирует ваш интерес и начинает переписку по email. Указанные цены ориентировочные и не подтверждены до открытия бронирования.',
@@ -1429,7 +1429,7 @@ window.RU = {
   'Write to': 'Напишите на',
   "and we'll tell you what we hold about you, correct it, or delete it.":
     '— и мы расскажем, что о вас храним, исправим это или удалим.',
-  'TinyArc Group d.o.o., Bar, Montenegro,': 'TinyArc Group d.o.o., Бар, Черногория,',
+  'Korsakov Group d.o.o., Tivat, Montenegro,': 'Korsakov Group d.o.o., Тиват, Черногория,',
   ', decides how your data is used on this site.':
     ' — определяет, как используются ваши данные на этом сайте.',
 

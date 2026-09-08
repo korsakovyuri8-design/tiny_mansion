@@ -149,8 +149,8 @@ def page(lang):
     </div>
   </div>
 </section>''' % (
-        t(T('Черногория · первое размещение — III квартал 2026',
-            'Montenegro · first deployment Q3 2026')),
+        t(T('Черногория · первое размещение — I квартал 2027',
+            'Montenegro · first deployment Q1 2027')),
         t(T('Дом в вашей собственности,<br>который переезжает за сезоном',
             'A house you own outright,<br>that moves to where the season is')),
         t(T('Вы покупаете резиденцию на своё имя и ставите её на действующую ферму. '
@@ -582,10 +582,10 @@ def page(lang):
             'outcome. Images of the residences are renders: no house has been built to the '
             'production specification.')),
         t(T('Условия участия обсуждаются индивидуально и оформляются документами, '
-            'подготовленными с юристом. Tiny Mansion — проект TinyArc Group d.o.o., Бар, '
+            'подготовленными с юристом. Tiny Mansion — проект Korsakov Group d.o.o., Тиват, '
             'Черногория.',
             'Terms are agreed individually and set out in documents prepared with a lawyer. '
-            'Tiny Mansion is a project of TinyArc Group d.o.o., Bar, Montenegro.'))))
+            'Tiny Mansion is a project of Korsakov Group d.o.o., Tivat, Montenegro.'))))
 
     return ''.join(out)
 

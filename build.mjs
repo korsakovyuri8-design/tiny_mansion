@@ -243,7 +243,7 @@ console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
 }
 
 /* ---------- the advertised launch date ----------
-   The whole site turns on one promise — "first residences deploy Q3 2026" —
+   The whole site turns on one promise — "first residences deploy Q1 2027" —
    repeated in about forty places. A date like that rots silently: nothing
    breaks, no test fails, and one day the site is advertising a quarter that
    has already ended to somebody reading it. So the build says so.

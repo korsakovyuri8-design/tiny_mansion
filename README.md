@@ -27,7 +27,7 @@ Also hand-written:
 | `gen_bars.py` | Rewrites `/bars/economics/` out of `bars.py`. Replaces the section rather than appending, so it is safe to re-run. |
 | `gen_deck.py` | Rewrites the money slides of `deck/deck.html` out of `club.py` and `bars.py`. |
 | `relaunch.py` | Changes the advertised launch quarter everywhere at once. |
-| `checks/` | Ten browser checks that run against the built site. See **The checks** below. |
+| `checks/` | Eleven browser checks that run against the built site. See **The checks** below. |
 
 ## Building
 
@@ -216,23 +216,54 @@ visitor who switches language gets the translation of the same strings.
 
 ## The launch date
 
-The whole site turns on one promise — "first residences deploy Q3 2026" —
+The whole site turns on one promise — "first residences deploy Q1 2027" —
 written out in about forty places: markup, dictionary keys, dictionary
 values, the footer, both investor pages. A dictionary key is the English
 string, so editing the English by hand and forgetting the key silently
 drops the translation. Hence a script rather than find-and-replace:
 
     python3 relaunch.py --check                        # where it stands today
-    python3 relaunch.py "Q4 2026" "IV квартал 2026"    # change it everywhere
+    python3 relaunch.py "Q2 2027" "II квартал 2027"    # change it everywhere
     node build.mjs && python3 gen_invest.py            # then rebuild
+    node deck/mkpdf.mjs                                # and the pitch PDF
 
-It handles the Russian prepositional case ("в IV квартале") separately.
-After a run, update `EN_OLD` and `RU_OLD` at the top of the script.
+Russian declines, and the date stands on the site in four forms: "I квартал
+2027", "в I квартале 2027", "с I квартала 2027" and "I кв. 2027". The script
+replaces all four, longest first. It missed the last two on the Q3-to-Q1 move
+and left two English keys pointing at Russian values a quarter behind, which
+is what `--check` now looks for: any date on the site that is not the
+advertised one is printed with its line and exits non-zero.
+
+`FILES` is the list it edits. The deck and the unpublished investor draft are
+in it because GitHub Pages serves both, and both carried the date. After a
+run, update `EN_OLD` and `RU_OLD` at the top of the script.
 
 A date like this rots without anything breaking: no test fails, and one day
 the site is advertising a quarter that has already ended. So `build.mjs`
 reads the quarter back out of the source and says so when it is past or
 within sixty days of ending.
+
+## Who the site says it is
+
+Four facts about the company are spread over dozens of places and drift apart
+one at a time: the legal entity, the city it is registered in, the contact
+mailbox and the advertised quarter. When TinyArc Group d.o.o. of Bar became
+Korsakov Group d.o.o. of Tivat, the name stood in `src/index.html`, `404.html`,
+`deck/deck.html`, `gen_invest.py` and an unpublished investor draft — five
+files, none of which any test read. The pitch PDF is built from `deck.html`
+and gitignored, so it does not go stale in the repository, but a copy already
+sent to someone does: rebuild it with `node deck/mkpdf.mjs`.
+
+`checks/identity.mjs` now holds the four values in one `WANT` object and the
+retired ones in `GONE`, and reads every served page in both languages: nothing
+from `GONE` may survive, every `mailto:` href must equal its own link text
+(they are separate strings in the code), and every form must post to the
+current address. Change the company and this is the file that says whether the
+change landed everywhere.
+
+The mailbox is also the one thing the site says about a third party it cannot
+check: `/privacy/` names the mail provider. Confirm that line still describes
+the truth whenever the mailbox moves.
 
 ## The contact address
 
@@ -267,8 +298,9 @@ actually cite, above what we model at.
 
 ## The checks
 
-`node checks/all.mjs` runs all ten in turn: addresses and the language
-round-trip, internal links, Cyrillic left in English, Latin left in Russian,
+`node checks/all.mjs` runs all eleven in turn: addresses and the language
+round-trip, internal links, who the site says it is, Cyrillic left in English,
+Latin left in Russian,
 English prose left in Russian, thousands grouped the wrong way round, titles
 and descriptions, landmarks and focus rings and alt text, text clipped at 390
 and 1280 in both languages, and anything pushing the page sideways. Each
@@ -310,6 +342,9 @@ reading `€10 770`.
 - FormSubmit needs its one-time activation — send the form once from the
   live site and confirm the email it sends back, or submissions are not
   forwarded.
+- `/privacy/` says the mail runs through Google. That was true of the Gmail
+  address; confirm it is still true of the mailbox on the company domain, or
+  the privacy notice names the wrong processor.
 - Terms still has no registration number or postal address, and the
   cancellation terms have to be decided before booking opens.
 - The bar figures rest on two North American operators. They want checking

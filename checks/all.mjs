@@ -7,6 +7,7 @@ const HERE = path.resolve(new URL('.', import.meta.url).pathname);
 const ORDER = [
   ['routes',       'addresses, the language round-trip and the reveal'],
   ['links',        'internal links and subresources'],
+  ['identity',     'company, city, mailbox and the advertised quarter'],
   ['cyr',          'Cyrillic left in the English version'],
   ['latin',        'Latin left in the Russian version'],
   ['untranslated', 'English prose left in the Russian version'],
