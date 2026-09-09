@@ -73,7 +73,45 @@ python3 gen_invest.py  # write both pages from it
 
 Both languages come out of one pass over one model, so the Russian and the
 English cannot drift apart and neither can drift from the arithmetic. To
-change a figure, change it in `club.py` and re-run.
+change a figure, change it in `club.py` and re-run. The deck reads the same
+model, so `python3 gen_deck.py && node deck/mkpdf.mjs` follows.
+
+### The order the model computes in
+
+This is the part worth understanding before touching `club.py`, because the
+order is the whole design:
+
+```
+entry   = house price + onboarding fee
+payout  = TARGET × entry          — the target, fixed
+share   = payout / revenue        — derived, and different per model
+```
+
+It used to run the other way: the owner's share of revenue was the fixed
+thing, and the yield fell out of it. That breaks as soon as the price is a
+range — at a 30.6% share the €120,000 house returns 17.0% a year and the
+€170,000 house returns 14.3%, and a page quoting one number for both is
+wrong about one of them. Fixing the target instead and deriving the share
+gives 30.6% and 36.5% respectively, and both come out at 17.0%.
+
+Two things follow, and both are on the page rather than hidden:
+
+- **The return is a target, not a promise.** It is reached by sizing the
+  share in advance at 75% occupancy. Less revenue, less paid out — nobody
+  tops it up. `break_occ()` in `gen_invest.py` computes where the payment
+  eats everything left after costs: 44.2% and 47.9% occupancy. Below that
+  the target cannot be met by anything except paying out less.
+- **Every return figure is on the entry sum, not the house price.** The
+  €18,000 onboarding fee is part of what the buyer pays, so leaving it out
+  of the denominator would flatter the yield by two points.
+
+Occupancy is one number for the whole year on purpose — a policy, not a
+forecast. The house is not tied to a site, so a farm that does not reach it
+is replaced during the season.
+
+The booking commission is a percentage of the rate rather than a figure per
+night. It used to be €33.60, which is 12% of €280 and of nothing else; with
+two models at two rates it was wrong for one of them.
 
 ## The bar economics page
 
@@ -394,6 +432,17 @@ twice before believing it.
 - FormSubmit needs its one-time activation — send the form once from the
   live site and confirm the email it sends back, or submissions are not
   forwarded.
+- The residence-permit section on the investor page states Montenegrin
+  immigration rules — the €150,000 cadastral threshold, the €5,000 a year in
+  taxes and contributions, the EU/EEA/Swiss exemption, and that a
+  property-based permit neither allows work nor counts toward permanent
+  residence. None of that has been checked against a source in this
+  repository. Have the Montenegrin lawyer confirm it before the page is shown
+  to a buyer; the page already says it is not legal advice, which is not the
+  same as being right.
+- The one-off cost of setting up the buyer's own Montenegrin company is the
+  only figure on the investor page still written as "quoted to you before you
+  commit". Fill it in when the lawyer gives a number.
 - `/privacy/` says the mail runs through Google. That was true of the Gmail
   address; confirm it is still true of the mailbox on the company domain, or
   the privacy notice names the wrong processor.

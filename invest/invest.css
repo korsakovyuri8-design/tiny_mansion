@@ -249,7 +249,17 @@ section{padding:96px 0}
   .rung > div:first-child{display:flex;flex-direction:column;gap:6px}
 }
 
-.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:18px}
+/* Таблица шире телефона прокручивается внутри рамки, а не тащит страницу.
+   Тень справа привязана к позиции прокрутки: она видна, пока справа есть
+   ещё столбец, и гаснет, когда до него доехали. Без неё на телефоне видна
+   одна модель из двух, и об этом никто не догадывается. */
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:18px;
+  background:
+    linear-gradient(to left, var(--cream), rgba(247,243,237,0)) right / 34px 100% no-repeat local,
+    radial-gradient(farthest-side at 100% 50%, rgba(26,22,20,.14), rgba(26,22,20,0)) right / 12px 100% no-repeat scroll}
+.dark .tblwrap{background:
+    linear-gradient(to left, var(--ink), rgba(26,22,20,0)) right / 34px 100% no-repeat local,
+    radial-gradient(farthest-side at 100% 50%, rgba(247,243,237,.20), rgba(247,243,237,0)) right / 12px 100% no-repeat scroll}
 table{width:100%;border-collapse:collapse;font-size:16px;min-width:640px}
 th,td{text-align:left;padding:15px 16px 15px 0;border-bottom:1px solid var(--rule);
   font-weight:400;vertical-align:top}
@@ -259,6 +269,10 @@ tbody td:first-child{font-family:var(--mono);font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:23%}
 thead th.us{color:var(--gold-ink)}
 td.us{font-weight:500}
+/* Строка, ради которой читают таблицу. Линия под ней в цвет текста,
+   а не в цвет линейки: глаз должен останавливаться именно здесь. */
+tr.tot td{border-bottom:2px solid var(--ink);font-weight:500}
+.dark tr.tot td{border-bottom-color:rgba(247,243,237,.55)}
 .dark table th,.dark table td{border-color:rgba(247,243,237,.14)}
 .dark thead th,.dark tbody td:first-child{color:rgba(247,243,237,.5)}
 .dark td{color:var(--cream)}

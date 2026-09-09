@@ -25,10 +25,13 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
   else{r.writeHead(404);r.end('x');}});
 await new Promise(r=>srv.listen(8335,r));
 
-/* Не только страницы из sitemap: 404, презентация и черновик тоже отдаются. */
+/* Не только страницы из sitemap: 404, презентация, черновик и обе страницы
+   инвесторам тоже отдаются. Последние закрыты noindex и потому в sitemap не
+   попадают — а на них стоят и юрлицо, и квартал, и почта. */
 const sm=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const pages=[...sm.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m=>m[1])
-  .concat(['/404.html','/deck/deck.html','/drafts/invest-en.html']);
+  .concat(['/404.html','/deck/deck.html','/drafts/invest-en.html',
+           '/invest/','/invest/en/']);
 
 const b=await pw.chromium.launch({args:['--no-proxy-server']});
 let problems=0;

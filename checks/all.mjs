@@ -8,6 +8,7 @@ const ORDER = [
   ['routes',       'addresses, the language round-trip and the reveal'],
   ['links',        'internal links and subresources'],
   ['identity',     'company, city, mailbox and the advertised quarter'],
+  ['invest',       'the two investor pages, which no other check reaches'],
   ['live',         'the calculator, forms, gallery and language switch, clicked'],
   ['resilient',    'no JavaScript, no dictionary, back and forward'],
   ['cyr',          'Cyrillic left in the English version'],

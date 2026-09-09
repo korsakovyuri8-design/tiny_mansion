@@ -21,10 +21,14 @@ with contextlib.redirect_stdout(io.StringIO()):
     C = runpy.run_path(os.path.join(ROOT, 'club.py'))
     B = runpy.run_path(os.path.join(ROOT, 'bars.py'))
 
-HOUSE_LOW, HOUSE_HIGH = C['HOUSE_LOW'], C['HOUSE_HIGH']
-ONBOARDING, NUNITS = C['ONBOARDING'], C['UNITS']
-HURDLE = C['HURDLE']
-unit, SCENARIOS = C['unit'], C['SCENARIOS']
+ALL        = C['ALL']
+ONBOARDING = C['ONBOARDING']
+OCC        = C['OCC']
+TARGET     = C['TARGET']
+NUNITS     = 3                      # столько резиденций в первом размещении
+D21, D24   = ALL[0][3], ALL[1][3]
+HOUSE_LOW, HOUSE_HIGH = D21['price'], D24['price']
+ENTRY_LOW, ENTRY_HIGH = D21['entry'], D24['entry']
 
 # Та же ставка, по которой считает /bars/economics/ и страницы юнитов:
 # средняя оценка по Европе. €1610 — факт по Северной Америке, он остаётся
@@ -43,15 +47,15 @@ def E(v):
 
 
 def rows_residences():
+    """Раньше здесь стояли три сценария загрузки. Теперь загрузка одна —
+    политика, а не прогноз, — и различаются модели, а не сценарии."""
     out = ''
-    for i, (_, occ) in enumerate(SCENARIOS):
-        d = unit(occ)
-        cls = ' class="tot"' if i == len(SCENARIOS) - 1 else ''
+    for i, (_, en, _, d) in enumerate(ALL):
+        cls = ' class="tot"' if i == len(ALL) - 1 else ''
         out += ('      <tr%s><td class="lbl">%s</td>'
-                '<td class="n">%.0f%%</td><td class="n">%s</td>'
-                '<td class="n">%s</td><td>%s</td></tr>\n'
-                % (cls, EN[i], d['occ'] * 100, E(d['adr']),
-                   E(d['rev'] * NUNITS), NOTE[i]))
+                '<td class="n">%s</td><td class="n">%.0f%%</td>'
+                '<td class="n">%s</td><td class="n">%s</td></tr>\n'
+                % (cls, en, E(d['rate']), OCC * 100, E(d['rev']), E(d['payout'])))
     return out
 
 
@@ -76,15 +80,16 @@ def rows_units():
 
 
 def rows_revenue():
-    lo = min(unit(o)['rev'] for _, o in SCENARIOS) * NUNITS
-    hi = max(unit(o)['rev'] for _, o in SCENARIOS) * NUNITS
-    adr_lo = min(unit(o)['adr'] for _, o in SCENARIOS)
-    adr_hi = max(unit(o)['adr'] for _, o in SCENARIOS)
-    return ('          <tr><td class="lbl">Guest nights, average sold</td>'
-            '<td class="n">%s–%s a night</td></tr>\n'
-            '          <tr><td class="lbl">Three residences, a full season</td>'
+    lo = min(d['rev'] for _, _, _, d in ALL)
+    hi = max(d['rev'] for _, _, _, d in ALL)
+    return ('          <tr><td class="lbl">Rate a night, by model</td>'
+            '<td class="n">%s and %s</td></tr>\n'
+            '          <tr><td class="lbl">One residence, a full year at %.0f%%</td>'
             '<td class="n">%s–%s</td></tr>\n'
-            % (E(adr_lo), E(adr_hi), E(lo), E(hi)))
+            '          <tr><td class="lbl">Three residences, a full year</td>'
+            '<td class="n">%s–%s</td></tr>\n'
+            % (E(D21['rate']), E(D24['rate']), OCC * 100,
+               E(lo), E(hi), E(lo * NUNITS), E(hi * NUNITS)))
 
 
 BLOCKS = {
@@ -95,9 +100,10 @@ BLOCKS = {
     'INVESTOR': ('      <p><strong>The house itself, %s–%s all in.</strong> Buys the '
                  'residence outright in their own name — movable property with a serial '
                  'number and an invoice, not cadastral real estate — and we run the guests '
-                 'under a management contract they can end. Our fee is subordinated to a %.0f%% '
-                 'preferred return: below it we are cut first.</p>\n'
-                 % (E(HOUSE_LOW + ONBOARDING), E(HOUSE_HIGH + ONBOARDING), HURDLE * 100)),
+                 'under a management contract they can end. Their share of the revenue is '
+                 'sized in advance to a %.0f%% a year target on that full sum; when revenue '
+                 'falls short, the payment falls with it and we add no money of our own.</p>\n'
+                 % (E(ENTRY_LOW), E(ENTRY_HIGH), TARGET * 100)),
     'RESIDENCES': rows_residences(),
     'UNITS': rows_units(),
 }
