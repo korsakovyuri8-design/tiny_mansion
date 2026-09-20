@@ -7,6 +7,7 @@ const HERE = path.resolve(new URL('.', import.meta.url).pathname);
 const ORDER = [
   ['routes',       'addresses, the language round-trip and the reveal'],
   ['links',        'internal links and subresources'],
+  ['dashes',       'the em dash, which is not used on this site'],
   ['identity',     'company, city, mailbox and the advertised quarter'],
   ['invest',       'the two investor pages, which no other check reaches'],
   ['live',         'the calculator, forms, gallery and language switch, clicked'],
@@ -26,7 +27,7 @@ const ORDER = [
   ['ovf',          'anything pushing the page sideways'],
 ];
 for (const [name, what] of ORDER) {
-  console.log('\n\n═══ ' + name + ' — ' + what + ' ═══');
+  console.log('\n\n═══ ' + name + ': ' + what + ' ═══');
   try {
     console.log(execFileSync('node', [path.join(HERE, name + '.mjs')],
       { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));

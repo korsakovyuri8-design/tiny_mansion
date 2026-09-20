@@ -1,6 +1,6 @@
 /* Контраст текста к фону по всему сайту, оба языка, телефон и компьютер.
    Порог WCAG AA: 4.5 для обычного текста, 3.0 для крупного (18.66px жирный
-   или 24px). Шапка над героем прозрачная — там фон берётся с картинки, такие
+   или 24px). Шапка над героем прозрачная, там фон берётся с картинки, и такие
    узлы считаем отдельно и мягче, потому что под ними лежит затемнение. */
 import pw from './pw.mjs';
 import { serve, pages } from './srv.mjs';
@@ -37,7 +37,7 @@ for (const [w, h] of [[390, 844], [1280, 900]]) {
           if (st.visibility === 'hidden' || st.display === 'none') continue;
           if (parseFloat(st.opacity) < 0.9) continue;
           const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) continue;
-          /* Шапка над героем стоит на фотографии — её меряет глаз, не формула. */
+          /* Шапка над героем стоит на фотографии, её меряет глаз, не формула. */
           if (el.closest('header.over-hero')) continue;
           const fs = parseFloat(st.fontSize), bold = parseInt(st.fontWeight, 10) >= 700;
           const need = (fs >= 24 || (fs >= 18.66 && bold)) ? 3 : 4.5;

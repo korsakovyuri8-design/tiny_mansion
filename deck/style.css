@@ -1,4 +1,4 @@
-/* Tiny Mansion — deck for the NTPCG public call.
+/* Tiny Mansion: deck for the NTPCG public call.
    Same tokens as tinymansion.co, laid out for a 1280x720 page. */
 @import url('/__f/fonts.css');
 
@@ -103,7 +103,7 @@ th { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: v
 td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 td.lbl { font-family: var(--serif); font-size: 16px; }
 th.n, td.n { text-align: right; padding-right: 0; white-space: nowrap; }
-/* Правая колонка стоит вплотную к краю таблицы — это верно, пока она
+/* Правая колонка стоит вплотную к краю таблицы, и это верно, пока она
    последняя. Если за числом идёт текст, они слипаются: «€206,302The
    floor we hold ourselves to». */
 th.n:not(:last-child), td.n:not(:last-child) { padding-right: 24px; }
@@ -154,7 +154,7 @@ tr.tot td.lbl { font-weight: 400; }
 .dark .stat p { color: rgba(247,243,237,.66); }
 .dark td, .dark th { border-color: rgba(247,243,237,.22); }
 .dark th { color: rgba(247,243,237,.62); border-bottom-color: rgba(247,243,237,.6); }
-/* tr.tot подчёркивает итог цветом чернил — на тёмном слайде это
+/* tr.tot подчёркивает итог цветом чернил, и на тёмном слайде это
    тёмное по тёмному, и строка с ответом выглядит как все прочие. */
 .dark tr.tot td { border-bottom-color: rgba(247,243,237,.75); color: #F7F3ED; }
 .dark .foot { color: rgba(247,243,237,.55); }

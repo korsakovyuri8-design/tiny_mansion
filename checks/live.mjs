@@ -17,7 +17,7 @@ for (const [w, h, dev] of [[390, 844, 'телефон'], [1280, 900, 'компь
     if (m.type() === 'error' && !/ERR_FAILED/.test(t)) errs.push('console: ' + t.slice(0, 120)); });
   await page.route('**://fonts.g*.com/**', r => r.abort());
 
-  /* — калькулятор — */
+  /* калькулятор */
   await page.goto('http://127.0.0.1:8410/bars/calculator/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
   const rows0 = await page.locator('.calc-table--menu tbody tr').count();
@@ -65,7 +65,7 @@ for (const [w, h, dev] of [[390, 844, 'телефон'], [1280, 900, 'компь
   const kept = await page.locator('.calc-table--menu tbody').innerText();
   kept.length > 10 ? ok('меню пережило перезагрузку') : no('меню после перезагрузки пустое');
 
-  /* — переключатель языка на всех видах — */
+  /* переключатель языка на всех видах */
   for (const u of ['/', '/bars/calculator/', '/salons/economics/', '/residence/residence-21/']) {
     await page.goto('http://127.0.0.1:8410' + u, { waitUntil: 'networkidle' });
     await page.waitForTimeout(300);
@@ -79,7 +79,7 @@ for (const [w, h, dev] of [[390, 844, 'телефон'], [1280, 900, 'компь
     else ok('язык туда-обратно: ' + u);
   }
 
-  /* — галерея резиденции — */
+  /* галерея резиденции */
   await page.goto('http://127.0.0.1:8410/residence/residence-21/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
   const thumbs = page.locator('.res-thumb');
@@ -92,7 +92,7 @@ for (const [w, h, dev] of [[390, 844, 'телефон'], [1280, 900, 'компь
                           : no('галерея: миниатюра не меняет фото (' + src0 + ' → ' + src1 + ')');
   } else no('миниатюр в галерее нет');
 
-  /* — форма заявки — */
+  /* форма заявки */
   await page.goto('http://127.0.0.1:8410/enquiry/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(300);
   const form = page.locator('form[data-mailform]').first();
@@ -100,7 +100,7 @@ for (const [w, h, dev] of [[390, 844, 'телефон'], [1280, 900, 'компь
   action && action.includes('yuri@korsakovgroup.com') ? ok('форма уходит на рабочий адрес')
     : no('форма уходит на ' + action);
   const req = await form.locator('[required]').count();
-  req > 0 ? ok('обязательные поля размечены: ' + req) : no('обязательных полей нет — форма уйдёт пустой');
+  req > 0 ? ok('обязательные поля размечены: ' + req) : no('обязательных полей нет, форма уйдёт пустой');
   const next = await form.locator('input[name="_next"]').first().inputValue().catch(e => 'ошибка: ' + e.message.slice(0, 60));
   next && next.endsWith('/thanks/') ? ok('после отправки ведёт на /thanks/') : no('_next = ' + next);
 

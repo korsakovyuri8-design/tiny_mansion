@@ -26,12 +26,12 @@ console.log('\n═══ JavaScript выключен');
                note: (document.querySelector('noscript') ? 'есть' : 'нет') };
     });
     r.len > 300 && r.shown === 1
-      ? ok(u + ': видна одна страница, ' + r.len + ' знаков — «' + r.head + '…»')
+      ? ok(u + ': видна одна страница, ' + r.len + ' знаков: «' + r.head + '…»')
       : no(u + ': видимых секций ' + r.shown + ', знаков ' + r.len);
   }
-  /* Почта без скрипта пишется вручную — она должна быть на странице */
+  /* Почта без скрипта пишется вручную, она должна быть на странице */
   await page.goto('http://127.0.0.1:8411/', { waitUntil: 'domcontentloaded' });
-  /* Их несколько: первый — стиль для reveal, адрес в другом. */
+  /* Их несколько: первый задаёт стиль для reveal, адрес в другом. */
   const ns = (await page.locator('noscript').allInnerTexts().catch(() => []))
     .concat(await page.evaluate(() => [...document.querySelectorAll('noscript')].map(n => n.innerHTML)))
     .join(' ');

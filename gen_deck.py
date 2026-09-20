@@ -31,7 +31,7 @@ HOUSE_LOW, HOUSE_HIGH = D21['price'], D24['price']
 ENTRY_LOW, ENTRY_HIGH = D21['entry'], D24['entry']
 
 # Та же ставка, по которой считает /bars/economics/ и страницы юнитов:
-# средняя оценка по Европе. €1610 — факт по Северной Америке, он остаётся
+# средняя оценка по Европе. €1610 это факт по Северной Америке, он остаётся
 # в тексте как то, на что можно сослаться.
 RATE_EU, WAGE_EU, RATE_NA = 1_450, 18, 1_610
 outing = B['outing']
@@ -47,8 +47,8 @@ def E(v):
 
 
 def rows_residences():
-    """Раньше здесь стояли три сценария загрузки. Теперь загрузка одна —
-    политика, а не прогноз, — и различаются модели, а не сценарии."""
+    """Раньше здесь стояли три сценария загрузки. Теперь загрузка одна,
+    политика, а не прогноз, и различаются модели, а не сценарии."""
     out = ''
     for i, (_, en, _, d) in enumerate(ALL):
         cls = ' class="tot"' if i == len(ALL) - 1 else ''
@@ -98,8 +98,8 @@ BLOCKS = {
               '<td class="n" colspan="2">%s–%s, plus %s onboarding</td></tr>\n'
               % (E(HOUSE_LOW), E(HOUSE_HIGH), E(ONBOARDING))),
     'INVESTOR': ('      <p><strong>The house itself, %s–%s all in.</strong> Buys the '
-                 'residence outright in their own name — movable property with a serial '
-                 'number and an invoice, not cadastral real estate — and we run the guests '
+                 'residence outright in their own name, as movable property with a serial '
+                 'number and an invoice rather than cadastral real estate, and we run the guests '
                  'under a management contract they can end. Their share of the revenue is '
                  'sized in advance to a %.0f%% a year target on that full sum; when revenue '
                  'falls short, the payment falls with it and we add no money of our own.</p>\n'
@@ -113,7 +113,7 @@ changed = 0
 for name, html in BLOCKS.items():
     a, b = '<!-- GEN:%s -->' % name, '<!-- /GEN:%s -->' % name
     if s.count(a) != 1 or s.count(b) != 1:
-        sys.exit('нет маркеров GEN:%s в deck.html — добавьте их вокруг блока' % name)
+        sys.exit('нет маркеров GEN:%s в deck.html, добавьте их вокруг блока' % name)
     i, j = s.index(a) + len(a), s.index(b)
     if s[i:j] != '\n' + html:
         s = s[:i] + '\n' + html + s[j:]

@@ -37,7 +37,7 @@ for (const [name, w, h] of VIEWS) {
         const de = document.documentElement;
         if (de.scrollWidth > de.clientWidth + 1) out.scroll = de.scrollWidth - de.clientWidth;
         const view = document.querySelector('.view-section.active') || document.body;
-        /* Элемент шире экрана — беда только если его никто не прокручивает. */
+        /* Элемент шире экрана это беда только если его никто не прокручивает. */
         const scrollable = el => {
           for (let p = el.parentElement; p; p = p.parentElement) {
             const ov = getComputedStyle(p).overflowX;

@@ -5,7 +5,7 @@
    and a JPEG in the <img>. That is how a browser gets the smaller file.
 
    The catch: a <source> the browser accepts is a commitment. If that WebP
-   then fails to arrive — blocked, missing, a proxy that mangles it — the
+   then fails to arrive, whether blocked, missing or mangled by a proxy, the
    browser does NOT fall back to the <img src>. It draws nothing, and the
    perfectly good JPEG sits there unused. And because every photograph is
    offered the same way, whatever stops one tends to stop all of them: the

@@ -36,7 +36,7 @@ def slots_for(width):
 
     A source at least as wide as the smallest slot gets the full set, named
     by slot. media() in the page names all three without being able to look
-    at the disk, so for anything it renders the three files have to exist —
+    at the disk, so for anything it renders the three files have to exist:
     a narrower source simply lands in the larger slots at its own size.
 
     A source narrower than even the smallest slot gets one file, named by
@@ -81,7 +81,7 @@ def main():
 
     print('\n%d files written, %d sources' % (written, len(names)))
     if narrow:
-        print('\nwritten as a single file — markup for these names the width shown:')
+        print('\nwritten as a single file. Markup for these names the width shown:')
         for name, widths in narrow:
             print('  %-26s %s' % (name, ', '.join(str(w) for w in widths)))
     if before and after:

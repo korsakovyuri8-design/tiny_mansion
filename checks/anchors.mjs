@@ -34,7 +34,7 @@ for (const [w, h, tag] of [[390, 844, 'телефон'], [1280, 900, 'компь
         if (ok.missing) { bad.push(tag + ' ' + lang + ' ' + u + ' → #' + id + ': такого id на странице нет'); continue; }
         if (ok.top < ok.header - 2)
           bad.push(tag + ' ' + lang + ' ' + u + ' → #' + id + ': цель на ' + ok.top +
-                   'px, шапка кончается на ' + ok.header + 'px — ушла под неё на ' + (ok.header - ok.top) + 'px');
+                   'px, шапка кончается на ' + ok.header + 'px, ушла под неё на ' + (ok.header - ok.top) + 'px');
       }
     }
     await page.close();

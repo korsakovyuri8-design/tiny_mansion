@@ -5,10 +5,10 @@
    not in either page, so the two cannot drift apart.
    ========================================================== */
 /* ═══════════════════════════════════════════════
-   КАРТИНКИ — меняй только здесь.
-   Каждая плита — image-set из webp и jpg: браузер
+   КАРТИНКИ. Меняй только здесь.
+   Каждая плита это image-set из webp и jpg: браузер
    берёт webp, если умеет, и jpg, если нет. Фолбэк
-   двумя объявлениями тут не работает — это
+   двумя объявлениями тут не работает, и это
    переменная, и при var() позднее объявление
    просто выигрывает, поэтому запасной формат
    должен лежать внутри одного значения.
@@ -16,14 +16,14 @@
    Пять снимков берутся из фотографий сайта (../),
    пять пока не сняты и стоят как none: плита
    рисуется цветом, битых запросов нет.
-   Как появится файл — положи его в папку img
+   Как появится файл, положи его в папку img
    рядом с этой страницей и подставь путь.
    ═══════════════════════════════════════════════ */
 :root{
   --img-hero:      image-set(url('/residence-21-2048.webp') type('image/webp'),
                        url('/residence-21.jpg') type('image/jpeg'));    /* резиденция на ферме, горы */
   --img-country:   image-set(url('/north-empty-2048.webp') type('image/webp'),
-                          url('/north-empty.jpg') type('image/jpeg'));     /* север: ни людей, ни построек — та самая пустота */
+                          url('/north-empty.jpg') type('image/jpeg'));     /* север: ни людей, ни построек, та самая пустота */
   --img-res21:     image-set(url('/residence-21-b-2048.webp') type('image/webp'),
                         url('/residence-21-b.jpg') type('image/jpeg'));  /* 21ft спереди */
   --img-res24:     image-set(url('/residence-24-2048.webp') type('image/webp'),
@@ -43,9 +43,9 @@
 
   --cream:#F7F3ED; --card:#EFE9DF; --ink:#1A1614; --gold:#9C7A3C;
   /* Брендовое золото даёт на кремовом только 3,6:1. Мелкие капсы на светлом
-     фоне идут этим более тёмным оттенком — 5,1:1, и это всё ещё золото. */
+     фоне идут этим более тёмным оттенком: 5,1:1, и это всё ещё золото. */
   --gold-ink:#7F622E;
-  /* На .60 мелкий текст на карточке давал 4,4:1 — чуть ниже нормы.
+  /* На .60 мелкий текст на карточке давал 4,4:1, чуть ниже нормы.
      На .64 выглядит так же, но проходит. */
   --rule:rgba(26,22,20,.14); --muted:rgba(26,22,20,.64);
   --cream-muted:rgba(247,243,237,.66);
@@ -55,7 +55,7 @@
 
 /* Every plate on this page is a full-bleed background, and a background
    cannot carry a srcset. On a narrow screen the same photographs come
-   from the 1024 files instead — about a third of the weight for a
+   from the 1024 files instead, about a third of the weight for a
    third of the width. */
 @media(max-width:900px){
   :root{
@@ -93,7 +93,7 @@ a{color:inherit}
 .narrow{max-width:760px;margin:0 auto;padding:0 26px}
 
 /* ── Шапка. Та же, что на сайте, но на здешней типографике: имя
-   гарнитурой EB Garamond, меню — Plex Mono. Держится сверху, чтобы с
+   гарнитурой EB Garamond, меню набрано Plex Mono. Держится сверху, чтобы с
    длинной страницы можно было вернуться, не мотая наверх. ── */
 #site-header{position:sticky;top:0;z-index:20;
   background:rgba(247,243,237,.94);backdrop-filter:saturate(160%) blur(10px);
@@ -110,7 +110,7 @@ a{color:inherit}
 .nav a[aria-current="page"]{color:var(--ink)}
 
 /* Language switch. The same pair of buttons as the main site, in this
-   page's mono face — the two pages are separate files, so it is a link,
+   page's mono face. The two pages are separate files, so it is a link,
    not a toggle. */
 .lang{display:flex;align-items:center;gap:9px;margin-left:clamp(12px,2.2vw,34px)}
 .lang a,.lang span{font-family:var(--mono);font-size:11px;letter-spacing:.09em;
@@ -131,7 +131,7 @@ a{color:inherit}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--gold-ink);margin-bottom:20px}
 .dark .eyebrow{color:var(--gold)}
-/* Поверх фотографии тёмное золото не держится — берём светлый оттенок,
+/* Поверх фотографии тёмное золото не держится, берём светлый оттенок,
    тот же, что на главной странице сайта. */
 .hero .eyebrow,.closing .eyebrow{color:#C7A96B}
 h1{font-weight:400;font-size:clamp(38px,7vw,76px);line-height:1.03;letter-spacing:-.02em}
@@ -167,7 +167,7 @@ section{padding:96px 0}
   display:flex;flex-wrap:wrap;gap:14px 52px;font-family:var(--mono);
   font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,237,.72)}
 
-/* ── Дисбаланс ночёвок. Обе полосы меряют одну величину — долю ночёвок,
+/* ── Дисбаланс ночёвок. Обе полосы меряют одну величину, долю ночёвок,
    поэтому цвет один: разница в длине и есть весь смысл. Золотом идёт не
    вторая «серия», а подпись-указатель. Значения продублированы текстом,
    так что смысл не держится на одном цвете. ── */
@@ -190,7 +190,7 @@ section{padding:96px 0}
 /* Two photographs of the coast, under the figure that says 89,7% of the
    country's nights happen there. Everything else on this page is a render;
    these are not, which is the point of showing them. Held to a narrow
-   column because they came off a phone at 597px — wider would be an
+   column because they came off a phone at 597px; wider would be an
    upscale, and a soft photograph argues nothing. */
 .pair{margin:44px 0 0;max-width:780px;
   display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -341,7 +341,7 @@ ol.steps p{color:var(--muted);font-size:18px}
 .tier{padding:34px 30px;background:var(--card)}
 .tier--top{background:var(--ink);color:var(--cream)}
 .tier--top h3,.tier--top .tier-am{color:var(--cream)}
-/* Одинаковый вес с «.tier li» ниже, а идёт раньше — поэтому тёмная карточка
+/* Одинаковый вес с «.tier li» ниже, а идёт раньше, поэтому тёмная карточка
    получала тёмный текст на тёмном фоне. Поднимаем вес, чтобы правило выиграло. */
 .tier.tier--top li{color:var(--cream-muted);border-color:rgba(247,243,237,.14)}
 .tier-am{font-family:var(--mono);font-size:11px;letter-spacing:.15em;
@@ -376,7 +376,7 @@ ol.steps p{color:var(--muted);font-size:18px}
 footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
-/* Пометка на выданной цитате — рамка слева, в отличие от .note,
+/* Пометка на выданной цитате: рамка слева, в отличие от .note,
    который набран моноширинным и служит мелким шрифтом. */
 .callout{border-left:2px solid var(--gold);padding:2px 0 2px 18px;margin:26px 0;
   font-size:16px;line-height:1.7;color:var(--muted);max-width:62ch}
@@ -387,7 +387,7 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
 .tbd{background:#B3261E;color:#fff;padding:1px 7px;border-radius:2px;
   font-family:var(--mono);font-size:.85em;letter-spacing:.04em;white-space:nowrap}
 
-/* Пара «метка — объяснение» на всю ширину. В отличие от .spec, где
+/* Пара «метка и объяснение» на всю ширину. В отличие от .spec, где
    значение прижато вправо, здесь текст читается как текст: метка
    сверху, объяснение под ней, обе по левому краю. */
 .terms{margin-top:26px;border-top:1px solid var(--rule)}
@@ -399,7 +399,7 @@ footer{padding:42px 0 64px;border-top:1px solid var(--rule)}
 .dark .terms dt{color:var(--gold)}
 .dark .terms dd{color:rgba(247,243,237,.86)}
 
-/* Плашки под заголовком первой секции — то же, что .hero-meta,
+/* Плашки под заголовком первой секции, то же, что .hero-meta,
    но на светлом фоне. */
 .keyline{margin-top:38px;padding-top:24px;border-top:1px solid var(--rule);
   display:flex;flex-wrap:wrap;gap:14px 38px;font-family:var(--mono);

@@ -1,6 +1,6 @@
 /* Четыре вещи стоят на сайте десятками мест и разъезжаются по одной: юрлицо,
    город регистрации, почта и объявленный квартал. Проверка читает собранные
-   страницы и требует, чтобы каждая из них имела ровно одно значение — и чтобы
+   страницы и требует, чтобы каждая из них имела ровно одно значение, и чтобы
    ссылка mailto, её текст и запасной адрес в <noscript> совпадали между собой. */
 import pw from './pw.mjs';
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path';
@@ -27,7 +27,7 @@ await new Promise(r=>srv.listen(8335,r));
 
 /* Не только страницы из sitemap: 404, презентация, черновик и обе страницы
    инвесторам тоже отдаются. Последние закрыты noindex и потому в sitemap не
-   попадают — а на них стоят и юрлицо, и квартал, и почта. */
+   попадают, а на них стоят и юрлицо, и квартал, и почта. */
 const sm=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const pages=[...sm.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m=>m[1])
   .concat(['/404.html','/deck/deck.html','/drafts/invest-en.html',
@@ -50,7 +50,7 @@ for (const lang of ['en','ru']) {
     }));
     const say = m => { problems++; console.log('  ' + lang + ' ' + u + ': ' + m); };
     for (const g of GONE) if (r.html.includes(g)) say('осталось «' + g + '»');
-    /* Текст ссылки и её href — разные строки в коде, поэтому и сверяются. */
+    /* Текст ссылки и её href это разные строки в коде, поэтому и сверяются. */
     for (const [href, text] of r.mails) {
       if (href !== WANT.mail) say('mailto ведёт на ' + href);
       if (text !== WANT.mail) say('подпись ссылки ' + text);

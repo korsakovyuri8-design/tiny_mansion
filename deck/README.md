@@ -7,7 +7,7 @@ node deck/mkpdf.mjs
 ```
 
 It writes `Tiny-Mansion-NTPCG-pitch-deck.pdf` to the repository root. That
-PDF is not committed — it is 4 MB and regenerates in seconds.
+PDF is not committed: it is 4 MB and regenerates in seconds.
 
 The deck pulls the site's own photographs out of the repository root, so a
 picture that changes there changes here too. `fonts/` holds the same EB
@@ -15,15 +15,15 @@ Garamond and Jost subsets the site loads from Google, kept locally because
 the build has no outbound network.
 
 The team comes from the About view in `src/index.html`. Every money
-figure is generated — see below.
+figure is generated, see below.
 
-`robots.txt` disallows `/deck/` — this is the source of a document, not a
+`robots.txt` disallows `/deck/`, because this is the source of a document, not a
 page of the site.
 
 ## The numbers are generated
 
 Every figure on the money slides is written by `gen_deck.py` from `club.py`
-and `bars.py` — the same two models the site reads. The deck drifted once:
+and `bars.py`, the same two models the site reads. The deck drifted once:
 it went on offering entry from €50,000 into a pool months after the model
 became an outright sale, and ran a different occupancy ladder. Nobody
 noticed, because a slide has no test.

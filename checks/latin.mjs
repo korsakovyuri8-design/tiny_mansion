@@ -1,7 +1,7 @@
 /* untranslated.mjs only flags Latin prose of two words and twelve characters or
    more, so "11 m²" sat untranslated on a Russian page for a while, along with
    three aria-labels. This flags any Latin letter left in the Russian rendering
-   once the vocabulary that is *meant* to stay Latin has been struck out — brand
+   once the vocabulary that is *meant* to stay Latin has been struck out: brand
    names, chemistry, licence classes, standards. Target is zero: a new hit is
    either a missing dictionary key or a term that belongs on this list. */
 import pw from './pw.mjs';

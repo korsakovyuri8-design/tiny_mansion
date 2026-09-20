@@ -1,4 +1,4 @@
-/* Playwright is not a dependency of this repo — it is whatever is installed on
+/* Playwright is not a dependency of this repo: it is whatever is installed on
    the machine running the checks. Try the normal resolution first, then the
    global install these checks were written against. */
 let mod;

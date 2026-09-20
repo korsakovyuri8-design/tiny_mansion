@@ -25,7 +25,7 @@ for (const u of pages) {
       if(t && /[Ѐ-ӿ]/.test(t)) out.push(t.slice(0,80));}
     return [...new Set(out)];});
   if(hits.length){ total+=hits.length;
-    console.log('\n'+u+'  — кириллица в английской версии: '+hits.length);
+    console.log('\n'+u+'  кириллица в английской версии: '+hits.length);
     hits.slice(0,60).forEach(h=>console.log('   '+h));}
 }
 console.log('\nвсего: '+total);

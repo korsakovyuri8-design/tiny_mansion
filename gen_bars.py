@@ -2,7 +2,7 @@
 """Пересобирает /bars/economics/ из bars.py.
 
 Страница показывает, из чего складывается цена юнита, почему она
-диапазоном, и когда она возвращается — отдельно для бара и отдельно
+диапазоном, и когда она возвращается, отдельно для бара и отдельно
 для кофейни. Заменяет секцию целиком, а не дописывает, поэтому её
 можно запускать сколько угодно раз.
 
@@ -105,22 +105,22 @@ def section(eyebrow, head, lede, rest=''):
 s1 = section(
   ('Why the price moves', 'Почему цена не одна'),
   ('The shell is ours. The equipment is your choice.',
-   'Корпус наш. Оборудование — ваш выбор.'),
+   'Корпус наш. Оборудование выбираете вы.'),
   ('Two units off the same drawing can differ by twenty thousand euro, and all of that '
    'difference sits in the equipment. Some buyers already own machines. Some have a supplier '
    'they have worked with for years. Some want one particular espresso machine and nothing '
    'else. We build the trailer around whatever you decide, and the price follows that decision '
    'rather than a price list of ours.',
-   'Два юнита по одному чертежу могут отличаться на двадцать тысяч евро, и вся эта разница — '
+   'Два юнита по одному чертежу могут отличаться на двадцать тысяч евро, и вся эта разница сидит '
    'в оборудовании. У кого-то машины уже есть. У кого-то поставщик, с которым работают годами. '
    'Кто-то хочет одну конкретную кофемашину и никакую другую. Мы строим прицеп вокруг вашего '
    'решения, и цена идёт за этим решением, а не за нашим прайсом.'),
   '          <p class="fineprint" style="margin-top:26px;">' + t(
    'If you bring your own equipment, its line simply comes out of the quotation. What stays is '
-   'the shell, the services and the fitting — and we will say plainly whether what you have '
+   'the shell, the services and the fitting, and we will say plainly whether what you have '
    'will work in a trailer that moves.',
    'Если оборудование у вас своё, его строка просто уходит из расчёта. Остаётся корпус, '
-   'инженерия и монтаж — и мы прямо скажем, будет ли то, что у вас есть, работать в прицепе, '
+   'инженерия и монтаж, и мы прямо скажем, будет ли то, что у вас есть, работать в прицепе, '
    'который ездит.') + '</p>\n')
 
 # ── 2. корпус ────────────────────────────────────────────────────────────
@@ -139,7 +139,7 @@ s2 = section(
       'A buffer battery, not autonomy. A bar at an event stands on shore power; it does not '
       'need the week of independence a residence is built for, and it is not paying for it.',
       'Буферная батарея, а не автономность. Бар на мероприятии стоит у розетки: недельная '
-      'независимость, ради которой строится резиденция, ему не нужна — и он за неё не платит.'))
+      'независимость, ради которой строится резиденция, ему не нужна, и он за неё не платит.'))
 
 # ── 3. барное оборудование ───────────────────────────────────────────────
 b3 = rows(BAR_KIT) + total_row('The bar fit-out', 'Барная начинка', BK[0], BK[1])
@@ -149,13 +149,13 @@ s3 = section(
   ('What goes into pouring', 'Из чего собирается розлив'),
   ('Built around the glycol line, because that is what decides whether the last pour at '
    'midnight is the same temperature as the first one at noon.',
-   'Собирается вокруг гликолевой линии — именно она решает, будет ли последняя кружка в '
+   'Собирается вокруг гликолевой линии, и именно она решает, будет ли последняя кружка в '
    'полночь той же температуры, что первая в полдень.'),
   fig('The bar fit-out, line by line', 'Барная начинка по строкам',
       'Component', 'Узел', b3,
       'Six taps is the common configuration; four and twelve are both possible and both move '
       'the chiller, the python and the tower.',
-      'Шесть кранов — обычная конфигурация. Четыре и двенадцать тоже возможны, и оба варианта '
+      'Шесть кранов это обычная конфигурация. Четыре и двенадцать тоже возможны, и оба варианта '
       'двигают чиллер, питон и колонну.'))
 
 # ── 4. кофейное оборудование ─────────────────────────────────────────────
@@ -170,7 +170,7 @@ s4 = section(
   ('The espresso machine and the grinders are the single largest variable in the whole '
    'quotation. A mid-range two-group and a La Marzocco Linea are eight thousand euro apart, '
    'and the trailer around them is identical.',
-   'Эспрессо-машина и кофемолки — самая большая переменная во всём расчёте. Между двухгруппной '
+   'Эспрессо-машина и кофемолки остаются самой большой переменной во всём расчёте. Между двухгруппной '
    'машиной среднего класса и La Marzocco Linea восемь тысяч евро разницы, а прицеп вокруг них '
    'одинаковый.'),
   fig('The coffee fit-out, line by line', 'Кофейная начинка по строкам',
@@ -195,16 +195,16 @@ s5 = section(
   ('The price', 'Цена'),
   ('What a unit comes to', 'Во что обходится юнит'),
   ('Delivered to your gate, in your own livery, with the papers. The spread inside each line '
-   'is the equipment, not our margin — that stays the same across the whole range.',
-   'До ваших ворот, в вашей ливрее, с документами. Разброс внутри каждой строки — это '
+   'is the equipment, not our margin, which stays the same across the whole range.',
+   'До ваших ворот, в вашей ливрее, с документами. Разброс внутри каждой строки даёт '
    'оборудование, а не наша маржа: она одинакова по всему диапазону.'),
   fig('Delivered price', 'Цена с доставкой',
       'Unit', 'Юнит', b5,
       'Quoted per order against the specification you approve. Bring your own equipment and '
       'those lines come out; specify something we have not costed and we will price it before '
       'you commit.',
-      'Считается под заказ по спецификации, которую вы утверждаете. Своё оборудование — строки '
-      'уходят из расчёта; что-то, чего мы не считали, — посчитаем до того, как вы на что-то '
+      'Считается под заказ по спецификации, которую вы утверждаете. Со своим оборудованием строки '
+      'уходят из расчёта; то, чего мы не считали, посчитаем до того, как вы на что-то '
       'подпишетесь.'))
 
 print('sections 1-5 built, %d phrases so far' % len(TXT))
@@ -234,10 +234,10 @@ def model_section(kind, eyebrow, head, lede, price, net, cost_rows, note):
 
     return section(eyebrow, head, lede,
       fig('One outing', 'Один выезд', 'Line', 'Строка', body,
-          'At €1,450 an outing and €18 an hour for labour — a middle estimate for western '
+          'At €1,450 an outing and €18 an hour for labour, a middle estimate for western '
           'Europe. The one rate we can point at is North American: the Ohio and Alberta '
           'operators who publish theirs.',
-          'При ставке €1 450 за выезд и €18 в час за труд — это средняя оценка по Западной '
+          'При ставке €1 450 за выезд и €18 в час за труд, по средней оценке для Западной '
           'Европе. Единственная ставка, на которую мы можем показать пальцем, '
           'североамериканская: операторы в Огайо и Альберте публикуют свою.',
           'Amount', 'Сумма')
@@ -268,15 +268,15 @@ s6 = model_section('bar',
    ('Cleaning, consumables, line service', 'Уборка, расходники, обслуживание линии', 100)],
   ('Taken at ' + E(BAR_MID) + ', the middle of the range. A cheaper build pays back sooner, a '
    'dearer one later, and the arithmetic is the same either way.',
-   'Считано по ' + ERU(BAR_MID) + ' — середине диапазона. Сборка дешевле окупается быстрее, '
-   'дороже — медленнее, арифметика та же.'))
+   'Считано по ' + ERU(BAR_MID) + ', по середине диапазона. Сборка дешевле окупается быстрее, '
+   'дороже медленнее, арифметика та же.'))
 
 s7 = model_section('coffee',
   ('The coffee bar, in numbers', 'Кофейня в цифрах'),
   ('What an espresso bar earns', 'Что зарабатывает кофейня'),
-  ('One barista, three hours on site, a hundred and fifty drinks — the package the Alberta '
+  ('One barista, three hours on site, a hundred and fifty drinks: the package the Alberta '
    'operator sells. Here the drinks do cost something, because you are the one supplying them.',
-   'Один бариста, три часа на площадке, полтораста напитков — тот пакет, который продаёт '
+   'Один бариста, три часа на площадке, полтораста напитков: тот пакет, который продаёт '
    'оператор в Альберте. Здесь напитки уже чего-то стоят, потому что поставляете их вы.'),
   COFM_MID, COF_NET,
   [('Barista, six hours including travel', 'Бариста, шесть часов с дорогой', 6 * WAGE),
@@ -284,9 +284,9 @@ s7 = model_section('coffee',
    ('Fuel and towing', 'Топливо и буксировка', 60),
    ('Cleaning and consumables', 'Уборка и расходники', 40)],
   ('Taken at ' + E(COFM_MID) + ', the mid-range build. The top-tier machine adds about twelve '
-   'thousand to the price and nothing to the revenue — it buys queue speed and the look of the '
+   'thousand to the price and nothing to the revenue. It buys queue speed and the look of the '
    'counter, not a higher rate.',
-   'Считано по ' + ERU(COFM_MID) + ' — сборке среднего класса. Машина верхнего класса '
+   'Считано по ' + ERU(COFM_MID) + ', по сборке среднего класса. Машина верхнего класса '
    'добавляет к цене около двенадцати тысяч и ничего к выручке: она покупает скорость очереди '
    'и вид стойки, а не ставку.'))
 
@@ -298,8 +298,8 @@ s8 = section(
    '€1,450 an outing is an estimate for western Europe; the only rates we can point at are the '
    'two North American operators who publish theirs. Both will move when we have invoices and '
    'European operators to compare against, and we will publish what changes.',
-   'Цены узлов здесь — рыночные оценки, а не выставленные нам счета. Ставка €1 450 за выезд — '
-   'оценка по Западной Европе; единственные ставки, на которые можно показать пальцем, — у двух '
+   'Цены узлов здесь рыночные, а не выставленные нам счета. Ставка €1 450 за выезд взята '
+   'оценка по Западной Европе; единственные ставки, на которые можно показать пальцем, стоят у двух '
    'североамериканских операторов, публикующих свои прайсы. И то и другое сдвинется, когда '
    'появятся счета и европейские операторы для сравнения, и мы опубликуем, что изменилось.'),
   '          <p class="fineprint" style="margin-top:26px;">' + t(
@@ -310,7 +310,7 @@ s8 = section(
 
 # ── страница целиком ─────────────────────────────────────────────────────
 PAGE = '''    <!-- ======================================================
-         MOBILE BARS — the working behind the numbers
+         MOBILE BARS: the working behind the numbers
          ====================================================== -->
     <section id="view-unit-economics" class="view-section">
       <div class="container page-top">
@@ -326,9 +326,9 @@ PAGE = '''    <!-- ======================================================
           <h1 class="page-title serif">''' + t('What the price is made of, and when it comes back',
                                                'Из чего складывается цена и когда она возвращается') + '''</h1>
           <p class="page-lede">''' + t(
-  'Every component we costed, what each one adds, and the arithmetic of a season — separately '
+  'Every component we costed, what each one adds, and the arithmetic of a season, separately '
   'for the bar and for the coffee bar. Disagree with a line rather than with the conclusion.',
-  'Каждый узел, который мы посчитали, сколько каждый из них добавляет, и арифметика сезона — отдельно для бара '
+  'Каждый узел, который мы посчитали, сколько каждый из них добавляет, и арифметика сезона, отдельно для бара '
   'и отдельно для кофейни. Спорьте со строкой, а не с выводом.') + '''</p>
         </div>
 
@@ -345,7 +345,7 @@ PAGE = '''    <!-- ======================================================
 s = io.open(SRC, encoding='utf-8').read()
 
 A = '''    <!-- ======================================================
-         MOBILE BARS — the working behind the numbers'''
+         MOBILE BARS: the working behind the numbers'''
 B = '''    <!-- ======================================================
          ALL FARMS'''
 if s.count(A) != 1 or s.count(B) != 1:

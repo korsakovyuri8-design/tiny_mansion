@@ -2,7 +2,7 @@
    BUILD
    ==========================================================
    The site is one hand-written document, src/index.html. Every view lives
-   in it and the browser swaps between them without a reload — which is
+   in it and the browser swaps between them without a reload, which is
    fast, but leaves one address for the whole site. A crawler, a shared
    link and a reload all need an address that a server can answer on its
    own.
@@ -13,7 +13,7 @@
    same interactive site.
 
    Edit src/index.html. Everything else here with an index.html in it is
-   output — it is overwritten on every run, so changes made to it are lost.
+   output: it is overwritten on every run, so changes made to it are lost.
 
    Run it after editing the source:
 
@@ -45,7 +45,7 @@ const TYPES = {
 const server = http.createServer((req, res) => {
   const p = decodeURIComponent(req.url.split('?')[0]);
   /* Assets come off disk. Every other address is answered with the source
-     document — which is the point: we are asking it to render that address.
+     document, which is the point: we are asking it to render that address.
      Never with a file from an earlier build, or each run would re-render
      its own output. */
   const file = path.extname(p) ? path.join(ROOT, p) : SOURCE;
@@ -64,7 +64,7 @@ const errors = [];
 page.on('pageerror', e => errors.push(String(e)));
 
 /* Nothing outside this machine is needed to produce the markup, and the
-   font request is slow to fail here — which would make the build wait on
+   font request is slow to fail here, which would make the build wait on
    it once per address. The <link> stays in the written file; only this
    run skips fetching it. */
 await page.route('**://fonts.googleapis.com/**', r => r.abort());
@@ -122,7 +122,7 @@ for (const route of routes) {
     doc.querySelectorAll('.reveal.in, .route.in').forEach(el => el.classList.remove('in'));
 
     /* initForms() fills the form's action and return address from wherever
-       the page is running — which during a build is this machine. Put the
+       the page is running, which during a build is this machine. Put the
        live values back so nothing local is written into a shipped file. */
     doc.querySelectorAll('form[data-mailform]').forEach(f => {
       f.removeAttribute('action');   /* the address stays out of the markup */
@@ -166,7 +166,7 @@ for (const route of routes) {
 fs.writeFileSync(path.join(ROOT, 'ru.js'),
   '/* Собран build.mjs из словаря RU в src/index.html. Не править руками:\n' +
   '   правки уйдут при следующей сборке. Грузится только для русской\n' +
-  '   версии — загрузчиком в <head> каждой страницы. */\n' +
+  '   версии, загрузчиком в <head> каждой страницы. */\n' +
   'window.RU = ' + dictionary + ';\n');
 
 /* ---------- sitemap and robots ---------- */
@@ -223,7 +223,7 @@ console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
 /* ---------- duplicate dictionary keys ----------
    RU is a JavaScript object literal, so two entries with the same key are
    not an error: the later one silently wins and the earlier translation is
-   dead text in the file. Two had been sitting there — 'Power' and 'On site',
+   dead text in the file. Two had been sitting there, 'Power' and 'On site',
    each wanted in two places with two different Russian words. The key is the
    English string, so the only cure is different English, and the only way to
    notice is to look. */
@@ -243,7 +243,7 @@ console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
 }
 
 /* ---------- the advertised launch date ----------
-   The whole site turns on one promise — "first residences deploy Q1 2027" —
+   The whole site turns on one promise, "first residences deploy Q1 2027",
    repeated in about forty places. A date like that rots silently: nothing
    breaks, no test fails, and one day the site is advertising a quarter that
    has already ended to somebody reading it. So the build says so.

@@ -5,18 +5,18 @@ from `main`, on the domain named in `CNAME`.
 
 ## Where to edit
 
-**`src/index.html`** — the whole site: markup, styles, data, script, and the
+**`src/index.html`** holds the whole site: markup, styles, data, script, and the
 Russian dictionary. This is the only file to edit by hand.
 
 Everything else with an `index.html` in it (`/`, `about/`, `farm/f-pony/`, …)
-is **generated**. Editing those files is wasted work — the next build
+is **generated**. Editing those files is wasted work: the next build
 overwrites them.
 
 Also hand-written:
 
 | File | What it is |
 | --- | --- |
-| `invest/invest.css` | Styles shared by both investor pages. The pages themselves are generated — see below. |
+| `invest/invest.css` | Styles shared by both investor pages. The pages themselves are generated, see below. |
 | `404.html` | What GitHub Pages serves for an address that does not exist. |
 | `analytics.js` | Inert until `SRC` and `ID` are filled in. See the comment at the top of it. |
 | `build.mjs` | The build described below. |
@@ -41,7 +41,7 @@ This opens `src/index.html` in a real browser once per address, and writes
 what it renders to a static file at that address. It also writes
 `sitemap.xml` and `robots.txt` from the same list of addresses.
 
-Commit the generated files along with the source — GitHub Pages serves what
+Commit the generated files along with the source, because GitHub Pages serves what
 is in the repository, there is no build step on their side.
 
 Then run the checks:
@@ -56,8 +56,8 @@ Every view lives in one document and the browser swaps between them without
 a reload, which is fast. On its own that leaves the whole site sharing one
 address: a shared link, a reload and a search engine all get the home page.
 
-The build gives each view a real address that a server answers by itself —
-its own file, its own title, description and canonical — while the site
+The build gives each view a real address that a server answers by itself:
+its own file, its own title, description and canonical, while the site
 still moves between them in the browser without a reload. Addresses shared
 back when the site used `#/` still work; they rewrite themselves to the real
 one.
@@ -83,13 +83,13 @@ order is the whole design:
 
 ```
 entry   = house price + onboarding fee
-payout  = TARGET × entry          — the target, fixed
-share   = payout / revenue        — derived, and different per model
+payout  = TARGET × entry          (the target, fixed)
+share   = payout / revenue        (derived, different per model)
 ```
 
 It used to run the other way: the owner's share of revenue was the fixed
 thing, and the yield fell out of it. That breaks as soon as the price is a
-range — at a 30.6% share the €120,000 house returns 17.0% a year and the
+range: at a 30.6% share the €120,000 house returns 17.0% a year and the
 €170,000 house returns 14.3%, and a page quoting one number for both is
 wrong about one of them. Fixing the target instead and deriving the share
 gives 30.6% and 36.5% respectively, and both come out at 17.0%.
@@ -97,7 +97,7 @@ gives 30.6% and 36.5% respectively, and both come out at 17.0%.
 Two things follow, and both are on the page rather than hidden:
 
 - **The return is a target, not a promise.** It is reached by sizing the
-  share in advance at 75% occupancy. Less revenue, less paid out — nobody
+  share in advance at 75% occupancy. Less revenue, less paid out, and nobody
   tops it up. `break_occ()` in `gen_invest.py` computes where the payment
   eats everything left after costs: 44.2% and 47.9% occupancy. Below that
   the target cannot be met by anything except paying out less.
@@ -105,7 +105,7 @@ Two things follow, and both are on the page rather than hidden:
   €18,000 onboarding fee is part of what the buyer pays, so leaving it out
   of the denominator would flatter the yield by two points.
 
-Occupancy is one number for the whole year on purpose — a policy, not a
+Occupancy is one number for the whole year on purpose: a policy, not a
 forecast. The house is not tied to a site, so a farm that does not reach it
 is replaced during the season.
 
@@ -118,7 +118,7 @@ two models at two rates it was wrong for one of them.
 Each component row in `bars.py` is `(english, russian, cheap, dear)`. The
 English name is not decoration: `gen_bars.py` puts it in the markup and the
 Russian one in the dictionary. When the rows were Russian-only the English
-page showed Cyrillic in its own cost tables — a chassis, a glycol chiller and
+page showed Cyrillic in its own cost tables: a chassis, a glycol chiller and
 an espresso machine, in Russian, to a German buyer. Keep both names on the
 row: that way they can only drift together with the price.
 
@@ -131,10 +131,10 @@ python3 gen_bars.py   # rewrite the page in src/index.html
 node build.mjs
 ```
 
-`gen_bars.py` replaces everything between the `MOBILE BARS — the working`
+`gen_bars.py` replaces everything between the `MOBILE BARS: the working`
 comment and `ALL FARMS`, and everything in the RU dictionary between the
 `Финмодель` and `Мобильные бары` markers. Do not put unrelated dictionary
-entries in that range — it ate a batch once, and the entries for the home
+entries in that range, because it ate a batch once and the entries for the home
 page's trade band now live above the first marker for that reason.
 
 ## The commercial line
@@ -142,8 +142,8 @@ page's trade band now live above the first marker for that reason.
 Three pages behind /bars/: `/bars/economics/` is generated by `gen_bars.py`,
 `/bars/spec/` and `/bars/permits/` are hand-written views in `src/index.html`
 like every other page. They are separate views because the trade buyer reads
-them at different moments — what it is, then what it costs, then what the
-paperwork is — and because one page carrying all of it was three thousand
+them at different moments: what it is, then what it costs, then what the
+paperwork is, and because one page carrying all of it was three thousand
 words before anyone reached a price.
 
 There is one platform, `PLATFORM` in `src/index.html`: 18 ft, 5.5 m body.
@@ -161,7 +161,7 @@ standard and the bars are not**, and that is a load argument rather than a
 positioning one. An espresso machine and a keg fridge draw continuously, so
 those units expect a socket; a salon's load is light and comes in pulses, so
 it can carry its own. The recirculating water system is what buys the
-budget — 60/80 litre tanks instead of 400/500 saves about 700 kg, which is
+budget: 60/80 litre tanks instead of 400/500 saves about 700 kg, which is
 what lets the off-grid pack fit under 3,500 kg. Change one of those numbers
 and the weight section stops adding up.
 
@@ -172,15 +172,15 @@ salon bill of materials exists it belongs in a model file like the others.
 
 The owner's-profit table on `/salons/economics/` deliberately runs three
 rows rather than one number. Four technicians on 45% leaves €3,140 a month;
-nobody on a share leaves €7,990 — but one person cannot work four stations,
+nobody on a share leaves €7,990, but one person cannot work four stations,
 so the last row only holds where the others are family or partners. It is
 the ceiling of the model, not its expected case, and the caption says so.
 
 ## The payback calculator
 
 `/bars/calculator/` lets an operator type their own menu in and get the
-payback on a unit. It runs the same sum as `/bars/economics/` — takings,
-less what is served, less staff, fuel and running — with the first two
+payback on a unit. It runs the same sum as `/bars/economics/`: takings,
+less what is served, less staff, fuel and running, with the first two
 lines coming from their menu instead of our estimate. The cost lines start
 at the figures in `bars.py` and are editable.
 
@@ -202,7 +202,7 @@ The type scale's lower bound was set against English. Russian words are longer
 and «Конфиденциальность» is longer than the whole measure at 320px, so below
 340px the scale steps down (`--t-hero`, `--t-display`, `--t-section`). Every
 heading also carries `overflow-wrap: break-word` and `hyphens: auto`, which do
-nothing until a word genuinely will not fit — the guard for the next long word
+nothing until a word genuinely will not fit: the guard for the next long word
 rather than a fix for this one. `checks/longword.mjs` is what notices.
 
 ## Wide tables on a phone
@@ -216,14 +216,14 @@ fused headers ("ВЫРУЧКАРАСХОДЫ") on the salon economics page.
 Where the last columns are the ones that matter, scrolling to reach them is
 not good enough. `.fig--cards` turns each row into a card below 620px; the
 labels come off `data-label`, which is in `I18N_ATTRS` and so translates
-like any other attribute. Only the five-column occupancy table uses it — a
+like any other attribute. Only the five-column occupancy table uses it, because a
 matrix like the bars payback grid does not card usefully and stays a scroll.
 
 ## Adding a farm, a country or a residence
 
 Add the record to `DATA` in `src/index.html` and run the build. Its page,
 its entry in `sitemap.xml`, and its title and description all follow from
-the record — there is no second place to update.
+the record, and there is no second place to update.
 
 ## Translation
 
@@ -240,8 +240,8 @@ The `RU` literal stays in `src/index.html`, which is where every generator
 splices into it. `build.mjs` cuts it out of each built page and writes it
 once to `/ru.js`, leaving `let RU = window.RU || {};` behind.
 
-A bootstrap in `<head>` decides the language before anything paints — a
-remembered choice, else the browser's — and only for Russian does it pull
+A bootstrap in `<head>` decides the language before anything paints: a
+remembered choice, else the browser's, and only for Russian does it pull
 `/ru.js` in synchronously, so a Russian reader never sees a flash of English.
 An English reader never downloads a byte of it: 350 KB a page became 209 KB,
 and 96 KB gzipped became 52 KB. When an English reader clicks RU, `withDict`
@@ -257,13 +257,13 @@ on the residence cards), it is a `HEAD_META` title or description and so
 never becomes a text node, or the data writes it escaped (`city:
 'Nik\u0161i\u0107'`) while the key is written plainly. Before deleting one,
 check that its replacement is actually on the page and run the translation
-check — deleting two "dead" keys turned two Russian cards English, and only
+check, because deleting two "dead" keys turned two Russian cards English, and only
 the check noticed. The build runs in English, which is what a crawler reads; a
 visitor who switches language gets the translation of the same strings.
 
 ## The launch date
 
-The whole site turns on one promise — "first residences deploy Q1 2027" —
+The whole site turns on one promise, "first residences deploy Q1 2027",
 written out in about forty places: markup, dictionary keys, dictionary
 values, the footer, both investor pages. A dictionary key is the English
 string, so editing the English by hand and forgetting the key silently
@@ -296,7 +296,7 @@ Four facts about the company are spread over dozens of places and drift apart
 one at a time: the legal entity, the city it is registered in, the contact
 mailbox and the advertised quarter. When TinyArc Group d.o.o. of Bar became
 Korsakov Group d.o.o. of Tivat, the name stood in `src/index.html`, `404.html`,
-`deck/deck.html`, `gen_invest.py` and an unpublished investor draft — five
+`deck/deck.html`, `gen_invest.py` and an unpublished investor draft: five
 files, none of which any test read. The pitch PDF is built from `deck.html`
 and gitignored, so it does not go stale in the repository, but a copy already
 sent to someone does: rebuild it with `node deck/mkpdf.mjs`.
@@ -316,7 +316,7 @@ the truth whenever the mailbox moves.
 
 `siteMail()` is the only place it is written. Everywhere it appears on the
 site is a `<span data-mail></span>` that `initForms()` turns into a link at
-boot — which the build then bakes into the static files, so a crawler and a
+boot, which the build then bakes into the static files, so a crawler and a
 visitor with no script both get a real address.
 
 The one exception is the `<noscript>` notice, which by definition cannot run
@@ -326,7 +326,7 @@ means those two places and nothing else.
 ## The deck
 
 `deck/` renders the NTPCG PDF, and its money slides are generated by
-`gen_deck.py` from `club.py` and `bars.py` — the same models the site reads.
+`gen_deck.py` from `club.py` and `bars.py`, the same models the site reads.
 It had drifted: months after the model became an outright house sale it was
 still offering entry from €50,000 into a pool, and running an occupancy
 ladder the site does not use. A slide has no test, so nothing caught it.
@@ -338,7 +338,7 @@ ladder the site does not use. A slide has no test, so nothing caught it.
 €1,610 an outing is the North American figure: what two working operators
 publish, converted from dollars. €1,450 is our middle estimate for Europe.
 The unit pages used to call €1,610 "the published European rate" and quote
-figures from it, while /bars/economics/ modelled €1,450 — so the two halves
+figures from it, while /bars/economics/ modelled €1,450, so the two halves
 of the same site answered the same question differently. Everything models
 at €1,450 now, and the North American rate appears only as the thing we can
 actually cite, above what we model at.
@@ -347,7 +347,7 @@ actually cite, above what we model at.
 
 `node checks/all.mjs` runs all eighteen in turn. Each starts its own static
 server and prints its own summary, so a failure is read from the output rather
-than an exit code. **Build first** — they read the built pages, not `src/`. The
+than an exit code. **Build first**: they read the built pages, not `src/`. The
 whole set takes around forty minutes; `devices` and `clip` are most of that.
 
 | | |
@@ -376,8 +376,8 @@ knowing about.
 text and translated attributes alike. `untranslated.mjs` only catches Latin
 prose of two words and twelve characters or more, so `11 m²` sat
 untranslated on a Russian page for a while, along with three `aria-label`s.
-The vocabulary that is meant to stay Latin — Victron, LiFePO₄, PIR, CE,
-Morsko dobro, the farm names — is struck out by the `KEEP` list at the top,
+The vocabulary that is meant to stay Latin (Victron, LiFePO₄, PIR, CE,
+Morsko dobro, the farm names) is struck out by the `KEEP` list at the top,
 so **the target is zero**: a new hit is either a missing dictionary key or a
 term that belongs on that list. Run against the English build it reports
 around 1,245, which is the check proving it is looking.
@@ -385,13 +385,13 @@ around 1,245, which is the check proving it is looking.
 `checks/money.mjs` catches thousands grouped the wrong way round. Russian
 uses a space (`€36 000`) and English a comma (`€36,000`); `calcMoney()` does
 that in script, but a figure written straight into markup needs its own
-dictionary key or it stays comma-grouped in Russian — which is how the salon
+dictionary key or it stays comma-grouped in Russian, which is how the salon
 economics tables first shipped, with `€10,770` in a table above prose
 reading `€10 770`.
 
 `checks/longword.mjs` walks text nodes with a `Range`, not elements. A word
 too long for the screen overflows its block while the block's own box stays
-put, so an element scan cannot see it — «Конфиденциальность» hung 21px past
+put, so an element scan cannot see it: «Конфиденциальность» hung 21px past
 the edge of a 320px screen and dragged the whole page sideways. It also has to
 stop its clipping walk at `<body>`: `overflow-x: hidden` there does not clip,
 it propagates to the viewport, and a check that believes it reports zero while
@@ -399,7 +399,7 @@ the page slides. The fix was a type step below 340px, plus `overflow-wrap` and
 `hyphens` on headings as the general guard.
 
 `checks/tap.mjs` measures every control at 390px against **WCAG 2.5.8 (AA),
-which is 24×24** — not the 44×44 of 2.5.5 (AAA), which on a phone would make
+which is 24×24**, not the 44×44 of 2.5.5 (AAA), which on a phone would make
 the sticky header eat a third of the screen. It found 46 controls under the
 line, the language switch among them at 20×20 on every page. Links inside
 prose are exempt: there the line of text is the target, not a button.
@@ -416,7 +416,7 @@ add and delete a calculator row, switch units, edit a price and watch the
 payback move, switch language and switch back on four views, open a gallery
 thumbnail, read the form's action and `_next`. Then the same site with
 JavaScript off, with `/ru.js` blocked, and with the back button. Two of the
-three failures they first reported were bugs in the probe, not the site —
+three failures they first reported were bugs in the probe, not the site:
 `form[data-mailform]` matches two forms on every page, and an edited menu is
 not supposed to be overwritten when you switch units. Read a failure here
 twice before believing it.
@@ -429,11 +429,11 @@ twice before believing it.
 - Not one of the eight farms has a photograph. Every farm page is a colour
   block, and /farms/ is a page about farms with no farm on it.
 - `analytics.js` needs an account: fill in `SRC` and `ID`.
-- FormSubmit needs its one-time activation — send the form once from the
+- FormSubmit needs its one-time activation: send the form once from the
   live site and confirm the email it sends back, or submissions are not
   forwarded.
 - The residence-permit section on the investor page states Montenegrin
-  immigration rules — the €150,000 cadastral threshold, the €5,000 a year in
+  immigration rules, namely the €150,000 cadastral threshold, the €5,000 a year in
   taxes and contributions, the EU/EEA/Swiss exemption, and that a
   property-based permit neither allows work nor counts toward permanent
   residence. None of that has been checked against a source in this
@@ -453,7 +453,7 @@ twice before believing it.
 - `bars.py` prices the build from market estimates, not from a bill of
   materials or supplier quotes. Every figure in it moves once real ones
   exist.
-- The bar and cafe imagery is renders, not photographs — no unit has been
+- The bar and cafe imagery is renders, not photographs: no unit has been
   built to production specification. The pages say so beside the pictures;
   keep that note wherever the renders are used.
 - The internal dimensions in `inside` on each unit are read off those
@@ -461,7 +461,7 @@ twice before believing it.
   are carried across from the cafe renders to the bar because it is the
   same shell; nothing in the bar renders states them. Confirm the whole
   list against the manufacturer's drawing before it is quoted to anyone.
-- The salon pages have no imagery at all — not even renders. Both layouts
+- The salon pages have no imagery at all, not even renders. Both layouts
   are described in words and a table.
 - `€45,000` for a salon has no bill of materials behind it, unlike the
   €66,000 bar. It is the figure the economics page is built on, so it is

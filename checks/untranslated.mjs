@@ -15,7 +15,7 @@ const b=await pw.chromium.launch({args:['--no-proxy-server']});
 const page=await b.newPage();
 await page.route('**://fonts.g*.com/**',r=>r.abort());
 
-/* Latin letters in a run of words, with no Cyrillic anywhere in the node —
+/* Latin letters in a run of words, with no Cyrillic anywhere in the node:
    proper names like "Residence 21ft" or "Đedovina" are expected, so this
    only flags nodes that are wholly Latin prose. */
 const SCAN = `(() => {

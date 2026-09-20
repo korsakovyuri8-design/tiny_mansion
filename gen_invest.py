@@ -3,7 +3,7 @@
 
 Обе страницы пишутся одним проходом из одной модели, поэтому русская и
 английская версии не могут разойтись, а цифры на странице не могут
-разойтись с расчётом. Меняется club.py — запускается это.
+разойтись с расчётом. Меняется club.py, запускается это.
 
     python3 gen_invest.py
 """
@@ -153,7 +153,7 @@ def page(lang):
     </div>
   </div>
 </section>''' % (
-        t(T('Черногория · первое размещение — I квартал 2027',
+        t(T('Черногория · первое размещение: I квартал 2027',
             'Montenegro · first deployment Q1 2027')),
         t(T('Два способа владеть домом,<br>который переезжает за сезоном',
             'Two ways to own a residence<br>that moves to where the season is')),
@@ -172,7 +172,7 @@ def page(lang):
     # ── ТРЕК А: КУПИТЬ ОДИН ДОМ ──────────────────────────────────────────
     terms = [
         ('Цена', 'Price',
-         '%s за Residence 21ft, %s за Grand Residence 24ft — готовый дом, '
+         '%s за Residence 21ft, %s за Grand Residence 24ft: готовый дом, '
          'доставленный на ферму.' % (E(HOUSE_LOW), E(HOUSE_HIGH)),
          '%s for the Residence 21ft, %s for the Grand Residence 24ft, delivered '
          'finished to the farm.' % (E(HOUSE_LOW), E(HOUSE_HIGH))),
@@ -202,7 +202,7 @@ def page(lang):
          'groundwork, no connections, no building permit on your side.'),
         ('Кто им управляет', 'Who runs it',
          'Мы, по отдельному договору управления, который вы можете расторгнуть. '
-         'Бронирования, гости, уборка, обслуживание и сезонные переезды — наши.',
+         'Бронирования, гости, уборка, обслуживание и сезонные переезды остаются за нами.',
          'We do, under a separate management agreement you can terminate. Bookings, '
          'guests, cleaning, maintenance and the season\u2019s moves are ours.'),
         ('Срок', 'Delivery',
@@ -212,7 +212,7 @@ def page(lang):
          'few days to the farm. Built to one specification, tested before it leaves '
          'the yard.'),
         ('Если захотите забрать', 'If you want it back',
-         'Это транспортное средство. Расторгаете договор управления — и дом едет '
+         'Это транспортное средство. Расторгаете договор управления, и дом едет '
          'туда, куда вы скажете.',
          'It is a vehicle. End the management agreement, and the house goes where '
          'you send it.'),
@@ -236,14 +236,14 @@ def page(lang):
 </section>''' % (
         t(T('Трек А', 'Track A')),
         t(T('Купить один дом', 'Buy one residence')),
-        t(T('Дом ваш и записан на вас. Земля в сделку не входит — именно поэтому '
+        t(T('Дом ваш и записан на вас. Земля в сделку не входит, и именно поэтому '
             'цена такая.',
             'The house is yours, in your name. The land is not part of the deal, '
             'which is what keeps the price where it is.')),
         rows,
         t(T('На что идёт взнос за подключение', 'What the onboarding fee buys')),
         onb,
-        t(T('Сумма расписана до последней строки и сходится с %s. Тягач — самая '
+        t(T('Сумма расписана до последней строки и сходится с %s. Тягач идёт самой '
             'крупная позиция и единственная, которой вы пользуетесь, не владея ею: '
             'он общий на парк.' % E(ONBOARD),
             'The lines add up to %s exactly. The tow vehicle is the largest of them '
@@ -251,7 +251,7 @@ def page(lang):
             'fleet.' % E(ONBOARD)))))
 
     # ── АРИФМЕТИКА ───────────────────────────────────────────────────────
-    # Порядок расчёта — тот же, что в club.py: сначала цель по доходности,
+    # Порядок расчёта тот же, что в club.py: сначала цель по доходности,
     # потом доля. Обратный порядок разъезжается по вилке цены.
     def col(d, k, en, rune):
         return d
@@ -294,15 +294,15 @@ def page(lang):
         t(T('Как считается доля', 'How the share is worked out')),
         t(T('Владелец получает %s годовых от суммы входа. Его доля в выручке дома '
             'зависит от того, во сколько обошёлся дом: дорогой дом берёт большую '
-            'долю, дешёвый — меньшую, а в процентах годовых оба дают одно и то же.'
+            'долю, дешёвый меньшую, а в процентах годовых оба дают одно и то же.'
             % P(TARGET, 0),
             'The owner takes %s a year on the entry sum. The share of the house’s '
             'revenue that produces it depends on what the house cost: a dearer house '
             'takes a larger share, a cheaper one a smaller share, and as a percentage '
             'a year the two come out the same.' % P(TARGET, 0))),
-        t(T('<strong>%s — это цель, а не обещание.</strong> Она рассчитана при '
+        t(T('<strong>%s это цель, а не обещание.</strong> Она рассчитана при '
             'загрузке %s и достигается тем, что доля владельца в выручке заранее '
-            'подобрана под неё. Меньше выручка — меньше выплата: своих денег '
+            'подобрана под неё. Меньше выручка, меньше выплата: своих денег '
             'управляющая сторона не добавляет, и ниже мы говорим, где именно этот '
             'механизм упирается в предел.' % (P(TARGET, 0), P(OCC, 0)),
             '<strong>%s is a target, not a promise.</strong> It is computed at %s '
@@ -311,16 +311,16 @@ def page(lang):
             'own, and below we say where the mechanism runs out.'
             % (P(TARGET, 0), P(OCC, 0)))),
         hdr, body,
-        t(T('Загрузка %s стоит одна на весь год — это политика, а не прогноз. Дом не '
+        t(T('Загрузка %s стоит одна на весь год, и это политика, а не прогноз. Дом не '
             'привязан к площадке: ферма, которая на эту цифру не выходит, меняется по '
-            'ходу сезона, и резиденция переезжает. Внутри сезонного окна цель — 75–85%%.'
+            'ходу сезона, и резиденция переезжает. Внутри сезонного окна цель 75–85%%.'
             % P(OCC, 0),
-            'Occupancy is taken at %s across the year — a policy rather than a '
+            'Occupancy is taken at %s across the year, a policy rather than a '
             'forecast. The house is not tied to a site: any farm that does not reach '
             'that figure is replaced during the season, and the residence moves. '
             'Within each seasonal window the target is 75–85%%.' % P(OCC, 0))),
         t(T('<strong>Где механизм упирается в предел.</strong> Выплата владельцу '
-            'съедает всё, что остаётся после расходов, при загрузке %s–%s — в '
+            'съедает всё, что остаётся после расходов, при загрузке %s–%s, в '
             'зависимости от модели. Ниже неё цель не достигается ничем, кроме '
             'уменьшения самой выплаты.' % (P(BREAK_LOW), P(BREAK_HIGH)),
             '<strong>Where the mechanism runs out.</strong> The owner’s payment eats '
@@ -373,7 +373,7 @@ def page(lang):
     # ── ВИД НА ЖИТЕЛЬСТВО ────────────────────────────────────────────────
     status = [
         ('Оформление', 'Set-up',
-         'Регистрация компании и первая отчётность — через юриста, с которым мы '
+         'Регистрация компании и первая отчётность идут через юриста, с которым мы '
          'работаем в Черногории. Стоимость называется вам до того, как вы на '
          'что-либо соглашаетесь.',
          'Company registration and the first filing, handled by the lawyer we work '
@@ -386,7 +386,7 @@ def page(lang):
          'cost and it comes out of what the house earns, so we show it separately '
          'rather than folding it into a yield figure.'),
         ('Не входит', 'Not included',
-         'Ваше налоговое положение в стране, где вы налоговый резидент, — это вопрос '
+         'Ваше налоговое положение в стране, где вы налоговый резидент, остаётся вопросом '
          'к вашему советнику.',
          'Your own tax position at home, which is a question for your own adviser.'),
     ]
@@ -440,7 +440,7 @@ def page(lang):
             'not count toward permanent residence.')),
         t(T('Что работает', 'What does work')),
         t(T('Вид на жительство через собственную черногорскую компанию. Компания ваша, '
-            'на ней договор управления вашим домом, вы — её директор по трудовому '
+            'на ней договор управления вашим домом, вы её директор по трудовому '
             'договору. Эти годы идут в зачёт постоянного проживания полностью, и '
             'работать вы вправе.',
             'Residence through your own Montenegrin company. You hold the company, the '
@@ -488,7 +488,7 @@ def page(lang):
         t(T('Трек Б', 'Track B')),
         t(T('Или войти в размещение целиком', 'Or come in on the deployment')),
         t(T('Двадцать пять резиденций по Черногории и сеть ферм, на которые их '
-            'ставить. Один дом — это актив. Размещение — бизнес вокруг него.',
+            'ставить. Один дом это актив. Размещение это бизнес вокруг него.',
             'Twenty-five residences across Montenegro, and a network of farms to put '
             'them on. One house is an asset. The deployment is the business around it.')),
         t(T('Что строится', 'What is being built')),
@@ -550,13 +550,13 @@ def page(lang):
             'One prototype exists, built by hand in 2023. No residence has been built '
             'to production specification yet, and no guest has stayed in one. The '
             'first units deploy in Montenegro in Q1 2027.')),
-        t(T('Всё, что на этой странице описывает доход, — модель. Всё, что описывает '
-            'продукт, — спецификация, по которой мы строим. Отвечаем на письма сами.',
+        t(T('Всё, что на этой странице описывает доход, есть модель. Всё, что описывает '
+            'продукт, есть спецификация, по которой мы строим. Отвечаем на письма сами.',
             'Everything on this page that describes earnings is a model, and everything '
             'that describes the product is a specification we are building to. We '
             'answer every message ourselves.')),
         t(T('Написать нам', 'Write to us')),
-        t(T('Показанные цифры — модельные и ориентировочные. Это не прогноз, не '
+        t(T('Показанные цифры модельные и ориентировочные. Это не прогноз, не '
             'гарантия и не обещание дохода. Доходность зависит от загрузки, '
             'операционных расходов и сезона и может оказаться ниже расчётной.',
             'Figures shown are modelled and indicative. They are not a forecast, a '
@@ -564,14 +564,14 @@ def page(lang):
             'costs and the season, and may be lower than modelled.')),
         t(T('Страница носит информационный характер. Это не инвестиционная, '
             'юридическая или налоговая консультация, не публичная оферта и не '
-            'приглашение приобрести какой-либо инструмент. Изображения резиденций — '
+            'приглашение приобрести какой-либо инструмент. Изображения резиденций это '
             'рендеры: ни один дом не построен по производственной спецификации.',
             'This page is information only. It is not investment advice, legal advice, '
             'tax advice, a public offer, or an invitation to subscribe for any '
             'instrument. Images of the residences are renders: no house has been built '
             'to the production specification.')),
         t(T('Условия участия обсуждаются индивидуально и оформляются документами, '
-            'подготовленными с юристом. Tiny Mansion — проект Korsakov Group d.o.o., '
+            'подготовленными с юристом. Tiny Mansion это проект Korsakov Group d.o.o., '
             'Тиват, Черногория.',
             'Terms are agreed individually and set out in documents prepared with a '
             'lawyer. Tiny Mansion is a project of Korsakov Group d.o.o., Tivat, '
