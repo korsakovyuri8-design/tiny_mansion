@@ -89,7 +89,6 @@ const routes = await page.evaluate(() => {
 const NOINDEX = ['/thanks/'];
 
 console.log(routes.length + ' addresses\n');
-let dictionary = null;
 
 /* Clear what the last build wrote, so a farm removed from index.html stops
    having a page rather than lingering as an orphan in search results. */
@@ -144,14 +143,6 @@ for (const route of routes) {
     return '<!DOCTYPE html>\n' + doc.outerHTML;
   }, NOINDEX.indexOf(route) !== -1);
 
-  /* The Russian dictionary is 143 KB of every page and an English visitor
-     never reads a line of it. It leaves here for /ru.js, which the head
-     bootstrap fetches only when the visitor is reading Russian. The source
-     keeps the literal, so every generator still writes to one place. */
-  const m = html.match(/\nlet RU = \{[\s\S]*?\n\};\n/);
-  if (!m) throw new Error('не нашёл словарь RU в ' + route);
-  if (!dictionary) dictionary = m[0].replace(/^\nlet RU = /, '').replace(/;\n$/, '');
-  html = html.replace(m[0], '\nlet RU = window.RU || {};\n');
 
   const dir = route === '/' ? ROOT : path.join(ROOT, route);
   fs.mkdirSync(dir, { recursive: true });
@@ -162,12 +153,21 @@ for (const route of routes) {
   built++;
 }
 
-/* ---------- the dictionary, once, beside the pages ---------- */
-fs.writeFileSync(path.join(ROOT, 'ru.js'),
-  '/* Собран build.mjs из словаря RU в src/index.html. Не править руками:\n' +
-  '   правки уйдут при следующей сборке. Грузится только для русской\n' +
-  '   версии, загрузчиком в <head> каждой страницы. */\n' +
-  'window.RU = ' + dictionary + ';\n');
+/* ---------- словари, по файлу на язык, рядом со страницами ----------
+   Каждый словарь лежит в lang/<код>.js и копируется в корень как есть.
+   Страница не несёт в себе ни одного из них: загрузчик в <head> тянет
+   ровно тот, на котором читают, а английскому не отдаётся ни байта. */
+const LANG_DIR = path.join(ROOT, 'lang');
+const dicts = fs.readdirSync(LANG_DIR).filter(f => f.endsWith('.js')).sort();
+if (!dicts.length) throw new Error('в lang/ нет ни одного словаря');
+for (const f of dicts) {
+  const src = fs.readFileSync(path.join(LANG_DIR, f), 'utf8');
+  const code = f.replace(/\.js$/, '');
+  if (!src.includes('window.DICT.' + code))
+    throw new Error(f + ' не объявляет window.DICT.' + code);
+  fs.writeFileSync(path.join(ROOT, f), src);
+  console.log('  словарь ' + f.padEnd(28) + Math.round(src.length / 1024) + ' KB');
+}
 
 /* ---------- sitemap and robots ---------- */
 const indexed = routes.filter(r => NOINDEX.indexOf(r) === -1);
@@ -221,24 +221,31 @@ console.log('\n' + built + ' files, ' + indexed.length + ' in sitemap.xml');
 console.log('page errors: ' + (errors.length ? errors.join('; ') : 'none'));
 
 /* ---------- duplicate dictionary keys ----------
-   RU is a JavaScript object literal, so two entries with the same key are
-   not an error: the later one silently wins and the earlier translation is
-   dead text in the file. Two had been sitting there, 'Power' and 'On site',
-   each wanted in two places with two different Russian words. The key is the
-   English string, so the only cure is different English, and the only way to
-   notice is to look. */
-{
-  const ru = fs.readFileSync(SOURCE, 'utf8');
-  const body = ru.slice(ru.indexOf('let RU = {'));
+   A dictionary is a JavaScript object literal, so two entries with the same
+   key are not an error: the later one silently wins and the earlier
+   translation is dead text in the file. Two had been sitting there, 'Power'
+   and 'On site', each wanted in two places with two different Russian words.
+   The key is the English string, so the only cure is different English, and
+   the only way to notice is to look. Every language is checked, because each
+   one can grow its own clash. */
+for (const f of dicts) {
+  const body = fs.readFileSync(path.join(LANG_DIR, f), 'utf8');
   const seen = new Map();
   const clash = [];
-  for (const m of body.matchAll(/^\s{2}'((?:[^'\\]|\\.)*)':\s*\n?\s*'((?:[^'\\]|\\.)*)'/gm)) {
-    const [, k, v] = m;
+  /* Кавычки у словарей разные: русский собран одинарными, сербский и
+     турецкий выписаны сборщиком двойными. Проверка берёт обе, иначе она
+     молча не находит ничего и выглядит пройденной. */
+  const PAIR = /^\s{2,}(['"])((?:(?!\1)[^\\]|\\.)*)\1:\s*\n?\s*(['"])((?:(?!\3)[^\\]|\\.)*)\3/gm;
+  for (const m of body.matchAll(PAIR)) {
+    const k = m[2], v = m[4];
     if (seen.has(k) && seen.get(k) !== v) clash.push(k + ': "' + seen.get(k) + '" / "' + v + '"');
     seen.set(k, v);
   }
+  if (seen.size < 100)
+    console.log('\n  ВНИМАНИЕ: в ' + f + ' разобрано всего ' + seen.size +
+                ' пар, проверка на дубли ничего не видит');
   if (clash.length)
-    console.log('\n  ВНИМАНИЕ: один ключ словаря с разными переводами, ' +
+    console.log('\n  ВНИМАНИЕ: ' + f + ', один ключ с разными переводами, ' +
                 'побеждает последний:\n    ' + clash.join('\n    '));
 }
 

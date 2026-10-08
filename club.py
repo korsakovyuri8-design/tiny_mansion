@@ -42,27 +42,68 @@ TARGET = 0.17    # цель по доходности на полную сумм
 # другая, чем на €280. Раньше она стояла в списке числом €33,60, что верно
 # ровно для одной ставки из двух.
 COMMISSION = 0.12
+# Вторым элементом идёт не строка, а перевод по языкам: английский служит
+# ключом и подписью английской версии, остальные языки берутся отсюда.
+# Тройка (английское, переводы, число) сохранена, чтобы распаковка по всему
+# файлу и в gen_invest.py осталась прежней.
 VARIABLE = [
-    ('Cleaning and linen between guests',   'Уборка и бельё между гостями',      27.00),
-    ('Maintenance, parts, wear',            'Обслуживание, запчасти, износ',     14.00),
-    ('Welcome basket from the farm',        'Приветственный набор с фермы',      11.00),
-    ('Water, waste, consumables',           'Вода, вывоз, расходники',            9.50),
-    ('Moving between zones',                'Перегон между зонами',               7.50),
-    ('Check-in, comms, platform',           'Приём гостя, связь, платформа',      5.40),
+    ('Cleaning and linen between guests',
+     {'ru': 'Уборка и бельё между гостями',
+      'sr': 'Čišćenje i posteljina između gostiju',
+      'tr': 'Konuklar arası temizlik ve çarşaf'},                            27.00),
+    ('Maintenance, parts, wear',
+     {'ru': 'Обслуживание, запчасти, износ',
+      'sr': 'Servis, delovi, habanje',
+      'tr': 'Bakım, yedek parça, aşınma'},                                   14.00),
+    ('Welcome basket from the farm',
+     {'ru': 'Приветственный набор с фермы',
+      'sr': 'Korpa dobrodošlice sa imanja',
+      'tr': 'Çiftlikten karşılama sepeti'},                                  11.00),
+    ('Water, waste, consumables',
+     {'ru': 'Вода, вывоз, расходники',
+      'sr': 'Voda, odvoz, potrošni materijal',
+      'tr': 'Su, atık, sarf malzemesi'},                                      9.50),
+    ('Moving between zones',
+     {'ru': 'Перегон между зонами',
+      'sr': 'Premeštanje između zona',
+      'tr': 'Bölgeler arası taşıma'},                                         7.50),
+    ('Check-in, comms, platform',
+     {'ru': 'Приём гостя, связь, платформа',
+      'sr': 'Prijem gosta, komunikacija, platforma',
+      'tr': 'Karşılama, iletişim, platform'},                                 5.40),
 ]
 FIXED = [
-    ('Insurance',                'Страховка',                 1_500),
-    ('Accounting and admin',     'Бухгалтерия и админ',       2_000),
-    ('Platform and telemetry',   'Платформа и телеметрия',      800),
+    ('Insurance',
+     {'ru': 'Страховка', 'sr': 'Osiguranje', 'tr': 'Sigorta'},            1_500),
+    ('Accounting and admin',
+     {'ru': 'Бухгалтерия и админ',
+      'sr': 'Računovodstvo i administracija',
+      'tr': 'Muhasebe ve idare'},                                         2_000),
+    ('Platform and telemetry',
+     {'ru': 'Платформа и телеметрия',
+      'sr': 'Platforma i telemetrija',
+      'tr': 'Platform ve telemetri'},                                       800),
 ]
 VAR_NIGHT = sum(v for _, _, v in VARIABLE)      # без комиссии канала
 FIX_YEAR  = sum(v for _, _, v in FIXED)         # на один юнит в год
 
 ONBOARDING_USE = [
-    ('Tow vehicle: deposit or lease, net of VAT', 'Тягач: первый взнос или лизинг, за вычетом НДС', 11_400),
-    ('Logistics and siting on the farm',          'Логистика и установка на ферме',                  3_600),
-    ('PMS, locks, photography, listings',         'Интеграция в PMS, замки, съёмка, листинги',       2_000),
-    ('Company structure for the first months',    'Структура компании на первые месяцы',             1_000),
+    ('Tow vehicle: deposit or lease, net of VAT',
+     {'ru': 'Тягач: первый взнос или лизинг, за вычетом НДС',
+      'sr': 'Vozilo za vuču: prva rata ili lizing, bez PDV-a',
+      'tr': 'Çekici araç: peşinat ya da kiralama, KDV hariç'},            11_400),
+    ('Logistics and siting on the farm',
+     {'ru': 'Логистика и установка на ферме',
+      'sr': 'Logistika i postavljanje na imanju',
+      'tr': 'Lojistik ve çiftliğe yerleştirme'},                           3_600),
+    ('PMS, locks, photography, listings',
+     {'ru': 'Интеграция в PMS, замки, съёмка, листинги',
+      'sr': 'Integracija u PMS, zaključavanje, snimanje, oglasi',
+      'tr': 'PMS entegrasyonu, kilitler, çekim, ilanlar'},                 2_000),
+    ('Company structure for the first months',
+     {'ru': 'Структура компании на первые месяцы',
+      'sr': 'Struktura kompanije za prve mesece',
+      'tr': 'İlk aylar için şirket yapısı'},                               1_000),
 ]
 
 

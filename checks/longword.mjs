@@ -8,7 +8,7 @@ const b = await pw.chromium.launch({ args: ['--no-proxy-server'] });
 const urls = pages();
 let total = 0;
 for (const w of [320, 360, 390]) {
-  for (const lang of ['en', 'ru']) {
+  for (const lang of ['en', 'ru', 'sr', 'tr']) {
     const page = await b.newPage({ viewport: { width: w, height: 780 }, isMobile: true, hasTouch: true });
     await page.route('**://fonts.g*.com/**', r => r.abort());
     await page.addInitScript(l => { try { localStorage.setItem('tm-lang', l); } catch (e) {} }, lang);

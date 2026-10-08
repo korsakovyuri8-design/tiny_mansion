@@ -31,11 +31,11 @@ await new Promise(r=>srv.listen(8335,r));
 const sm=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const pages=[...sm.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m=>m[1])
   .concat(['/404.html','/deck/deck.html','/drafts/invest-en.html',
-           '/invest/','/invest/en/']);
+           '/invest/','/invest/en/','/invest/sr/','/invest/tr/']);
 
 const b=await pw.chromium.launch({args:['--no-proxy-server']});
 let problems=0;
-for (const lang of ['en','ru']) {
+for (const lang of ['en','ru','sr','tr']) {
   const page=await b.newPage({viewport:{width:1280,height:900}});
   await page.route('**://fonts.g*.com/**',r=>r.abort());
   await page.addInitScript(l=>{try{localStorage.setItem('tm-lang',l);}catch(e){}}, lang);

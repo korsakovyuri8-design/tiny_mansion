@@ -51,7 +51,7 @@ const SCAN = `(() => {
 })()`;
 
 for (const w of [390, 1280]) {
-  for (const lang of ['en','ru']) {
+  for (const lang of ['en','ru','sr','tr']) {
     const page = await b.newPage({viewport:{width:w,height:900}});
     await page.route('**://fonts.g*.com/**', r=>r.abort());
     await page.goto(B+'/',{waitUntil:'networkidle'});

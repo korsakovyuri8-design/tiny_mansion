@@ -120,12 +120,15 @@ console.log('  broken requests: ' + (bad404.length ? bad404.join('\n    ') : 'no
 
 console.log('\n--- language switch still round-trips on a built page ---');
 await page.goto(B + '/farm/f-pony/', { waitUntil: 'networkidle' });
-const en = await page.evaluate(() => document.querySelector('.view-section.active').innerText);
-await page.click('.lang-btn[data-lang="ru"]'); await page.waitForTimeout(250);
-const ru = await page.evaluate(() => document.querySelector('.view-section.active').innerText);
-await page.click('.lang-btn[data-lang="en"]'); await page.waitForTimeout(250);
-const en2 = await page.evaluate(() => document.querySelector('.view-section.active').innerText);
-console.log('  ru differs: ' + (ru !== en) + ', en restored exactly: ' + (en === en2));
+const view = () => page.evaluate(() => document.querySelector('.view-section.active').innerText);
+const en = await view();
+for (const l of ['ru', 'sr', 'tr']) {
+  await page.click('.lang-btn[data-lang="' + l + '"]'); await page.waitForTimeout(350);
+  const other = await view();
+  await page.click('.lang-btn[data-lang="en"]'); await page.waitForTimeout(350);
+  const back = await view();
+  console.log('  ' + l + ' differs: ' + (other !== en) + ', en restored exactly: ' + (en === back));
+}
 
 console.log('\n--- scroll reveal still fires on a built page ---');
 await page.goto(B + '/', { waitUntil: 'networkidle' });

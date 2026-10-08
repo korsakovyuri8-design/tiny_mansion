@@ -12,20 +12,33 @@ const page=await b.newPage({viewport:{width:1280,height:900}});
 await page.route('**://fonts.g*.com/**',r=>r.abort());
 const sm=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const pages=[...sm.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m=>m[1]);
-for (const lang of ['ru']) {
+/* Описание страницы живёт в HEAD_META и текстовым узлом не становится,
+   поэтому его не видит ни одна из проверок перевода. Здесь оно читается
+   прямо из <meta>: сначала по-английски, потом на каждом языке, и
+   совпавшее с английским значит ключ, которого нет в словаре. */
+const desc = u => page.evaluate(()=>document.querySelector('meta[name="description"]').content);
+const EN = {};
+await page.goto('http://127.0.0.1:8320/',{waitUntil:'networkidle'});
+await page.click('.lang-btn[data-lang="en"]'); await page.waitForTimeout(300);
+for (const u of pages) {
+  await page.goto('http://127.0.0.1:8320'+u,{waitUntil:'networkidle'});
+  await page.waitForTimeout(200);
+  EN[u]=await desc(u);
+}
+for (const lang of ['ru','sr','tr']) {
   await page.goto('http://127.0.0.1:8320/',{waitUntil:'networkidle'});
   await page.click('.lang-btn[data-lang="'+lang+'"]'); await page.waitForTimeout(300);
   console.log('=== '+lang);
-  let short=0, latin=0;
+  let short=0, same=0;
   for (const u of pages) {
     await page.goto('http://127.0.0.1:8320'+u,{waitUntil:'networkidle'});
     await page.waitForTimeout(200);
-    const d=await page.evaluate(()=>document.querySelector('meta[name="description"]').content);
+    const d=await desc(u);
     const bad=[];
     if(d.length<70) {short++; bad.push('коротко');}
-    if(!/[Ѐ-ӿ]/.test(d)) {latin++; bad.push('НЕ ПЕРЕВЕДЕНО');}
+    if(d===EN[u]) {same++; bad.push('НЕ ПЕРЕВЕДЕНО');}
     if(bad.length) console.log('  '+u.padEnd(26)+String(d.length).padStart(3)+'  '+bad.join(', ')+'  '+d.slice(0,70));
   }
-  console.log('  короче 70 знаков: '+short+', без кириллицы: '+latin+' из '+pages.length);
+  console.log('  короче 70 знаков: '+short+', совпадает с английским: '+same+' из '+pages.length);
 }
 await b.close(); srv.close();

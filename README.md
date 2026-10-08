@@ -5,8 +5,9 @@ from `main`, on the domain named in `CNAME`.
 
 ## Where to edit
 
-**`src/index.html`** holds the whole site: markup, styles, data, script, and the
-Russian dictionary. This is the only file to edit by hand.
+**`src/index.html`** holds the whole site: markup, styles, data and script.
+This is the only page file to edit by hand. The translations live beside it in
+`lang/`, one file per language.
 
 Everything else with an `index.html` in it (`/`, `about/`, `farm/f-pony/`, …)
 is **generated**. Editing those files is wasted work: the next build
@@ -16,18 +17,19 @@ Also hand-written:
 
 | File | What it is |
 | --- | --- |
-| `invest/invest.css` | Styles shared by both investor pages. The pages themselves are generated, see below. |
+| `lang/ru.js` `lang/sr.js` `lang/tr.js` | The dictionaries: Russian, Serbian and Turkish. One file per language, keyed by the English source string. |
+| `invest/invest.css` | Styles shared by all four investor pages. The pages themselves are generated, see below. |
 | `404.html` | What GitHub Pages serves for an address that does not exist. |
 | `analytics.js` | Inert until `SRC` and `ID` are filled in. See the comment at the top of it. |
 | `build.mjs` | The build described below. |
 | `images.py` | Makes the WebP derivatives that `<picture>` offers. |
 | `club.py` | The club offer: what a buyer pays, what the house earns, what the network takes. Run it to see the whole working. |
-| `gen_invest.py` | Writes both investor pages out of `club.py`. Run it after any change there. |
+| `gen_invest.py` | Writes all four investor pages out of `club.py`. Run it after any change there. |
 | `bars.py` | The commercial line: build cost from named components, retail at a fixed margin, and payback per market. |
 | `gen_bars.py` | Rewrites `/bars/economics/` out of `bars.py`. Replaces the section rather than appending, so it is safe to re-run. |
 | `gen_deck.py` | Rewrites the money slides of `deck/deck.html` out of `club.py` and `bars.py`. |
 | `relaunch.py` | Changes the advertised launch quarter everywhere at once. |
-| `checks/` | Eighteen browser checks that run against the built site. See **The checks** below. |
+| `checks/` | Twenty browser checks that run against the built site. See **The checks** below. |
 
 ## Building
 
@@ -64,16 +66,21 @@ one.
 
 ## The investor pages
 
-`/invest/` and `/invest/en/` are **generated**, not hand-written:
+`/invest/` (Russian), `/invest/en/`, `/invest/sr/` and `/invest/tr/` are
+**generated**, not hand-written:
 
 ```
 python3 club.py        # see the model and check it
-python3 gen_invest.py  # write both pages from it
+python3 gen_invest.py  # write all four pages from it
 ```
 
-Both languages come out of one pass over one model, so the Russian and the
-English cannot drift apart and neither can drift from the arithmetic. To
-change a figure, change it in `club.py` and re-run. The deck reads the same
+All four languages come out of one pass over one model, so no two versions can
+drift apart and none can drift from the arithmetic. To change a figure, change
+it in `club.py` and re-run. A string is written once for every language at
+its own call site, `T(ru=…, en=…, sr=…, tr=…)`; a missing language is a
+`KeyError` at generation time rather than an English paragraph on a Serbian
+page. The three label tables in `club.py` carry their translations the same
+way, as a dict beside the English label. The deck reads the same
 model, so `python3 gen_deck.py && node deck/mkpdf.mjs` follows.
 
 ### The order the model computes in
@@ -227,28 +234,71 @@ the record, and there is no second place to update.
 
 ## Translation
 
-`applyLang()` walks the document and swaps text against the `RU` dictionary,
-keyed by the English source string. So **changing an English string means
-changing its dictionary key too**, or that string stops being translated.
+The site is in four languages: English, Russian, Serbian (Latin) and Turkish.
+English is the source. `applyLang()` walks the document and swaps text against
+the dictionary of the chosen language, keyed by the English source string. So
+**changing an English string means changing its dictionary key too**, in every
+language file, or that string stops being translated.
 
 Page titles and descriptions live in `HEAD_META` and go through the same
-dictionary.
+dictionaries.
 
-### Where the dictionary lives
+### Where the dictionaries live
 
-The `RU` literal stays in `src/index.html`, which is where every generator
-splices into it. `build.mjs` cuts it out of each built page and writes it
-once to `/ru.js`, leaving `let RU = window.RU || {};` behind.
+One file per language in `lang/`, each declaring its own branch of one global:
+
+```
+window.DICT = window.DICT || {};
+window.DICT.sr = { text: { … }, html: { … } };
+```
+
+`text` holds the text nodes and the translated attributes (`placeholder`,
+`alt`, `aria-label`, `title`, `data-label`). `html` holds the two headings
+whose word order differs enough to need the markup itself.
+
+`build.mjs` copies every file in `lang/` to the site root, so a new language is
+a new file there and nothing else: the build picks it up, and the duplicate-key
+guard runs over it like the others. Adding it to the switcher is two lines in
+`src/index.html`, `LANGS` and a button, plus its number formatting in `NUM` and
+its address in `INVEST`.
 
 A bootstrap in `<head>` decides the language before anything paints: a
-remembered choice, else the browser's, and only for Russian does it pull
-`/ru.js` in synchronously, so a Russian reader never sees a flash of English.
-An English reader never downloads a byte of it: 350 KB a page became 209 KB,
-and 96 KB gzipped became 52 KB. When an English reader clicks RU, `withDict`
-fetches it then; if that fetch fails the page simply stays in English.
+remembered choice, else the browser's, and for anything but English it pulls
+`/{lang}.js` in synchronously, so a Russian, Serbian or Turkish reader never
+sees a flash of English. An English reader never downloads a byte of any of
+them: 350 KB a page became 209 KB, and 96 KB gzipped became 52 KB. When a
+reader clicks another language, `withDict` fetches that file then; if the fetch
+fails the page simply stays in English.
 
-`src/index.html` opened on its own still has the literal inline, so it works
-without any of this.
+The language is not in the address: one URL serves all four and the switch
+changes the text, not the path. So the `hreflang` block in `<head>` points
+every language at the same address, which is a self-reference rather than a
+set of alternatives, and `setHead()` keeps it pointing at whichever view is
+open. A crawler is always served the English build. Separate addresses per
+language would be the thing to build if the translations ever need to rank on
+their own; the investor pages, which are real files, already have them.
+
+`node.__en` keeps the original English on the node, so switching back is
+byte-identical rather than a translation of a translation. `routes`, `live`
+and `resilient` all assert that round trip, now for each of the three
+translations.
+
+### The Turkish i
+
+`text-transform: uppercase` is not the same operation in every language. Under
+`lang="tr"` the browser applies Turkish casing, where `i` becomes `İ`, which is
+right for Turkish words and wrong for English names: the wordmark came out
+`TİNY MANSİON`, the breadcrumb `RESİDENCE 21FT`, the investor table
+`GRAND RESİDENCE 24FT`. The fix is `lang="en"` on the name itself, so the
+browser knows which language's rules to cap it by. `checks/cyr.mjs` looks for
+the dotted capital inside the English names it knows, so a new one is caught
+rather than shipped.
+
+A translation is not review: the Serbian and the Turkish were written without
+a native reviewer, and the pages that carry legal or regulatory claims
+(`/terms/`, `/privacy/`, the permits pages, the residence-permit section of
+the investor page) should be read by someone who works in that language
+before anyone is asked to rely on them.
 
 A key that looks unused usually is not. Three ways a string reaches the
 dictionary without appearing in the markup, all of which have caught me:
@@ -264,26 +314,37 @@ visitor who switches language gets the translation of the same strings.
 ## The launch date
 
 The whole site turns on one promise, "first residences deploy Q1 2027",
-written out in about forty places: markup, dictionary keys, dictionary
-values, the footer, both investor pages. A dictionary key is the English
-string, so editing the English by hand and forgetting the key silently
-drops the translation. Hence a script rather than find-and-replace:
+written out in about a hundred and ten places: markup, dictionary keys,
+dictionary values in three languages, the footer, all four investor pages. A
+dictionary key is the English string, so editing the English by hand and
+forgetting the key silently drops the translation. Hence a script rather than
+find-and-replace:
 
-    python3 relaunch.py --check                        # where it stands today
-    python3 relaunch.py "Q2 2027" "II квартал 2027"    # change it everywhere
-    node build.mjs && python3 gen_invest.py            # then rebuild
-    node deck/mkpdf.mjs                                # and the pitch PDF
+    python3 relaunch.py --check                 # where it stands today
+    python3 relaunch.py 2 2027                  # quarter and year, everywhere
+    node build.mjs && python3 gen_invest.py     # then rebuild
+    node deck/mkpdf.mjs                         # and the pitch PDF
 
-Russian declines, and the date stands on the site in four forms: "I квартал
-2027", "в I квартале 2027", "с I квартала 2027" and "I кв. 2027". The script
-replaces all four, longest first. It missed the last two on the Q3-to-Q1 move
-and left two English keys pointing at Russian values a quarter behind, which
-is what `--check` now looks for: any date on the site that is not the
-advertised one is printed with its line and exits non-zero.
+It takes the quarter as a number because every language writes it its own way
+and the script builds the forms itself: Russian declines ("I квартал 2027", "в
+I квартале 2027", "с I квартала 2027", "I кв. 2027"), Serbian declines and also
+abbreviates ("prvi kvartal", "prvog kvartala", "prvom kvartalu", "I kv."), and
+Turkish takes both spellings of the number with both suffixes ("2027 ilk
+çeyrek", "2027 1. çeyrekte"). Fifteen forms in all, replaced longest first, or
+a long form loses its tail to a short one.
 
-`FILES` is the list it edits. The deck and the unpublished investor draft are
-in it because GitHub Pages serves both, and both carried the date. After a
-run, update `EN_OLD` and `RU_OLD` at the top of the script.
+An earlier version took the strings by hand and knew only two of the Russian
+cases. It missed the other two on the Q3-to-Q1 move and left two English keys
+pointing at Russian values a quarter behind, which is what `--check` looks for:
+any date on the site that is not the advertised one is printed with its line
+and exits non-zero. A round trip is byte-identical, which is the cheapest way
+to test the script: move the date and move it back.
+
+`files()` is the list it edits: the source, the generators, the deck, the
+unpublished investor draft, and every dictionary in `lang/`. The deck and the
+draft are in it because GitHub Pages serves both and both carried the date.
+After a run the script rewrites its own `CURRENT`, because forgetting that by
+hand is exactly how the forms drifted apart the first time.
 
 A date like this rots without anything breaking: no test fails, and one day
 the site is advertising a quarter that has already ended. So `build.mjs`
@@ -302,7 +363,7 @@ and gitignored, so it does not go stale in the repository, but a copy already
 sent to someone does: rebuild it with `node deck/mkpdf.mjs`.
 
 `checks/identity.mjs` now holds the four values in one `WANT` object and the
-retired ones in `GONE`, and reads every served page in both languages: nothing
+retired ones in `GONE`, and reads every served page in all four languages: nothing
 from `GONE` may survive, every `mailto:` href must equal its own link text
 (they are separate strings in the code), and every form must post to the
 current address. Change the company and this is the file that says whether the
@@ -345,7 +406,7 @@ actually cite, above what we model at.
 
 ## The checks
 
-`node checks/all.mjs` runs all eighteen in turn. Each starts its own static
+`node checks/all.mjs` runs all twenty in turn. Each starts its own static
 server and prints its own summary, so a failure is read from the output rather
 than an exit code. **Build first**: they read the built pages, not `src/`. The
 whole set takes around forty minutes; `devices` and `clip` are most of that.
@@ -357,7 +418,7 @@ whole set takes around forty minutes; `devices` and `clip` are most of that.
 | `identity` | company, city, mailbox and the advertised quarter |
 | `live` | the calculator, forms, gallery and language switch, actually clicked |
 | `resilient` | no JavaScript, no dictionary, back and forward |
-| `cyr` `latin` `untranslated` | one language leaking into the other |
+| `cyr` `latin` `untranslated` | one language leaking into another |
 | `money` | thousands grouped the wrong way round |
 | `meta` | titles and descriptions |
 | `a11y` | landmarks, focus rings, alt text |
@@ -372,22 +433,30 @@ falls back to a global install. `checks/srv.mjs` is the shared static server.
 Several of them exist because they caught something, and those are worth
 knowing about.
 
-`checks/latin.mjs` flags any Latin letter left in the Russian rendering,
-text and translated attributes alike. `untranslated.mjs` only catches Latin
-prose of two words and twelve characters or more, so `11 m²` sat
+`checks/latin.mjs` flags any Latin letter left in the Russian rendering, text
+and translated attributes alike, including single words: `11 m²` sat
 untranslated on a Russian page for a while, along with three `aria-label`s.
-The vocabulary that is meant to stay Latin (Victron, LiFePO₄, PIR, CE,
-Morsko dobro, the farm names) is struck out by the `KEEP` list at the top,
-so **the target is zero**: a new hit is either a missing dictionary key or a
-term that belongs on that list. Run against the English build it reports
-around 1,245, which is the check proving it is looking.
+The vocabulary that is meant to stay Latin (Victron, LiFePO₄, PIR, CE, Morsko
+dobro, the farm names) is struck out by the shared `KEEP` list in
+`checks/keep.mjs`, so **the target is zero**: a new hit is either a missing
+dictionary key or a term that belongs on that list. Run against the English
+build it reports around 1,245, which is the check proving it is looking.
 
-`checks/money.mjs` catches thousands grouped the wrong way round. Russian
-uses a space (`€36 000`) and English a comma (`€36,000`); `calcMoney()` does
-that in script, but a figure written straight into markup needs its own
-dictionary key or it stays comma-grouped in Russian, which is how the salon
-economics tables first shipped, with `€10,770` in a table above prose
-reading `€10 770`.
+Letters cannot do that job for Serbian or Turkish, where Latin *is* the
+language, so `untranslated.mjs` compares strings instead of scripts. It
+snapshots the text nodes and translated attributes of every page in English,
+then in each translation, and flags a node that came back identical to the
+English and reads as prose. The same `KEEP` list exempts the names that are
+supposed to match. That makes it the coverage check for all three
+translations, and the reason the dictionaries were built key-for-key against
+the English rather than by eye.
+
+`checks/money.mjs` catches thousands grouped the wrong way round. English uses
+a comma (`€36,000`), Russian a space (`€36 000`), Serbian and Turkish a dot
+(`€36.000`); `calcMoney()` does that in script, but a figure written straight
+into markup needs its own dictionary key or it stays comma-grouped in every
+translation, which is how the salon economics tables first shipped, with
+`€10,770` in a table above prose reading `€10 770`.
 
 `checks/longword.mjs` walks text nodes with a `Range`, not elements. A word
 too long for the screen overflows its block while the block's own box stays
@@ -402,7 +471,18 @@ the page slides. The fix was a type step below 340px, plus `overflow-wrap` and
 which is 24×24**, not the 44×44 of 2.5.5 (AAA), which on a phone would make
 the sticky header eat a third of the screen. It found 46 controls under the
 line, the language switch among them at 20×20 on every page. Links inside
-prose are exempt: there the line of text is the target, not a button.
+prose are exempt: there the line of text is the target, not a button. It also
+lists neighbours sitting close together, which is a note rather than a
+failure: the four language buttons are 3px apart so the switch still fits a
+360px header, and each is 27×26, over the 24×24 minimum, which is what the
+success criterion actually asks for.
+
+`checks/clip.mjs` and `checks/longword.mjs` run in all four languages, and
+`checks/devices.mjs`, which is most of the suite's running time, runs in
+English and Russian only. Russian is the longest of the four: Serbian and
+Turkish sit between it and the English, so Russian is the binding case for a
+layout, while the per-language overflow checks still read every page in every
+language at 320, 360 and 390.
 
 `checks/anchors.mjs` clicks every in-page anchor and checks where it lands
 relative to the header. Raising those tap targets made the header eighteen
@@ -413,9 +493,10 @@ fallback for the first paint and for no script.
 
 `checks/live.mjs` and `checks/resilient.mjs` are the ones that click things:
 add and delete a calculator row, switch units, edit a price and watch the
-payback move, switch language and switch back on four views, open a gallery
-thumbnail, read the form's action and `_next`. Then the same site with
-JavaScript off, with `/ru.js` blocked, and with the back button. Two of the
+payback move, switch into each of the three translations and back on four
+views, open a gallery thumbnail, read the form's action and `_next`. Then the
+same site with JavaScript off, with `/ru.js` blocked, and with the back
+button. Two of the
 three failures they first reported were bugs in the probe, not the site:
 `form[data-mailform]` matches two forms on every page, and an edited menu is
 not supposed to be overwritten when you switch units. Read a failure here
@@ -423,6 +504,12 @@ twice before believing it.
 
 ## Still to do
 
+- The Serbian and the Turkish were translated without a native reviewer.
+  Around ten thousand words of commercial, technical and legal copy: the
+  terms, the privacy notice, the permits pages and the residence-permit
+  section all state things someone could rely on, and a wrong word there is
+  not a typo. Have each language read by someone who works in it before it
+  is used to sell anything.
 - Georgia is on /bars/permits/ alongside Montenegro and Croatia while we
   find out whether there is demand there. It is a market we are testing,
   not one we have committed to.

@@ -8,25 +8,45 @@ const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]
   else{r.writeHead(404);r.end('x');}});
 await new Promise(r=>srv.listen(8330,r));
 const b=await pw.chromium.launch({args:['--no-proxy-server']});
-const page=await b.newPage({viewport:{width:1280,height:900}});
-await page.route('**://fonts.g*.com/**',r=>r.abort());
 const sm=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const pages=[...sm.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m=>m[1]);
-await page.goto('http://127.0.0.1:8330/',{waitUntil:'networkidle'});
-await page.click('.lang-btn[data-lang="en"]'); await page.waitForTimeout(300);
+/* Кириллица неуместна в трёх версиях из четырёх: английской, сербской
+   латиницей и турецкой. Утёкшая русская строка видна сразу по письму. */
+const NAMES={en:'английской',sr:'сербской',tr:'турецкой'};
 let total=0;
-for (const u of pages) {
-  await page.goto('http://127.0.0.1:8330'+u,{waitUntil:'networkidle'});
-  await page.waitForTimeout(300);
-  const hits=await page.evaluate(()=>{
-    const v=document.querySelector('.view-section.active'); const out=[];
-    const w=document.createTreeWalker(v,NodeFilter.SHOW_TEXT); let n;
-    while((n=w.nextNode())){const t=n.textContent.trim();
-      if(t && /[Ѐ-ӿ]/.test(t)) out.push(t.slice(0,80));}
-    return [...new Set(out)];});
-  if(hits.length){ total+=hits.length;
-    console.log('\n'+u+'  кириллица в английской версии: '+hits.length);
-    hits.slice(0,60).forEach(h=>console.log('   '+h));}
+for (const lang of ['en','sr','tr']) {
+  const page=await b.newPage({viewport:{width:1280,height:900}});
+  await page.route('**://fonts.g*.com/**',r=>r.abort());
+  await page.addInitScript(l=>{try{localStorage.setItem('tm-lang',l);}catch(e){}}, lang);
+  for (const u of pages) {
+    await page.goto('http://127.0.0.1:8330'+u,{waitUntil:'networkidle'});
+    await page.waitForTimeout(300);
+    const hits=await page.evaluate(()=>{
+      const v=document.querySelector('.view-section.active'); const out=[];
+      const w=document.createTreeWalker(v,NodeFilter.SHOW_TEXT); let n;
+      while((n=w.nextNode())){const t=n.textContent.trim();
+        if(t && /[Ѐ-ӿ]/.test(t)) out.push(t.slice(0,80));}
+      return [...new Set(out)];});
+    if(hits.length){ total+=hits.length;
+      console.log('\n'+u+'  кириллица в '+NAMES[lang]+' версии: '+hits.length);
+      hits.slice(0,60).forEach(h=>console.log('   '+h));}
+
+    /* Турецкая i. При lang="tr" браузер поднимает i до İ, как и положено
+       по-турецки, и английское имя собственное под text-transform
+       превращается в «RESİDENCE 21FT» и «TİNY MANSİON». Лечится атрибутом
+       lang="en" на самом имени, а ловится здесь. */
+    if (lang === 'tr') {
+      const dotted = await page.evaluate(() => {
+        /* Английские имена, какими они выглядят после турецкого
+           uppercase. Список ровно из тех, в которых есть i. */
+        const rx = /RESİDENCE|MANSİON|VİCTRON|İNSTAGRAM|RADİSSON|LİNEA|NUKİ|ORBİTAL|BEST WESTERN İ/g;
+        return [...new Set((document.body.innerText.match(rx) || []))];
+      });
+      if (dotted.length) { total += dotted.length;
+        console.log('\n'+u+'  турецкая İ в английском имени: '+dotted.join(', ')); }
+    }
+  }
+  await page.close();
 }
 console.log('\nвсего: '+total);
 await b.close(); srv.close();

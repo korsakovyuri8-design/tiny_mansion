@@ -8,6 +8,13 @@
   <!-- Live address of the site. The CNAME file in the repository root is what
        points GitHub Pages at this domain; keep the two in step. -->
   <link rel="canonical" href="https://tinymansion.co/country/greece/">
+  <!-- Один адрес на все четыре языка: переключение меняет текст, а не URL,
+       поэтому каждая страница объявляет себя альтернативой самой себе. -->
+  <link rel="alternate" hreflang="en" href="https://tinymansion.co/country/greece/">
+  <link rel="alternate" hreflang="ru" href="https://tinymansion.co/country/greece/">
+  <link rel="alternate" hreflang="sr" href="https://tinymansion.co/country/greece/">
+  <link rel="alternate" hreflang="tr" href="https://tinymansion.co/country/greece/">
+  <link rel="alternate" hreflang="x-default" href="https://tinymansion.co/country/greece/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="theme-color" content="#1A1614">
@@ -270,23 +277,26 @@
     }
     .nav-link:hover { text-decoration: underline; text-underline-offset: 5px; }
 
-    /* Language switch. Sits at the end of the nav, same weight as a nav link */
-    .lang { display: flex; align-items: center; gap: 9px; margin-left: clamp(14px, 2.2vw, 30px); }
+    /* Language switch. Sits at the end of the nav, same weight as a nav link.
+       Два кода разделяла волосяная линия, читавшаяся как «или/или». Четыре
+       читаются рядом и без неё, а сэкономленная ширина решает, встанет ли
+       переключатель в строку с логотипом на телефоне или заберёт свою. */
+    .lang { display: flex; align-items: center; gap: 3px; margin-left: clamp(10px, 2.2vw, 30px); }
     .lang-btn {
       font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em;
       text-transform: uppercase; background: none; border: 0;
       /* WCAG 2.5.8 просит не меньше 24×24. Текст здесь 11px, поэтому размер
-         цели держится на отступах, а не на кегле: 20×20 пальцем не берётся. */
-      padding: 7px 8px; min-height: 26px;
+         цели держится на отступах, а не на кегле: 20×20 пальцем не берётся.
+         Боковой отступ ужат под четыре кода, нижняя граница по ширине
+         удержана min-width. */
+      padding: 7px 5px; min-height: 26px; min-width: 26px;
       color: var(--muted); cursor: pointer; transition: color 0.3s ease;
     }
     .lang-btn.active { color: var(--ink); }
     .lang-btn:not(.active):hover { color: var(--ink); }
-    .lang-sep { width: 1px; height: 11px; background: var(--rule); }
     header.over-hero .lang-btn { color: rgba(247, 243, 237, 0.72); }
     header.over-hero .lang-btn.active,
     header.over-hero .lang-btn:not(.active):hover { color: var(--bg-cream); }
-    header.over-hero .lang-sep { background: rgba(247, 243, 237, 0.3); }
 
     @media (max-width: 780px) {
       /* Wordmark and language on the first line, nav on the second. */
@@ -413,13 +423,14 @@
       max-width: 20ch; margin: 0 auto;
     }
     .manifesto-quote em { font-style: italic; color: var(--gold); }
-    /* Russian runs roughly a quarter longer than English, so the measures
-       set in ch need a little more room to break where the design intends. */
-    html[lang="ru"] .manifesto-quote { max-width: 26ch; }
-    html[lang="ru"] .manifesto-body,
-    html[lang="ru"] .seasonal-lede,
-    html[lang="ru"] .section-head p,
-    html[lang="ru"] .country-hero-body p { max-width: 64ch; }
+    /* Every translation runs longer than the English: Russian by roughly a
+       quarter, Serbian and Turkish not far behind. The measures set in ch
+       need a little more room to break where the design intends. */
+    html:not([lang="en"]) .manifesto-quote { max-width: 26ch; }
+    html:not([lang="en"]) .manifesto-body,
+    html:not([lang="en"]) .seasonal-lede,
+    html:not([lang="en"]) .section-head p,
+    html:not([lang="en"]) .country-hero-body p { max-width: 64ch; }
     .manifesto-body {
       font-size: var(--t-lede); line-height: 1.65; color: var(--body);
       max-width: 60ch; margin: 32px auto 0;
@@ -1181,14 +1192,19 @@
        initLang() ниже читает готовый результат. -->
   <script>
   (function () {
-    var l = null;
+    /* Список повторён здесь намеренно: загрузчик работает до того, как
+       доедет основной скрипт, и обязан обойтись без него. */
+    var codes = ['en', 'ru', 'sr', 'tr'], l = null;
     try { l = localStorage.getItem('tm-lang'); } catch (e) { /* приватный режим */ }
-    if (l !== 'ru' && l !== 'en')
-      l = String(navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en';
+    if (codes.indexOf(l) < 0) {
+      var two = String(navigator.language || '').toLowerCase().slice(0, 2);
+      l = codes.indexOf(two) >= 0 ? two : 'en';
+    }
     window.__lang = l;
     /* Синхронно и только здесь: к моменту applyLang() словарь уже на месте,
-       поэтому русский посетитель не видит вспышки английского. */
-    if (l === 'ru') document.write('<scr' + 'ipt src="/ru.js"></scr' + 'ipt>');
+       поэтому посетитель не видит вспышки английского. Английскому не
+       отдаётся ни байта словарей. */
+    if (l !== 'en') document.write('<scr' + 'ipt src="/' + l + '.js"></scr' + 'ipt>');
   })();
   </script>
   <script src="/photo-fallback.js" defer=""></script>
@@ -1203,7 +1219,7 @@
   <header id="site-header" class="">
     <div class="container">
       <div class="header-inner">
-        <a href="/" class="wordmark">Tiny Mansion</a>
+        <a href="/" class="wordmark" lang="en">Tiny Mansion</a>
         <nav class="nav" aria-label="Main">
           <a href="/residences/" class="nav-link">Residences</a>
           <a href="/farms/" class="nav-link">Farms</a>
@@ -1217,9 +1233,10 @@
           <a href="/enquiry/" class="nav-link">Enquire</a>
         </nav>
         <div class="lang" role="group" aria-label="Language">
-          <button type="button" class="lang-btn active" data-lang="en" lang="en">EN</button>
-          <span class="lang-sep" aria-hidden="true"></span>
-          <button type="button" class="lang-btn" data-lang="ru" lang="ru">RU</button>
+          <button type="button" class="lang-btn active" data-lang="en" lang="en" title="English">EN</button>
+          <button type="button" class="lang-btn" data-lang="ru" lang="ru" title="Русский">RU</button>
+          <button type="button" class="lang-btn" data-lang="sr" lang="sr" title="Srpski">SR</button>
+          <button type="button" class="lang-btn" data-lang="tr" lang="tr" title="Türkçe">TR</button>
         </div>
       </div>
     </div>
@@ -1536,7 +1553,7 @@
           <span>/</span>
           <a class="breadcrumb-item" href="/residences/">Residences</a>
           <span>/</span>
-          <span class="breadcrumb-current" id="residence-breadcrumb-title">Residence</span>
+          <span class="breadcrumb-current" id="residence-breadcrumb-title" lang="en">Residence</span>
         </div>
       </div>
 
@@ -1894,7 +1911,7 @@
           <a class="breadcrumb-item" href="/">Home</a>
           <span>/</span>
           <a class="breadcrumb-item" href="/bars/">Mobile bars</a>
-          <span>/</span><span class="breadcrumb-current" id="unit-breadcrumb-name">Unit</span>
+          <span>/</span><span class="breadcrumb-current" id="unit-breadcrumb-name" lang="en">Unit</span>
         </div>
       </div>
 
@@ -2764,7 +2781,7 @@
               <input type="text" name="interest" placeholder="Residence, bar or coffee unit" id="enquiry-interest">
             </div>
             <label class="sr-only" for="enq-when">Roughly when you would want it</label>
-            <input type="text" id="enq-when" name="when" placeholder="Roughly when (e.g. late summer 2026)">
+            <input type="text" id="enq-when" name="when" placeholder="Roughly when (e.g. late summer 2027)">
             <label class="sr-only" for="enq-message">Anything else we should know</label>
             <textarea id="enq-message" name="message" placeholder="Anything else we should know"></textarea>
             <button type="submit" class="btn btn-solid">Send</button>
@@ -2808,7 +2825,7 @@
 
           <div class="note-block" style="margin-bottom:64px;">
             <h2 class="serif">Where we actually are</h2>
-            <p>No residence has been built to production specification yet. There is one prototype, from 2023, and the first units are due in Montenegro in 2026.</p>
+            <p>No residence has been built to production specification yet. There is one prototype, from 2023, and the first units are due in Montenegro in Q1 2027.</p>
             <p>So we can't promise you a number of guests or a season's income. What exists today is signed framework agreements with farms, a confirmed manufacturer, and terms that cost you nothing until a residence is actually standing on your land.</p>
           </div>
 
@@ -2988,7 +3005,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <span class="footer-wordmark">Tiny Mansion</span>
+          <span class="footer-wordmark" lang="en">Tiny Mansion</span>
           <p class="footer-desc">Off-grid residences on working farms. A Korsakov Group project. First deployment Montenegro, Q1 2027.</p>
         </div>
 
@@ -3620,6 +3637,10 @@ function setHead(p) {
 
   set('meta[name="description"]', 'content', desc);
   set('link[rel="canonical"]', 'href', SITE + p);
+  /* Все языки живут по одному адресу, поэтому альтернативы переезжают
+     вместе с canonical. */
+  document.querySelectorAll('link[rel="alternate"][hreflang]')
+    .forEach(l => l.setAttribute('href', SITE + p));
   set('meta[property="og:title"]', 'content', title);
   set('meta[property="og:description"]', 'content', og);
   set('meta[property="og:url"]', 'content', SITE + p);
@@ -4027,8 +4048,9 @@ function renderUnitRows() {
 function writeUnitMoney(u) {
   const el = document.getElementById('unit-money');
   if (!el || !u || !u.money) return;
-  /* Russian groups thousands with a space, English with a comma. */
-  const n = v => '\u20AC' + (lang === 'ru' ? v.replace(',', '\u00A0') : v);
+  /* Значения приходят сгруппированными по-английски, запятой: здесь она
+     меняется на тот разделитель, который принят в выбранном языке. */
+  const n = v => '\u20AC' + v.replace(',', (NUM[lang] || NUM.en).group);
   el.innerText = T('At €1,450 an outing, our middle estimate for a European diary, this unit leaves about {n} once staff, stock, fuel and its own running are paid. A season of twenty-four outings is roughly {s24}; thirty is roughly {s30}.')
     .replace('{n}', n(u.money.outing))
     .replace('{s24}', n(u.money.s24))
@@ -4040,9 +4062,9 @@ function writeUnitLengths(u) {
   if (!el || !u) return;
   /* Numbers and a unit name, so it is composed here rather than looked up
      as a finished sentence. */
-  el.innerText = (lang === 'ru'
-                    ? PLATFORM.m.replace('.', ',') + ' м · ' + PLATFORM.ft + ' футов'
-                    : PLATFORM.m + ' m · ' + PLATFORM.ft + ' ft') +
+  const f = NUM[lang] || NUM.en, w = UNIT_WORDS[lang] || UNIT_WORDS.en;
+  el.innerText = PLATFORM.m.replace('.', f.dec) + ' ' + w.m +
+                 ' · ' + PLATFORM.ft + ' ' + w.ft +
                  ' · ' + T('price on application');
 }
 
@@ -4138,11 +4160,9 @@ function calcMoney(v, dp) {
   const d = dp === undefined ? 0 : dp;
   const s = Math.abs(v).toFixed(d);
   const parts = s.split('.');
-  const group = lang === 'ru' ? ' ' : ',';
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
-  const joined = parts.length > 1
-    ? parts[0] + (lang === 'ru' ? ',' : '.') + parts[1]
-    : parts[0];
+  const f = NUM[lang] || NUM.en;
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, f.group);
+  const joined = parts.length > 1 ? parts[0] + f.dec + parts[1] : parts[0];
   return (v < 0 ? '−' : '') + '€' + joined;
 }
 
@@ -4247,7 +4267,7 @@ function recalcCalc() {
     return;
   }
   const seasons = calc.price / season;
-  const n = lang === 'ru' ? seasons.toFixed(1).replace('.', ',') : seasons.toFixed(1);
+  const n = seasons.toFixed(1).replace('.', (NUM[lang] || NUM.en).dec);
   pay.innerText = T('{n} seasons').replace('{n}', n);
   verdict.innerText = seasons <= 2.5
     ? T('At two and a half seasons or under, the unit is a piece of equipment rather than a bet. That is the line we hold ourselves to.')
@@ -4365,21 +4385,15 @@ function renderAllFarms() {
 /* ==========================================================
    LANGUAGE
    ==========================================================
-   English lives in the markup and in the data; Russian is a lookup keyed
-   by the English string. Everything the site renders - static copy, the
-   country/residence/farm data, placeholders, alt text - goes through the
-   same pass, so new copy only needs an entry here. Two headlines wrap a
-   word in <em>, where Russian word order differs; those carry a
+   English lives in the markup and in the data; every other language is a
+   lookup keyed by the English string, in its own file under lang/.
+   Everything the site renders - static copy, the country/residence/farm
+   data, placeholders, alt text - goes through the same pass, so new copy
+   needs one entry per language and nothing else. Two headlines wrap a word
+   in <em>, where the word order differs in translation; those carry a
    data-i18n-html key and are swapped whole.
    ========================================================== */
 
-let RU = window.RU || {};
-
-/* Headlines whose Russian word order differs from the English. */
-const RU_HTML = {
-  'hero-title': 'Дом, который едет туда, где <em>сезон</em>',
-  'manifesto': 'Отель хорош ровно настолько, насколько хорошо <em>место, где он построен</em>.'
-};
 
 /* The title and description belong to the address, not to the language, so
    they come from HEAD_META through setHead. Switching language only
@@ -4390,8 +4404,46 @@ const I18N_ATTRS = ['placeholder', 'alt', 'aria-label', 'title', 'data-label'];
 const originalAttrs = new WeakMap();
 let lang = 'en';
 
+/* English is the source. Every other language is a dictionary keyed by the
+   English string, living in its own file and fetched only if chosen. Adding
+   a language is this list, a lang/<code>.js, a button in the header and a
+   row in NUM and UNIT_WORDS below. */
+const LANGS = ['en', 'ru', 'sr', 'tr'];
+const DICT = window.DICT || (window.DICT = {});
+
+/* Thousands and decimals are not the same mark everywhere: English groups
+   with a comma, Russian with a space, Serbian and Turkish with a dot. */
+const NUM = {
+  en: { group: ',', dec: '.' },
+  ru: { group: '\u00A0', dec: ',' },
+  sr: { group: '.', dec: ',' },
+  tr: { group: '.', dec: ',' }
+};
+/* Metre and foot are written out in Russian and abbreviated in the Latin
+   languages, which is how each of them is actually read. */
+const UNIT_WORDS = {
+  en: { m: 'm', ft: 'ft' },
+  ru: { m: '\u043C', ft: '\u0444\u0443\u0442\u043E\u0432' },
+  sr: { m: 'm', ft: 'ft' },
+  tr: { m: 'm', ft: 'ft' }
+};
+/* The investor pages are separate files per language, not one page that
+   translates itself. /invest/ is Russian for historical reasons: the address
+   is already in circulation, so it stays where it is. */
+const INVEST = { en: '/invest/en/', ru: '/invest/', sr: '/invest/sr/', tr: '/invest/tr/' };
+
+/* Одно правило на загрузчик в <head> и на initLang: совпадение по первым
+   двум буквам, потому что браузер присылает ru-RU, sr-Latn-ME, tr-TR. */
+function langFromBrowser() {
+  const two = String(navigator.language || '').toLowerCase().slice(0, 2);
+  return LANGS.indexOf(two) >= 0 ? two : 'en';
+}
+
+function dictText() { return (DICT[lang] && DICT[lang].text) || {}; }
+function dictHtml() { return (DICT[lang] && DICT[lang].html) || {}; }
+
 /* For strings built in JS, where a plain lookup cannot carry the numbers. */
-function T(s) { return (lang === 'ru' && RU[s]) || s; }
+function T(s) { return (lang !== 'en' && dictText()[s]) || s; }
 
 function applyLang() {
   document.documentElement.lang = lang;
@@ -4400,8 +4452,8 @@ function applyLang() {
     let store = originalAttrs.get(el);
     if (!store) originalAttrs.set(el, (store = {}));
     if (store.__html === undefined) store.__html = el.innerHTML;
-    const ru = RU_HTML[el.getAttribute('data-i18n-html')];
-    el.innerHTML = (lang === 'ru' && ru) || store.__html;
+    const t = dictHtml()[el.getAttribute('data-i18n-html')];
+    el.innerHTML = (lang !== 'en' && t) || store.__html;
   });
 
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -4415,8 +4467,8 @@ function applyLang() {
     if (node.__en === undefined) node.__en = node.nodeValue;
     const key = node.__en.trim();
     if (!key) continue;
-    const ru = lang === 'ru' ? RU[key] : null;
-    node.nodeValue = ru ? node.__en.replace(key, ru) : node.__en;
+    const t = lang !== 'en' ? dictText()[key] : null;
+    node.nodeValue = t ? node.__en.replace(key, t) : node.__en;
   }
 
   document.querySelectorAll(I18N_ATTRS.map(a => '[' + a + ']').join(',')).forEach(el => {
@@ -4425,8 +4477,8 @@ function applyLang() {
     I18N_ATTRS.forEach(a => {
       if (!el.hasAttribute(a)) return;
       if (store[a] === undefined) store[a] = el.getAttribute(a);
-      const ru = lang === 'ru' ? RU[store[a]] : null;
-      el.setAttribute(a, ru || store[a]);
+      const t = lang !== 'en' ? dictText()[store[a]] : null;
+      el.setAttribute(a, t || store[a]);
     });
   });
 
@@ -4441,10 +4493,8 @@ function applyLang() {
 
   setHead(location.pathname);
 
-  /* The investor deck is two separate files rather than one page that
-     translates itself, so the link has to pick the right one. */
   document.querySelectorAll('[data-invest]').forEach(a =>
-    a.setAttribute('href', lang === 'ru' ? '/invest/' : '/invest/en/'));
+    a.setAttribute('href', INVEST[lang] || INVEST.en));
 
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.classList.toggle('active', b.getAttribute('data-lang') === lang));
@@ -4454,16 +4504,15 @@ function applyLang() {
   writeJsonLd();
 }
 
-/* The built pages carry an empty RU and fetch /ru.js; src/index.html keeps
-   the literal inline so it still works opened on its own. Either way this
-   calls back once there is something to translate with, or once it is clear
-   there will not be, in which case the page simply stays in English. */
-function withDict(done) {
-  if (window.RU) { RU = window.RU; return done(); }
-  if (Object.keys(RU).length) return done();
+/* Each dictionary is its own file at the site root, fetched the first time
+   its language is chosen and kept after that. This calls back once there is
+   something to translate with, or once it is clear there will not be, in
+   which case the page simply stays in English. */
+function withDict(code, done) {
+  if (code === 'en' || DICT[code]) return done();
   const s = document.createElement('script');
-  s.src = '/ru.js';
-  s.onload = () => { RU = window.RU || RU; done(); };
+  s.src = '/' + code + '.js';
+  s.onload = done;
   s.onerror = done;
   document.head.appendChild(s);
 }
@@ -4479,7 +4528,7 @@ function setLang(next) {
     writeUnitMoney(currentUnit);
     if (calc) drawCalc();
   };
-  if (next === 'ru') withDict(go); else go();
+  withDict(next, go);
 }
 
 function initLang() {
@@ -4487,16 +4536,15 @@ function initLang() {
      loaded by now. Falling back to the same rule keeps src/index.html
      working when it is opened without that bootstrap. */
   let saved = window.__lang || null;
-  if (saved !== 'ru' && saved !== 'en') {
+  if (LANGS.indexOf(saved) < 0) {
     try { saved = localStorage.getItem(LANG_KEY); } catch (e) { /* private mode */ }
   }
-  lang = (saved === 'ru' || saved === 'en') ? saved
-       : (String(navigator.language || '').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en');
+  lang = LANGS.indexOf(saved) >= 0 ? saved : langFromBrowser();
 
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.addEventListener('click', () => setLang(b.getAttribute('data-lang'))));
 
-  if (lang === 'ru') withDict(applyLang); else applyLang();
+  withDict(lang, applyLang);
 }
 
 /* ==========================================================

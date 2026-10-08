@@ -8,20 +8,8 @@ import pw from './pw.mjs';
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path';
 const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
 
-/* Stays Latin in Russian on purpose. */
-const KEEP = [
-  /TINY MANSION/g, /Korsakov Group(\s+d\.o\.o\.)?/g, /Best Western/g,
-  /\bI{1,3}V?\b/g,   /* Roman quarters: I, II, III, IV */ /\bEN\b/g, /\bRU\b/g,
-  /Grand Residence 24ft/g, /Residence 2\dft/g, /Trailer Made/g,
-  /Đedov(ina|\s+Do)?/g, /Ravni/g, /Eko Oaza/g, /Karadžić/g, /Pavićević/g, /Pešić/g, /Medojević/g,
-  /Victron/g, /Cerbo GX/g, /Nuki/g, /Orbital/g, /LiFePO[₄4]?/g, /Wyndham/g,
-  /Instagram/g, /FormSubmit/g, /Google( Fonts)?/g, /La Marzocco( Linea)?/g,
-  /Radisson( Individuals)?/g, /CO[₂2]/g, /\bIP\b/g, /Tiny Mansion/g, /Farm Store/g, /full-stack/gi, /white label/gi,
-  /on-demand/gi, /Morsko dobro/g, /konoba/gi, /\bPIR\b/g, /\bCEE\b/g, /\bCE\b/g,
-  /\bPOS\b/g, /\bR-\d+\b/g, /\bB96\b/g, /\bBE\b/g, /\bAV\b/g, /\bLED\b/g,
-  /°C/g, /\bGX\b/g, /[\w.+-]+@[\w.-]+/g, /e-?mail/gi,
-];
-const strip = t => KEEP.reduce((s, r) => s.replace(r, ''), t);
+/* Словарь исключений общий с untranslated.mjs: имена, бренды, стандарты. */
+import { strip } from './keep.mjs';
 
 const TY={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.webp':'image/webp'};
 const srv=http.createServer((q,r)=>{let p=decodeURIComponent(q.url.split('?')[0]);

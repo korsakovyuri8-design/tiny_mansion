@@ -1,5 +1,6 @@
-/* Russian groups thousands with a space and English with a comma. Anything
-   still comma-grouped in the Russian rendering is a cell nobody translated. */
+/* Thousands are grouped differently in each language: English «120,000»,
+   Russian «120 000», Serbian and Turkish «120.000». A number grouped the
+   wrong way for the language on screen is a cell nobody translated. */
 import pw from './pw.mjs';
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path';
 const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
@@ -13,14 +14,16 @@ const b=await pw.chromium.launch({args:['--no-proxy-server']});
 const sm=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const pages=[...sm.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m=>m[1]);
 for (const [lang, bad, want] of [['ru', /€\s?\d{1,3},\d{3}/, 'запятая в русском'],
-                                 ['en', /€\s?\d{1,3} \d{3}/, 'пробел в английском']]) {
+                                 ['en', /€\s?\d{1,3} \d{3}/, 'пробел в английском'],
+                                 ['sr', /€\s?\d{1,3}[, ]\d{3}/, 'запятая или пробел в сербском'],
+                                 ['tr', /€\s?\d{1,3}[, ]\d{3}/, 'запятая или пробел в турецком']]) {
   const page=await b.newPage({viewport:{width:1280,height:2000}});
   await page.route('**://fonts.g*.com/**',r=>r.abort());
   await page.addInitScript(l=>{try{localStorage.setItem('tm-lang',l);}catch(e){}}, lang);
   let total=0;
   for (const u of pages) {
-    if (lang==='ru' && u.startsWith('/invest/en')) continue;
-    if (lang==='en' && u==='/invest/') continue;
+    if (lang!=='en' && u.startsWith('/invest/en')) continue;
+    if (lang!=='ru' && u==='/invest/') continue;
     await page.goto('http://127.0.0.1:8334'+u,{waitUntil:'networkidle'});
     await page.waitForTimeout(200);
     const hits=await page.evaluate(re=>{

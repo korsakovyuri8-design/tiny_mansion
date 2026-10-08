@@ -7,8 +7,10 @@ import pw from './pw.mjs';
 import { serve } from './srv.mjs';
 
 const PAGES = [
-  ['/invest/en/', 'en', /[Ѐ-ӿ]/,  'кириллица в английской версии'],
-  ['/invest/',    'ru', null,               null],
+  ['/invest/en/', 'en', /[Ѐ-ӿ]/, 'кириллица в английской версии'],
+  ['/invest/',    'ru', null,     null],
+  ['/invest/sr/', 'sr', /[Ѐ-ӿ]/, 'кириллица в сербской версии'],
+  ['/invest/tr/', 'tr', /[Ѐ-ӿ]/, 'кириллица в турецкой версии'],
 ];
 /* Латиница, которой на русской странице место. */
 /* Метки на этой странице набраны через text-transform, поэтому innerText
@@ -17,7 +19,7 @@ const PAGES = [
 /* Длинное имя стирается раньше короткого: иначе «Grand Residence 24ft»
    теряет свой хвост на правиле для «Residence 24ft» и оставляет «Grand». */
 const KEEP = [/Tiny Mansion/gi, /Korsakov Group(\s+d\.o\.o\.)?/gi,
-  /Grand Residence 24ft/gi, /Residence 2\dft/gi, /\bRU\b|\bEN\b/g, /d\.o\.o\./gi, /[\w.+-]+@[\w.-]+/g,
+  /Grand Residence 24ft/gi, /Residence 2\dft/gi, /\bRU\b|\bEN\b|\bSR\b|\bTR\b/g, /d\.o\.o\./gi, /[\w.+-]+@[\w.-]+/g,
   /\bPMS\b/gi, /\bI{1,3}V?\b/g];
 
 await serve(8440);

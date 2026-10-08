@@ -70,13 +70,15 @@ for (const [w, h, dev] of [[390, 844, 'телефон'], [1280, 900, 'компь
     await page.goto('http://127.0.0.1:8410' + u, { waitUntil: 'networkidle' });
     await page.waitForTimeout(300);
     const en = await page.locator('main').innerText();
-    await page.locator('.lang-btn[data-lang="ru"]').click(); await page.waitForTimeout(400);
-    const ru = await page.locator('main').innerText();
-    await page.locator('.lang-btn[data-lang="en"]').click(); await page.waitForTimeout(400);
-    const back = await page.locator('main').innerText();
-    if (ru === en) no('язык не переключается на ' + u);
-    else if (back !== en) no('обратно на английский возвращается не тем же текстом: ' + u);
-    else ok('язык туда-обратно: ' + u);
+    for (const l of ['ru', 'sr', 'tr']) {
+      await page.locator('.lang-btn[data-lang="' + l + '"]').click(); await page.waitForTimeout(400);
+      const other = await page.locator('main').innerText();
+      await page.locator('.lang-btn[data-lang="en"]').click(); await page.waitForTimeout(400);
+      const back = await page.locator('main').innerText();
+      if (other === en) no('язык ' + l + ' не переключается на ' + u);
+      else if (back !== en) no('обратно на английский возвращается не тем же текстом: ' + l + ' ' + u);
+      else ok('язык туда-обратно: ' + l + ' ' + u);
+    }
   }
 
   /* галерея резиденции */

@@ -109,20 +109,25 @@ a{color:inherit}
 .nav a:hover{color:var(--ink)}
 .nav a[aria-current="page"]{color:var(--ink)}
 
-/* Language switch. The same pair of buttons as the main site, in this
-   page's mono face. The two pages are separate files, so it is a link,
-   not a toggle. */
-.lang{display:flex;align-items:center;gap:9px;margin-left:clamp(12px,2.2vw,34px)}
+/* Language switch. The same buttons as the main site, in this page's mono
+   face. The four pages are separate files, so each is a link, not a toggle.
+   Разделители убраны, чтобы блок из четырёх языков не выдавливал
+   навигацию, а отбивка внутри кнопки даёт палец. */
+.lang{display:flex;align-items:center;gap:3px;margin-left:clamp(12px,2.2vw,34px)}
 .lang a,.lang span{font-family:var(--mono);font-size:11px;letter-spacing:.09em;
-  text-transform:uppercase;text-decoration:none;transition:color .3s ease}
+  text-transform:uppercase;text-decoration:none;transition:color .3s ease;
+  padding:7px 5px;min-width:26px;text-align:center}
 .lang a{color:var(--muted)}
 .lang a:hover{color:var(--ink)}
 .lang [aria-current="true"]{color:var(--ink)}
-.lang .sep{width:1px;height:11px;background:var(--rule)}
 
 @media(max-width:760px){
   .header-inner{height:auto;flex-wrap:wrap;gap:9px;padding:12px 0}
-  .nav{width:100%;justify-content:space-between;gap:0;margin-left:0}
+  /* Турецкий набор длиннее английского, и в одну строку семь пунктов на
+     390px не встают: без переноса ряд вылезал за экран на 21px и тащил
+     за собой страницу. */
+  .nav{width:100%;justify-content:space-between;gap:0 10px;margin-left:0;
+    flex-wrap:wrap;white-space:normal}
   .nav a{font-size:10px;letter-spacing:.04em}
   .lang{width:100%;justify-content:flex-end;margin-left:0}
   .lang a,.lang span{font-size:10px;letter-spacing:.04em}

@@ -26,10 +26,10 @@ page.on('response', r => {
   if (r.status() >= 400 && r.url().startsWith(B)) broken.add(r.status() + ' ' + r.url().slice(B.length));
 });
 
-/* Every address in the sitemap, plus the two pages kept out of it. */
+/* Every address in the sitemap, plus the pages kept out of it. */
 const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
 const pages = [...sitemap.matchAll(/<loc>https:\/\/tinymansion\.co([^<]*)<\/loc>/g)].map(m => m[1]);
-pages.push('/thanks/', '/invest/', '/invest/en/');
+pages.push('/thanks/', '/invest/', '/invest/en/', '/invest/sr/', '/invest/tr/');
 
 const linkTargets = new Set();
 let checked = 0;

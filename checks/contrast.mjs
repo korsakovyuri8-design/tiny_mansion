@@ -8,7 +8,7 @@ await serve(8415);
 const b = await pw.chromium.launch({ args: ['--no-proxy-server'] });
 const hits = new Map();
 for (const [w, h] of [[390, 844], [1280, 900]]) {
-  for (const lang of ['en', 'ru']) {
+  for (const lang of ['en', 'ru', 'sr', 'tr']) {
     const page = await b.newPage({ viewport: { width: w, height: h } });
     await page.route('**://fonts.g*.com/**', r => r.abort());
     await page.addInitScript(l => { try { localStorage.setItem('tm-lang', l); } catch (e) {} }, lang);
