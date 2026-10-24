@@ -3625,6 +3625,12 @@ function writeJsonLd() {
      два сайта одним хозяйством. Тот же @id холдинга надо объявить и на
      korsakovgroup.com, со встречным subOrganization. */
   const PARENT = 'https://korsakovgroup.com';
+  /* Профили, по которым поисковик сшивает организацию с тем, что о ней
+     написано в других местах. Адреса записаны без меток перехода: метка
+     принадлежит тому, кто поделился ссылкой, а не странице, и в sameAs
+     превращает один и тот же профиль в два разных адреса. */
+  const LINKEDIN_ORG = 'https://www.linkedin.com/company/korsakov-group/';
+  const LINKEDIN_YURI = 'https://www.linkedin.com/in/yuri-korsakov';
   const graph = [{
     '@type': 'Organization',
     '@id': SITE + '/#org',
@@ -3633,7 +3639,10 @@ function writeJsonLd() {
     logo: SITE + '/og.jpg',
     description: 'Off-grid residences on working farms, and mobile bars, coffee units and salons.',
     address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' },
-    parentOrganization: { '@id': PARENT + '/#org' }
+    parentOrganization: { '@id': PARENT + '/#org' },
+    /* Оба имени стоят на странице «О нас» с теми же ролями: разметка
+       повторяет страницу, а не добавляет к ней. */
+    founder: [{ '@id': SITE + '/#yuri' }, { '@id': SITE + '/#sergei' }]
   }, {
     '@type': 'Organization',
     '@id': PARENT + '/#org',
@@ -3641,7 +3650,21 @@ function writeJsonLd() {
     legalName: 'Korsakov Group d.o.o.',
     url: PARENT + '/',
     address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' },
+    sameAs: [LINKEDIN_ORG],
     subOrganization: { '@id': SITE + '/#org' }
+  }, {
+    '@type': 'Person',
+    '@id': SITE + '/#yuri',
+    name: 'Yuri Korsakov',
+    jobTitle: 'Founder',
+    worksFor: { '@id': PARENT + '/#org' },
+    sameAs: [LINKEDIN_YURI]
+  }, {
+    '@type': 'Person',
+    '@id': SITE + '/#sergei',
+    name: 'Sergei Ermakov',
+    jobTitle: 'Co-founder',
+    worksFor: { '@id': PARENT + '/#org' }
   }];
 
   const trail = [];

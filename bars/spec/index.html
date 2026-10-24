@@ -37,7 +37,7 @@
   <!-- Structured data. writeJsonLd() fills this from what the page actually
        shows, so the machine-readable copy cannot drift away from the visible
        one, and the build bakes the right graph into every static file. -->
-  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","description":"Off-grid residences on working farms, and mobile bars, coffee units and salons.","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"},"parentOrganization":{"@id":"https://korsakovgroup.com/#org"}},{"@type":"Organization","@id":"https://korsakovgroup.com/#org","name":"Korsakov Group","legalName":"Korsakov Group d.o.o.","url":"https://korsakovgroup.com/","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"},"subOrganization":{"@id":"https://tinymansion.co/#org"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tinymansion.co/"},{"@type":"ListItem","position":2,"name":"Mobile bars","item":"https://tinymansion.co/bars/"},{"@type":"ListItem","position":3,"name":"Specification","item":"https://tinymansion.co/bars/spec/"}]}]}</script>
+  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","description":"Off-grid residences on working farms, and mobile bars, coffee units and salons.","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"},"parentOrganization":{"@id":"https://korsakovgroup.com/#org"},"founder":[{"@id":"https://tinymansion.co/#yuri"},{"@id":"https://tinymansion.co/#sergei"}]},{"@type":"Organization","@id":"https://korsakovgroup.com/#org","name":"Korsakov Group","legalName":"Korsakov Group d.o.o.","url":"https://korsakovgroup.com/","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"},"sameAs":["https://www.linkedin.com/company/korsakov-group/"],"subOrganization":{"@id":"https://tinymansion.co/#org"}},{"@type":"Person","@id":"https://tinymansion.co/#yuri","name":"Yuri Korsakov","jobTitle":"Founder","worksFor":{"@id":"https://korsakovgroup.com/#org"},"sameAs":["https://www.linkedin.com/in/yuri-korsakov"]},{"@type":"Person","@id":"https://tinymansion.co/#sergei","name":"Sergei Ermakov","jobTitle":"Co-founder","worksFor":{"@id":"https://korsakovgroup.com/#org"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tinymansion.co/"},{"@type":"ListItem","position":2,"name":"Mobile bars","item":"https://tinymansion.co/bars/"},{"@type":"ListItem","position":3,"name":"Specification","item":"https://tinymansion.co/bars/spec/"}]}]}</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -3667,6 +3667,12 @@ function writeJsonLd() {
      два сайта одним хозяйством. Тот же @id холдинга надо объявить и на
      korsakovgroup.com, со встречным subOrganization. */
   const PARENT = 'https://korsakovgroup.com';
+  /* Профили, по которым поисковик сшивает организацию с тем, что о ней
+     написано в других местах. Адреса записаны без меток перехода: метка
+     принадлежит тому, кто поделился ссылкой, а не странице, и в sameAs
+     превращает один и тот же профиль в два разных адреса. */
+  const LINKEDIN_ORG = 'https://www.linkedin.com/company/korsakov-group/';
+  const LINKEDIN_YURI = 'https://www.linkedin.com/in/yuri-korsakov';
   const graph = [{
     '@type': 'Organization',
     '@id': SITE + '/#org',
@@ -3675,7 +3681,10 @@ function writeJsonLd() {
     logo: SITE + '/og.jpg',
     description: 'Off-grid residences on working farms, and mobile bars, coffee units and salons.',
     address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' },
-    parentOrganization: { '@id': PARENT + '/#org' }
+    parentOrganization: { '@id': PARENT + '/#org' },
+    /* Оба имени стоят на странице «О нас» с теми же ролями: разметка
+       повторяет страницу, а не добавляет к ней. */
+    founder: [{ '@id': SITE + '/#yuri' }, { '@id': SITE + '/#sergei' }]
   }, {
     '@type': 'Organization',
     '@id': PARENT + '/#org',
@@ -3683,7 +3692,21 @@ function writeJsonLd() {
     legalName: 'Korsakov Group d.o.o.',
     url: PARENT + '/',
     address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' },
+    sameAs: [LINKEDIN_ORG],
     subOrganization: { '@id': SITE + '/#org' }
+  }, {
+    '@type': 'Person',
+    '@id': SITE + '/#yuri',
+    name: 'Yuri Korsakov',
+    jobTitle: 'Founder',
+    worksFor: { '@id': PARENT + '/#org' },
+    sameAs: [LINKEDIN_YURI]
+  }, {
+    '@type': 'Person',
+    '@id': SITE + '/#sergei',
+    name: 'Sergei Ermakov',
+    jobTitle: 'Co-founder',
+    worksFor: { '@id': PARENT + '/#org' }
   }];
 
   const trail = [];
