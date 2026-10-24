@@ -8,6 +8,7 @@
 window.DICT = window.DICT || {};
 window.DICT.tr = {
   text: {
+    "Tiny Mansion is a project of Korsakov Group d.o.o., a holding company registered in Tivat, Montenegro.": "Tiny Mansion, Tivat'ta (Karadağ) kayıtlı holding şirketi Korsakov Group d.o.o.'nun bir projesidir.",
     "Residences": "Rezidanslar",
     "Farms": "Çiftlikler",
     "About": "Hakkımızda",

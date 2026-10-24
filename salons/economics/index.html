@@ -37,7 +37,7 @@
   <!-- Structured data. writeJsonLd() fills this from what the page actually
        shows, so the machine-readable copy cannot drift away from the visible
        one, and the build bakes the right graph into every static file. -->
-  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","legalName":"Korsakov Group d.o.o.","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tinymansion.co/"},{"@type":"ListItem","position":2,"name":"Mobile salons","item":"https://tinymansion.co/salons/"},{"@type":"ListItem","position":3,"name":"What it earns","item":"https://tinymansion.co/salons/economics/"}]}]}</script>
+  <script type="application/ld+json" id="ld-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://tinymansion.co/#org","name":"Tiny Mansion","url":"https://tinymansion.co/","logo":"https://tinymansion.co/og.jpg","description":"Off-grid residences on working farms, and mobile bars, coffee units and salons.","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"},"parentOrganization":{"@id":"https://korsakovgroup.com/#org"}},{"@type":"Organization","@id":"https://korsakovgroup.com/#org","name":"Korsakov Group","legalName":"Korsakov Group d.o.o.","url":"https://korsakovgroup.com/","address":{"@type":"PostalAddress","addressLocality":"Tivat","addressCountry":"ME"},"subOrganization":{"@id":"https://tinymansion.co/#org"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tinymansion.co/"},{"@type":"ListItem","position":2,"name":"Mobile salons","item":"https://tinymansion.co/salons/"},{"@type":"ListItem","position":3,"name":"What it earns","item":"https://tinymansion.co/salons/economics/"}]}]}</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -1168,6 +1168,7 @@
     .footer-brand { max-width: 330px; }
     .footer-wordmark { font-family: var(--font-serif); font-size: 22px; letter-spacing: 0.22em; text-transform: uppercase; display: block; margin-bottom: 14px; }
     .footer-desc { font-size: 14px; font-weight: 300; line-height: 1.7; color: rgba(247,243,237,0.6); }
+    .footer-parent { margin-top: 14px; }
     .footer-nav-group { display: flex; gap: clamp(32px, 6vw, 74px); flex-wrap: wrap; }
     .footer-column { display: flex; flex-direction: column; gap: 13px; }
     .footer-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C7A96B; }
@@ -2881,6 +2882,7 @@
             <p>So we built the other thing. A residence engineered like a yacht, registered as a vehicle, able to run a full week with no power, water or drainage connected to it. It stands on a farm for a season and then it goes somewhere else.</p>
             <p>We don't own land and don't intend to. Across Europe there are farms with owners, with land, and with almost no income, and they are better places to wake up than anything we could buy. We work with them instead.</p>
             <p>The first twenty-five residences deploy across Montenegro from Q1 2027: the mountains of the north, the wine country in the middle, and a small number of coastal sites in the south. Croatia follows, then further afield.</p>
+            <p>Tiny Mansion is a project of Korsakov Group d.o.o., a holding company registered in Tivat, Montenegro.</p>
           </div>
 
           <hr class="rule" style="margin:64px 0 48px;">
@@ -3007,6 +3009,11 @@
         <div class="footer-brand">
           <span class="footer-wordmark" lang="en">Tiny Mansion</span>
           <p class="footer-desc">Off-grid residences on working farms. A Korsakov Group project. First deployment Montenegro, Q1 2027.</p>
+          <!-- Ссылка, а не просто имя: поисковик связывает два сайта по
+               ссылке и по разметке, а упоминание текстом ему ничего не
+               говорит. Стоит внутри <p>, чтобы считаться ссылкой в тексте
+               и не требовать размера кнопки. -->
+          <p class="footer-desc footer-parent"><a class="footer-link" href="https://korsakovgroup.com">Korsakov Group</a></p>
         </div>
 
         <div class="footer-nav-group">
@@ -3654,14 +3661,29 @@ function writeJsonLd() {
   const el = document.getElementById('ld-graph');
   if (!el) return;
 
+  /* Два узла, а не один: Tiny Mansion это торговая марка, Korsakov Group
+     d.o.o. это юридическое лицо за ней, и у него свой адрес в сети. Пока
+     связь стояла одним полем legalName, поисковик не имел повода считать
+     два сайта одним хозяйством. Тот же @id холдинга надо объявить и на
+     korsakovgroup.com, со встречным subOrganization. */
+  const PARENT = 'https://korsakovgroup.com';
   const graph = [{
     '@type': 'Organization',
     '@id': SITE + '/#org',
     name: 'Tiny Mansion',
-    legalName: 'Korsakov Group d.o.o.',
     url: SITE + '/',
     logo: SITE + '/og.jpg',
-    address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' }
+    description: 'Off-grid residences on working farms, and mobile bars, coffee units and salons.',
+    address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' },
+    parentOrganization: { '@id': PARENT + '/#org' }
+  }, {
+    '@type': 'Organization',
+    '@id': PARENT + '/#org',
+    name: 'Korsakov Group',
+    legalName: 'Korsakov Group d.o.o.',
+    url: PARENT + '/',
+    address: { '@type': 'PostalAddress', addressLocality: 'Tivat', addressCountry: 'ME' },
+    subOrganization: { '@id': SITE + '/#org' }
   }];
 
   const trail = [];
